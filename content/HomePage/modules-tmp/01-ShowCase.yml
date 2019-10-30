@@ -1,0 +1,22 @@
+type: ShowCase
+backgroundImage:
+  - src: /todo
+    srcset: /todo
+preHeadline: Take Your Images to the Next Level
+headline: Ansel
+subHeadline: For Craft CMS and ExpressionEngine
+ctas:
+  - content: Ansel for EE
+    href: /software/ansel-ee
+  - content: Ansel for Craft
+    href: /software/ansel-craft
+showCaseImage:
+  - src: /uploads-static/software/ansel-craft/ansel-craft-desktop.jpg
+    srcset: /uploads-static/software/ansel-craft/ansel-craft-desktop.jpg 1x, /uploads-static/software/ansel-craft/ansel-craft-desktop-2x.jpg 2x
+    alt: Ansel for Craft CMS and ExpressionEngine
+  - minWidth: 1px
+    maxWidth: 649px
+    srcset: /uploads-static/software/ansel-craft/ansel-craft-mobile.jpg 1x, /uploads-static/software/ansel-craft/ansel-craft-mobile-2x.jpg 2x
+  - minWidth: 650px
+    maxWidth: 1349px
+    srcset: /uploads-static/software/ansel-craft/ansel-craft-tablet.jpg 1x, /uploads-static/software/ansel-craft/ansel-craft-tablet-2x.jpg 2x
