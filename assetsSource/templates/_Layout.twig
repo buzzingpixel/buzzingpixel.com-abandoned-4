@@ -80,7 +80,10 @@
     {{ block('beginBody') ?? '' }}
 
     {# Get content #}
-    {{ block('content') ?? '' }}
+    <main class="SiteMain">
+        {% include 'Includes/MainMenu.twig' only %}
+        {{ block('content') ?? '' }}
+    </main>
 
     {# Output JS from globals #}
     {% for jsFile in GeneralConfig.jsFiles %}

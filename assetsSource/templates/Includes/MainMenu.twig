@@ -1,0 +1,27 @@
+{# @var \Config\MainMenu MainMenu #}
+
+<nav class="SiteNav">
+    <a href="/" class="SiteNav__Logo">
+        {% include 'svg/BzpxlLogoWide.svg' only  %}
+    </a>
+    <ul class="SiteNav__List">
+        {% for level1 in MainMenu.menu %}
+            <li class="SiteNav__ListItem">
+                <a href="{{ level1.href }}" class="SiteNav__ListItemLink">
+                    {{ level1.content|smartypants|widont }}
+                </a>
+                {% if level1.subItems is defined and level1.subItems is iterable %}
+                    <ul class="SiteNav__ListLevel2">
+                        {% for level2 in level1.subItems %}
+                            <li class="SiteNav__ListLevel2Item">
+                                <a href="{{ level2.href }}" class="SiteNav__ListLevel2ItemLink">
+                                    {{ level2.content|smartypants|widont }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
