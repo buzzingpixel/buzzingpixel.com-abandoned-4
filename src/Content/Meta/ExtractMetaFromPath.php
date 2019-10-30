@@ -28,7 +28,13 @@ class ExtractMetaFromPath
         $parsedYaml = Yaml::parseFile($fullPath);
 
         return new MetaPayload([
-            'metaTitle' => $parsedYaml['metaTitle'] ?? '',
+            'noIndex' => isset($parsedYaml['noIndex']) ? ((bool) $parsedYaml['noIndex']) : false,
+            'metaTitle' => isset($parsedYaml['metaTitle']) ? ((string) $parsedYaml['metaTitle']) : '',
+            'metaDescription' => isset($parsedYaml['metaDescription']) ? ((string) $parsedYaml['metaDescription']) : '',
+            'ogType' => isset($parsedYaml['ogType']) ? ((string) $parsedYaml['ogType']) : 'website',
+            'twitterCardType' => isset($parsedYaml['twitterCardType']) ?
+                ((string) $parsedYaml['twitterCardType']) :
+                'summary',
         ]);
     }
 }

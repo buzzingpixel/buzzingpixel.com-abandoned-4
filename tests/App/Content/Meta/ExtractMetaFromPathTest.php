@@ -36,7 +36,11 @@ class ExtractMetaFromPathTest extends TestCase
 
         $payload = $extractMetaFromPath('EmptyYamlFile');
 
+        self::assertFalse($payload->getNoIndex());
         self::assertSame('', $payload->getMetaTitle());
+        self::assertSame('', $payload->getMetaDescription());
+        self::assertSame('website', $payload->getOgType());
+        self::assertSame('summary', $payload->getTwitterCardType());
     }
 
     /**
@@ -48,6 +52,10 @@ class ExtractMetaFromPathTest extends TestCase
 
         $payload = $extractMetaFromPath('TestYamlFile');
 
+        self::assertTrue($payload->getNoIndex());
         self::assertSame('Test Meta Title', $payload->getMetaTitle());
+        self::assertSame('Test Meta Description', $payload->getMetaDescription());
+        self::assertSame('Test Og Type', $payload->getOgType());
+        self::assertSame('Test Twitter Card Type', $payload->getTwitterCardType());
     }
 }
