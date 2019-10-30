@@ -7,6 +7,7 @@ namespace Config\Factories;
 use App\HttpRespose\Twig\Extensions\PhpFunctions;
 use App\HttpRespose\Twig\Extensions\RequireVariables;
 use BuzzingPixel\TwigDumper\TwigDumper;
+use Config\General;
 use Psr\Container\ContainerInterface;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
@@ -51,6 +52,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(PhpFunctions::class));
 
         $twig->addExtension($di->get(RequireVariables::class));
+
+        $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
         return $twig;
     }
