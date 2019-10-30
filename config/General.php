@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Config;
 
-class General
+use Config\Abstractions\SimpleModel;
+
+class General extends SimpleModel
 {
     /** @var string */
     public static $siteName = 'BuzzingPixel';
@@ -19,7 +21,7 @@ class General
         '/assets/css/style.min.css',
     ];
 
-    /** @var string[] */
+    /** @var array<string, array<string, string>|string> */
     public static $jsFiles = [
         'vue' => 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js',
         'main' => [
@@ -27,14 +29,4 @@ class General
             'type' => 'module',
         ],
     ];
-
-    /**
-     * @param mixed[] $arguments
-     *
-     * @return mixed
-     */
-    public function __call(string $name, array $arguments)
-    {
-        return self::${$name} ?? null;
-    }
 }
