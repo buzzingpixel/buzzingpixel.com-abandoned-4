@@ -131,6 +131,11 @@
       <path value="$PROJECT_DIR$/vendor/marcusschwarz/lesserphp" />
       <path value="$PROJECT_DIR$/vendor/intervention/httpauth" />
       <path value="$PROJECT_DIR$/vendor/container-interop/container-interop" />
+      <path value="$PROJECT_DIR$/vendor/michelf/php-smartypants" />
+      <path value="$PROJECT_DIR$/vendor/buzzingpixel/corbomite-config-collector" />
+      <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-widont" />
+      <path value="$PROJECT_DIR$/vendor/buzzingpixel/corbomite-di" />
+      <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-smartypants" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

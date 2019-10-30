@@ -4,8 +4,191 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8807abaab2df7efc01e4f3aecc778d8",
+    "content-hash": "117303f198ba9b26eda9297d033fe027",
     "packages": [
+        {
+            "name": "buzzingpixel/corbomite-config-collector",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/corbomite-config-collector.git",
+                "reference": "b2991644c3ba29769af8265f60cce8159c490e1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/corbomite-config-collector/zipball/b2991644c3ba29769af8265f60cce8159c490e1d",
+                "reference": "b2991644c3ba29769af8265f60cce8159c490e1d",
+                "shasum": ""
+            },
+            "require": {
+                "buzzingpixel/corbomite-di": "^1.2",
+                "ext-json": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.26.1",
+                "doctrine/coding-standard": "^6.0",
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "phpmd/phpmd": "^2.6",
+                "phpunit/phpunit": "^8.0",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "extra": {
+                "diConfigFilePath": "src/diConfig.php"
+            },
+            "autoload": {
+                "psr-4": {
+                    "corbomite\\configcollector\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "TJ Draper",
+                    "email": "tj@buzzingpixel.com",
+                    "homepage": "https://buzzingpixel.com"
+                }
+            ],
+            "description": "Corbomite Config Collector",
+            "time": "2019-03-31T21:30:52+00:00"
+        },
+        {
+            "name": "buzzingpixel/corbomite-di",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/corbomite-di.git",
+                "reference": "e8ef39e88bf5d2ff4893f14c0ba42e192c90fd78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/corbomite-di/zipball/e8ef39e88bf5d2ff4893f14c0ba42e192c90fd78",
+                "reference": "e8ef39e88bf5d2ff4893f14c0ba42e192c90fd78",
+                "shasum": ""
+            },
+            "require": {
+                "buzzingpixel/corbomite-config-collector": "^1.1",
+                "ext-json": "*",
+                "php": ">=7.2",
+                "php-di/php-di": "^6.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.6",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "corbomite\\di\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Corbomite DI",
+            "homepage": "https://buzzingpixel.com/",
+            "time": "2019-03-30T20:16:02+00:00"
+        },
+        {
+            "name": "buzzingpixel/twig-smartypants",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/twig-smartypants.git",
+                "reference": "5a983a42f0029c2df47e12cbea61f8aad7f39819"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-smartypants/zipball/5a983a42f0029c2df47e12cbea61f8aad7f39819",
+                "reference": "5a983a42f0029c2df47e12cbea61f8aad7f39819",
+                "shasum": ""
+            },
+            "require": {
+                "buzzingpixel/corbomite-di": "^1.0",
+                "michelf/php-smartypants": "^1.8",
+                "php": ">=7.1",
+                "twig/twig": "^2.5"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.6",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "extra": {
+                "diConfigFilePath": "src/diConfig.php",
+                "twigExtensions": [
+                    "buzzingpixel\\twigsmartypants\\SmartypantsTwigExtension"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "buzzingpixel\\twigsmartypants\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "TJ Draper",
+                    "email": "tj@buzzingpixel.com",
+                    "homepage": "https://buzzingpixel.com"
+                }
+            ],
+            "description": "A Twig Smartypants filter",
+            "time": "2019-01-01T20:28:50+00:00"
+        },
+        {
+            "name": "buzzingpixel/twig-widont",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/twig-widont.git",
+                "reference": "3f9bbe45fa641e3a4088e691815df017f213921b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-widont/zipball/3f9bbe45fa641e3a4088e691815df017f213921b",
+                "reference": "3f9bbe45fa641e3a4088e691815df017f213921b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "twig/twig": "^2.5"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.6",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "extra": {
+                "twigExtensions": [
+                    "buzzingpixel\\twigwidont\\WidontTwigExtension"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "buzzingpixel\\twigwidont\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "TJ Draper",
+                    "email": "tj@buzzingpixel.com",
+                    "homepage": "https://buzzingpixel.com"
+                }
+            ],
+            "description": "A Twig widont filter",
+            "time": "2018-12-30T23:47:44+00:00"
+        },
         {
             "name": "container-interop/container-interop",
             "version": "1.2.0",
@@ -252,6 +435,56 @@
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
             "homepage": "http://leafo.net/lessphp/",
             "time": "2018-05-28T12:54:01+00:00"
+        },
+        {
+            "name": "michelf/php-smartypants",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-smartypants.git",
+                "reference": "47d17c90a4dfd0ccf1f87e25c65e6c8012415aad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/47d17c90a4dfd0ccf1f87e25c65e6c8012415aad",
+                "reference": "47d17c90a4dfd0ccf1f87e25c65e6c8012415aad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Michelf": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "https://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "https://daringfireball.net/"
+                }
+            ],
+            "description": "PHP SmartyPants",
+            "homepage": "https://michelf.ca/projects/php-smartypants/",
+            "keywords": [
+                "dashes",
+                "quotes",
+                "spaces",
+                "typographer",
+                "typography"
+            ],
+            "time": "2016-12-13T01:01:17+00:00"
         },
         {
             "name": "monolog/monolog",
