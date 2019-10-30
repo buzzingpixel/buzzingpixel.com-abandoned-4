@@ -2,7 +2,7 @@
 
 <nav class="SiteNav">
     <a href="/" class="SiteNav__Logo">
-        {% include 'svg/BzpxlLogoWide.svg' only  %}
+        {% include 'svg/BzpxlLogoWide.svg' only %}
     </a>
     <ul class="SiteNav__List">
         {% for level1 in MainMenu.menu %}
@@ -24,4 +24,25 @@
             </li>
         {% endfor %}
     </ul>
+    <ul class="SiteNav__Icons">
+        <li class="SiteNav__IconsItem">
+            <a
+                href=" /account"
+                class="SiteNav__IconsItemLink"
+            >
+                {% include 'svg/Account.svg' only %}
+            </a>
+        </li>
+        <li class="SiteNav__IconsItem">
+            <a
+                href="/cart"
+                class="SiteNav__IconsItemLink"
+            >
+                {% include 'svg/Cart.svg' only %}
+            </a>
+        </li>
+    </ul>
+    <span class="SiteNav__MobileOpener">
+        {% include 'svg/Menu.svg' only %}
+    </span>
 </nav>
