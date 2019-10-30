@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Modules\ExtractModulesFromPath;
 use Config\Factories\TwigEnvironmentFactory;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 use Twig\Environment as TwigEnvironment;
@@ -20,7 +21,7 @@ return [
         dirname(__DIR__) . '/content'
     ),
     ResponseFactoryInterface::class => autowire(ResponseFactory::class),
-    TwigEnvironment::class => static function () {
-        return (new TwigEnvironmentFactory())();
+    TwigEnvironment::class => static function (ContainerInterface $di) {
+        return (new TwigEnvironmentFactory())($di);
     },
 ];
