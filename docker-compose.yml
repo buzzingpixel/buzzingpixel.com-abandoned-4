@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   utility:
+    env_file: .env
     image: buzzingpixel/utility:1.1.0
     container_name: buzzingpixel-utility
     environment:
@@ -13,6 +14,7 @@ services:
     networks:
       common-buzzingpixel-network:
   web:
+    env_file: .env
     build:
       context: ./docker/web
     container_name: buzzingpixel-web
@@ -31,6 +33,7 @@ services:
         aliases:
           - buzzingpixel.localtest.me
   php:
+    env_file: .env
     build:
       context: ./docker/php
     container_name: buzzingpixel-php
@@ -43,6 +46,7 @@ services:
     networks:
       common-buzzingpixel-network:
   db:
+    env_file: .env
     build:
       context: ./docker/db
     container_name: buzzingpixel-db
