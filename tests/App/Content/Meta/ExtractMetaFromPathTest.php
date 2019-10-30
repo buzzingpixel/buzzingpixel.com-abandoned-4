@@ -46,7 +46,7 @@ class ExtractMetaFromPathTest extends TestCase
     {
         $extractMetaFromPath = new ExtractMetaFromPath(__DIR__ . '');
 
-        $payload = $extractMetaFromPath('EmptyYamlFile');
+        $payload = $extractMetaFromPath('TestYamlFile');
 
         self::assertSame('Test Meta Title', $payload->getMetaTitle());
     }
