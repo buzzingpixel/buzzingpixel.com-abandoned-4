@@ -75,7 +75,7 @@ if "%cmd%" == "composer" (
 )
 
 if "%cmd%" == "phpcs" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src web/index.php bootstrap.php devMode.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;"
+    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;"
     exit /b 0
 )
 

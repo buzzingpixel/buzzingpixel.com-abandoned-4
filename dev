@@ -95,7 +95,7 @@ if [[ "${cmd}" = "composer" ]]; then
 fi
 
 if [[ "${cmd}" = "phpcs" ]]; then
-    docker run -it -v ${PWD}:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src web/index.php bootstrap.php devMode.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;";
+    docker run -it -v ${PWD}:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;";
     exit 0;
 fi
 
