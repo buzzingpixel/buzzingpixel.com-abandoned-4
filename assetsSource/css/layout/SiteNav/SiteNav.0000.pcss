@@ -1,0 +1,94 @@
+.SiteNav {
+    background-color: rgba(var(--DeepSea), 0.9);
+    border-bottom: 1px solid  var(--AquaHaze);
+    border-top: 6px solid var(--Meteor);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.SiteNav__Logo {
+    color: var(--AquaHaze);
+    display: inline-block;
+    height: 38px;
+    margin: 10px 14px;
+    width: 130px;
+}
+
+.SiteNav__Logo:hover {
+    color: var(--AquaIsland);
+}
+
+.SiteNav__List {
+    background-color: var(--AquaHaze);
+    box-shadow: 0 0 10px 2px rgba(0,0,0,0.3);
+    display: none;
+    margin: 0;
+    position: absolute;
+    right: 16px;
+    top: 54px;
+    width: 80%;
+}
+
+.SiteNav__ListItemLink,
+.SiteNav__ListLevel2ItemLink {
+    color: var(--baseColor);
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.SiteNav__ListItemLink:hover,
+.SiteNav__ListLevel2ItemLink:hover {
+    background-color: var(--GoldSand);
+    color: var(--baseColor);
+    text-decoration: none;
+}
+
+.SiteNav__ListLevel2 {
+    margin: 0;
+}
+
+.SiteNav__ListLevel2ItemLink {
+    padding-left: 34px;
+}
+
+.SiteNav__Icons {
+    display:inline-block;
+    position: absolute;
+    right: 54px;
+    top: 11px;
+}
+
+.SiteNav__IconsItem {
+    display: inline-block;
+}
+
+.SiteNav__IconsItemLink {
+    color: var(--AquaHaze);
+    display: block;
+    height: 30px;
+    margin: 0 6px;
+    width: 30px;
+}
+
+.SiteNav__IconsItemLink:hover {
+    color: var(--AquaIsland);
+}
+
+.SiteNav__MobileOpener {
+    color: var(--AquaHaze);
+    cursor: pointer;
+    display: block;
+    padding: 0 20px;
+    position: absolute;
+    right: 0;
+    top: 8px;
+    width: 50px;
+}
+
+.SiteNav__MobileOpener:hover {
+    color: var(--AquaIsland);
+}
