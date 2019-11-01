@@ -32,12 +32,15 @@ export default {
 
             self.activateDesktopMenu(val);
         });
+
+        document.getElementById('SiteContent').addEventListener('click', self.siteContentClick);
     },
 
     data () {
         return {
             isActive: false,
             siteNavMouseLeaveTimer: 0,
+            subNavActionInProgress: false,
         };
     },
 
@@ -54,8 +57,34 @@ export default {
             this.isActive = false;
         },
 
+        siteContentClick () {
+            EventBus.desktopMenuActiveId = '';
+        },
+
         subMenuMouseEnter (e) {
-            EventBus.desktopMenuActiveId = e.target.dataset.id;
+            this.subNavAction(e);
+        },
+
+        subMenuClick (e) {
+            e.preventDefault();
+
+            this.subNavAction(e);
+        },
+
+        subNavAction (e) {
+            const self = this;
+
+            if (self.subNavActionInProgress) {
+                return;
+            }
+
+            self.subNavActionInProgress = true;
+
+            EventBus.desktopMenuActiveId = e.currentTarget.dataset.id;
+
+            setTimeout(() => {
+                self.subNavActionInProgress = false;
+            }, 100);
         },
 
         siteNavMouseEnter () {
@@ -64,6 +93,10 @@ export default {
 
         siteNavMouseLeave () {
             const self = this;
+
+            if (self.subNavActionInProgress) {
+                return;
+            }
 
             clearTimeout(self.siteNavMouseLeaveTimer);
 

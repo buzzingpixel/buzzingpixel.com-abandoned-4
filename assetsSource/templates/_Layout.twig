@@ -82,7 +82,10 @@
     {# Get content #}
     <main class="SiteMain">
         {% include 'Includes/MainMenu.twig' only %}
-        {{ block('content') ?? '' }}
+        <div class="SiteContent" id="SiteContent">
+            {{ block('content') ?? '' }}
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
     </main>
 
     {# Output JS from globals #}
