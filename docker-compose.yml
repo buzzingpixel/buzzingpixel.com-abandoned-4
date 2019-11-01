@@ -20,9 +20,6 @@ services:
     container_name: buzzingpixel-web
     environment:
       HOSTNAME: buzzingpixel-web
-      COMPOSER_HOME: /composer-home-volume
-      NGINX_HOST: foobar.com
-      NGINX_PORT: 80
     ports:
       - 26087:443
     volumes:
