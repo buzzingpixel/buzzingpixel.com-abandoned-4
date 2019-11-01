@@ -23,13 +23,20 @@
 .SiteNav__List {
     background-color: var(--AquaHaze);
     box-shadow: 0 0 10px 2px rgba(0,0,0,0.3);
-    display: none;
     margin: 0;
     max-width: 350px;
     position: absolute;
     right: 16px;
     top: 54px;
+    transform-origin: top left;
+    transform: scaleY(0);
+    transition: all 0.15s;
     width: 80%;
+}
+
+.SiteNav__List--MobileMenuIsActive {
+    display: block;
+    transform: scaleY(1);
 }
 
 .SiteNav__ListItemLink,

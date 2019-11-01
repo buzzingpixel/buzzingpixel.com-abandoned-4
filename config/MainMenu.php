@@ -11,7 +11,7 @@ class MainMenu extends SimpleModel
     /** @var mixed[] */
     public static $menu = [
         [
-            'href' => '#1',
+            'href' => '#0',
             'content' => 'software',
             'subItems' => [
                 [
@@ -57,9 +57,13 @@ class MainMenu extends SimpleModel
             ],
         ],
         [
-            'href' => '/support',
+            'href' => '#0',
             'content' => 'support',
             'subItems' => [
+                [
+                    'href' => '/support',
+                    'content' => 'Support',
+                ],
                 [
                     'href' => '/support/public',
                     'content' => 'Public Support',

@@ -5,6 +5,8 @@
     max-width: 100%;
     right: 100px;
     text-align: right;
+    transform: scaleY(1);
+    transition: none;
     top: 0;
     width: calc(100% - 250px);
 }
@@ -12,6 +14,11 @@
 .SiteNav__ListItem {
     display: inline-block;
     position: relative;
+}
+
+.SiteNav__ListItemLink,
+.SiteNav__ListLevel2ItemLink {
+    text-transform: none;
 }
 
 .SiteNav__ListItemLink {
@@ -22,11 +29,18 @@
 .SiteNav__ListLevel2 {
     background-color: var(--AquaHaze);
     box-shadow: 0 4px 10px 2px rgba(0,0,0,0.3);
-    display: none;
     position: absolute;
     right: 0;
     text-align: left;
     top: 100%;
+    transform-origin: top left;
+    transform: scaleY(0);
+    transition: all 0.15s;
+}
+
+.SiteNav__ListLevel2--IsActive {
+    display: block;
+    transform: scaleY(1);
 }
 
 .SiteNav__ListLevel2ItemLink {

@@ -4,7 +4,12 @@
 export const EventBus = new Vue({
     data () {
         return {
-            menuIsOpen: false,
+            windowWidth: 0,
+            windowHeight: 0,
+            windowWidthHeight: '',
+            mobileMenuBreakPoint: 600,
+            mobileMenuIsOpen: false,
+            desktopMenuActiveId: '',
         };
     },
 });

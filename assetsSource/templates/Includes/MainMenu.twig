@@ -1,17 +1,35 @@
 {# @var \Config\MainMenu MainMenu #}
 
-<nav class="SiteNav">
+<nav
+    class="SiteNav"
+    ref="SiteNav"
+    @mouseenter="siteNavMouseEnter"
+    @mouseleave="siteNavMouseLeave"
+>
     <a href="/" class="SiteNav__Logo">
         {% include 'svg/BzpxlLogoWide.svg' only %}
     </a>
-    <ul class="SiteNav__List">
+    <ul
+        class="SiteNav__List"
+        v-bind:class="{'SiteNav__List--MobileMenuIsActive': isActive}"
+    >
         {% for level1 in MainMenu.menu %}
-            <li class="SiteNav__ListItem">
+            {% set id = uniqid() %}
+            <li
+                class="SiteNav__ListItem"
+                @mouseenter="subMenuMouseEnter"
+                data-id="{{ id }}"
+            >
                 <a href="{{ level1.href }}" class="SiteNav__ListItemLink">
                     {{ level1.content|smartypants|widont }}
                 </a>
                 {% if level1.subItems is defined and level1.subItems is iterable %}
-                    <ul class="SiteNav__ListLevel2">
+                    <ul
+                        class="SiteNav__ListLevel2"
+                        ref="{{ id }}"
+                        data-is-sub-nav="true"
+                        data-active-class="SiteNav__ListLevel2--IsActive"
+                    >
                         {% for level2 in level1.subItems %}
                             <li class="SiteNav__ListLevel2Item">
                                 <a href="{{ level2.href }}" class="SiteNav__ListLevel2ItemLink">
@@ -42,7 +60,10 @@
             </a>
         </li>
     </ul>
-    <span class="SiteNav__MobileOpener">
+    <span
+        class="SiteNav__MobileOpener"
+        @click="mobileOpenerClick"
+    >
         {% include 'svg/Menu.svg' only %}
     </span>
 </nav>
