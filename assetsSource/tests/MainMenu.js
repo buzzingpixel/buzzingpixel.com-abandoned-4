@@ -47,23 +47,30 @@ urls.forEach((url) => {
             cy.viewport(600, 800);
             cy.get('.SiteNav__MobileOpener').should('not.be.visible');
             cy.get('.SiteNav__List').should('not.have.class', 'SiteNav__List--MobileMenuIsActive');
-            cy.get('.SiteNav__ListItem')
-                .each(($el) => {
-                    const $listItem = $el.closest('.SiteNav__ListItem');
-                    const $menu = $listItem.find('.SiteNav__ListLevel2');
-                    const $siteNav = $el.closest('.SiteNav');
-                    expect($menu).not.to.have.class('SiteNav__ListLevel2--IsActive');
-                    $listItem.trigger('mouseenter');
-                    // Unfortunately this doesn't really work with cypress right now
-                    // expect($listItem.trigger('mouseenter'))
-                    // .to.have.class('SiteNav__ListLevel2--IsActive');
-                    $siteNav.trigger('mouseleave');
-                    cy.wait(500);
-                    expect($menu).not.to.have.class('SiteNav__ListLevel2--IsActive');
-                })
-                .then(($els) => {
-                    expect($els).to.have.length(2);
-                });
+
+            cy.wait(400);
+
+            cy.get('.SiteNav__ListItem').should('have.length', 2);
+
+            cy.get('.SiteNav__ListItem').eq(0).click();
+            cy.wait(50);
+            cy.get('.SiteNav__ListItem').eq(0).find('.SiteNav__ListLevel2').should('have.class', 'SiteNav__ListLevel2--IsActive');
+            cy.wait(400);
+            cy.get('#SiteContent').click({ force: true });
+            cy.get('.SiteNav__ListItem').eq(0).find('.SiteNav__ListLevel2').should('not.have.class', 'SiteNav__ListLevel2--IsActive');
+
+            cy.get('.SiteNav__ListItem').eq(1).click();
+            cy.wait(50);
+            cy.get('.SiteNav__ListItem').eq(1).find('.SiteNav__ListLevel2').should('have.class', 'SiteNav__ListLevel2--IsActive');
+            cy.wait(50);
+            cy.get('.SiteNav__ListItem').eq(0).click();
+            cy.wait(50);
+            cy.get('.SiteNav__ListItem').eq(1).find('.SiteNav__ListLevel2').should('not.have.class', 'SiteNav__ListLevel2--IsActive');
+            cy.wait(50);
+            cy.get('.SiteNav__ListItem').eq(0).click();
+            cy.get('#SiteContent').click({ force: true });
+            cy.get('.SiteNav__ListItem').eq(0).find('.SiteNav__ListLevel2').should('not.have.class', 'SiteNav__ListLevel2--IsActive');
+            cy.get('.SiteNav__ListItem').eq(1).find('.SiteNav__ListLevel2').should('not.have.class', 'SiteNav__ListLevel2--IsActive');
         });
     });
 });

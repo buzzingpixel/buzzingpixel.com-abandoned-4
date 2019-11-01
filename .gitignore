@@ -6,6 +6,8 @@
 /public/assets
 auth.json
 projectOverrides.json
+/cypress/videos/*
+/cypress/screenshots/*
 
 
 
