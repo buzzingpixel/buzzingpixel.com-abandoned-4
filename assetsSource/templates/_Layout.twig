@@ -91,16 +91,18 @@
     {# Get content #}
     <main class="SiteMain">
         {% include 'Includes/MainMenu.twig' only %}
-        {% if hasHeadingBackgroundPayload %}
-            {% include 'Includes/HeadingBackground.twig' with {
-                headingBackgroundPayload: headingBackgroundPayload
-            } only %}
-        {% endif %}
         <div
             class="SiteContent{% if hasHeadingBackgroundPayload %} SiteContent--HasHeadingBackground{% endif %}"
             id="SiteContent"
         >
-            {{ block('content') ?? '' }}
+            {% if hasHeadingBackgroundPayload %}
+                {% include 'Includes/HeadingBackground.twig' with {
+                    headingBackgroundPayload: headingBackgroundPayload
+                } only %}
+            {% endif %}
+            <div class="SiteContent__Inner">
+                {{ block('content') ?? '' }}
+            </div>
         </div>
     </main>
 
