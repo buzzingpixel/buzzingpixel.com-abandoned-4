@@ -6,6 +6,7 @@ namespace Config\Factories;
 
 use App\HttpRespose\Twig\Extensions\PhpFunctions;
 use App\HttpRespose\Twig\Extensions\RequireVariables;
+use App\HttpRespose\Twig\Extensions\TemplateExists;
 use BuzzingPixel\TwigDumper\TwigDumper;
 use buzzingpixel\twiggetenv\GetEnvTwigExtension;
 use buzzingpixel\twigsmartypants\SmartypantsTwigExtension;
@@ -65,6 +66,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(SwitchTwigExtension::class));
 
         $twig->addExtension($di->get(GetEnvTwigExtension::class));
+
+        $twig->addExtension(new TemplateExists($twig->getLoader()));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
