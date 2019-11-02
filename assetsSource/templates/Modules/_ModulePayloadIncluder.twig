@@ -6,24 +6,27 @@
 
 {# @var \App\Content\Modules\ModulePayload modulePayload #}
 
-{% for payload in modulePayload.getItems() %}
-    {% set templatePath = 'Modules/' ~ payload.getName() ~ '.twig' %}
+<div class="Modules">
+    {% for payload in modulePayload.getItems() %}
+        {% set templatePath = 'Modules/' ~ payload.getName() ~ '.twig' %}
 
-    {% if templateExists(templatePath) %}
-        {% include templatePath with {
-            payload: payload
-        } only %}
-    {% else %}
-        {% if GeneralConfig.devMode %}
-            <div style="text-align: center;">
-                <br><br><br>
-<pre>
-=====================================<br>
-TODO: Implement module: {{ payload.getName() }}<br>
-=====================================<br>
-</pre>
-                <br><br><br>
-            </div>
+        {% if templateExists(templatePath) %}
+            {% include templatePath with {
+                payload: payload,
+                moduleCount: loop.index,
+            } only %}
+        {% else %}
+            {% if GeneralConfig.devMode %}
+                <div style="text-align: center;">
+                    <br><br><br>
+    <pre>
+    =====================================<br>
+    TODO: Implement module: {{ payload.getName() }}<br>
+    =====================================<br>
+    </pre>
+                    <br><br><br>
+                </div>
+            {% endif %}
         {% endif %}
-    {% endif %}
-{% endfor %}
+    {% endfor %}
+</div>

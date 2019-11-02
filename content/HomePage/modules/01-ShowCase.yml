@@ -8,13 +8,13 @@ ctas:
   - content: Ansel for Craft
     href: /software/ansel-craft
 showCaseImage:
-  src: /content-images/ansel-craft-screen-shot/ansel-craft-screen-shot.jpg
-  srcset: TODO
+  1x: /content-images/ansel-craft-screen-shot/ansel-craft-screen-shot.jpg
+#  2x: TODO
   alt: Ansel for Craft CMS and ExpressionEngine
-  sources:
-    - 1x: /path/to/img.jpg
-      2x: /path/to/img@2x.jpg
-      mediaQuery: "(min-width: 1px) and (max-width: 499px)"
-    - 1x: /path/to/img.jpg
-      2x: /path/to/img@2x.jpg
-      mediaQuery: "(min-width: 1px) and (max-width: 499px)"
+#  sources:
+#    - 1x: /path/to/img.jpg
+#      2x: /path/to/img@2x.jpg
+#      mediaQuery: "(min-width: 1px) and (max-width: 499px)"
+#    - 1x: /path/to/img.jpg
+#      2x: /path/to/img@2x.jpg
+#      mediaQuery: "(min-width: 1px) and (max-width: 499px)"

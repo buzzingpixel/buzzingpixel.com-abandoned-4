@@ -1,0 +1,73 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\ShowCasePayload',
+    moduleCount: 'integer'
+}) %}
+
+{# @var \App\Content\Modules\Payloads\ShowCasePayload payload #}
+{# @var int moduleCount #}
+
+{% set headlineH1 = moduleCount == 1 %}
+
+<section class="ShowCase">
+    <div class="ShowCase__Inner">
+        {% if payload.getPreHeadline() %}
+            <span class="ShowCase__PreHeadline">
+                {{ payload.getPreHeadline()|smartypants|widont }}
+            </span>
+        {% endif %}
+        {% if headlineH1 %}
+            <h1 class="ShowCase__Headline">
+                {{ payload.getHeadline()|smartypants }}
+            </h1>
+        {% else %}
+            <h2 class="ShowCase__Headline">
+                {{ payload.getHeadline()|smartypants }}
+            </h2>
+        {% endif %}
+        {% if payload.getSubHeadline() %}
+            {% if headlineH1 %}
+                <h2 class="ShowCase__SubHeadline">
+                    {{ payload.getSubHeadline()|smartypants|widont }}
+                </h2>
+            {% else %}
+                <h3 class="ShowCase__SubHeadline">
+                    {{ payload.getSubHeadline()|smartypants|widont }}
+                </h3>
+            {% endif %}
+        {% endif %}
+        {% if payload.getCtas()|length %}
+            <div class="ShowCase__Ctas">
+                <div class="ShowCase__CtasInner">
+                    {% for cta in payload.getCtas() %}
+                        <a href="{{ cta.getHref() }}" class="ShowCase__CtasCta">
+                            {{ cta.getContent()|smartypants|widont }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {# @var \App\Content\Modules\Payloads\ShowCaseImagePayload showCaseImage #}
+        {% set showCaseImage = payload.getShowCaseImage() %}
+        {% if showCaseImage.getOneX() %}
+            <div class="ShowCase__ImageWrapper">
+                <picture>
+                    {% if showCaseImage.getSources()|length %}
+                        {% for source in showCaseImage.getSources() %}
+                            <source
+                                srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                                media="{{ source.getMediaQuery() }}"
+                            >
+                        {% endfor %}
+                    {% endif %}
+                    <img
+                        src="{{ showCaseImage.getOneX() }}"
+                        {% if showCaseImage.getTwoX() %}
+                        srcset="{{ showCaseImage.getOneX() }} 1x, {{ showCaseImage.getTwoX() }} 2x"
+                        {% endif %}
+                        alt="{{ showCaseImage.getAlt()|smartypants }}"
+                    >
+                </picture>
+            </div>
+        {% endif %}
+    </div>
+</section>
