@@ -19,8 +19,8 @@ class ImagePropertiesTest extends TestCase
             use ImageProperties;
         };
 
-        self::assertSame('', $model->getSrc());
-        self::assertSame('', $model->getSrcset());
+        self::assertSame('', $model->getOneX());
+        self::assertSame('', $model->getTwoX());
         self::assertSame('', $model->getAlt());
     }
 
@@ -41,15 +41,15 @@ class ImagePropertiesTest extends TestCase
     public function test() : void
     {
         $model = new class([
-            'src' => 'TestSrc',
-            'srcset' => 'testSrcset',
+            'oneX' => 'TestSrc',
+            'twoX' => 'testSrcset',
             'alt' => 'testAlt',
         ]) extends SpecificPayload {
             use ImageProperties;
         };
 
-        self::assertSame('TestSrc', $model->getSrc());
-        self::assertSame('testSrcset', $model->getSrcset());
+        self::assertSame('TestSrc', $model->getOneX());
+        self::assertSame('testSrcset', $model->getTwoX());
         self::assertSame('testAlt', $model->getAlt());
     }
 }

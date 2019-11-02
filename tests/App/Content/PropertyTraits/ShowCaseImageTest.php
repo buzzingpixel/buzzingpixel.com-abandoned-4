@@ -21,8 +21,8 @@ class ShowCaseImageTest extends TestCase
         $payload = $trait->getShowCaseImage();
 
         self::assertInstanceOf(ShowCaseImagePayload::class, $payload);
-        self::assertSame('', $payload->getSrc());
-        self::assertSame('', $payload->getSrcset());
+        self::assertSame('', $payload->getOneX());
+        self::assertSame('', $payload->getTwoX());
         self::assertSame('', $payload->getAlt());
         self::assertSame([], $payload->getSources());
     }

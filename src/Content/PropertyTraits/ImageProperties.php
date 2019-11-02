@@ -10,29 +10,29 @@ use InvalidArgumentException;
 trait ImageProperties
 {
     /** @var string */
-    private $src = '';
+    private $oneX = '';
 
-    protected function setSrc(string $src) : void
+    protected function setOneX(string $oneX) : void
     {
-        $this->src = $src;
+        $this->oneX = $oneX;
     }
 
-    public function getSrc() : string
+    public function getOneX() : string
     {
-        return $this->src;
+        return $this->oneX;
     }
 
     /** @var string */
-    private $srcset = '';
+    private $twoX = '';
 
-    protected function setSrcset(string $srcset) : void
+    protected function setTwoX(string $twoX) : void
     {
-        $this->srcset = $srcset;
+        $this->twoX = $twoX;
     }
 
-    public function getSrcset() : string
+    public function getTwoX() : string
     {
-        return $this->srcset;
+        return $this->twoX;
     }
 
     /** @var string */

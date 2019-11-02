@@ -36,8 +36,8 @@ class ExtractMetaFromPath
                 ((string) $parsedYaml['twitterCardType']) :
                 'summary',
             'headingBackground' => new HeadingBackgroundPayload([
-                'src' => $parsedYaml['headingBackground']['src'] ?? '',
-                'srcset' => $parsedYaml['headingBackground']['srcset'] ?? '',
+                'oneX' => $parsedYaml['headingBackground']['1x'] ?? '',
+                'twoX' => $parsedYaml['headingBackground']['2x'] ?? '',
                 'alt' => $parsedYaml['headingBackground']['alt'] ?? '',
             ]),
         ]);

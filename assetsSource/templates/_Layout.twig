@@ -14,7 +14,7 @@
 {# @var \App\Content\Meta\HeadingBackgroundPayload headingBackgroundPayload #}
 {% set headingBackgroundPayload = metaPayload.getHeadingBackground() %}
 
-{% set hasHeadingBackgroundPayload = headingBackgroundPayload and headingBackgroundPayload.getSrc() %}
+{% set hasHeadingBackgroundPayload = headingBackgroundPayload and headingBackgroundPayload.getOneX() %}
 
 <!doctype html>
 <html lang="en">

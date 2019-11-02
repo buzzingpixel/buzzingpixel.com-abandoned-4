@@ -46,8 +46,8 @@ class ExtractMetaFromPathTest extends TestCase
         /** @var HeadingBackgroundPayload $headingBackground */
         $headingBackground = $payload->getHeadingBackground();
         self::assertInstanceOf(HeadingBackgroundPayload::class, $headingBackground);
-        self::assertSame('', $headingBackground->getSrc());
-        self::assertSame('', $headingBackground->getSrcset());
+        self::assertSame('', $headingBackground->getOneX());
+        self::assertSame('', $headingBackground->getTwoX());
         self::assertSame('', $headingBackground->getAlt());
     }
 
@@ -69,8 +69,8 @@ class ExtractMetaFromPathTest extends TestCase
         /** @var HeadingBackgroundPayload $headingBackground */
         $headingBackground = $payload->getHeadingBackground();
         self::assertInstanceOf(HeadingBackgroundPayload::class, $headingBackground);
-        self::assertSame('testsrc', $headingBackground->getSrc());
-        self::assertSame('testsrcset', $headingBackground->getSrcset());
+        self::assertSame('testsrc', $headingBackground->getOneX());
+        self::assertSame('testsrcset', $headingBackground->getTwoX());
         self::assertSame('testalt', $headingBackground->getAlt());
     }
 }

@@ -42,8 +42,8 @@ trait ExtractShowCase
             'subHeadline' => (string) ($parsedYaml['subHeadline'] ?? ''),
             'ctas' => array_map([$this, 'mapYamlCtaToPayload'], $yamlCtas),
             'showCaseImage' => new ShowCaseImagePayload([
-                'src' => (string) ($yamlShowCaseImage['src'] ?? ''),
-                'srcset' => (string) ($yamlShowCaseImage['srcset'] ?? ''),
+                'oneX' => (string) ($yamlShowCaseImage['1x'] ?? ''),
+                'twoX' => (string) ($yamlShowCaseImage['2x'] ?? ''),
                 'alt' => (string) ($yamlShowCaseImage['alt'] ?? ''),
                 'sources' => array_map(
                     [$this, 'mapYamlShowCaseImageSourceToPayload'],

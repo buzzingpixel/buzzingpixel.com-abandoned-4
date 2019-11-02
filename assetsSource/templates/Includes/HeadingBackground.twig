@@ -6,12 +6,20 @@
 
 <div class="HeadingBackground">
     <picture>
+        {% if headingBackgroundPayload.getSources()|length %}
+            {% for source in headingBackgroundPayload.getSources() %}
+                <source
+                    srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                    media="{{ source.getMediaQuery() }}"
+                >
+            {% endfor %}
+        {% endif %}
         <img
-            src="{{ headingBackgroundPayload.getSrc() }}"
-            {% if headingBackgroundPayload.getSrcset() %}
-            srcset="{{ headingBackgroundPayload.getSrcset() }}"
+            src="{{ headingBackgroundPayload.getOneX() }}"
+            {% if headingBackgroundPayload.getTwoX() %}
+            srcset="{{ headingBackgroundPayload.getOneX() }} 1x, {{ headingBackgroundPayload.getTwoX() }} 2x"
             {% endif %}
-            alt="{{ headingBackgroundPayload.getSrcset() }}"
+            alt="{{ headingBackgroundPayload.getOneX() }}"
             class="HeadingBackground__Img"
         >
     </picture>

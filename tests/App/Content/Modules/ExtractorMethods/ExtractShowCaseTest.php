@@ -32,8 +32,8 @@ class ExtractShowCaseTest extends TestCase
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
-        self::assertSame('', $showCaseImage->getSrc());
-        self::assertSame('', $showCaseImage->getSrcset());
+        self::assertSame('', $showCaseImage->getOneX());
+        self::assertSame('', $showCaseImage->getTwoX());
         self::assertSame('', $showCaseImage->getAlt());
         self::assertSame([], $showCaseImage->getSources());
     }
@@ -55,8 +55,8 @@ class ExtractShowCaseTest extends TestCase
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
-        self::assertSame('', $showCaseImage->getSrc());
-        self::assertSame('', $showCaseImage->getSrcset());
+        self::assertSame('', $showCaseImage->getOneX());
+        self::assertSame('', $showCaseImage->getTwoX());
         self::assertSame('', $showCaseImage->getAlt());
         self::assertSame([], $showCaseImage->getSources());
     }
@@ -79,8 +79,8 @@ class ExtractShowCaseTest extends TestCase
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
-        self::assertSame('', $showCaseImage->getSrc());
-        self::assertSame('', $showCaseImage->getSrcset());
+        self::assertSame('', $showCaseImage->getOneX());
+        self::assertSame('', $showCaseImage->getTwoX());
         self::assertSame('', $showCaseImage->getAlt());
         self::assertSame([], $showCaseImage->getSources());
     }
@@ -96,8 +96,8 @@ class ExtractShowCaseTest extends TestCase
             'headline' => 'TestHeadline',
             'subHeadline' => 'TestSubHeadline',
             'showCaseImage' => [
-                'src' => 'TestShowCaseSrc',
-                'srcset' => 'TestShowCaseSrcset',
+                '1x' => 'TestShowCaseSrc',
+                '2x' => 'TestShowCaseSrcset',
                 'alt' => 'TestShowCaseAlt',
             ],
         ]);
@@ -108,8 +108,8 @@ class ExtractShowCaseTest extends TestCase
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
-        self::assertSame('TestShowCaseSrc', $showCaseImage->getSrc());
-        self::assertSame('TestShowCaseSrcset', $showCaseImage->getSrcset());
+        self::assertSame('TestShowCaseSrc', $showCaseImage->getOneX());
+        self::assertSame('TestShowCaseSrcset', $showCaseImage->getTwoX());
         self::assertSame('TestShowCaseAlt', $showCaseImage->getAlt());
         self::assertSame([], $showCaseImage->getSources());
     }
@@ -125,8 +125,8 @@ class ExtractShowCaseTest extends TestCase
             'headline' => 'TestHeadline',
             'subHeadline' => 'TestSubHeadline',
             'showCaseImage' => [
-                'src' => 'TestShowCaseSrc',
-                'srcset' => 'TestShowCaseSrcset',
+                '1x' => 'TestShowCaseSrc',
+                '2x' => 'TestShowCaseSrcset',
                 'alt' => 'TestShowCaseAlt',
                 'sources' => 'FooBar',
             ],
@@ -138,8 +138,8 @@ class ExtractShowCaseTest extends TestCase
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
-        self::assertSame('TestShowCaseSrc', $showCaseImage->getSrc());
-        self::assertSame('TestShowCaseSrcset', $showCaseImage->getSrcset());
+        self::assertSame('TestShowCaseSrc', $showCaseImage->getOneX());
+        self::assertSame('TestShowCaseSrcset', $showCaseImage->getTwoX());
         self::assertSame('TestShowCaseAlt', $showCaseImage->getAlt());
         self::assertSame([], $showCaseImage->getSources());
     }
@@ -155,8 +155,8 @@ class ExtractShowCaseTest extends TestCase
             'headline' => 'TestHeadline',
             'subHeadline' => 'TestSubHeadline',
             'showCaseImage' => [
-                'src' => 'TestShowCaseSrc',
-                'srcset' => 'TestShowCaseSrcset',
+                '1x' => 'TestShowCaseSrc',
+                '2x' => 'TestShowCaseSrcset',
                 'alt' => 'TestShowCaseAlt',
                 'sources' => [
                     ['foo' => 'bar'],
@@ -175,8 +175,8 @@ class ExtractShowCaseTest extends TestCase
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
-        self::assertSame('TestShowCaseSrc', $showCaseImage->getSrc());
-        self::assertSame('TestShowCaseSrcset', $showCaseImage->getSrcset());
+        self::assertSame('TestShowCaseSrc', $showCaseImage->getOneX());
+        self::assertSame('TestShowCaseSrcset', $showCaseImage->getTwoX());
         self::assertSame('TestShowCaseAlt', $showCaseImage->getAlt());
 
         $sources = $showCaseImage->getSources();
@@ -214,8 +214,8 @@ class ExtractShowCaseTest extends TestCase
         self::assertSame('', $payload->getSubHeadline());
 
         $showCaseImage = $payload->getShowCaseImage();
-        self::assertSame('', $showCaseImage->getSrc());
-        self::assertSame('', $showCaseImage->getSrcset());
+        self::assertSame('', $showCaseImage->getOneX());
+        self::assertSame('', $showCaseImage->getTwoX());
         self::assertSame('', $showCaseImage->getAlt());
         self::assertSame([], $showCaseImage->getSources());
 
