@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Content\Modules;
 
+use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
+use App\Content\Modules\ExtractorMethods\ExtractShowCase;
 use DirectoryIterator;
 use IteratorIterator;
 use RegexIterator;
@@ -16,6 +18,9 @@ use function ucfirst;
 
 class ExtractModulesFromPath
 {
+    use MapYamlCtaToPayload;
+    use ExtractShowCase;
+
     /** @var string */
     private $pathToContentDirectory;
 

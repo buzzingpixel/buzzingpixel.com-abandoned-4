@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Content\PropertyTraits;
 
+use App\Content\Modules\Payloads\ImageSourcePayload;
+use InvalidArgumentException;
+
 trait ImageProperties
 {
     /** @var string */
@@ -43,5 +46,34 @@ trait ImageProperties
     public function getAlt() : string
     {
         return $this->alt;
+    }
+
+    /** @var ImageSourcePayload[] */
+    private $sources = [];
+
+    /**
+     * @param ImageSourcePayload[] $sources
+     */
+    protected function setSources(array $sources) : void
+    {
+        foreach ($sources as $source) {
+            if ($source instanceof ImageSourcePayload) {
+                continue;
+            }
+
+            throw new InvalidArgumentException(
+                'Source must be instance of ' . ImageSourcePayload::class
+            );
+        }
+
+        $this->sources = $sources;
+    }
+
+    /**
+     * @return ImageSourcePayload[]
+     */
+    public function getSources() : array
+    {
+        return $this->sources;
     }
 }
