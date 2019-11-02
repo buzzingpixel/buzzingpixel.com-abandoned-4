@@ -6,16 +6,16 @@
 {# @var \App\Content\Modules\Payloads\ShowCasePayload payload #}
 {# @var int moduleCount #}
 
-{% set headlineH1 = moduleCount == 1 %}
+{% set isFirst = moduleCount == 1 %}
 
-<section class="ShowCase">
+<section class="ShowCase{% if isFirst %} ShowCase--IsFirst{% endif %}">
     <div class="ShowCase__Inner">
         {% if payload.getPreHeadline() %}
             <span class="ShowCase__PreHeadline">
                 {{ payload.getPreHeadline()|smartypants|widont }}
             </span>
         {% endif %}
-        {% if headlineH1 %}
+        {% if isFirst %}
             <h1 class="ShowCase__Headline">
                 {{ payload.getHeadline()|smartypants }}
             </h1>
@@ -25,7 +25,7 @@
             </h2>
         {% endif %}
         {% if payload.getSubHeadline() %}
-            {% if headlineH1 %}
+            {% if isFirst %}
                 <h2 class="ShowCase__SubHeadline">
                     {{ payload.getSubHeadline()|smartypants|widont }}
                 </h2>
