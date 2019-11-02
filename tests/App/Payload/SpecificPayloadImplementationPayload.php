@@ -6,7 +6,7 @@ namespace Tests\App\Payload;
 
 use App\Payload\SpecificPayload;
 
-class SpecificPayloadImplementation extends SpecificPayload
+class SpecificPayloadImplementationPayload extends SpecificPayload
 {
     /** @var mixed */
     private $bar;

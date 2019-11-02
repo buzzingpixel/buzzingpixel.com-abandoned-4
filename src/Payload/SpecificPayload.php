@@ -8,7 +8,10 @@ use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
 use ReflectionException;
+use function mb_strpos;
+use function mb_substr;
 use function method_exists;
+use function strrev;
 use function ucfirst;
 
 abstract class SpecificPayload
@@ -51,13 +54,31 @@ abstract class SpecificPayload
         $reflect = new ReflectionClass($this);
 
         $this->shortName = $reflect->getShortName();
+
+        $this->name = $this->shortName;
+
+        $reversedShortName = strrev($this->shortName);
+
+        if (mb_strpos($reversedShortName, 'daolyaP') !== 0) {
+            return;
+        }
+
+        $this->name = mb_substr($this->shortName, 0, -7);
     }
 
-    /** @var string $shortName */
+    /** @var string */
     protected $shortName = '';
 
     public function getShortName() : string
     {
         return $this->shortName;
+    }
+
+    /** @var string */
+    protected $name = '';
+
+    public function getName() : string
+    {
+        return $this->name;
     }
 }

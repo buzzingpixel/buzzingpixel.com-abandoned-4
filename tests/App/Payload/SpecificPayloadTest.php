@@ -16,12 +16,12 @@ class SpecificPayloadTest extends TestCase
      */
     public function testDoubleInit() : void
     {
-        $objectToTest = new SpecificPayloadImplementation();
+        $objectToTest = new SpecificPayloadImplementationPayload();
 
         self::expectException(LogicException::class);
 
         self::expectExceptionMessage(
-            SpecificPayloadImplementation::class . ' instances can only be initialized once.'
+            SpecificPayloadImplementationPayload::class . ' instances can only be initialized once.'
         );
 
         $objectToTest->__construct();
@@ -36,7 +36,7 @@ class SpecificPayloadTest extends TestCase
 
         self::expectExceptionMessage('Property does not exist: FooBar');
 
-        new SpecificPayloadImplementation(['FooBar' => 'var']);
+        new SpecificPayloadImplementationPayload(['FooBar' => 'var']);
     }
 
     /**
@@ -44,25 +44,35 @@ class SpecificPayloadTest extends TestCase
      */
     public function testSetProperty() : void
     {
-        $objectToTest = new SpecificPayloadImplementation(['Bar' => 'TestVal']);
+        $objectToTest = new SpecificPayloadImplementationPayload(['Bar' => 'TestVal']);
 
         self::assertSame('TestVal', $objectToTest->getBar());
     }
 
     public function testNoProperties() : void
     {
-        $objectToTest = new SpecificPayloadImplementation();
+        $objectToTest = new SpecificPayloadImplementationPayload();
 
         self::assertNull($objectToTest->getBar());
     }
 
     public function testGetShortname() : void
     {
-        $objectToTest = new SpecificPayloadImplementation();
+        $objectToTest = new SpecificPayloadImplementationPayload();
+
+        self::assertSame(
+            'SpecificPayloadImplementationPayload',
+            $objectToTest->getShortName()
+        );
+    }
+
+    public function testGetName() : void
+    {
+        $objectToTest = new SpecificPayloadImplementationPayload();
 
         self::assertSame(
             'SpecificPayloadImplementation',
-            $objectToTest->getShortName()
+            $objectToTest->getName()
         );
     }
 }

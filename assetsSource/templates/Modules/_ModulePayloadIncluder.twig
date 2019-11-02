@@ -7,24 +7,23 @@
 {# @var \App\Content\Modules\ModulePayload modulePayload #}
 
 {% for payload in modulePayload.getItems() %}
-    {% set sendPackage = {
-        payload: payload
-    } %}
+    {% set templatePath = 'Modules/' ~ payload.getName() ~ '.twig' %}
 
-    {% switch payload.getShortName() %}
-        {% case 'todo' %}
-            {{ dump('todo') }}
-        {% default %}
-            {% if GeneralConfig.devMode %}
-                <div style="text-align: center;">
-                    <br><br><br>
+    {% if templateExists(templatePath) %}
+        {% include templatePath with {
+            payload: payload
+        } only %}
+    {% else %}
+        {% if GeneralConfig.devMode %}
+            <div style="text-align: center;">
+                <br><br><br>
 <pre>
 =====================================<br>
-TODO: Implement module: {{ payload.getShortName() }}<br>
+TODO: Implement module: {{ payload.getName() }}<br>
 =====================================<br>
 </pre>
-                    <br><br><br>
-                </div>
-            {% endif %}
-    {% endswitch %}
+                <br><br><br>
+            </div>
+        {% endif %}
+    {% endif %}
 {% endfor %}
