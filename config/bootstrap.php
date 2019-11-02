@@ -7,8 +7,17 @@ use Psr\Container\ContainerInterface;
 use Whoops\Handler\PlainTextHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run as WhoopsRun;
+use function Safe\ini_set;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
+
+if (getenv('DEV_MODE') === 'true') {
+    /** @noinspection PhpUnhandledExceptionInspection */
+    ini_set('display_errors', '1');
+    /** @noinspection PhpUnhandledExceptionInspection */
+    ini_set('display_startup_errors', '1');
+    error_reporting(E_ALL);
+}
 
 if (class_exists(WhoopsRun::class)) {
     $whoops = new WhoopsRun();
