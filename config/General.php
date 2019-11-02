@@ -5,9 +5,18 @@ declare(strict_types=1);
 namespace Config;
 
 use Config\Abstractions\SimpleModel;
+use function getenv;
 
 class General extends SimpleModel
 {
+    public function __construct()
+    {
+        static::$devMode = getenv('DEV_MODE') === 'true';
+    }
+
+    /** @var bool */
+    public static $devMode = false;
+
     /** @var string */
     public static $siteName = 'BuzzingPixel';
 
