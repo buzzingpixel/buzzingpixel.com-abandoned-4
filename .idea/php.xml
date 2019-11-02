@@ -136,6 +136,8 @@
       <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-widont" />
       <path value="$PROJECT_DIR$/vendor/buzzingpixel/corbomite-di" />
       <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-smartypants" />
+      <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-switch" />
+      <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-getenv" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

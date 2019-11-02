@@ -7,7 +7,9 @@ namespace Config\Factories;
 use App\HttpRespose\Twig\Extensions\PhpFunctions;
 use App\HttpRespose\Twig\Extensions\RequireVariables;
 use BuzzingPixel\TwigDumper\TwigDumper;
+use buzzingpixel\twiggetenv\GetEnvTwigExtension;
 use buzzingpixel\twigsmartypants\SmartypantsTwigExtension;
+use buzzingpixel\twigswitch\SwitchTwigExtension;
 use buzzingpixel\twigwidont\WidontTwigExtension;
 use Config\General;
 use Config\MainMenu;
@@ -59,6 +61,10 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(SmartypantsTwigExtension::class));
 
         $twig->addExtension($di->get(WidontTwigExtension::class));
+
+        $twig->addExtension($di->get(SwitchTwigExtension::class));
+
+        $twig->addExtension($di->get(GetEnvTwigExtension::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 

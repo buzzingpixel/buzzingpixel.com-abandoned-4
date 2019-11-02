@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "117303f198ba9b26eda9297d033fe027",
+    "content-hash": "2564ce387c38fbfed327c5b91c616991",
     "packages": [
         {
             "name": "buzzingpixel/corbomite-config-collector",
@@ -97,6 +97,51 @@
             "time": "2019-03-30T20:16:02+00:00"
         },
         {
+            "name": "buzzingpixel/twig-getenv",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/twig-getenv.git",
+                "reference": "564fa5d46cb122135059d5719e6ee64a7740ae4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-getenv/zipball/564fa5d46cb122135059d5719e6ee64a7740ae4f",
+                "reference": "564fa5d46cb122135059d5719e6ee64a7740ae4f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "twig/twig": "^2.5"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.6",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "extra": {
+                "twigExtensions": [
+                    "buzzingpixel\\twiggetenv\\GetEnvTwigExtension"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "buzzingpixel\\twiggetenv\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "TJ Draper",
+                    "email": "tj@buzzingpixel.com",
+                    "homepage": "https://buzzingpixel.com"
+                }
+            ],
+            "description": "A Twig getenv function",
+            "time": "2019-01-01T21:52:32+00:00"
+        },
+        {
             "name": "buzzingpixel/twig-smartypants",
             "version": "1.0.0",
             "source": {
@@ -143,6 +188,51 @@
             ],
             "description": "A Twig Smartypants filter",
             "time": "2019-01-01T20:28:50+00:00"
+        },
+        {
+            "name": "buzzingpixel/twig-switch",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/twig-switch.git",
+                "reference": "b1b97f4f38655d13b4c1bb257db418a72ac06ae0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-switch/zipball/b1b97f4f38655d13b4c1bb257db418a72ac06ae0",
+                "reference": "b1b97f4f38655d13b4c1bb257db418a72ac06ae0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "twig/twig": "^2.5"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.6",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "extra": {
+                "twigExtensions": [
+                    "buzzingpixel\\twigswitch\\SwitchTwigExtension"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "buzzingpixel\\twigswitch\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "TJ Draper",
+                    "email": "tj@buzzingpixel.com",
+                    "homepage": "https://buzzingpixel.com"
+                }
+            ],
+            "description": "Provides a {% switch %} tag for Twig switch case statements",
+            "time": "2018-12-30T23:12:10+00:00"
         },
         {
             "name": "buzzingpixel/twig-widont",
