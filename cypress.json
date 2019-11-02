@@ -1,6 +1,6 @@
 {
     "baseUrl": "https://buzzingpixel.localtest.me:26087",
     "projectId": "buzzingpixel-website",
-    "video": true,
+    "video": false,
     "integrationFolder": "assetsSource/tests"
 }
