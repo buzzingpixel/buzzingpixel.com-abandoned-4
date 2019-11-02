@@ -35,6 +35,11 @@ class ExtractMetaFromPath
             'twitterCardType' => isset($parsedYaml['twitterCardType']) ?
                 ((string) $parsedYaml['twitterCardType']) :
                 'summary',
+            'headingBackground' => new HeadingBackgroundPayload([
+                'src' => $parsedYaml['headingBackground']['src'] ?? '',
+                'srcset' => $parsedYaml['headingBackground']['srcset'] ?? '',
+                'alt' => $parsedYaml['headingBackground']['alt'] ?? '',
+            ]),
         ]);
     }
 }

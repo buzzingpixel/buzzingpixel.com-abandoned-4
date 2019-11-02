@@ -72,4 +72,17 @@ class MetaPayload extends SpecificPayload
     {
         return $this->twitterCardType;
     }
+
+    /** @var HeadingBackgroundPayload|null */
+    private $headingBackground;
+
+    protected function setHeadingBackground(?HeadingBackgroundPayload $headingBackground) : void
+    {
+        $this->headingBackground = $headingBackground;
+    }
+
+    public function getHeadingBackground() : ?HeadingBackgroundPayload
+    {
+        return $this->headingBackground;
+    }
 }

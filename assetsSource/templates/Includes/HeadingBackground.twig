@@ -1,0 +1,18 @@
+{% do requireVariables({
+    headingBackgroundPayload: 'App\\Content\\Meta\\HeadingBackgroundPayload',
+}) %}
+
+{# @var \App\Content\Meta\HeadingBackgroundPayload headingBackgroundPayload #}
+
+<div class="HeadingBackground">
+    <picture>
+        <img
+            src="{{ headingBackgroundPayload.getSrc() }}"
+            {% if headingBackgroundPayload.getSrcset() %}
+            srcset="{{ headingBackgroundPayload.getSrcset() }}"
+            {% endif %}
+            alt="{{ headingBackgroundPayload.getSrcset() }}"
+            class="HeadingBackground__Img"
+        >
+    </picture>
+</div>

@@ -3,3 +3,7 @@ metaTitle: Test Meta Title
 metaDescription: Test Meta Description
 ogType: Test Og Type
 twitterCardType: Test Twitter Card Type
+headingBackground:
+  src: testsrc
+  srcset: testsrcset
+  alt: testalt

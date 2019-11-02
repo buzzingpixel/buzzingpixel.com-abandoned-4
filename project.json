@@ -5,9 +5,10 @@
     "jsOneToOneMode": true,
     "proxy": "https://buzzingpixel.localtest.me",
     "watch": [
+        "assetsSource/templates/**",
         "config/**",
-        "src/**",
-        "assetsSource/templates/**"
+        "content/**",
+        "src/**"
     ],
     "watchUsesPolling": true
 }

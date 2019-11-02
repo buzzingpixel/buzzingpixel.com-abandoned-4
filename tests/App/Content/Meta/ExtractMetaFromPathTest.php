@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Content\Meta;
 
 use App\Content\Meta\ExtractMetaFromPath;
+use App\Content\Meta\HeadingBackgroundPayload;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Throwable;
@@ -41,6 +42,13 @@ class ExtractMetaFromPathTest extends TestCase
         self::assertSame('', $payload->getMetaDescription());
         self::assertSame('website', $payload->getOgType());
         self::assertSame('summary', $payload->getTwitterCardType());
+
+        /** @var HeadingBackgroundPayload $headingBackground */
+        $headingBackground = $payload->getHeadingBackground();
+        self::assertInstanceOf(HeadingBackgroundPayload::class, $headingBackground);
+        self::assertSame('', $headingBackground->getSrc());
+        self::assertSame('', $headingBackground->getSrcset());
+        self::assertSame('', $headingBackground->getAlt());
     }
 
     /**
@@ -57,5 +65,12 @@ class ExtractMetaFromPathTest extends TestCase
         self::assertSame('Test Meta Description', $payload->getMetaDescription());
         self::assertSame('Test Og Type', $payload->getOgType());
         self::assertSame('Test Twitter Card Type', $payload->getTwitterCardType());
+
+        /** @var HeadingBackgroundPayload $headingBackground */
+        $headingBackground = $payload->getHeadingBackground();
+        self::assertInstanceOf(HeadingBackgroundPayload::class, $headingBackground);
+        self::assertSame('testsrc', $headingBackground->getSrc());
+        self::assertSame('testsrcset', $headingBackground->getSrcset());
+        self::assertSame('testalt', $headingBackground->getAlt());
     }
 }

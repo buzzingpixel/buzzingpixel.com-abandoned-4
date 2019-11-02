@@ -1,3 +1,7 @@
+{% do requireVariables({
+    metaPayload: 'App\\Content\\Meta\\MetaPayload',
+}) %}
+
 {# @var \Config\General GeneralConfig #}
 {# @var \App\Content\Meta\MetaPayload metaPayload #}
 
@@ -6,6 +10,11 @@
 {% set metaDescription = metaPayload.getMetaDescription() ?? '' %}
 {% set ogType = metaPayload.getOgType() ?? 'website' %}
 {% set twitterCardType = twitterCardType ?? 'summary' %}
+
+{# @var \App\Content\Meta\HeadingBackgroundPayload headingBackgroundPayload #}
+{% set headingBackgroundPayload = metaPayload.getHeadingBackground() %}
+
+{% set hasHeadingBackgroundPayload = headingBackgroundPayload and headingBackgroundPayload.getSrc() %}
 
 <!doctype html>
 <html lang="en">
@@ -82,9 +91,16 @@
     {# Get content #}
     <main class="SiteMain">
         {% include 'Includes/MainMenu.twig' only %}
-        <div class="SiteContent" id="SiteContent">
+        {% if hasHeadingBackgroundPayload %}
+            {% include 'Includes/HeadingBackground.twig' with {
+                headingBackgroundPayload: headingBackgroundPayload
+            } only %}
+        {% endif %}
+        <div
+            class="SiteContent{% if hasHeadingBackgroundPayload %} SiteContent--HasHeadingBackground{% endif %}"
+            id="SiteContent"
+        >
             {{ block('content') ?? '' }}
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
     </main>
 
