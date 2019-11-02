@@ -1,0 +1,30 @@
+{# @var \Config\General GeneralConfig #}
+
+{% do requireVariables({
+    modulePayload: 'App\\Content\\Modules\\ModulePayload',
+}) %}
+
+{# @var \App\Content\Modules\ModulePayload modulePayload #}
+
+{% for payload in modulePayload.getItems() %}
+    {% set sendPackage = {
+        payload: payload
+    } %}
+
+    {% switch payload.getShortName() %}
+        {% case 'todo' %}
+            {{ dump('todo') }}
+        {% default %}
+            {% if GeneralConfig.devMode %}
+                <div style="text-align: center;">
+                    <br><br><br>
+<pre>
+=====================================<br>
+TODO: Implement module: {{ payload.getShortName() }}<br>
+=====================================<br>
+</pre>
+                    <br><br><br>
+                </div>
+            {% endif %}
+    {% endswitch %}
+{% endfor %}

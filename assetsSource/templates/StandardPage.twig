@@ -9,5 +9,8 @@
 {% extends '_Layout.twig' %}
 
 {% block content %}
+    {% include 'Modules/_ModulePayloadIncluder.twig' with {
+        modulePayload: modulePayload
+    } only %}
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}
