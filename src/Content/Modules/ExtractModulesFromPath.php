@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Content\Modules;
 
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
+use App\Content\Modules\ExtractorMethods\ExtractCtaCards;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
+use cebe\markdown\GithubMarkdown;
 use DirectoryIterator;
 use IteratorIterator;
 use RegexIterator;
@@ -20,13 +22,19 @@ class ExtractModulesFromPath
 {
     use MapYamlCtaToPayload;
     use ExtractShowCase;
+    use ExtractCtaCards;
 
     /** @var string */
     private $pathToContentDirectory;
+    /** @var GithubMarkdown */
+    protected $markdownParser;
 
-    public function __construct(string $pathToContentDirectory)
-    {
+    public function __construct(
+        string $pathToContentDirectory,
+        GithubMarkdown $markdownParser
+    ) {
         $this->pathToContentDirectory = $pathToContentDirectory;
+        $this->markdownParser         = $markdownParser;
     }
 
     /**

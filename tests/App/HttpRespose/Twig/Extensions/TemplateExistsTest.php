@@ -28,6 +28,7 @@ class TemplateExistsTest extends TestCase
 
         self::assertSame('templateExists', $function->getName());
 
+        /** @var mixed[] $callable */
         $callable = $function->getCallable();
 
         self::assertSame($templateExists, $callable[0]);

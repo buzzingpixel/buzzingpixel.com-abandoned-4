@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\App\Content\Modules;
 
 use App\Content\Modules\ExtractModulesFromPath;
+use cebe\markdown\GithubMarkdown;
 use Error;
 use PHPUnit\Framework\TestCase;
+use Tests\TestConfig;
 use Throwable;
 use UnexpectedValueException;
 
@@ -18,7 +20,8 @@ class ExtractModulesFromPathTest extends TestCase
     protected function setUp() : void
     {
         $this->extractModulesFromPath = new ExtractorImplementation(
-            __DIR__ . '/TestContent'
+            __DIR__ . '/TestContent',
+            TestConfig::$di->get(GithubMarkdown::class)
         );
     }
 
