@@ -1,0 +1,74 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\CtaCardsPayload',
+    moduleCount: 'integer'
+}) %}
+
+{# @var \App\Content\Modules\Payloads\CtaCardsPayload payload #}
+
+{# @var \App\Content\Modules\Payloads\CtaCardItemPayload left #}
+{% set left = payload.getLeft() %}
+
+{# @var \App\Content\Modules\Payloads\CtaCardItemPayload primary #}
+{% set primary = payload.getPrimary() %}
+
+{# @var \App\Content\Modules\Payloads\CtaCardItemPayload right #}
+{% set right = payload.getRight() %}
+
+{% macro CalloutItem(itemPayload) %}
+    {# @var \App\Content\Modules\Payloads\CtaCardItemPayload itemPayload #}
+    <header class="CtaCards__ItemTitle">
+        {{ itemPayload.getHeading()|smartypants }}
+    </header>
+    <section class="CtaCards__ItemBody">
+        {% if itemPayload.getContent() %}
+            <div class="CtaCards__ItemBodyContent">
+                {{ itemPayload.getContent()|smartypants|widont }}
+            </div>
+        {% endif %}
+        {% if itemPayload.getTextBullets()|length %}
+            <ul class="CtaCards__ItemBodyBullets">
+                {% for bullet in itemPayload.getTextBullets() %}
+                    <li class="CtaCards__ItemBodyBullet">
+                        {{ bullet|smartypants|widont }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if itemPayload.getCtas()|length %}
+            <div class="CtaCards__ItemCtas">
+                <div class="CtaCards__ItemCtasInner">
+                    {% for cta in itemPayload.getCtas() %}
+                        <a href="{{ cta.getHref() }}" class="CtaCards__ItemCtasCta">
+                            {{ cta.getContent()|smartypants|widont }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if itemPayload.getFooterContent() %}
+            <footer class="CtaCards__ItemBodyFooterContent">
+                {{ itemPayload.getFooterContent()|smartypants|widont }}
+            </footer>
+        {% endif %}
+    </section>
+{% endmacro %}
+
+<section class="CtaCards">
+    <div class="CtaCards__Inner">
+        {% if left.getContent() or left.getTextBullets() %}
+            <div class="CtaCards__Item CtaCards__Item--IsLeftItem">
+                {{ _self.CalloutItem(left) }}
+            </div>
+        {% endif %}
+        {% if primary.getContent() or primary.getTextBullets() %}
+            <div class="CtaCards__Item CtaCards__Item--IsPrimaryItem">
+                {{ _self.CalloutItem(primary) }}
+            </div>
+        {% endif %}
+        {% if right.getContent() or primary.getTextBullets() %}
+            <div class="CtaCards__Item CtaCards__Item--IsRightItem">
+                {{ _self.CalloutItem(right) }}
+            </div>
+        {% endif %}
+    </div>
+</section>

@@ -15,9 +15,7 @@ class TextBulletsTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        self:$this->expectExceptionMessage(
-            'Bullet must be a string'
-        );
+        self::expectExceptionMessage('Bullet must be a string');
 
         new class(['textBullets' => [123]]) extends SpecificPayload
         {
