@@ -43,7 +43,7 @@ Object.keys(urls).forEach((url) => {
                     length += 1;
                 })
                 .then(() => {
-                    assert.equal(3, length);
+                    assert.equal(length, 3);
                 });
         });
 

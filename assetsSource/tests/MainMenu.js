@@ -14,6 +14,12 @@ urls.forEach((url) => {
             }
         });
 
+        it('Has one main menu', () => {
+            cy.get('.SiteNav').should('have.length', 1);
+
+            cy.get('.SiteMain').children().eq(0).should('have.class', 'SiteNav');
+        });
+
         it('Loads with mobile menu hidden', () => {
             cy.viewport('iphone-x');
             cy.get('.SiteNav__Logo').should('be.visible');

@@ -1,0 +1,15 @@
+{# @var \Config\Footer Footer #}
+
+<footer class="SiteFooter">
+    <div class="SiteFooter__Inner">
+        <div class="SiteFooter__Upper">&copy; {{ 'now'|date('Y') }} BuzzingPixel, LLC</div>
+        <div class="SiteFooter__Lower">
+            {% for item in Footer.menu %}
+                <a
+                    href="{{ item.href }}"
+                    class="SiteFooter__Link"
+                >{{ item.content|smartypants|widont }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</footer>

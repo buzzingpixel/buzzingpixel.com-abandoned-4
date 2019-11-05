@@ -12,6 +12,7 @@ use buzzingpixel\twiggetenv\GetEnvTwigExtension;
 use buzzingpixel\twigsmartypants\SmartypantsTwigExtension;
 use buzzingpixel\twigswitch\SwitchTwigExtension;
 use buzzingpixel\twigwidont\WidontTwigExtension;
+use Config\Footer;
 use Config\General;
 use Config\MainMenu;
 use Psr\Container\ContainerInterface;
@@ -72,6 +73,8 @@ class TwigEnvironmentFactory
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
         $twig->addGlobal('MainMenu', $di->get(MainMenu::class));
+
+        $twig->addGlobal('Footer', $di->get(Footer::class));
 
         return $twig;
     }
