@@ -18,7 +18,9 @@
             <li
                 class="SiteNav__ListItem"
                 @mouseenter="subMenuMouseEnter"
+                {% if level1.subItems is defined and level1.subItems is iterable %}
                 @click="subMenuClick"
+                {% endif %}
                 data-id="{{ id }}"
             >
                 <a href="{{ level1.href }}" class="SiteNav__ListItemLink">
@@ -33,7 +35,11 @@
                     >
                         {% for level2 in level1.subItems %}
                             <li class="SiteNav__ListLevel2Item">
-                                <a href="{{ level2.href }}" class="SiteNav__ListLevel2ItemLink">
+                                <a
+                                    href="{{ level2.href }}"
+                                    class="SiteNav__ListLevel2ItemLink"
+                                    @click="subMenuItemClick"
+                                >
                                     {{ level2.content|smartypants|widont }}
                                 </a>
                             </li>

@@ -71,6 +71,10 @@ export default {
             this.subNavAction(e);
         },
 
+        subMenuItemClick (e) {
+            e.stopPropagation();
+        },
+
         subNavAction (e) {
             const self = this;
 
