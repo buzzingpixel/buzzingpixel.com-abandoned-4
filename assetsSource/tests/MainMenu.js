@@ -4,9 +4,14 @@ const urls = [
 
 urls.forEach((url) => {
     describe(`Check main menu functionality at ${url}`, () => {
+        const hasGoneToUrl = false;
+
         beforeEach(() => {
-            cy.viewport('iphone-x');
-            cy.visit('/');
+            if (!hasGoneToUrl) {
+                cy.visit(url);
+
+                cy.viewport('iphone-x');
+            }
         });
 
         it('Loads with mobile menu hidden', () => {

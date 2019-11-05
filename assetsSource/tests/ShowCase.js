@@ -10,42 +10,52 @@ Object.keys(urls).forEach((url) => {
 
         beforeEach(() => {
             if (!hasGoneToUrl) {
-                cy.visit('/');
+                cy.visit(url);
+
+                cy.viewport('macbook-13');
 
                 hasGoneToUrl = true;
             }
-
-            cy.viewport('macbook-13');
         });
 
-        it(`Is visible in position ${pos}`, () => {
-            const $module = cy.get('.Modules').eq(0);
-            $module.should('be.visible');
+        it(`Is in position ${pos}`, () => {
+            cy.get('.Modules').children().eq(pos)
+                .should('have.class', 'ShowCase');
+
+            if (pos === 0) {
+                cy.get('.Modules').children().eq(pos)
+                    .should('have.class', 'ShowCase--IsFirst');
+            }
         });
 
         it('Contains pre headline', () => {
-            const $module = cy.get('.Modules').eq(0);
-            $module.find('.ShowCase__PreHeadline').should('be.visible');
+            cy.get('.Modules').children().eq(pos)
+                .find('.ShowCase__PreHeadline')
+                .should('have.length', 1);
         });
 
         it('Contains headline', () => {
-            const $module = cy.get('.Modules').eq(0);
-            $module.find('.ShowCase__Headline').should('be.visible');
+            cy.get('.Modules').children().eq(pos)
+                .find('.ShowCase__Headline')
+                .should('have.length', 1);
         });
 
         it('Contains sub headline', () => {
-            const $module = cy.get('.Modules').eq(0);
-            $module.find('.ShowCase__SubHeadline').should('be.visible');
+            cy.get('.Modules').children().eq(pos)
+                .find('.ShowCase__SubHeadline')
+                .should('have.length', 1);
         });
 
         it('Contains ctas', () => {
-            const $module = cy.get('.Modules').eq(0);
-            $module.find('.ShowCase__Ctas').should('be.visible');
+            cy.get('.Modules').children().eq(pos)
+                .find('.ShowCase__Ctas')
+                .should('have.length', 1);
         });
 
         it('Contains the show case image', () => {
-            const $module = cy.get('.Modules').eq(0);
-            $module.find('.ShowCase__ImageWrapper').should('be.visible');
+            cy.get('.Modules').children().eq(pos)
+                .find('.ShowCase__ImageWrapper')
+                .should('have.length', 1);
         });
     });
 });

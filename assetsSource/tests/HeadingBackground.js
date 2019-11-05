@@ -12,31 +12,38 @@ const imgForUrlMap = {
 
 urls.forEach((url) => {
     describe(`Check that heading background exists at ${url}`, () => {
+        const hasGoneToUrl = false;
         const img = imgForUrlMap[url];
 
         beforeEach(() => {
-            cy.viewport('iphone-x');
-            cy.visit('/');
+            if (!hasGoneToUrl) {
+                cy.visit(url);
+
+                cy.viewport('iphone-x');
+            }
         });
 
         it('Is visible', () => {
-            cy.get('.HeadingBackground').should('be.visible');
+            cy.get('.HeadingBackground').should('have.length', 1);
         });
 
         it('Has correct image', () => {
-            const $headingBackground = cy.get('.HeadingBackground');
-            const $img = $headingBackground.find('.HeadingBackground__Img');
-
-            $img.should('have.attr', 'src')
+            cy.get('.HeadingBackground')
+                .find('.HeadingBackground__Img')
+                .should('have.attr', 'src')
                 .should('include', img.src);
 
             if (img.alt) {
-                $img.should('have.attr', 'alt')
+                cy.get('.HeadingBackground')
+                    .find('.HeadingBackground__Img')
+                    .should('have.attr', 'alt')
                     .should('include', img.alt);
             }
 
             if (img.srcset) {
-                $img.should('have.attr', 'srcset')
+                cy.get('.HeadingBackground')
+                    .find('.HeadingBackground__Img')
+                    .should('have.attr', 'srcset')
                     .should('include', img.srcset);
             }
         });
