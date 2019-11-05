@@ -1,0 +1,50 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\InformationalImagePayload',
+    moduleCount: 'integer'
+}) %}
+
+{# @var \App\Content\Modules\Payloads\InformationalImagePayload payload #}
+
+{# @var \App\Content\Modules\Payloads\ImagePayload image #}
+{% set image = payload.getImage() %}
+
+<section class="InformationalImage">
+    <div class="InformationalImage__Inner">
+        {% if payload.getHeadline() %}
+            <h2 class="heading heading--level-2 InformationalImage__Headline">
+                {{ payload.getHeadline()|smartypants|widont }}
+            </h2>
+        {% endif %}
+        {% if payload.getSubHeadline() %}
+            <h3 class="heading heading--level-3 InformationalImage__SubHeading">
+                {{ payload.getSubHeadline()|smartypants|widont }}
+            </h3>
+        {% endif %}
+        {% if payload.getContent() %}
+            <div class="InformationalImage__Content">
+                {{ payload.getContent()|smartypants|widont }}
+            </div>
+        {% endif %}
+        {% if image.getOneX() %}
+            <div class="InformationalImage__Image">
+                <picture>
+                    {% if image.getSources()|length %}
+                        {% for source in image.getSources() %}
+                            <source
+                                srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                                media="{{ source.getMediaQuery() }}"
+                            >
+                        {% endfor %}
+                    {% endif %}
+                    <img
+                        src="{{ image.getOneX() }}"
+                        {% if image.getTwoX() %}
+                        srcset="{{ image.getOneX() }} 1x, {{ image.getTwoX() }} 2x"
+                        {% endif %}
+                        alt="{{ image.getAlt()|smartypants }}"
+                    >
+                </picture>
+            </div>
+        {% endif %}
+    </div>
+</section>
