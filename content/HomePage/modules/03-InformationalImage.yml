@@ -6,6 +6,13 @@ content: >
 
   When I'm not developing software, I'm probably spending time with my 4 children and/or my beautiful wife, watching a movie or TV show, or podcasting.
 image:
-  - src: /content-images/tj-headshot-wide-900w.jpg
-    srcset: /content-images/tj-headshot-wide-900w.jpg 1x, /content-images/tj-headshot-wide-1800w.jpg 2x
-    alt: TJ Headshot
+  1x: /content-images/tj-headshot-wide-900w.jpg
+  2x: /content-images/tj-headshot-wide-1800w.jpg
+  alt: TJ Headshot
+#  sources:
+#    - 1x: /path/to/img.jpg
+#      2x: /path/to/img@2x.jpg
+#      mediaQuery: "(min-width: 1px) and (max-width: 499px)"
+#    - 1x: /path/to/img.jpg
+#      2x: /path/to/img@2x.jpg
+#      mediaQuery: "(min-width: 1px) and (max-width: 499px)"

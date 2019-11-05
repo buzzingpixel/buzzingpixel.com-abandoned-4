@@ -6,6 +6,7 @@ namespace App\Content\Modules;
 
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractCtaCards;
+use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
 use cebe\markdown\GithubMarkdown;
 use DirectoryIterator;
@@ -13,16 +14,19 @@ use IteratorIterator;
 use RegexIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+use const SORT_NATURAL;
 use function array_map;
 use function array_values;
 use function iterator_to_array;
+use function Safe\ksort;
 use function ucfirst;
 
 class ExtractModulesFromPath
 {
     use MapYamlCtaToPayload;
-    use ExtractShowCase;
     use ExtractCtaCards;
+    use ExtractInformationalImage;
+    use ExtractShowCase;
 
     /** @var string */
     private $pathToContentDirectory;
@@ -54,15 +58,26 @@ class ExtractModulesFromPath
             RegexIterator::GET_MATCH
         );
 
+        /** @var array<int, array<int, string>> $items */
+        $items = iterator_to_array($finalIterator);
+
+        $fileNames = [];
+
+        foreach ($items as $item) {
+            $fileNames[$item[0]] = $item[0];
+        }
+
+        ksort($fileNames, SORT_NATURAL);
+
         return new ModulePayload([
             'items' => array_values(array_map(
                 /**
-                 * @param string[] $item
+                 * @param string $item
                  *
                  * @return mixed
                  */
-                function (array $item) use ($modulesPath) {
-                    $fullPath = $modulesPath . '/' . (string) $item[0];
+                function (string $item) use ($modulesPath) {
+                    $fullPath = $modulesPath . '/' . (string) $item;
 
                     /** @var array $parsedYaml */
                     $parsedYaml = Yaml::parseFile($fullPath);
@@ -73,7 +88,7 @@ class ExtractModulesFromPath
 
                     return $this->{$method}($parsedYaml);
                 },
-                iterator_to_array($finalIterator)
+                $fileNames
             )),
         ]);
     }
