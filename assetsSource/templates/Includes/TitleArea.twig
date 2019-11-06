@@ -8,9 +8,11 @@
 {# @var string subTitle #}
 {# @var \App\Content\Modules\Payloads\CtaPayload[] actionButtons #}
 
+{% set hasActionButtons = actionButtons|length %}
+
 <div class="TitleArea">
-    <div class="TitleArea__Inner">
-        <h1 class="heading heading--level-1">
+    <div class="TitleArea__Inner{% if hasActionButtons %} TitleArea__Inner--HasActionButtons{% endif %}">
+        <h1 class="heading heading--level-1 TitleArea__Title{% if hasActionButtons %} TitleArea__Title--HasActionButtons{% endif %}">
             {{ title|smartypants|widont }}
             {% if subTitle %}
                 <small class="TitleArea__Small">
@@ -18,7 +20,7 @@
                 </small>
             {% endif %}
         </h1>
-        {% if actionButtons|length %}
+        {% if hasActionButtons %}
             <div class="TitleArea__ActionButtons">
                 {% for button in actionButtons %}
                     <a

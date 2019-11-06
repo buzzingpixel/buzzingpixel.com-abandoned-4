@@ -1,0 +1,37 @@
+.SubTitlePageNav__Inner {
+    padding-left: 4px;
+    padding-right: 6px;
+}
+
+.SubTitlePageNav__NavItems {
+    list-style: none;
+    margin: 0;
+    text-align: center;
+}
+
+.SubTitlePageNav__NavItemLink {
+    display: inline-block;
+    font-weight: var(--PrimaryFontBoldWeight);
+    padding: 4px 10px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.SubTitlePageNav__NavItemLink,
+.SubTitlePageNav__NavItemLink:hover {
+    color: var(--Nandor);
+    text-decoration: none;
+}
+
+.SubTitlePageNav__NavItemLink--IsActive:before,
+.SubTitlePageNav__NavItemLink:hover:before {
+    background-color: var(--Meteor);
+    content: ' ';
+    display: block;
+    height: 2px;
+    left: 10px;
+    position: absolute;
+    width: calc(50% - 10px);
+    bottom: 6px;
+    max-width: 70px;
+}
