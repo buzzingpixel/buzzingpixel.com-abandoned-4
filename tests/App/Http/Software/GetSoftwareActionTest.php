@@ -37,6 +37,7 @@ class GetSoftwareActionTest extends TestCase
 
         $softwareInfoPayload = new SoftwareInfoPayload();
 
+        /** @var ExtractSoftwareInfoFromPath&MockObject $extractSoftwareInfoFromPath */
         $extractSoftwareInfoFromPath = $this->createMock(ExtractSoftwareInfoFromPath::class);
 
         $extractSoftwareInfoFromPath->expects(self::once())
