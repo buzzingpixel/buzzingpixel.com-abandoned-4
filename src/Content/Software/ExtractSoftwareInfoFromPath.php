@@ -37,6 +37,8 @@ class ExtractSoftwareInfoFromPath
             [];
 
         return new SoftwareInfoPayload([
+            'title' => isset($vars['title']) ? ((string) $vars['title']) : '',
+            'subTitle' => isset($vars['subTitle']) ? ((string) $vars['subTitle']) : '',
             'forSale' => isset($vars['forSale']) ? ((bool) $vars['forSale']) : false,
             'hasChangelog' => isset($vars['hasChangelog']) ? ((bool) $vars['hasChangelog']) : false,
             'hasDocumentation' => isset($vars['hasDocumentation']) ? ((bool) $vars['hasDocumentation']) : false,

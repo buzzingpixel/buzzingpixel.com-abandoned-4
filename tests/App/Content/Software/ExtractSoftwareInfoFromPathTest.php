@@ -34,8 +34,27 @@ class ExtractSoftwareInfoFromPathTest extends TestCase
     {
         $extractSoftwareInfoFromPath = new ExtractSoftwareInfoFromPath(__DIR__);
 
+        $payload = $extractSoftwareInfoFromPath('EmptyYamlFile');
+
+        self::assertSame('', $payload->getTitle());
+        self::assertSame('', $payload->getSubTitle());
+        self::assertFalse($payload->getForSale());
+        self::assertFalse($payload->getHasChangelog());
+        self::assertFalse($payload->getHasDocumentation());
+        self::assertSame([], $payload->getActionButtons());
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function test() : void
+    {
+        $extractSoftwareInfoFromPath = new ExtractSoftwareInfoFromPath(__DIR__);
+
         $payload = $extractSoftwareInfoFromPath('TestYamlFile');
 
+        self::assertSame('TestTitle', $payload->getTitle());
+        self::assertSame('TestSubTitle', $payload->getSubTitle());
         self::assertTrue($payload->getForSale());
         self::assertTrue($payload->getHasChangelog());
         self::assertTrue($payload->getHasDocumentation());

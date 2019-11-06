@@ -10,6 +10,32 @@ use InvalidArgumentException;
 
 class SoftwareInfoPayload extends SpecificPayload
 {
+    /** @var string */
+    private $title = '';
+
+    protected function setTitle(string $title) : void
+    {
+        $this->title = $title;
+    }
+
+    public function getTitle() : string
+    {
+        return $this->title;
+    }
+
+    /** @var string */
+    private $subTitle = '';
+
+    protected function setSubTitle(string $subTitle) : void
+    {
+        $this->subTitle = $subTitle;
+    }
+
+    public function getSubTitle() : string
+    {
+        return $this->subTitle;
+    }
+
     /** @var bool */
     private $forSale = false;
 
