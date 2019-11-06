@@ -2,7 +2,7 @@ const urls = [
     {
         url: '/software/ansel-craft',
         titleContent: 'Ansel',
-        subTitleContent: 'for ExpressionEngine',
+        subTitleContent: 'for Craft CMS',
         actionButtons: [
             {
                 href: 'https://github.com/buzzingpixel/ansel-craft',
