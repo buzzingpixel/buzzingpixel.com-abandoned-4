@@ -86,7 +86,8 @@ class GetSoftwareActionTest extends TestCase
             ->with(
                 self::equalTo($metaPayload),
                 self::equalTo($modulePayload),
-                self::equalTo($softwareInfoPayload)
+                self::equalTo($softwareInfoPayload),
+                self::equalTo($contentPath)
             )
             ->willReturn($responseInterface);
 

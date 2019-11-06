@@ -44,12 +44,15 @@ class GetSoftwareAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $contentPath = self::PATH_MAP[$request->getUri()->getPath()];
+        $uriPath = $request->getUri()->getPath();
+
+        $contentPath = self::PATH_MAP[$uriPath];
 
         return ($this->responder)(
             ($this->extractMetaFromPath)($contentPath),
             ($this->extractModulesFromPath)($contentPath),
-            ($this->extractSoftwareInfoFromPath)($contentPath)
+            ($this->extractSoftwareInfoFromPath)($contentPath),
+            $uriPath
         );
     }
 }

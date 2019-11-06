@@ -2,15 +2,50 @@
     metaPayload: 'App\\Content\\Meta\\MetaPayload',
     modulePayload: 'App\\Content\\Modules\\ModulePayload',
     softwareInfoPayload: 'App\\Content\\Software\\SoftwareInfoPayload',
+    uriPath: 'string',
 }) %}
 
 {# @var \App\Content\Meta\MetaPayload metaPayload #}
 {# @var \App\Content\Modules\ModulePayload modulePayload #}
 {# @var \App\Content\Software\SoftwareInfoPayload softwareInfoPayload #}
+{# @var string uriPath #}
 
 {% extends '_Layout.twig' %}
 
+{% set navItemsLeft = [{
+    href: uriPath,
+    content: 'Features',
+}] %}
+
+{% if softwareInfoPayload.getHasChangelog() %}
+    {% set navItemsLeft = navItemsLeft|merge([{
+        href: uriPath ~ '/changelog',
+        content: 'Changelog',
+    }]) %}
+{% endif %}
+
+{% set navItemsRight = [] %}
+
+{% if softwareInfoPayload.getHasDocumentation() %}
+    {% set navItemsRight = [{
+        href: uriPath ~ '/documentation',
+        content: 'Documentation',
+    }] %}
+{% endif %}
+
 {% block content %}
+    {% include 'Includes/TitleArea.twig' with {
+        title: softwareInfoPayload.getTitle(),
+        subTitle: softwareInfoPayload.getSubTitle(),
+        actionButtons: softwareInfoPayload.getActionButtons(),
+    } only %}
+
+    {% include 'Includes/SubTitlePageNav.twig' with {
+        navItemsLeft: navItemsLeft,
+        navItemsRight: navItemsRight,
+        activeHref: uriPath
+    } only %}
+
     {% include 'Modules/_ModulePayloadIncluder.twig' with {
         modulePayload: modulePayload
     } only %}

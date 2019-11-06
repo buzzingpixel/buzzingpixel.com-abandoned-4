@@ -1,0 +1,37 @@
+{# @var array navItemsLeft #}
+{% set navItemsLeft = navItemsLeft ?? [] %}
+
+{# @var array navItemsRight #}
+{% set navItemsRight = navItemsRight ?? [] %}
+
+{% set activeHref = activeHref ?? null %}
+
+{% macro navItemMacro(navItem, activeHref) %}
+    <li class="SubTitlePageNav__NavItem">
+        <a
+            href="{{ navItem.href }}"
+            class="SubTitlePageNav__NavItemLink{% if navItem.href == activeHref %} SubTitlePageNav__NavItemLink--IsActive{% endif %}"
+        >
+            {{ navItem.content|smartypants|widont }}
+        </a>
+    </li>
+{% endmacro %}
+
+<div class="SubTitlePageNav">
+    <div class="SubTitlePageNav__Inner">
+        {% if navItemsLeft|length %}
+            <ul class="SubTitlePageNav__NavItems SubTitlePageNav__NavItems--IsOnLeftSide">
+                {% for navItem in navItemsLeft %}
+                    {{ _self.navItemMacro(navItem, activeHref) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if navItemsRight|length %}
+            <ul class="SubTitlePageNav__NavItems SubTitlePageNav__NavItems--IsOnRightSide">
+                {% for navItem in navItemsRight %}
+                    {{ _self.navItemMacro(navItem, activeHref) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>

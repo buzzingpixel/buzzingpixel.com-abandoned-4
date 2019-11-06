@@ -38,7 +38,8 @@ class GetSoftwareResponder
     public function __invoke(
         MetaPayload $metaPayload,
         ModulePayload $modulePayload,
-        SoftwareInfoPayload $softwareInfoPayload
+        SoftwareInfoPayload $softwareInfoPayload,
+        string $uriPath
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
@@ -47,6 +48,7 @@ class GetSoftwareResponder
                 'metaPayload' => $metaPayload,
                 'modulePayload' => $modulePayload,
                 'softwareInfoPayload' => $softwareInfoPayload,
+                'uriPath' => $uriPath,
             ])
         ));
 

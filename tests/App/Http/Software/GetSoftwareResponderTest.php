@@ -39,6 +39,7 @@ class GetSoftwareResponderTest extends TestCase
                     'metaPayload' => $metaPayload,
                     'modulePayload' => $modulePayload,
                     'softwareInfoPayload' => $softwareInfoPayload,
+                    'uriPath' => '/foo/var',
                 ])
             )
             ->willReturn('TwigRenderReturnContent');
@@ -60,7 +61,8 @@ class GetSoftwareResponderTest extends TestCase
         ))(
             $metaPayload,
             $modulePayload,
-            $softwareInfoPayload
+            $softwareInfoPayload,
+            '/foo/var'
         );
 
         self::assertSame(200, $response->getStatusCode());
