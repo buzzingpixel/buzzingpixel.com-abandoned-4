@@ -13,11 +13,9 @@
 <div class="TitleArea">
     <div class="TitleArea__Inner{% if hasActionButtons %} TitleArea__Inner--HasActionButtons{% endif %}">
         <h1 class="heading heading--level-1 TitleArea__Title{% if hasActionButtons %} TitleArea__Title--HasActionButtons{% endif %}">
-            {{ title|smartypants|widont }}
+            {{ title|smartypants }}
             {% if subTitle %}
-                <small class="TitleArea__Small">
-                    {{ subTitle|smartypants|widont }}
-                </small>
+                <small class="TitleArea__Small">{{ subTitle|smartypants }}</small>
             {% endif %}
         </h1>
         {% if hasActionButtons %}
@@ -25,9 +23,9 @@
                 {% for button in actionButtons %}
                     <a
                         href="{{ button.getHref() }}"
-                        class="button TitleArea__ActionButton{% if loop.last %}  button--light{% else %} button--colored{% endif %}"
+                        class="button TitleArea__ActionButton{% if not loop.last %}  button--light{% else %} button--colored{% endif %}"
                     >
-                        {{ button.getContent()|smartypants|widont }}
+                        {{ button.getContent()|smartypants }}
                     </a>
                 {% endfor %}
             </div>

@@ -12,7 +12,7 @@
             href="{{ navItem.href }}"
             class="SubTitlePageNav__NavItemLink{% if navItem.href == activeHref %} SubTitlePageNav__NavItemLink--IsActive{% endif %}"
         >
-            {{ navItem.content|smartypants|widont }}
+            {{ navItem.content|smartypants }}
         </a>
     </li>
 {% endmacro %}
