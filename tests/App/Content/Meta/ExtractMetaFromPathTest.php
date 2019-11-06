@@ -20,12 +20,12 @@ class ExtractMetaFromPathTest extends TestCase
         self::expectException(ParseException::class);
 
         self::expectExceptionMessage(
-            'File "' . __DIR__ . '/asdf/meta.yml" does not exist.'
+            'File "' . __DIR__ . '/foo/meta.yml" does not exist.'
         );
 
-        $extractMetaFromPath = new ExtractMetaFromPath(__DIR__ . '');
+        $extractMetaFromPath = new ExtractMetaFromPath(__DIR__);
 
-        $extractMetaFromPath('asdf');
+        $extractMetaFromPath('foo');
     }
 
     /**
@@ -33,7 +33,7 @@ class ExtractMetaFromPathTest extends TestCase
      */
     public function testWhenEmptyYamlFile() : void
     {
-        $extractMetaFromPath = new ExtractMetaFromPath(__DIR__ . '');
+        $extractMetaFromPath = new ExtractMetaFromPath(__DIR__);
 
         $payload = $extractMetaFromPath('EmptyYamlFile');
 
@@ -56,7 +56,7 @@ class ExtractMetaFromPathTest extends TestCase
      */
     public function test() : void
     {
-        $extractMetaFromPath = new ExtractMetaFromPath(__DIR__ . '');
+        $extractMetaFromPath = new ExtractMetaFromPath(__DIR__);
 
         $payload = $extractMetaFromPath('TestYamlFile');
 

@@ -22,6 +22,10 @@ class GetHomeActionTest extends TestCase
      */
     public function test() : void
     {
+        /**
+         * Meta payload
+         */
+
         $metaPayload = new MetaPayload();
 
         /** @var ExtractMetaFromPath&MockObject $extractMetaFromPath */
@@ -29,7 +33,12 @@ class GetHomeActionTest extends TestCase
 
         $extractMetaFromPath->expects(self::once())
             ->method('__invoke')
+            ->with(self::equalTo('HomePage'))
             ->willReturn($metaPayload);
+
+        /**
+         * Module payload
+         */
 
         $modulePayload = new ModulePayload();
 
@@ -38,7 +47,12 @@ class GetHomeActionTest extends TestCase
 
         $extractModulesFromPath->expects(self::once())
             ->method('__invoke')
+            ->with(self::equalTo('HomePage'))
             ->willReturn($modulePayload);
+
+        /**
+         * Responder
+         */
 
         $responseInterface = $this->createMock(ResponseInterface::class);
 
@@ -52,6 +66,10 @@ class GetHomeActionTest extends TestCase
                 self::equalTo($modulePayload)
             )
             ->willReturn($responseInterface);
+
+        /**
+         * Test
+         */
 
         $response = (new GetHomeAction(
             $responder,

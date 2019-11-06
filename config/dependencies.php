@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Modules\ExtractModulesFromPath;
+use App\Content\Software\ExtractSoftwareInfoFromPath;
 use Config\Factories\TwigEnvironmentFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -17,6 +18,10 @@ return [
         dirname(__DIR__) . '/content'
     ),
     ExtractModulesFromPath::class => autowire(ExtractModulesFromPath::class)->constructorParameter(
+        'pathToContentDirectory',
+        dirname(__DIR__) . '/content'
+    ),
+    ExtractSoftwareInfoFromPath::class => autowire(ExtractSoftwareInfoFromPath::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),

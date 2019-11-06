@@ -1,0 +1,17 @@
+{% do requireVariables({
+    metaPayload: 'App\\Content\\Meta\\MetaPayload',
+    modulePayload: 'App\\Content\\Modules\\ModulePayload',
+    softwareInfoPayload: 'App\\Content\\Software\\SoftwareInfoPayload',
+}) %}
+
+{# @var \App\Content\Meta\MetaPayload metaPayload #}
+{# @var \App\Content\Modules\ModulePayload modulePayload #}
+{# @var \App\Content\Software\SoftwareInfoPayload softwareInfoPayload #}
+
+{% extends '_Layout.twig' %}
+
+{% block content %}
+    {% include 'Modules/_ModulePayloadIncluder.twig' with {
+        modulePayload: modulePayload
+    } only %}
+{% endblock %}

@@ -8,7 +8,7 @@ use Config\Abstractions\SimpleModel;
 
 class Footer extends SimpleModel
 {
-    /** @var <array<string, string> */
+    /** @var array<int, array<string, string>> */
     public static $menu = [
         [
             'href' => '/cookies',

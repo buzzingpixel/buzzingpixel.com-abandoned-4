@@ -1,0 +1,8 @@
+forSale: true
+hasChangelog: true
+hasDocumentation: true
+actionButtons:
+  - href: href1test
+  - content: content2test
+  - href: test3href
+    content: content3test
