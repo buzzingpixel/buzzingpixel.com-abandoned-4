@@ -1,0 +1,54 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\ImageCallOutPayload',
+    moduleCount: 'integer'
+}) %}
+
+{# @var \App\Content\Modules\Payloads\ImageCallOutPayload payload #}
+
+{# @var \App\Content\Modules\Payloads\ImagePayload image #}
+{% set image = payload.getImage() %}
+
+<section class="ImageCallOut">
+    <div class="ImageCallOut__Inner">
+        <div class="ImageCallOut__ContentArea">
+            {% if payload.getHeadline() %}
+                <h2 class="ImageCallOut__Heading">{{ payload.getHeadline()|smartypants|widont }}</h2>
+            {% endif %}
+            {% if payload.getContent() %}
+                <div class="ImageCallOut__Content">
+                    {{ payload.getContent()|smartypants|widont }}
+                </div>
+            {% endif %}
+            {% if payload.getCtas()|length %}
+                <div class="ImageCallOut__CTAs">
+                    {% for cta in payload.getCtas() %}
+                        <a
+                            href="{{ cta.getHref() }}"
+                            class="button ImageCallOut__CTAButton"
+                        >
+                            {{ cta.getContent()|smartypants|widont }}
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="ImageCallOut__ImageWrapper">
+            <div class="ImageCallOut__Image">
+                <picture>
+                    {% for source in image.getSources() %}
+                        <source
+                            srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                            media="{{ source.getMediaQuery() }}"
+                        >
+                    {% endfor %}
+                    <img
+                        src="{{ image.getOneX() }}"
+                        srcset="{{ image.getOneX() }} 1x{% if image.getTwoX() %}, {{ image.getTwoX }} 2x{% endif %}"
+                        alt="{{ image.getAlt() }}"
+                        class="ImageCallOut__ImageTag"
+                    >
+                </picture>
+            </div>
+        </div>
+    </div>
+</section>

@@ -6,6 +6,7 @@ namespace App\Content\Modules;
 
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractCtaCards;
+use App\Content\Modules\ExtractorMethods\ExtractImageCallOut;
 use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
 use cebe\markdown\GithubMarkdown;
@@ -25,6 +26,7 @@ class ExtractModulesFromPath
 {
     use MapYamlCtaToPayload;
     use ExtractCtaCards;
+    use ExtractImageCallOut;
     use ExtractInformationalImage;
     use ExtractShowCase;
 

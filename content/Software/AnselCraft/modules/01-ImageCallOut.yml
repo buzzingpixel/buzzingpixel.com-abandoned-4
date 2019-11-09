@@ -1,0 +1,17 @@
+type: ImageCallOut
+headline: Your Images Transformed
+content: |
+  Featuring a great user experience, great performance, drag and drop uploading, and more! The Ansel field type is compatible with any Craft element that accepts field types!
+
+  Try Ansel for free and pay when you're ready!
+ctas:
+  - content: Try Ansel Now!
+    href: https://plugins.craftcms.com/ansel
+image:
+  1x: /content-images/ansel-craft/ansel2-craft-desktop.png
+  2x: /content-images/ansel-craft/ansel2-craft-desktop-2x.png
+  alt: Ansel for Craft Screenshot
+  sources:
+    - 1x: /content-images/ansel-craft/ansel2-craft-mobile.png
+      2x: /content-images/ansel-craft/ansel2-craft-mobile-2x.png
+      mediaQuery: "(min-width: 1px) and (max-width: 424px)"
