@@ -1,0 +1,26 @@
+type: QuoteBlocks
+blocks:
+  - image:
+      1x: /content-images/quotes/mike-lohrman.jpg
+      2x: /content-images/quotes/mike-lohrman-2x.jpg
+      alt: Michael Lohrman
+    name: Michael Lohrman
+    position: 5BYFIVE Creative
+    positionHref: http://www.5byfivecreative.com
+    quote: I love the way Ansel allows the client to crop images based on developer defined aspect ratios. Plus it has excellent support. Ansel is now my new, standard install, image plugin.
+  - image:
+      1x: /content-images/quotes/james-cottis.jpg
+      2x: /content-images/quotes/james-cottis-2x.jpg
+      alt: James Cottis
+    name: James Cottis
+    position: Twist Interactive Design
+    positionHref: http://www.twist-id.co.uk/about
+    quote: Ansel has become a default install. Our clients love the ability to define areas of images, whilst we control other aspects to ensure no unusual images ruin the look of a site.
+  - image:
+      1x: /content-images/callout/kevin-smith.jpg
+      2x: /content-images/callout/kevin-smith-2x.jpg
+      alt: Kevin Smith
+    name: Kevin Smith
+    namHref: https://kevinsmith.io/
+    position: Senior Developer
+    quote: This will go in every new site build. Hands down the best way to give clients the control they need to pick and crop the right images.
