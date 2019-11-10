@@ -34,13 +34,13 @@
                                     class="QuoteBlocks__BlockHeaderTitle"
                                     target="_blank"
                                 >
-                                    {{ quoteBlock.getPersonName()|smartypants|widont }}
+                                    {{ quoteBlock.getPersonName()|smartypants }}
                                 </a>
                             {% else %}
                                 <span
                                     class="QuoteBlocks__BlockHeaderTitle"
                                 >
-                                    {{ quoteBlock.getPersonName()|smartypants|widont }}
+                                    {{ quoteBlock.getPersonName()|smartypants }}
                                 </span>
                             {% endif %}
                             {% if quoteBlock.getPositionHref() %}
