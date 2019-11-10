@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Content\PropertyTraits;
 
 use App\Content\Modules\Payloads\CtaPayload;
-use InvalidArgumentException;
+use function array_walk;
 
 trait Ctas
 {
@@ -17,17 +17,12 @@ trait Ctas
      */
     protected function setCtas(array $ctas) : void
     {
-        foreach ($ctas as $cta) {
-            if ($cta instanceof CtaPayload) {
-                continue;
-            }
+        array_walk($ctas, [$this, 'addCta']);
+    }
 
-            throw new InvalidArgumentException(
-                'Cta must be instance of ' . CtaPayload::class
-            );
-        }
-
-        $this->ctas = $ctas;
+    private function addCta(CtaPayload $cta) : void
+    {
+        $this->ctas[] = $cta;
     }
 
     /**

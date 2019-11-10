@@ -143,7 +143,7 @@ class ExtractQuoteBlocksTest extends TestCase
         $image1 = $block1->getImage();
         self::assertSame('OneXTest', $image1->getOneX());
         self::assertSame('TwoXTest', $image1->getTwoX());
-        self::assertSame('TestAlt2', $image1->getAlt());
+        self::assertSame('TestAlt', $image1->getAlt());
         self::assertSame([], $image1->getSources());
 
         $block2 = $blocks[1];

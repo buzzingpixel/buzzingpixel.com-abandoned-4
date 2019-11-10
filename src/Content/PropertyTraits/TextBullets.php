@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Content\PropertyTraits;
 
-use InvalidArgumentException;
-use function is_string;
+use function array_walk;
 
 trait TextBullets
 {
@@ -17,17 +16,12 @@ trait TextBullets
      */
     protected function setTextBullets(array $textBullets) : void
     {
-        foreach ($textBullets as $bullet) {
-            if (is_string($bullet)) {
-                continue;
-            }
+        array_walk($textBullets, [$this, 'addTextBullet']);
+    }
 
-            throw new InvalidArgumentException(
-                'Bullet must be a string'
-            );
-        }
-
-        $this->textBullets = $textBullets;
+    private function addTextBullet(string $textBullet) : void
+    {
+        $this->textBullets[] = $textBullet;
     }
 
     /**

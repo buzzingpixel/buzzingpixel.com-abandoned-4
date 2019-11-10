@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Content\PropertyTraits;
 
 use App\Content\Modules\Payloads\ImageSourcePayload;
-use InvalidArgumentException;
+use function array_walk;
 
 trait ImageProperties
 {
@@ -56,17 +56,12 @@ trait ImageProperties
      */
     protected function setSources(array $sources) : void
     {
-        foreach ($sources as $source) {
-            if ($source instanceof ImageSourcePayload) {
-                continue;
-            }
+        array_walk($sources, [$this, 'addSource']);
+    }
 
-            throw new InvalidArgumentException(
-                'Source must be instance of ' . ImageSourcePayload::class
-            );
-        }
-
-        $this->sources = $sources;
+    private function addSource(ImageSourcePayload $source) : void
+    {
+        $this->sources[] = $source;
     }
 
     /**
