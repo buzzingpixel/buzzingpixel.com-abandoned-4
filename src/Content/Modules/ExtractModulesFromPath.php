@@ -8,6 +8,7 @@ use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractCtaCards;
 use App\Content\Modules\ExtractorMethods\ExtractImageCallOut;
 use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
+use App\Content\Modules\ExtractorMethods\ExtractQuoteBlocks;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
 use cebe\markdown\GithubMarkdown;
 use DirectoryIterator;
@@ -28,6 +29,7 @@ class ExtractModulesFromPath
     use ExtractCtaCards;
     use ExtractImageCallOut;
     use ExtractInformationalImage;
+    use ExtractQuoteBlocks;
     use ExtractShowCase;
 
     /** @var string */
