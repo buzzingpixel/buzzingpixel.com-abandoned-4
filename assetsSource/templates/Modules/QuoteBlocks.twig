@@ -1,0 +1,71 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\QuoteBlocksPayload',
+    moduleCount: 'integer'
+}) %}
+
+{# @var \App\Content\Modules\Payloads\QuoteBlocksPayload payload #}
+
+<section class="QuoteBlocks">
+    <div class="QuoteBlocks__Inner">
+        {% for quoteBlock in payload.getQuoteBlocks() %}
+            {# @var \App\Content\Modules\Payloads\ImagePayload image #}
+            {% set image = quoteBlock.getImage() %}
+            <div class="QuoteBlocks__Block">
+                <div class="QuoteBlocks__BlockInner">
+                    <header class="QuoteBlocks__BlockHeader">
+                        <div class="QuoteBlocks__BlockImage">
+                            {% if image.getOneX() %}
+                                <picture>
+                                    <img
+                                        src="{{ image.getOneX() }}"
+                                        {% if image.getTwoX() %}
+                                        srcset="{{ image.getOneX() }} 1x, {{ image.getTwoX() }} 2x"
+                                        {% endif %}
+                                        alt="{{ image.getAlt() }}"
+                                        class="QuoteBlocks__BlockImageTag"
+                                    >
+                                </picture>
+                            {% endif %}
+                        </div>
+                        <div class="QuoteBlocks__BlockHeaderContent">
+                            {% if quoteBlock.getPersonNameHref() %}
+                                <a
+                                    href="{{ quoteBlock.getPersonNameHref() }}"
+                                    class="QuoteBlocks__BlockHeaderTitle"
+                                    target="_blank"
+                                >
+                                    {{ quoteBlock.getPersonName()|smartypants|widont }}
+                                </a>
+                            {% else %}
+                                <span
+                                    class="QuoteBlocks__BlockHeaderTitle"
+                                >
+                                    {{ quoteBlock.getPersonName()|smartypants|widont }}
+                                </span>
+                            {% endif %}
+                            {% if quoteBlock.getPositionHref() %}
+                                <a
+                                    href="{{ quoteBlock.getPositionHref() }}"
+                                    class="QuoteBlocks__BlockHeaderPosition"
+                                    target="_blank"
+                                >
+                                    {{ quoteBlock.getPosition()|smartypants|widont }}
+                                </a>
+                            {% else %}
+                                <span
+                                    class="QuoteBlocks__BlockHeaderPosition"
+                                >
+                                    {{ quoteBlock.getPosition()|smartypants|widont }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </header>
+                    <blockquote class="QuoteBlocks__BlockQuote">
+                        {{ quoteBlock.getContent()|smartypants|widont }}
+                    </blockquote>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+

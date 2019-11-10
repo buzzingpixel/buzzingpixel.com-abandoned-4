@@ -17,8 +17,8 @@ blocks:
     positionHref: http://www.twist-id.co.uk/about
     content: Ansel has become a default install. Our clients love the ability to define areas of images, whilst we control other aspects to ensure no unusual images ruin the look of a site.
   - image:
-      1x: /content-images/callout/kevin-smith.jpg
-      2x: /content-images/callout/kevin-smith-2x.jpg
+      1x: /content-images/quotes/kevin-smith.jpg
+      2x: /content-images/quotes/kevin-smith-2x.jpg
       alt: Kevin Smith
     name: Kevin Smith
     nameHref: https://kevinsmith.io/
