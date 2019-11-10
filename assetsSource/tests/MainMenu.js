@@ -1,5 +1,6 @@
 const urls = [
     '/',
+    '/software/ansel-craft',
 ];
 
 urls.forEach((url) => {
