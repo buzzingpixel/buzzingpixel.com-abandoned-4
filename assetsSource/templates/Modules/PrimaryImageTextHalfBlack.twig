@@ -1,0 +1,45 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\PrimaryImageTextHalfBlack'
+}) %}
+
+{# @var \App\Content\Modules\Payloads\InformationalImagePayload payload #}
+
+{# @var \App\Content\Modules\Payloads\ImagePayload image #}
+{% set image = payload.getImage() %}
+
+<section class="PrimaryImageTextHalfBlack">
+    <div class="PrimaryImageTextHalfBlack__Inner">
+        {% if payload.getHeadline() %}
+            <h2 class="PrimaryImageTextHalfBlack__Heading">
+                {{ payload.getHeadline()|smartypants }}
+            </h2>
+        {% endif %}
+        <div class="PrimaryImageTextHalfBlack__ImageContainer">
+            <div class="PrimaryImageTextHalfBlack__Image">
+                <picture>
+                    {# @var \App\Content\Modules\Payloads\ImageSourcePayload[] sources #}
+                    {% set sources = image.getSources() %}
+                    {% for source in sources %}
+                        <source
+                            srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                            media="{{ source.getMediaQuery() }}"
+                        >
+                    {% endfor %}
+                    <img
+                        src="{{ image.getOneX() }}"
+                        {% if image.getTwoX() %}
+                        srcset="{{ image.getOneX() }} 1x, {{ image.getTwoX() }} 2x"
+                        {% endif %}
+                        alt="{{ image.getAlt() }}"
+                        class="PrimaryImageTextHalfBlack__ImageTag"
+                    >
+                </picture>
+            </div>
+        </div>
+        <div class="PrimaryImageTextHalfBlack__Content">
+            <div class="PrimaryImageTextHalfBlack__ContentInner">
+                {{ payload.getContent()|smartypants|widont }}
+            </div>
+        </div>
+    </div>
+</section>
