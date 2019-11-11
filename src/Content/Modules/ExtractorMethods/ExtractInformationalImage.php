@@ -26,6 +26,7 @@ trait ExtractInformationalImage
      */
     protected function extractInformationalImage(array $parsedYaml) : InformationalImagePayload
     {
+        /** @var array<string, mixed> $image */
         $image = isset($parsedYaml['image']) && is_array($parsedYaml['image']) ?
             $parsedYaml['image'] :
             [];

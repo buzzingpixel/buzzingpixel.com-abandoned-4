@@ -29,6 +29,7 @@ trait ExtractShowCase
             $parsedYaml['ctas'] :
             [];
 
+        /** @var array<string, mixed> $yamlShowCaseImage */
         $yamlShowCaseImage = isset($parsedYaml['showCaseImage']) && is_array($parsedYaml['showCaseImage']) ?
             $parsedYaml['showCaseImage'] :
             [];

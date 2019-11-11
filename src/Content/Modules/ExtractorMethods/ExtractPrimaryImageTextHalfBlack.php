@@ -26,6 +26,7 @@ trait ExtractPrimaryImageTextHalfBlack
      */
     protected function extractPrimaryImageTextHalfBlack(array $parsedYaml) : PrimaryImageTextHalfBlack
     {
+        /** @var array<string, mixed> $image */
         $image = isset($parsedYaml['image']) && is_array($parsedYaml['image']) ?
             $parsedYaml['image'] :
             [];

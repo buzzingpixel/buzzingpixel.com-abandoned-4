@@ -34,6 +34,7 @@ trait ExtractImageCallOut
             $parsedYaml['ctas'] :
             [];
 
+        /** @var array<string, mixed> $image */
         $image = isset($parsedYaml['image']) && is_array($parsedYaml['image']) ?
             $parsedYaml['image'] :
             [];

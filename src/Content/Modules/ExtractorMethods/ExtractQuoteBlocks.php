@@ -42,6 +42,7 @@ trait ExtractQuoteBlocks
      */
     private function mapYamlQuoteBlockToPayload(array $block) : QuoteBlockPayload
     {
+        /** @var array<string, mixed> $image */
         $image = isset($block['image']) && is_array($block['image']) ?
             $block['image'] :
             [];
