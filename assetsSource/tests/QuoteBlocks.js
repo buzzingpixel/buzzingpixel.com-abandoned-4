@@ -57,8 +57,8 @@ urls.forEach((item) => {
                     .should('have.class', 'QuoteBlocks__BlockInner')
                     .children()
                     .should('have.length', 2)
-                    .each(($el, i) => {
-                        if (i === 0) {
+                    .each(($el, index) => {
+                        if (index === 0) {
                             cy.get($el)
                                 .should('have.class', 'QuoteBlocks__BlockHeader')
                                 .children()
@@ -68,10 +68,10 @@ urls.forEach((item) => {
                                 .eq(0)
                                 .children()
                                 .eq(0)
-                                .should(($el) => {
-                                    expect($el).to.have.class('QuoteBlocks__BlockImageTag');
-                                    expect($el).to.have.attr('src');
-                                    expect($el).to.have.attr('srcset');
+                                .should(($innerEl) => {
+                                    expect($innerEl).to.have.class('QuoteBlocks__BlockImageTag');
+                                    expect($innerEl).to.have.attr('src');
+                                    expect($innerEl).to.have.attr('srcset');
                                 });
 
                             return;
