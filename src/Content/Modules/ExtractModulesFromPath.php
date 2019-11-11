@@ -9,6 +9,7 @@ use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractCtaCards;
 use App\Content\Modules\ExtractorMethods\ExtractImageCallOut;
 use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
+use App\Content\Modules\ExtractorMethods\ExtractPrimaryImageTextHalfBlack;
 use App\Content\Modules\ExtractorMethods\ExtractQuoteBlocks;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
 use cebe\markdown\GithubMarkdown;
@@ -31,6 +32,7 @@ class ExtractModulesFromPath
     use ExtractCtaCards;
     use ExtractImageCallOut;
     use ExtractInformationalImage;
+    use ExtractPrimaryImageTextHalfBlack;
     use ExtractQuoteBlocks;
     use ExtractShowCase;
 
