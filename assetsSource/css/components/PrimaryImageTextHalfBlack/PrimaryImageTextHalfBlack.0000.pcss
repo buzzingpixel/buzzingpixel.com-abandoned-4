@@ -1,0 +1,56 @@
+.PrimaryImageTextHalfBlack__Heading,
+.PrimaryImageTextHalfBlack__ImageContainer,
+.PrimaryImageTextHalfBlack__ContentInner {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.PrimaryImageTextHalfBlack__Heading {
+    font-size: 26px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.PrimaryImageTextHalfBlack__ImageContainer {
+    position: relative;
+}
+
+.PrimaryImageTextHalfBlack__ImageContainer:before,
+.PrimaryImageTextHalfBlack__Content {
+    background-color: var(--MineShaft);
+}
+
+.PrimaryImageTextHalfBlack__ImageContainer:before {
+    bottom: 0;
+    content: ' ' ;
+    display: block;
+    height: 50%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.PrimaryImageTextHalfBlack__Image {
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,.35);
+    line-height: 0;
+    margin: 0 auto;
+    max-width: 1400px;
+    position: relative;
+    z-index: 2;
+}
+
+.PrimaryImageTextHalfBlack__ImageTag {
+    width: 100%;
+}
+
+.PrimaryImageTextHalfBlack__ContentInner {
+    padding-bottom: 30px;
+    padding-top: 30px;
+    margin: 0 auto;
+    max-width: 1100px;
+}
+
+.PrimaryImageTextHalfBlack__ContentInner * {
+    color: var(--SpringWood);
+}
