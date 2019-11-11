@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Content\PropertyTraits;
 
-use App\Content\Modules\Payloads\ShowCaseImagePayload;
+use App\Content\Modules\Payloads\ImagePayload;
 use App\Content\PropertyTraits\ShowCaseImage;
 use PHPUnit\Framework\TestCase;
 
@@ -17,12 +17,12 @@ class ShowCaseImageTest extends TestCase
             use ShowCaseImage;
         };
 
-        /** @var ShowCaseImagePayload $payload */
+        /** @var ImagePayload $payload */
         $payload = $trait->getShowCaseImage();
-        /** @var ShowCaseImagePayload $payl$payload2oad */
+        /** @var ImagePayload $payl$payload2oad */
         $payload2 = $trait->getShowCaseImage();
 
-        self::assertInstanceOf(ShowCaseImagePayload::class, $payload);
+        self::assertInstanceOf(ImagePayload::class, $payload);
         self::assertSame($payload, $payload2);
         self::assertSame('', $payload->getOneX());
         self::assertSame('', $payload->getTwoX());

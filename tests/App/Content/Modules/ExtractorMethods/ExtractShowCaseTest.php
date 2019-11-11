@@ -10,12 +10,12 @@ use Throwable;
 
 class ExtractShowCaseTest extends TestCase
 {
-    /** @var ExtractorShowCaseImplementation */
+    /** @var ExtractShowCaseImplementation */
     private $extractor;
 
     protected function setUp() : void
     {
-        $this->extractor = new ExtractorShowCaseImplementation();
+        $this->extractor = new ExtractShowCaseImplementation();
     }
 
     /**

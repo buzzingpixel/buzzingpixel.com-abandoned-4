@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Content\PropertyTraits;
 
-use App\Content\Modules\Payloads\ShowCaseImagePayload;
+use App\Content\Modules\Payloads\ImagePayload;
 
 trait ShowCaseImage
 {
-    /** @var ShowCaseImagePayload|null */
+    /** @var ImagePayload|null */
     private $showCaseImage;
 
-    protected function setShowCaseImage(ShowCaseImagePayload $showCaseImage) : void
+    protected function setShowCaseImage(ImagePayload $showCaseImage) : void
     {
         $this->showCaseImage = $showCaseImage;
     }
 
-    public function getShowCaseImage() : ShowCaseImagePayload
+    public function getShowCaseImage() : ImagePayload
     {
         if (! $this->showCaseImage) {
-            $this->showCaseImage = new ShowCaseImagePayload();
+            $this->showCaseImage = new ImagePayload();
         }
 
         return $this->showCaseImage;

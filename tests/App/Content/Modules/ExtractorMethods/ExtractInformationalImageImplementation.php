@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Content\Modules\ExtractorMethods;
 
+use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
 use App\Content\Modules\Payloads\InformationalImagePayload;
 use cebe\markdown\GithubMarkdown;
@@ -11,6 +12,7 @@ use Throwable;
 
 class ExtractInformationalImageImplementation
 {
+    use MapYamlImageToPayload;
     use ExtractInformationalImage;
 
     /** @var GithubMarkdown */

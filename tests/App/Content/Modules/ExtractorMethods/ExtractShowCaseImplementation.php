@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Tests\App\Content\Modules\ExtractorMethods;
 
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
+use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
 use App\Content\Modules\Payloads\ShowCasePayload;
 use Throwable;
 
-class ExtractorShowCaseImplementation
+class ExtractShowCaseImplementation
 {
     use MapYamlCtaToPayload;
+    use MapYamlImageToPayload;
     use ExtractShowCase;
 
     /**

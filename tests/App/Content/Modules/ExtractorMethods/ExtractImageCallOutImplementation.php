@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Content\Modules\ExtractorMethods;
 
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
+use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractImageCallOut;
 use App\Content\Modules\Payloads\ImageCallOutPayload;
 use cebe\markdown\GithubMarkdown;
@@ -13,6 +14,7 @@ use Throwable;
 class ExtractImageCallOutImplementation
 {
     use MapYamlCtaToPayload;
+    use MapYamlImageToPayload;
     use ExtractImageCallOut;
 
     /** @var GithubMarkdown */

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\App\Content\Modules\ExtractorMethods;
 
+use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractQuoteBlocks;
 use App\Content\Modules\Payloads\QuoteBlocksPayload;
 use Throwable;
 
 class ExtractQuoteBlocksImplementation
 {
+    use MapYamlImageToPayload;
     use ExtractQuoteBlocks;
 
     /**

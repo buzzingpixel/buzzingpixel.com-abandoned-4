@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Content\Modules;
 
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
+use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractCtaCards;
 use App\Content\Modules\ExtractorMethods\ExtractImageCallOut;
 use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
@@ -26,6 +27,7 @@ use function ucfirst;
 class ExtractModulesFromPath
 {
     use MapYamlCtaToPayload;
+    use MapYamlImageToPayload;
     use ExtractCtaCards;
     use ExtractImageCallOut;
     use ExtractInformationalImage;

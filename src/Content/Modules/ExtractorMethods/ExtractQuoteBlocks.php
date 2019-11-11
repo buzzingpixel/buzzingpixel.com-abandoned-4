@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Content\Modules\ExtractorMethods;
 
-use App\Content\Modules\Payloads\ImagePayload;
 use App\Content\Modules\Payloads\QuoteBlockPayload;
 use App\Content\Modules\Payloads\QuoteBlocksPayload;
 use Throwable;
 use function array_map;
 use function is_array;
 
+/**
+ * Requires parent to have:
+ * `use \App\Content\Modules\CommonTraits\MapYamlImageToPayload;`
+ */
 trait ExtractQuoteBlocks
 {
     /**
@@ -44,11 +47,7 @@ trait ExtractQuoteBlocks
             [];
 
         return new QuoteBlockPayload([
-            'image' => new ImagePayload([
-                'oneX' => (string) ($image['1x'] ?? ''),
-                'twoX' => (string) ($image['2x'] ?? ''),
-                'alt' => (string) ($image['alt'] ?? ''),
-            ]),
+            'image' => $this->mapYamlImageToPayload($image),
             'personName' => (string) ($block['name'] ?? ''),
             'personNameHref' => (string) ($block['nameHref'] ?? ''),
             'position' => (string) ($block['position'] ?? ''),
