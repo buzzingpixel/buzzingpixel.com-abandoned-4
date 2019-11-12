@@ -86,7 +86,7 @@ class GetSoftwareActionTest extends TestCase
             ->method('__invoke')
             ->with(
                 self::equalTo($metaPayload),
-                self::equalTo($modulePayload),
+                self::isInstanceOf(ModulePayload::class),
                 self::equalTo($softwareInfoPayload),
                 self::equalTo($contentPath)
             )
