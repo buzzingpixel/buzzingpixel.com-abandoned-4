@@ -1,0 +1,11 @@
+type: Image
+backgroundColor: SpringWood
+noShadow: true,
+image:
+  1x: /content-images/ansel-craft/ansel2-fieldsettings-crop-combined-desktop.png
+  2x: /content-images/ansel-craft/ansel2-fieldsettings-crop-combined-desktop-2x.png
+  alt: Ansel Field Settings
+  sources:
+    - 1x: /content-images/ansel-craft/ansel2-fieldsettings-crop-combined-mobile.png
+      2x: /content-images/ansel-craft/ansel2-fieldsettings-crop-combined-mobile-2x.png
+      mediaQuery: "(min-width: 1px) and (max-width: 600px)"
