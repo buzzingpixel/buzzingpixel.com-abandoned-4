@@ -25,7 +25,7 @@ trait ExtractTextColumns
      */
     protected function extractTextColumns(array $parsedYaml) : TextColumnsPayload
     {
-        /** @var array<int, array<string, string> $columns */
+        /** @var array<int, array<string, string>> $columns */
         $columns = isset($parsedYaml['columns']) && is_array($parsedYaml['columns']) ?
             $parsedYaml['columns'] :
             [];

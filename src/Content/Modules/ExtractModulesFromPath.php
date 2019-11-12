@@ -7,6 +7,7 @@ namespace App\Content\Modules;
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
 use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
 use App\Content\Modules\ExtractorMethods\ExtractCtaCards;
+use App\Content\Modules\ExtractorMethods\ExtractCtas;
 use App\Content\Modules\ExtractorMethods\ExtractImage;
 use App\Content\Modules\ExtractorMethods\ExtractImageCallOut;
 use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
@@ -32,6 +33,7 @@ class ExtractModulesFromPath
     use MapYamlCtaToPayload;
     use MapYamlImageToPayload;
     use ExtractCtaCards;
+    use ExtractCtas;
     use ExtractImage;
     use ExtractImageCallOut;
     use ExtractInformationalImage;
