@@ -28,14 +28,12 @@
         {% if image.getOneX() %}
             <div class="InformationalImage__Image">
                 <picture>
-                    {% if image.getSources()|length %}
-                        {% for source in image.getSources() %}
-                            <source
-                                srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
-                                media="{{ source.getMediaQuery() }}"
-                            >
-                        {% endfor %}
-                    {% endif %}
+                    {% for source in image.getSources() %}
+                        <source
+                            srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                            media="{{ source.getMediaQuery() }}"
+                        >
+                    {% endfor %}
                     <img
                         src="{{ image.getOneX() }}"
                         {% if image.getTwoX() %}

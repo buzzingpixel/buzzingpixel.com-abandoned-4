@@ -1,0 +1,30 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\ImageModulePayload',
+    moduleCount: 'integer'
+}) %}
+
+{# @var \App\Content\Modules\Payloads\ImageModulePayload payload #}
+
+{# @var \App\Content\Modules\Payloads\ImagePayload image #}
+{% set image = payload.getImage() %}
+
+<section class="Image{% if payload.getBackgroundColor() %} Image--HasBackgroundColor{{ payload.getBackgroundColor() }}{% endif %}">
+    <div class="Image__Inner{% if not payload.getNoShadow() %} Image__Inner--HasShadow{% endif %}">
+        <picture>
+            {% for source in image.getSources() %}
+                <source
+                    srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                    media="{{ source.getMediaQuery() }}"
+                >
+            {% endfor %}
+            <img
+                src="{{ image.getOneX() }}"
+                {% if image.getTwoX() %}
+                srcset="{{ image.getOneX() }} 1x, {{ image.getTwoX() }} 2x"
+                {% endif %}
+                alt="{{ image.getAlt()|smartypants }}"
+                class="Image__ImgTag"
+            >
+        </picture>
+    </div>
+</section>
