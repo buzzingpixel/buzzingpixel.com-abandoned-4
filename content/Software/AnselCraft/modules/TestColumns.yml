@@ -1,0 +1,14 @@
+type: TextColumns
+backgroundColor: SpringWood
+columns:
+  - heading: Users Rejoice
+    content: |
+      Anyone managing content in Craft can now upload any image with the peace of mind that nothing about the design or front end will break in any way. The image constraints have been defined and their image will live within those constraints.
+
+      And what if the action of the image they want to use is not in the frame? No problem. Use the crop lasso to select the correct portion of the image!
+  - heading: Powerful Templating
+    content: Templating with Ansel in Craft's Twig templating environment is truly a breeze. Ansel provides the Ansel Image Service to Twig from which any or all images can be retrieved and displayed.
+  - heading: Ansel and Assets
+    content: Ansel saves its images using Craft's native Assets. And when you work with Ansel images in Twig, everything that's available to you through an Asset in a Twig template is available to Ansel Images as well.
+  - heading: Get Started with Ansel
+    content: Getting started with Ansel is easy. It's available in the Craft Plugin store where you can simply install it right in your Craft Control Panel. Or if you like composer and the command line (and why wouldn't you? Composer is awesome!), you can install Ansel with a single composer command!
