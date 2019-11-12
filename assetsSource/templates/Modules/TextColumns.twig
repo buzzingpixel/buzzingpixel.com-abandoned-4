@@ -1,0 +1,22 @@
+{% do requireVariables({
+    payload: 'App\\Content\\Modules\\Payloads\\TextColumnsPayload',
+}) %}
+
+{# @var \App\Content\Modules\Payloads\TextColumnsPayload payload #}
+
+<section class="TextColumns{% if payload.getBackgroundColor() %} TextColumns--HasBackgroundColor{{ payload.getBackgroundColor() }}{% endif %}">
+    <div class="TextColumns__Inner">
+        {% for column in payload.getItems() %}
+            <div class="TextColumns__Column">
+                {% if column.getHeadline() %}
+                    <h2 class="TextColumns__ColumnHeading">
+                        {{ column.getHeadline()|smartypants }}
+                    </h2>
+                {% endif %}
+                {% if column.getContent() %}
+                    {{  column.getContent()|smartypants|widont }}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>
