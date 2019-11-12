@@ -1,6 +1,6 @@
 type: Image
 backgroundColor: SpringWood
-noShadow: true,
+noShadow: true
 image:
   1x: /content-images/ansel-craft/ansel2-fieldsettings-crop-combined-desktop.png
   2x: /content-images/ansel-craft/ansel2-fieldsettings-crop-combined-desktop-2x.png
