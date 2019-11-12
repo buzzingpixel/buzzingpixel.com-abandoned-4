@@ -37,6 +37,6 @@ class TemplateExistsTest extends TestCase
 
         self::assertFalse($templateExists->templateExists('FooBar'));
 
-        self::assertTrue($templateExists->templateExists('Standardpage.twig'));
+        self::assertTrue($templateExists->templateExists('StandardPage.twig'));
     }
 }
