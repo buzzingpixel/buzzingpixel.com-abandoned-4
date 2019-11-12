@@ -13,6 +13,7 @@ use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
 use App\Content\Modules\ExtractorMethods\ExtractPrimaryImageTextHalfBlack;
 use App\Content\Modules\ExtractorMethods\ExtractQuoteBlocks;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
+use App\Content\Modules\ExtractorMethods\ExtractTextColumns;
 use cebe\markdown\GithubMarkdown;
 use DirectoryIterator;
 use IteratorIterator;
@@ -37,6 +38,7 @@ class ExtractModulesFromPath
     use ExtractPrimaryImageTextHalfBlack;
     use ExtractQuoteBlocks;
     use ExtractShowCase;
+    use ExtractTextColumns;
 
     /** @var string */
     private $pathToContentDirectory;
