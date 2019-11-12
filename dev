@@ -66,6 +66,7 @@ if [[ "${cmd}" = "down" ]]; then
 fi
 
 if [[ "${cmd}" = "provision" ]]; then
+    docker build -t buzzingpixel:php-dev docker/php-dev;
     docker run -it -v ${PWD}:/app -v buzzingpixel_composer-home-volume:/composer-home-volume --env COMPOSER_HOME=/composer-home-volume -w /app ${composerDockerImage} bash -c "composer install";
     docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn";
     docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn run fab --build-only";
