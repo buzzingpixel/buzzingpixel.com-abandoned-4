@@ -5,7 +5,7 @@ image:
   2x: /content-images/ansel-craft/ansel2-field-type-tablet-desktop-2x.png
   alt: Ansel for Craft Screenshot
   sources:
-    - 1x: /content-images/ansel-craft/ansel2-field-type-mobile.png 1x
+    - 1x: /content-images/ansel-craft/ansel2-field-type-mobile.png
       2x: /content-images/ansel-craft/ansel2-field-type-mobile-2x.png
       mediaQuery: "(min-width: 1px) and (max-width: 700px)"
 content: |
