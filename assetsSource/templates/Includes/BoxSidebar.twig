@@ -1,0 +1,20 @@
+{% set sidebar = sidebar ?? [] %}
+
+<div class="Box__Sidebar">
+    <div class="Box__SidebarInner">
+        <ul class="Box__SidebarList">
+            {% for item in sidebar %}
+                <li class="Box__SidebarListItem">
+                    {% if item['key'] is defined %}
+                        <span class="Box__SidebarListItemKey">
+                            {{ item.key|smartypants }}:
+                        </span>
+                    {% endif %}
+                    <span class="Box__SidebarListItemContent">
+                        {{ item.value|smartypants }}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

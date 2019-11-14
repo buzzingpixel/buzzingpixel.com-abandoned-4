@@ -6,31 +6,12 @@ namespace App\Http\Home;
 
 use App\Content\Meta\MetaPayload;
 use App\Content\Modules\ModulePayload;
-use App\HttpRespose\Minifier;
-use Psr\Http\Message\ResponseFactoryInterface;
+use App\Http\StandardResponderConstructor;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use Twig\Environment as TwigEnvironment;
 
-class GetHomeResponder
+class GetHomeResponder extends StandardResponderConstructor
 {
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
-    /** @var TwigEnvironment */
-    private $twigEnvironment;
-    /** @var Minifier */
-    private $minifier;
-
-    public function __construct(
-        ResponseFactoryInterface $responseFactory,
-        TwigEnvironment $twigEnvironment,
-        Minifier $minifier
-    ) {
-        $this->responseFactory = $responseFactory;
-        $this->twigEnvironment = $twigEnvironment;
-        $this->minifier        = $minifier;
-    }
-
     /**
      * @throws Throwable
      */

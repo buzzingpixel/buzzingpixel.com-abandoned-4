@@ -2,6 +2,7 @@ title: Ansel
 subTitle: for Craft CMS
 forSale: false
 hasChangelog: true
+changelogExternalUrl: https://raw.githubusercontent.com/buzzingpixel/ansel-craft/master/changelog.md
 hasDocumentation: true
 actionButtons:
   - href: https://github.com/buzzingpixel/ansel-craft
@@ -10,12 +11,3 @@ actionButtons:
     content: Packagist
   - href: https://plugins.craftcms.com/ansel
     content: Plugin Store ($79)
-#nav:
-#  left:
-#    - href: /software/ansel-craft
-#      content: Features
-#    - href: /software/ansel-craft/changelog
-#      content: Changelog
-#    right:
-#      - href: /software/ansel-craft/documentation
-#        content: Documentation

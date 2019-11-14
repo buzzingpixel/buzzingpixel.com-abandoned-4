@@ -1,0 +1,24 @@
+.SidebarContent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SidebarContent__Sidebar {
+    position: relative;
+    width: 120px;
+}
+
+.SidebarContent__Sidebar:before {
+    background-color: var(--LightGray);
+    content: ' ';
+    display: block;
+    height: 100%;
+    position: absolute;
+    right: -20px;
+    top: 0;
+    width: 2px;
+}
+
+.SidebarContent__Body {
+    width: calc(100% - 160px);
+}

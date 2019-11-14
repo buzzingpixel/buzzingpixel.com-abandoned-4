@@ -43,10 +43,10 @@
     {% include 'Includes/SubTitlePageNav.twig' with {
         navItemsLeft: navItemsLeft,
         navItemsRight: navItemsRight,
-        activeHref: uriPath
+        activeHref: uriPath,
     } only %}
 
     {% include 'Modules/_ModulePayloadIncluder.twig' with {
-        modulePayload: modulePayload
+        modulePayload: modulePayload,
     } only %}
 {% endblock %}

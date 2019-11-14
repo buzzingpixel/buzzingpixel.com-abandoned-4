@@ -41,6 +41,9 @@ class ExtractSoftwareInfoFromPath
             'subTitle' => isset($vars['subTitle']) ? ((string) $vars['subTitle']) : '',
             'forSale' => isset($vars['forSale']) ? ((bool) $vars['forSale']) : false,
             'hasChangelog' => isset($vars['hasChangelog']) ? ((bool) $vars['hasChangelog']) : false,
+            'changelogExternalUrl' => isset($vars['changelogExternalUrl']) ?
+                ((string) $vars['changelogExternalUrl']) :
+                '',
             'hasDocumentation' => isset($vars['hasDocumentation']) ? ((bool) $vars['hasDocumentation']) : false,
             'actionButtons' => array_map([$this, 'mapYamlCtaToPayload'], $ctas),
         ]);

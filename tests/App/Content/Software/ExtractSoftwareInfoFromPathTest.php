@@ -40,6 +40,7 @@ class ExtractSoftwareInfoFromPathTest extends TestCase
         self::assertSame('', $payload->getSubTitle());
         self::assertFalse($payload->getForSale());
         self::assertFalse($payload->getHasChangelog());
+        self::assertSame('', $payload->getChangelogExternalUrl());
         self::assertFalse($payload->getHasDocumentation());
         self::assertSame([], $payload->getActionButtons());
     }
@@ -57,6 +58,7 @@ class ExtractSoftwareInfoFromPathTest extends TestCase
         self::assertSame('TestSubTitle', $payload->getSubTitle());
         self::assertTrue($payload->getForSale());
         self::assertTrue($payload->getHasChangelog());
+        self::assertSame('/test/changelog/url', $payload->getChangelogExternalUrl());
         self::assertTrue($payload->getHasDocumentation());
 
         $actionButtons = $payload->getActionButtons();

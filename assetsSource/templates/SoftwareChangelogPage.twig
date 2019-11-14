@@ -1,0 +1,107 @@
+{% do requireVariables({
+    metaPayload: 'App\\Content\\Meta\\MetaPayload',
+    allChangelogPayload: 'App\\Content\\Changelog\\ChangelogPayload',
+    changelogPayload: 'App\\Content\\Changelog\\ChangelogPayload',
+    pagination: 'App\\HttpHelpers\\Pagination\\Pagination',
+    softwareInfoPayload: 'App\\Content\\Software\\SoftwareInfoPayload',
+    uriPath: 'string',
+    activeHref: 'string',
+}) %}
+
+{# @var \App\Content\Meta\MetaPayload metaPayload #}
+{# @var \App\Content\Changelog\ChangelogPayload allChangelogPayload #}
+{# @var \App\Content\Changelog\ChangelogPayload changelogPayload #}
+{# @var \App\HttpHelpers\Pagination\Pagination pagination #}
+{# @var \App\Content\Software\SoftwareInfoPayload softwareInfoPayload #}
+{# @var string uriPath #}
+{# @var string activeHref #}
+
+{% extends '_Layout.twig' %}
+
+{% set navItemsLeft = [
+    {
+        href: uriPath,
+        content: 'Features',
+    },
+    {
+        href: uriPath ~ '/changelog',
+        content: 'Changelog',
+    },
+] %}
+
+{% set navItemsRight = [] %}
+
+{% if softwareInfoPayload.getHasDocumentation() %}
+    {% set navItemsRight = [{
+        href: uriPath ~ '/documentation',
+        content: 'Documentation',
+    }] %}
+{% endif %}
+
+{% block content %}
+    {% include 'Includes/TitleArea.twig' with {
+        title: softwareInfoPayload.getTitle(),
+        subTitle: softwareInfoPayload.getSubTitle(),
+        actionButtons: softwareInfoPayload.getActionButtons(),
+    } only %}
+
+    {% include 'Includes/SubTitlePageNav.twig' with {
+        navItemsLeft: navItemsLeft,
+        navItemsRight: navItemsRight,
+        activeHref: activeHref,
+    } only %}
+
+    <div class="StandardPageContent StandardPageContent--Max1600">
+        <div class="StandardPageContent__Inner">
+            {% include 'Includes/Pagination.twig' with {
+                pagination: pagination
+            } only %}
+            <div class="SidebarContent">
+                <aside class="SidebarContent__Sidebar">
+                    <ul class="SidebarContent__Links">
+                        {% for release in allChangelogPayload.getReleases() %}
+                            <li class="SidebarContent__Link">
+                                <a
+                                    href="{{ pagination.base() }}/{{ release.getVersion() }}"
+                                    class="SidebarContent__LinkTag"
+                                >
+                                    {{ release.getVersion() }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </aside>
+                <div class="SidebarContent__Body">
+                    {% for release in changelogPayload.getReleases() %}
+                        <div class="BoxContainer">
+                            {% set permalink %}
+                                <a href="{{ pagination.base() }}/{{ release.getVersion() }}">
+                                    Permalink
+                                </a>
+                            {% endset %}
+                            {% include "Includes/Box.twig" with {
+                                sidebar: [
+                                    {
+                                        key: 'version',
+                                        value: '<strong>' ~ release.getVersion() ~ '</strong>',
+                                    },
+                                    {
+                                        key: 'released',
+                                        value: '<strong>' ~ release.getDate() ~ '</strong>',
+                                    },
+                                    {
+                                        value: permalink,
+                                    },
+                                ],
+                                content: release.toHtml(),
+                            } only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% include 'Includes/Pagination.twig' with {
+                pagination: pagination
+            } only %}
+        </div>
+    </div>
+{% endblock %}

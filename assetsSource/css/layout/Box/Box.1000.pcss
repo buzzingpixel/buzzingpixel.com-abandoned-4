@@ -1,0 +1,20 @@
+.Box__Inner--HasSidebar {
+    display: flex;
+}
+
+.Box__Sidebar,
+.Box__Content {
+    padding: 20px;
+}
+
+.Box__Sidebar {
+    border-bottom: none;
+    border-right: 2px solid var(--LightGray);
+    font-size: 14px;
+    text-align: right;
+    width: 250px;
+}
+
+.Box__Content--HasSidebar {
+    width: calc(100% - 250px);
+}

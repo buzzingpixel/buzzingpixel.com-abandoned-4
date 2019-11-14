@@ -15,11 +15,6 @@ use Throwable;
 
 class GetSoftwareAction
 {
-    private const PATH_MAP = [
-        '/software/ansel-craft' => 'Software/AnselCraft',
-        '/software/ansel-ee' => 'Software/AnselEE',
-    ];
-
     /** @var GetSoftwareResponder */
     private $responder;
     /** @var ExtractMetaFromPath */
@@ -48,7 +43,7 @@ class GetSoftwareAction
     {
         $uriPath = $request->getUri()->getPath();
 
-        $contentPath = self::PATH_MAP[$uriPath];
+        $contentPath = PathMap::PATH_MAP[$uriPath];
 
         $softwareInfoPayload = ($this->extractSoftwareInfoFromPath)($contentPath);
 

@@ -62,6 +62,19 @@ class SoftwareInfoPayload extends SpecificPayload
         return $this->hasChangelog;
     }
 
+    /** @var string */
+    private $changelogExternalUrl = '';
+
+    protected function setChangelogExternalUrl(string $changelogExternalUrl) : void
+    {
+        $this->changelogExternalUrl = $changelogExternalUrl;
+    }
+
+    public function getChangelogExternalUrl() : string
+    {
+        return $this->changelogExternalUrl;
+    }
+
     /** @var bool */
     private $hasDocumentation = false;
 

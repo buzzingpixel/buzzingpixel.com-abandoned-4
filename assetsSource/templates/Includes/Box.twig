@@ -1,0 +1,23 @@
+{% set sidebar = (block('sidebar') ?? sidebar ?? '') %}
+{% set content = (block('content') ?? content ?? '') %}
+
+<div class="Box{% if sidebar or sidebar is iterable %} Box--HasSidebar{% endif %}">
+    <div class="Box__Inner{% if sidebar or sidebar is iterable %} Box__Inner--HasSidebar{% endif %}">
+        {% if sidebar is iterable %}
+            {% include "Includes/BoxSidebar.twig" with {
+                sidebar: sidebar,
+            } only %}
+        {% elseif sidebar %}
+            <div class="Box__Sidebar">
+                <div class="Box__SidebarInner">
+                    {{ sidebar|raw }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="Box__Content{% if sidebar or sidebar is iterable %} Box__Content--HasSidebar{% endif %}">
+            <div class="Box__ContentInner">
+                {{ content|smartypants }}
+            </div>
+        </div>
+    </div>
+</div>
