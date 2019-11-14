@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Content\Changelog\ParseChangelogFromMarkdownFile;
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Modules\ExtractModulesFromPath;
 use App\Content\Software\ExtractSoftwareInfoFromPath;
@@ -22,6 +23,10 @@ return [
         dirname(__DIR__) . '/content'
     ),
     ExtractSoftwareInfoFromPath::class => autowire(ExtractSoftwareInfoFromPath::class)->constructorParameter(
+        'pathToContentDirectory',
+        dirname(__DIR__) . '/content'
+    ),
+    ParseChangelogFromMarkdownFile::class => autowire(ParseChangelogFromMarkdownFile::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),

@@ -27,6 +27,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/coding-standard" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/erusev/parsedown" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/felixfbecker/advanced-json-rpc" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/felixfbecker/language-server-protocol" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fig/http-message-util" />
@@ -38,6 +39,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/jeremeamia/superclosure" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/marcusschwarz/lesserphp" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/michelf/php-smartypants" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mjerwin/parseachangelog" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mrclay/jsmin-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mrclay/minify" />

@@ -139,6 +139,8 @@
       <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-switch" />
       <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-getenv" />
       <path value="$PROJECT_DIR$/vendor/cebe/markdown" />
+      <path value="$PROJECT_DIR$/vendor/erusev/parsedown" />
+      <path value="$PROJECT_DIR$/vendor/mjerwin/parseachangelog" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
