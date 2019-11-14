@@ -18,6 +18,44 @@ const urls = [
             },
         ],
     },
+    {
+        url: '/software/ansel-craft/changelog',
+        titleContent: 'Ansel',
+        subTitleContent: 'for Craft CMS',
+        actionButtons: [
+            {
+                href: 'https://github.com/buzzingpixel/ansel-craft',
+                content: 'GitHub',
+            },
+            {
+                href: 'https://packagist.org/packages/buzzingpixel/ansel-craft',
+                content: 'Packagist',
+            },
+            {
+                href: 'https://plugins.craftcms.com/ansel',
+                content: 'Plugin Store ($79)',
+            },
+        ],
+    },
+    {
+        url: '/software/ansel-craft/changelog/page/2',
+        titleContent: 'Ansel',
+        subTitleContent: 'for Craft CMS',
+        actionButtons: [
+            {
+                href: 'https://github.com/buzzingpixel/ansel-craft',
+                content: 'GitHub',
+            },
+            {
+                href: 'https://packagist.org/packages/buzzingpixel/ansel-craft',
+                content: 'Packagist',
+            },
+            {
+                href: 'https://plugins.craftcms.com/ansel',
+                content: 'Plugin Store ($79)',
+            },
+        ],
+    },
 ];
 
 urls.forEach((item) => {
