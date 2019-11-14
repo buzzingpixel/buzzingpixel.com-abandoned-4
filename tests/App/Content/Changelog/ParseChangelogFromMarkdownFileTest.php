@@ -9,7 +9,7 @@ use MJErwin\ParseAChangelog\Release;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use function count;
-use function file_get_contents;
+use function Safe\file_get_contents;
 
 class ParseChangelogFromMarkdownFileTest extends TestCase
 {
