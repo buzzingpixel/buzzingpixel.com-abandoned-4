@@ -4,3 +4,8 @@ parameters:
         -
             message: '#If condition is always true\.#'
             path: %currentWorkingDirectory%/tests/TestConfig.php
+
+includes:
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
