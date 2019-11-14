@@ -23,7 +23,7 @@ class ChangelogPayload extends SpecificPayload
         array_walk($items, [$this, 'addRelease']);
     }
 
-    private function addRelease(Release $release) : void
+    protected function addRelease(Release $release) : void
     {
         $this->releases[] = $release;
     }

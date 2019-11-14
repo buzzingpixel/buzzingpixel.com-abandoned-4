@@ -8,7 +8,6 @@ use App\Content\Meta\MetaPayload;
 use App\Content\Modules\ModulePayload;
 use App\Http\Home\GetHomeResponder;
 use App\HttpRespose\Minifier;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
 use Throwable;
@@ -25,7 +24,6 @@ class GetHomeResponderTest extends TestCase
 
         $modulePayload = new ModulePayload();
 
-        /** @var TwigEnvironment&MockObject $twigEnvironment */
         $twigEnvironment = $this->createMock(TwigEnvironment::class);
 
         $twigEnvironment->expects(self::once())
@@ -41,7 +39,6 @@ class GetHomeResponderTest extends TestCase
 
         $responseFactory = new ResponseFactory();
 
-        /** @var Minifier&MockObject $minifier */
         $minifier = $this->createMock(Minifier::class);
 
         $minifier->expects(self::once())

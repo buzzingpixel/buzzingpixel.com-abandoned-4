@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Cli;
 
 use App\Cli\TestCommand;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,10 +23,8 @@ class TestCommandTest extends TestCase
 
         self::assertSame('The test command help description', $command->getHelp());
 
-        /** @var InputInterface&MockObject $inputInterface */
         $inputInterface = $this->createMock(InputInterface::class);
 
-        /** @var OutputInterface&MockObject $outputInterface */
         $outputInterface = $this->createMock(OutputInterface::class);
 
         $outputInterface->expects(self::once())

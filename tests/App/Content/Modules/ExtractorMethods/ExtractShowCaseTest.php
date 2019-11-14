@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Content\Modules\ExtractorMethods;
 
-use App\Content\Modules\Payloads\ShowCasePayload;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -23,7 +22,6 @@ class ExtractShowCaseTest extends TestCase
      */
     public function testEmptyArrayInput() : void
     {
-        /** @var ShowCasePayload $payload */
         $payload = $this->extractor->runTest([]);
 
         self::assertSame('', $payload->getPreHeadline());
@@ -43,7 +41,6 @@ class ExtractShowCaseTest extends TestCase
      */
     public function testCtasAndShowCaseImageNotArray() : void
     {
-        /** @var ShowCasePayload $payload */
         $payload = $this->extractor->runTest([
             'ctas' => 'FooBar',
             'showCaseImage' => 'BarBaz',
@@ -66,7 +63,6 @@ class ExtractShowCaseTest extends TestCase
      */
     public function testNonStringValues() : void
     {
-        /** @var ShowCasePayload $payload */
         $payload = $this->extractor->runTest([
             'preHeadline' => 234,
             'headline' => 356.23,
@@ -90,7 +86,6 @@ class ExtractShowCaseTest extends TestCase
      */
     public function testShowCaseImageNoSources() : void
     {
-        /** @var ShowCasePayload $payload */
         $payload = $this->extractor->runTest([
             'preHeadline' => 'TestPreHeadline',
             'headline' => 'TestHeadline',
@@ -119,7 +114,6 @@ class ExtractShowCaseTest extends TestCase
      */
     public function testShowCaseImageWhenSourcesNotArray() : void
     {
-        /** @var ShowCasePayload $payload */
         $payload = $this->extractor->runTest([
             'preHeadline' => 'TestPreHeadline',
             'headline' => 'TestHeadline',
@@ -149,7 +143,6 @@ class ExtractShowCaseTest extends TestCase
      */
     public function testWithShowCaseImageSources() : void
     {
-        /** @var ShowCasePayload $payload */
         $payload = $this->extractor->runTest([
             'preHeadline' => 'TestPreHeadline',
             'headline' => 'TestHeadline',
@@ -198,7 +191,6 @@ class ExtractShowCaseTest extends TestCase
      */
     public function testCtas() : void
     {
-        /** @var ShowCasePayload $payload */
         $payload = $this->extractor->runTest([
             'ctas' => [
                 ['foo' => 'bar'],

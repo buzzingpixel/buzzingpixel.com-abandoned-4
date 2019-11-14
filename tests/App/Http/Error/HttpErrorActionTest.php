@@ -18,6 +18,7 @@ class HttpErrorActionTest extends TestCase
 {
     /** @var HttpErrorAction */
     private $action;
+
     /** @var MockObject&ServerRequestInterface */
     private $request;
 
@@ -30,7 +31,6 @@ class HttpErrorActionTest extends TestCase
             new Error500Responder($responseFactory)
         );
 
-        /** @var MockObject&ServerRequestInterface $request */
         $request = $this->createMock(ServerRequestInterface::class);
 
         $this->request = $request;

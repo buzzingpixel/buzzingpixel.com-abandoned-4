@@ -12,7 +12,6 @@ use App\Content\Software\ExtractSoftwareInfoFromPath;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetSoftwareAction;
 use App\Http\Software\GetSoftwareResponder;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -37,7 +36,6 @@ class GetSoftwareActionTest extends TestCase
 
         $softwareInfoPayload = new SoftwareInfoPayload();
 
-        /** @var ExtractSoftwareInfoFromPath&MockObject $extractSoftwareInfoFromPath */
         $extractSoftwareInfoFromPath = $this->createMock(ExtractSoftwareInfoFromPath::class);
 
         $extractSoftwareInfoFromPath->expects(self::once())
@@ -51,7 +49,6 @@ class GetSoftwareActionTest extends TestCase
 
         $metaPayload = new MetaPayload();
 
-        /** @var ExtractMetaFromPath&MockObject $extractMetaFromPath */
         $extractMetaFromPath = $this->createMock(ExtractMetaFromPath::class);
 
         $extractMetaFromPath->expects(self::once())
@@ -65,7 +62,6 @@ class GetSoftwareActionTest extends TestCase
 
         $modulePayload = new ModulePayload();
 
-        /** @var ExtractModulesFromPath&MockObject $extractModulesFromPath */
         $extractModulesFromPath = $this->createMock(ExtractModulesFromPath::class);
 
         $extractModulesFromPath->expects(self::once())
@@ -79,7 +75,6 @@ class GetSoftwareActionTest extends TestCase
 
         $responseInterface = $this->createMock(ResponseInterface::class);
 
-        /** @var GetSoftwareResponder&MockObject $responder */
         $responder = $this->createMock(GetSoftwareResponder::class);
 
         $responder->expects(self::once())
@@ -96,7 +91,6 @@ class GetSoftwareActionTest extends TestCase
          * URI Interface
          */
 
-        /** @var UriInterface&MockObject $uriInterface */
         $uriInterface = $this->createMock(UriInterface::class);
 
         $uriInterface->expects(self::once())
@@ -107,7 +101,6 @@ class GetSoftwareActionTest extends TestCase
          * Request interface
          */
 
-        /** @var ServerRequestInterface&MockObject $requestInterface */
         $requestInterface = $this->createMock(ServerRequestInterface::class);
 
         $requestInterface->method('getUri')->willReturn($uriInterface);

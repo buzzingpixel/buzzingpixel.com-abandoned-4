@@ -10,7 +10,6 @@ use App\Content\Modules\ExtractModulesFromPath;
 use App\Content\Modules\ModulePayload;
 use App\Http\Home\GetHomeAction;
 use App\Http\Home\GetHomeResponder;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
@@ -28,7 +27,6 @@ class GetHomeActionTest extends TestCase
 
         $metaPayload = new MetaPayload();
 
-        /** @var ExtractMetaFromPath&MockObject $extractMetaFromPath */
         $extractMetaFromPath = $this->createMock(ExtractMetaFromPath::class);
 
         $extractMetaFromPath->expects(self::once())
@@ -42,7 +40,6 @@ class GetHomeActionTest extends TestCase
 
         $modulePayload = new ModulePayload();
 
-        /** @var ExtractModulesFromPath&MockObject $extractModulesFromPath */
         $extractModulesFromPath = $this->createMock(ExtractModulesFromPath::class);
 
         $extractModulesFromPath->expects(self::once())
@@ -56,7 +53,6 @@ class GetHomeActionTest extends TestCase
 
         $responseInterface = $this->createMock(ResponseInterface::class);
 
-        /** @var GetHomeResponder&MockObject $responder */
         $responder = $this->createMock(GetHomeResponder::class);
 
         $responder->expects(self::once())
