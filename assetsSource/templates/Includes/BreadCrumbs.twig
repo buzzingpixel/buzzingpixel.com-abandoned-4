@@ -1,0 +1,52 @@
+{# @var array breadcrumbs #}
+{% set includeHome = includeHome ?? true %}
+{% set breadcrumbs = breadcrumbs ?? [] %}
+
+{# {% set breadcrumbs = breadcrumbs ?? [
+    {
+        href: '#',
+        content: 'Test One',
+    },
+    {
+        href: '#',
+        content: 'Test Two',
+    },
+    {
+        content: 'Test Three',
+    },
+] %} #}
+
+{% if breadcrumbs|length %}
+    <ul class="BreadCrumbs">
+        {% if includeHome %}
+            <li class="BreadCrumbs__Item">
+                <a
+                    href="/"
+                    class="BreadCrumbs__ItemLink"
+                >
+                    Home
+                </a>
+            </li>
+        {% endif %}
+        {% for breadcrumb in breadcrumbs %}
+            <li class="BreadCrumbs__Item">
+                {% if not loop.last %}
+                <a
+                    href="{{ breadcrumb.href }}"
+                    class="BreadCrumbs__ItemLink"
+                >
+                {% else %}
+                <span
+                    class="BreadCrumbs__ItemLink BreadCrumbs__ItemLink--IsInactive"
+                >
+                {% endif %}
+                    {{ breadcrumb.content|smartypants }}
+                {% if loop.last %}
+                </span>
+                {% else %}
+                </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

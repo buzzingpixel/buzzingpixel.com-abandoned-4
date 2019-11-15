@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
+use App\Http\Software\GetChangelogItemAction;
 use App\Http\Software\GetSoftwareAction;
 use Slim\App;
 
 return static function (App $app) : void {
     // Match all integers except 0 or 1
-    // (?!(?:0|1)$)\d+;
+    // {page:(?!(?:0|1)$)\d+}
+
+    // Match anything except a forward slash
+    // {slug:[^\/]+}
 
     // Home
     $app->get('/', GetHomeAction::class);
@@ -17,4 +21,5 @@ return static function (App $app) : void {
     // Ansel Craft
     $app->get('/software/ansel-craft', GetSoftwareAction::class);
     $app->get('/software/ansel-craft/changelog[/page/{page:(?!(?:0|1)$)\d+}]', GetChangelogAction::class);
+    $app->get('/software/ansel-craft/changelog/{slug:[^\/]+}', GetChangelogItemAction::class);
 };

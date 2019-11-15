@@ -1,0 +1,83 @@
+.BreadCrumbs {
+    list-style: none;
+    margin: 0;
+}
+
+.BreadCrumbs__Item {
+    display: inline-block;
+}
+
+.BreadCrumbs__ItemLink {
+    background: linear-gradient(90deg, var(--DeepSea), var(--Jade));
+    color: var(--AquaHaze);
+    display: block;
+    font-size: 13px;
+    padding: 2px 14px 2px 30px;
+    position: relative;
+    text-decoration: none;
+}
+
+.BreadCrumbs__ItemLink:after {
+    position: absolute;
+    top: 0;
+    right: -18px;
+
+    @mixin caretRight var(--Jade), 18px, 18px;
+}
+
+a.BreadCrumbs__ItemLink:hover {
+    background: var(--AquaIsland);
+    color: var(--DeepSea);
+    text-decoration: none;
+}
+
+a.BreadCrumbs__ItemLink:hover:after {
+    border-left-color: var(--AquaIsland);
+}
+
+.BreadCrumbs__ItemLink--IsInactive,
+.BreadCrumbs__ItemLink--IsInactive:hover {
+    background: var(--Gray);
+}
+
+.BreadCrumbs__ItemLink--IsInactive:after,
+.BreadCrumbs__ItemLink--IsInactive:hover:after {
+    border-left-color: var(--Gray);
+}
+
+.BreadCrumbs__Item:first-child .BreadCrumbs__ItemLink {
+    padding-left: 14px;
+    z-index: 9;
+}
+
+.BreadCrumbs__Item:nth-child(2) .BreadCrumbs__ItemLink {
+    z-index: 8;
+}
+
+.BreadCrumbs__Item:nth-child(3) .BreadCrumbs__ItemLink {
+    z-index: 7;
+}
+
+.BreadCrumbs__Item:nth-child(4) .BreadCrumbs__ItemLink {
+    z-index: 6;
+}
+
+.BreadCrumbs__Item:nth-child(5) .BreadCrumbs__ItemLink {
+    z-index: 5;
+}
+
+.BreadCrumbs__Item:nth-child(6) .BreadCrumbs__ItemLink {
+    z-index: 4;
+}
+
+.BreadCrumbs__Item:nth-child(7) .BreadCrumbs__ItemLink {
+    z-index: 3;
+}
+
+.BreadCrumbs__Item:nth-child(8) .BreadCrumbs__ItemLink {
+    z-index: 2;
+}
+
+.BreadCrumbs__Item:nth-child(9) .BreadCrumbs__ItemLink {
+    z-index: 1;
+}
