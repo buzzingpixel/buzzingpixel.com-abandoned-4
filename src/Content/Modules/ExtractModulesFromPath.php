@@ -86,12 +86,10 @@ class ExtractModulesFromPath
         return new ModulePayload([
             'items' => array_values(array_map(
                 /**
-                 * @param string $item
-                 *
                  * @return mixed
                  */
                 function (string $item) use ($modulesPath) {
-                    $fullPath = $modulesPath . '/' . (string) $item;
+                    $fullPath = $modulesPath . '/' . $item;
 
                     /** @var array $parsedYaml */
                     $parsedYaml = Yaml::parseFile($fullPath);

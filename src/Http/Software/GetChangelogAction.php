@@ -78,7 +78,7 @@ class GetChangelogAction
 
         $changelogPayload = $allChangelogPayload->withReleaseSlice($limit, $offset);
 
-        if (! count($changelogPayload->getReleases())) {
+        if (count($changelogPayload->getReleases()) < 1) {
             throw new HttpNotFoundException($request);
         }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Content\Changelog;
 
 use App\Content\Changelog\ParseChangelogFromMarkdownFile;
-use MJErwin\ParseAChangelog\Release;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use function count;
@@ -68,8 +67,6 @@ class ParseChangelogFromMarkdownFileTest extends TestCase
         );
 
         self::assertTrue(count($payload->getReleases()) > 1);
-
-        self::assertInstanceOf(Release::class, $payload->getReleases()[0]);
     }
 
     /**

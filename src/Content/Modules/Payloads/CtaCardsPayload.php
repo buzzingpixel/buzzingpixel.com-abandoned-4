@@ -18,11 +18,19 @@ class CtaCardsPayload extends SpecificPayload
 
     public function getPrimary() : CtaCardItemPayload
     {
-        if (! $this->primary) {
+        $isInstance = $this->primary instanceof CtaCardItemPayload;
+
+        if (! $isInstance) {
             $this->primary = new CtaCardItemPayload();
         }
 
-        return $this->primary;
+        // We have to do this to make PHPStan happy because it doesn't
+        // understand that the condition above makes sure we always send
+        // an instance of CtaCardItemPayload
+        /** @var CtaCardItemPayload $primary */
+        $primary = $this->primary;
+
+        return $primary;
     }
 
     /** @var CtaCardItemPayload|null */
@@ -35,11 +43,19 @@ class CtaCardsPayload extends SpecificPayload
 
     public function getLeft() : CtaCardItemPayload
     {
-        if (! $this->left) {
+        $isInstance = $this->left instanceof CtaCardItemPayload;
+
+        if (! $isInstance) {
             $this->left = new CtaCardItemPayload();
         }
 
-        return $this->left;
+        // We have to do this to make PHPStan happy because it doesn't
+        // understand that the condition above makes sure we always send
+        // an instance of CtaCardItemPayload
+        /** @var CtaCardItemPayload $left */
+        $left = $this->left;
+
+        return $left;
     }
 
     /** @var CtaCardItemPayload|null */
@@ -52,10 +68,18 @@ class CtaCardsPayload extends SpecificPayload
 
     public function getRight() : CtaCardItemPayload
     {
-        if (! $this->right) {
+        $isInstance = $this->right instanceof CtaCardItemPayload;
+
+        if (! $isInstance) {
             $this->right = new CtaCardItemPayload();
         }
 
-        return $this->right;
+        // We have to do this to make PHPStan happy because it doesn't
+        // understand that the condition above makes sure we always send
+        // an instance of CtaCardItemPayload
+        /** @var CtaCardItemPayload $right */
+        $right = $this->right;
+
+        return $right;
     }
 }

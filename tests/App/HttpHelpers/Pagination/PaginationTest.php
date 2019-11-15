@@ -205,7 +205,6 @@ class PaginationTest extends TestCase
     {
         $pagination = $this->pagination;
 
-        self::assertIsArray($pagination->pagesArray());
         self::assertEmpty($pagination->pagesArray());
     }
 

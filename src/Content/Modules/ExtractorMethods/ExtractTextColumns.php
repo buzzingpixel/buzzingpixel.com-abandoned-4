@@ -40,7 +40,7 @@ trait ExtractTextColumns
     }
 
     /**
-     * @param array<string, string> $textColumn
+     * @param array<string, mixed> $textColumn
      *
      * @throws Throwable
      */

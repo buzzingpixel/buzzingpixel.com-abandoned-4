@@ -6,7 +6,7 @@ namespace App\Content\Software;
 
 use App\Content\Modules\Payloads\CtaPayload;
 use App\Payload\SpecificPayload;
-use InvalidArgumentException;
+use function array_walk;
 
 class SoftwareInfoPayload extends SpecificPayload
 {
@@ -96,17 +96,12 @@ class SoftwareInfoPayload extends SpecificPayload
      */
     protected function setActionButtons(array $actionButtons) : void
     {
-        foreach ($actionButtons as $actionButton) {
-            if ($actionButton instanceof CtaPayload) {
-                continue;
-            }
+        array_walk($actionButtons, [$this, 'setActionButton']);
+    }
 
-            throw new InvalidArgumentException(
-                'Action button must be instance of ' . CtaPayload::class
-            );
-        }
-
-        $this->actionButtons = $actionButtons;
+    protected function setActionButton(CtaPayload $ctaPayload) : void
+    {
+        $this->actionButtons[] = $ctaPayload;
     }
 
     /**

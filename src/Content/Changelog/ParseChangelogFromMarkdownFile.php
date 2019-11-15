@@ -24,7 +24,7 @@ class ParseChangelogFromMarkdownFile
      */
     public function __invoke(string $location) : ChangelogPayload
     {
-        if (! filter_var($location, FILTER_VALIDATE_URL)) {
+        if (filter_var($location, FILTER_VALIDATE_URL) === false) {
             $location = $this->pathToContentDirectory . '/' . $location;
         }
 

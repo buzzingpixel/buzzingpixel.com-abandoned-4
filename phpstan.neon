@@ -2,8 +2,15 @@ parameters:
     level: max
     ignoreErrors:
         -
-            message: '#If condition is always true\.#'
-            path: %currentWorkingDirectory%/tests/TestConfig.php
+            message: '#Variable method call on \$this\(App\\Payload\\SpecificPayload\)\.#'
+            path: %currentWorkingDirectory%/src/Payload/SpecificPayload.php
+        -
+            message: '#Variable method call on \$this\(App\\Content\\Modules\\ExtractModulesFromPath\)\.#'
+            path: %currentWorkingDirectory%/src/Content/Modules/ExtractModulesFromPath.php
+    excludes_analyse:
+        - %currentWorkingDirectory%/config/dumper.php
+        - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php
+        - %currentWorkingDirectory%/tests/TestConfig.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

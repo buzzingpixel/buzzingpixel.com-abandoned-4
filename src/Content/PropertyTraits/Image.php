@@ -18,10 +18,18 @@ trait Image
 
     public function getImage() : ImagePayload
     {
-        if (! $this->image) {
+        $isInstance = $this->image instanceof ImagePayload;
+
+        if (! $isInstance) {
             $this->image = new ImagePayload();
         }
 
-        return $this->image;
+        // We have to do this to make PHPStan happy because it doesn't
+        // understand that the condition above makes sure we always send
+        // an instance of ImagePayload
+        /** @var ImagePayload $image */
+        $image = $this->image;
+
+        return $image;
     }
 }

@@ -35,7 +35,7 @@ trait MapYamlImageToPayload
     }
 
     /**
-     * @param array<string, string> $source
+     * @param array<string, mixed> $source
      *
      * @throws Throwable
      */

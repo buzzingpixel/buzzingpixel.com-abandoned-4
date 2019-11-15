@@ -162,7 +162,7 @@ class Pagination
 
     public function prevPageLink() : ?string
     {
-        if (! $this->calcPrevPageLink) {
+        if ($this->calcPrevPageLink === null) {
             if ($this->prevPage() === null) {
                 return null;
             }
@@ -203,7 +203,7 @@ class Pagination
             return null;
         }
 
-        $base = $this->base() ? $this->base() : '/';
+        $base = $this->base() !== '' ? $this->base() : '/';
 
         return $base . $this->queryString();
     }
@@ -256,8 +256,6 @@ class Pagination
         $pages = [];
 
         foreach (range($lowerRange, $upperRange) as $pageNum) {
-            $pageNum = (int) $pageNum;
-
             $pageArray = [
                 'label' => $pageNum,
                 'target' => $this->base() . '/page/' . $pageNum . $this->queryString(),

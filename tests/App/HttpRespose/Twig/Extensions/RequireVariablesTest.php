@@ -56,7 +56,7 @@ class RequireVariablesTest extends TestCase
             ['randomInstance' => null]
         );
 
-        self::assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testWhenVarTypeIsClassAndNotInstance() : void
@@ -80,7 +80,7 @@ class RequireVariablesTest extends TestCase
             ['randomInstance' => RandomInstance::class]
         );
 
-        self::assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testWhenVarTypeIsStringAndInstanceNotString() : void
@@ -104,7 +104,7 @@ class RequireVariablesTest extends TestCase
             ['randomInstance' => 'string']
         );
 
-        self::assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testWhenVarTypeIsIntegerAndInstanceNotInteger() : void
@@ -128,6 +128,6 @@ class RequireVariablesTest extends TestCase
             ['randomInstance' => 'integer']
         );
 
-        self::assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 }

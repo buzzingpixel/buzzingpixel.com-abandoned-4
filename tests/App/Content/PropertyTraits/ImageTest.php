@@ -22,7 +22,6 @@ class ImageTest extends TestCase
         /** @var ImagePayload $payl$payload2oad */
         $payload2 = $trait->getImage();
 
-        self::assertInstanceOf(ImagePayload::class, $payload);
         self::assertSame($payload, $payload2);
         self::assertSame('', $payload->getOneX());
         self::assertSame('', $payload->getTwoX());

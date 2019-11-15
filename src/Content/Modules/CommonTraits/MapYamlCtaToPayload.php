@@ -10,7 +10,7 @@ use Throwable;
 trait MapYamlCtaToPayload
 {
     /**
-     * @param array<string, string> $yamlCta
+     * @param array<string, mixed> $yamlCta
      *
      * @throws Throwable
      */

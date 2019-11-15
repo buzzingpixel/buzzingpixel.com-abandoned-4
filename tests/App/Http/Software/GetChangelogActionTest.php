@@ -81,23 +81,19 @@ class GetChangelogActionTest extends TestCase
 
         /** @var MetaPayload $metaPayload */
         $metaPayload = $this->responderInvokeArgs[0];
-        self::assertInstanceOf(MetaPayload::class, $metaPayload);
         self::assertSame($this->metaPayload, $metaPayload);
 
         /** @var ChangelogPayload $allChangelogPayload */
         $allChangelogPayload = $this->responderInvokeArgs[1];
-        self::assertInstanceOf(ChangelogPayload::class, $allChangelogPayload);
         self::assertCount(2, $allChangelogPayload->getReleases());
 
         /** @var ChangelogPayload $changelogPayload */
         $changelogPayload = $this->responderInvokeArgs[2];
-        self::assertInstanceOf(ChangelogPayload::class, $changelogPayload);
         self::assertCount(2, $changelogPayload->getReleases());
         self::assertNotSame($allChangelogPayload, $changelogPayload);
 
         /** @var Pagination $pagination */
         $pagination = $this->responderInvokeArgs[3];
-        self::assertInstanceOf(Pagination::class, $pagination);
         self::assertSame('/software/ansel-craft/changelog', $pagination->base());
         self::assertSame(2, $pagination->totalResults());
         self::assertSame(10, $pagination->perPage());
@@ -106,7 +102,6 @@ class GetChangelogActionTest extends TestCase
 
         /** @var SoftwareInfoPayload $softwareInfoPayload */
         $softwareInfoPayload = $this->responderInvokeArgs[4];
-        self::assertInstanceOf(SoftwareInfoPayload::class, $softwareInfoPayload);
         self::assertSame($this->softwareInfoPayload, $softwareInfoPayload);
 
         /** @var string $uriPath */
@@ -134,23 +129,19 @@ class GetChangelogActionTest extends TestCase
 
         /** @var MetaPayload $metaPayload */
         $metaPayload = $this->responderInvokeArgs[0];
-        self::assertInstanceOf(MetaPayload::class, $metaPayload);
         self::assertSame($this->metaPayload, $metaPayload);
 
         /** @var ChangelogPayload $allChangelogPayload */
         $allChangelogPayload = $this->responderInvokeArgs[1];
-        self::assertInstanceOf(ChangelogPayload::class, $allChangelogPayload);
         self::assertCount(14, $allChangelogPayload->getReleases());
 
         /** @var ChangelogPayload $changelogPayload */
         $changelogPayload = $this->responderInvokeArgs[2];
-        self::assertInstanceOf(ChangelogPayload::class, $changelogPayload);
         self::assertCount(4, $changelogPayload->getReleases());
         self::assertNotSame($allChangelogPayload, $changelogPayload);
 
         /** @var Pagination $pagination */
         $pagination = $this->responderInvokeArgs[3];
-        self::assertInstanceOf(Pagination::class, $pagination);
         self::assertSame('/software/ansel-craft/changelog', $pagination->base());
         self::assertSame(14, $pagination->totalResults());
         self::assertSame(10, $pagination->perPage());
@@ -159,7 +150,6 @@ class GetChangelogActionTest extends TestCase
 
         /** @var SoftwareInfoPayload $softwareInfoPayload */
         $softwareInfoPayload = $this->responderInvokeArgs[4];
-        self::assertInstanceOf(SoftwareInfoPayload::class, $softwareInfoPayload);
         self::assertSame($this->softwareInfoPayload, $softwareInfoPayload);
 
         /** @var string $uriPath */

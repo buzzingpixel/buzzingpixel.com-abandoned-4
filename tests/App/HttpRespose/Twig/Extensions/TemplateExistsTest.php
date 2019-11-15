@@ -8,7 +8,6 @@ use App\HttpRespose\Twig\Extensions\TemplateExists;
 use PHPUnit\Framework\TestCase;
 use Tests\TestConfig;
 use Twig\Environment as TwigEnvironment;
-use Twig\TwigFunction;
 
 class TemplateExistsTest extends TestCase
 {
@@ -23,8 +22,6 @@ class TemplateExistsTest extends TestCase
         self::assertCount(1, $functions);
 
         $function = $functions[0];
-
-        self::assertInstanceOf(TwigFunction::class, $function);
 
         self::assertSame('templateExists', $function->getName());
 

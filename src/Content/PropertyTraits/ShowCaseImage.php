@@ -18,10 +18,18 @@ trait ShowCaseImage
 
     public function getShowCaseImage() : ImagePayload
     {
-        if (! $this->showCaseImage) {
+        $isInstance = $this->showCaseImage instanceof ImagePayload;
+
+        if (! $isInstance) {
             $this->showCaseImage = new ImagePayload();
         }
 
-        return $this->showCaseImage;
+        // We have to do this to make PHPStan happy because it doesn't
+        // understand that the condition above makes sure we always send
+        // an instance of ImagePayload
+        /** @var ImagePayload $showCaseImage */
+        $showCaseImage = $this->showCaseImage;
+
+        return $showCaseImage;
     }
 }

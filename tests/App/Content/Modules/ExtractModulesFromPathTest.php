@@ -79,17 +79,13 @@ class ExtractModulesFromPathTest extends TestCase
         /** @var ExtractorImplementationPayload $item */
         $item = $items[0];
 
-        self::assertInstanceOf(ExtractorImplementationPayload::class, $item);
-
-        $yaml = $item->getYaml();
-
         self::assertSame(
             [
                 'type' => 'TestContent',
                 'foo' => 'bar',
                 'bar' => 'Baz',
             ],
-            $yaml
+            $item->getYaml()
         );
     }
 }
