@@ -142,6 +142,7 @@
       <path value="$PROJECT_DIR$/vendor/erusev/parsedown" />
       <path value="$PROJECT_DIR$/vendor/mjerwin/parseachangelog" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-strict-rules" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
