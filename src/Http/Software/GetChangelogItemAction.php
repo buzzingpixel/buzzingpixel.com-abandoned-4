@@ -42,6 +42,7 @@ class GetChangelogItemAction
 
     /**
      * @throws Throwable
+     * @throws HttpNotFoundException
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {

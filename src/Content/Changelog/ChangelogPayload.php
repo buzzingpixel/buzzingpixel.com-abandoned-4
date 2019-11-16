@@ -16,11 +16,11 @@ class ChangelogPayload extends SpecificPayload
     private $releases = [];
 
     /**
-     * @param Release[] $items
+     * @param Release[] $releases
      */
-    protected function setReleases(array $items) : void
+    protected function setReleases(array $releases) : void
     {
-        array_walk($items, [$this, 'addRelease']);
+        array_walk($releases, [$this, 'addRelease']);
     }
 
     protected function addRelease(Release $release) : void

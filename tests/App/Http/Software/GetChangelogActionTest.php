@@ -23,6 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use ReflectionException;
 use Slim\Exception\HttpNotFoundException;
+use Tests\TestConfig;
 use Throwable;
 use function func_get_args;
 
@@ -196,7 +197,7 @@ class GetChangelogActionTest extends TestCase
 
         $this->action = new GetChangelogAction(
             $this->getChangelogResponder,
-            new ExtractUriSegments(),
+            TestConfig::$di->get(ExtractUriSegments::class),
             $this->extractSoftwareInfoFromPath,
             $this->parseChangelog,
             $this->extractMetaFromPath
