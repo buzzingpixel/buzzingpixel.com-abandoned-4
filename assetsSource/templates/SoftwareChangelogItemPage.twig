@@ -50,7 +50,7 @@
     {% set softwareTitle = softwareInfoPayload.getTitle() %}
 
     {% if softwareInfoPayload.getSubTitle() %}
-        {% set softwareTitle = softwareTitle ~ softwareInfoPayload.getSubTitle() %}
+        {% set softwareTitle = softwareTitle ~ ' ' ~ softwareInfoPayload.getSubTitle() %}
     {% endif %}
 
     {% include 'Includes/BreadCrumbs.twig' with {

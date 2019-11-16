@@ -1,10 +1,10 @@
 const urls = [
     {
-        url: 'software/ansel-craft/changelog',
+        url: '/software/ansel-craft/changelog',
         hasPagination: true,
     },
     {
-        url: 'software/ansel-craft/changelog/page/2',
+        url: '/software/ansel-craft/changelog/page/2',
         hasPagination: true,
     },
 ];

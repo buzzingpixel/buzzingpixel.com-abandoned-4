@@ -15,7 +15,7 @@ const urls = [
         ],
         navItemsRight: [
             {
-                href: '/software/ansel-craft/documentation',
+                href: 'software/ansel-craft/documentation',
                 content: 'Documentation',
                 isActive: false,
             },
@@ -45,6 +45,28 @@ const urls = [
     },
     {
         url: '/software/ansel-craft/changelog/page/2',
+        navItemsLeft: [
+            {
+                href: '/software/ansel-craft',
+                content: 'Features',
+                isActive: false,
+            },
+            {
+                href: '/software/ansel-craft/changelog',
+                content: 'Changelog',
+                isActive: true,
+            },
+        ],
+        navItemsRight: [
+            {
+                href: '/software/ansel-craft/documentation',
+                content: 'Documentation',
+                isActive: false,
+            },
+        ],
+    },
+    {
+        url: '/software/ansel-craft/changelog/2.1.4',
         navItemsLeft: [
             {
                 href: '/software/ansel-craft',

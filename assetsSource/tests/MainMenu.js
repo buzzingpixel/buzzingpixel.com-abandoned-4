@@ -3,6 +3,8 @@ const urls = [
     '/software/ansel-craft',
     '/software/ansel-craft/changelog',
     '/software/ansel-craft/changelog/page/2',
+    '/software/ansel-craft/changelog/2.1.4',
+    '/software/ansel-craft/changelog/1.0.2',
 ];
 
 urls.forEach((url) => {
