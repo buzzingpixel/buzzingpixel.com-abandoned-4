@@ -1,0 +1,42 @@
+title: System Requirements
+
+content:
+  - type: heading
+    level: 3
+    content: General Requirements
+
+  - type: list
+    content:
+      - Craft CMS 2.6 or greater
+      - content: PHP 5.3.0 or newer compiled with GD (or GD 2) library
+        children:
+          - ImageMagick is also supported if installed
+      - MySQL 5.1.0 or newer
+      - content: At least 128 megabytes of memory allocated and available to PHP
+        children:
+          - 512 megabytes of memory is recommended (and more if you can spare it). Manipulating images can take a lot of memory. And particularly, the larger image, the more memory it will take.
+
+  - type: heading
+    level: 3
+    content: Control panel interface and entry field type use requirements
+
+  - type: list
+    content:
+      - Internet Explorer 10 or greater
+      - Chrome (tested on version 55)
+      - Firefox (tested on version 50)
+      - Safari (Mac) (tested on version 10)
+
+  - type: heading
+    level: 3
+    content: Image optimization requirements
+
+  - type: content
+    content: Ansel will also utilize various image optimization libraries if they are installed on the server and your PHP version is high enough.
+
+  - type: list
+    content:
+      - PHP 5.5 or greater
+      - "`jpegoptim` for jpeg optimization"
+      - "`gifsicle` for gif optimization"
+      - "`optipng` for PNG optimization"
