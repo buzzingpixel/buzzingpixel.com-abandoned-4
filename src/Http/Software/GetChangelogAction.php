@@ -82,8 +82,19 @@ class GetChangelogAction
             throw new HttpNotFoundException($request);
         }
 
+        $metaPayload = ($this->extractMetaFromPath)($contentPath);
+
+        $metaTitle = 'Changelog | ' . $metaPayload->getMetaTitle();
+
+        if ($uriSegments->getPageNum() > 1) {
+            $metaTitle = 'Page ' . $uriSegments->getPageNum() . ' | ' . $metaTitle;
+        }
+
+        $newMetaPayload = $metaPayload->withMetaTitle($metaTitle)
+            ->withMetaDescription('');
+
         return ($this->responder)(
-            ($this->extractMetaFromPath)($contentPath),
+            $newMetaPayload,
             $allChangelogPayload,
             $changelogPayload,
             $pagination,

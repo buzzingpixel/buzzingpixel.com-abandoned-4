@@ -78,8 +78,16 @@ class GetChangelogItemAction
             throw new HttpNotFoundException($request);
         }
 
+        $metaPayload = ($this->extractMetaFromPath)($contentPath);
+
+        $newMetaPayload = $metaPayload
+            ->withMetaTitle(
+                'Version ' . $release->getVersion() . ' | Changelog | ' . $metaPayload->getMetaTitle()
+            )
+            ->withMetaDescription('');
+
         return ($this->responder)(
-            ($this->extractMetaFromPath)($contentPath),
+            $newMetaPayload,
             $release,
             $softwareInfoPayload,
             '/' . $uriSegments->getPathFromSegmentSlice(2)

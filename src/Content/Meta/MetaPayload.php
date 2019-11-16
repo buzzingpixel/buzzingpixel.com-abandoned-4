@@ -34,6 +34,15 @@ class MetaPayload extends SpecificPayload
         return $this->metaTitle;
     }
 
+    public function withMetaTitle(string $newMetaTitle) : MetaPayload
+    {
+        $newMetaPayload = clone $this;
+
+        $newMetaPayload->metaTitle = $newMetaTitle;
+
+        return $newMetaPayload;
+    }
+
     /** @var string */
     private $metaDescription = '';
 
@@ -45,6 +54,15 @@ class MetaPayload extends SpecificPayload
     public function getMetaDescription() : string
     {
         return $this->metaDescription;
+    }
+
+    public function withMetaDescription(string $newMetaDescription) : MetaPayload
+    {
+        $newMetaPayload = clone $this;
+
+        $newMetaPayload->metaDescription = $newMetaDescription;
+
+        return $newMetaPayload;
     }
 
     /** @var string */

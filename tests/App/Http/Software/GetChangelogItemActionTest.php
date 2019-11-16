@@ -22,6 +22,7 @@ use Psr\Http\Message\UriInterface;
 use Slim\Exception\HttpNotFoundException;
 use Tests\TestConfig;
 use Throwable;
+use function func_get_args;
 
 class GetChangelogItemActionTest extends TestCase
 {
@@ -44,6 +45,8 @@ class GetChangelogItemActionTest extends TestCase
     private $responderExceptCall = false;
     /** @var Release|null */
     private $release;
+    /** @var mixed[] */
+    private $responderCallArgs;
 
     /**
      * @throws Throwable
@@ -134,6 +137,29 @@ class GetChangelogItemActionTest extends TestCase
         $response = ($this->action)($this->mockRequest());
 
         self::assertSame($this->response, $response);
+
+        self::assertCount(4, $this->responderCallArgs);
+
+        /** @var MetaPayload|null $metaPayload */
+        $metaPayload = $this->responderCallArgs[0];
+        self::assertInstanceOf(MetaPayload::class, $metaPayload);
+        self::assertSame('Version 2.1.3 | Changelog | Ansel', $metaPayload->getMetaTitle());
+        self::assertSame('', $metaPayload->getMetaDescription());
+        self::assertSame('BarBaz', $metaPayload->getOgType());
+
+        /** @var Release|null $release */
+        $release = $this->responderCallArgs[1];
+        self::assertInstanceOf(Release::class, $release);
+        self::assertSame($this->release, $release);
+
+        /** @var SoftwareInfoPayload|null $softwareInfoPayload */
+        $softwareInfoPayload = $this->responderCallArgs[2];
+        self::assertInstanceOf(SoftwareInfoPayload::class, $softwareInfoPayload);
+        self::assertSame($this->softwareInfoPayload, $softwareInfoPayload);
+
+        /** @var string $uriPath */
+        $uriPath = $this->responderCallArgs[3];
+        self::assertSame('/software/ansel-craft', $uriPath);
     }
 
     /**
@@ -145,7 +171,11 @@ class GetChangelogItemActionTest extends TestCase
             'changelogExternalUrl' => $this->changelogExternalUrl,
         ]);
 
-        $this->metaPayload = new MetaPayload();
+        $this->metaPayload = new MetaPayload([
+            'metaTitle' => 'Ansel',
+            'metaDescription' => 'FooBar',
+            'ogType' => 'BarBaz',
+        ]);
 
         $this->response = $this->mockResponse();
 
@@ -173,6 +203,8 @@ class GetChangelogItemActionTest extends TestCase
      */
     private function mockResponder()
     {
+        $this->responderCallArgs = [];
+
         $responder = $this->createMock(
             GetChangelogItemResponder::class
         );
@@ -183,13 +215,11 @@ class GetChangelogItemActionTest extends TestCase
 
         $responder->expects(self::once())
             ->method('__invoke')
-            ->with(
-                self::equalTo($this->metaPayload),
-                self::equalTo($this->release),
-                self::equalTo($this->softwareInfoPayload),
-                self::equalTo('/software/ansel-craft')
-            )
-            ->willReturn($this->response);
+            ->willReturnCallback(function () {
+                $this->responderCallArgs = func_get_args();
+
+                return $this->response;
+            });
 
         return $responder;
     }

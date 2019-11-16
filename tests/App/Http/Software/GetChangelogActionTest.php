@@ -80,9 +80,12 @@ class GetChangelogActionTest extends TestCase
 
         self::assertCount(6, $this->responderInvokeArgs);
 
-        /** @var MetaPayload $metaPayload */
+        /** @var MetaPayload|null $metaPayload */
         $metaPayload = $this->responderInvokeArgs[0];
-        self::assertSame($this->metaPayload, $metaPayload);
+        self::assertInstanceOf(MetaPayload::class, $metaPayload);
+        self::assertSame('Changelog | Ansel', $metaPayload->getMetaTitle());
+        self::assertSame('', $metaPayload->getMetaDescription());
+        self::assertSame('BarBaz', $metaPayload->getOgType());
 
         /** @var ChangelogPayload $allChangelogPayload */
         $allChangelogPayload = $this->responderInvokeArgs[1];
@@ -128,9 +131,12 @@ class GetChangelogActionTest extends TestCase
 
         self::assertCount(6, $this->responderInvokeArgs);
 
-        /** @var MetaPayload $metaPayload */
+        /** @var MetaPayload|null $metaPayload */
         $metaPayload = $this->responderInvokeArgs[0];
-        self::assertSame($this->metaPayload, $metaPayload);
+        self::assertInstanceOf(MetaPayload::class, $metaPayload);
+        self::assertSame('Page 2 | Changelog | Ansel', $metaPayload->getMetaTitle());
+        self::assertSame('', $metaPayload->getMetaDescription());
+        self::assertSame('BarBaz', $metaPayload->getOgType());
 
         /** @var ChangelogPayload $allChangelogPayload */
         $allChangelogPayload = $this->responderInvokeArgs[1];
@@ -184,7 +190,7 @@ class GetChangelogActionTest extends TestCase
     }
 
     /**
-     * @throws ReflectionException
+     * @throws Throwable
      */
     protected function internalSetup() : void
     {
@@ -257,9 +263,16 @@ class GetChangelogActionTest extends TestCase
             ->willReturn($payload);
     }
 
+    /**
+     * @throws Throwable
+     */
     private function mockExtractMetaFromPath() : void
     {
-        $this->metaPayload = new MetaPayload();
+        $this->metaPayload = new MetaPayload([
+            'metaTitle' => 'Ansel',
+            'metaDescription' => 'FooBar',
+            'ogType' => 'BarBaz',
+        ]);
 
         $this->extractMetaFromPath = $this->createMock(
             ExtractMetaFromPath::class
