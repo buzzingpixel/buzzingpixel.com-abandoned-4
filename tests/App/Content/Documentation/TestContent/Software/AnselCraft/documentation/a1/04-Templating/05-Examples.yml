@@ -1,0 +1,75 @@
+title: Examples
+
+content:
+  - type: codeblock
+    lang: twig
+    heading: A Field From an Entry
+    content: |
+      {% for entry in craft.entries.section('mySection').limit(2) %}
+          <h1>{{ entry.title }}</h1>
+          <div class="images">
+              {% set images = entry.myImagesField.limit(2).coverFirst(true) %}
+
+              {% if not images.count %}
+                  <div class="images__no-results">
+                      This gallery has no images at this time. Please check back later.
+                  </div>
+              {% endif %}
+
+              {% for image in entry.myImagesField.limit(2).coverFirst(true) %}
+                  <div class="images__image">
+                      <img src="{{ image.asset.url }}" alt="{{ image.title|default(entry.title) }}">
+                      <div class="images__image-caption">
+                          {{ image.caption }}
+                      </div>
+                  </div>
+              {% endfor %}
+          </div>
+      {% endfor %}
+
+
+  - type: codeblock
+    lang: twig
+    heading: Resizing an Image on-the-fly
+    content: |
+      {% set image = craft.ansel.images.first() %}
+
+      {% set imageTransform = {
+          mode: 'crop',
+          width: 600,
+          quality: 80,
+          position: 'Center-Center'
+      } %}
+
+      <img src="{{ image.highQualityAsset.getUrl(imageTransform) }}" alt="{{ image.title }}">
+
+  - type: codeblock
+    lang: twig
+    heading: Ansel in a Matrix field
+    content: |
+      {% for entry in craft.entries.section('mySection').limit(2) %}
+          <h1>{{ entry.title }}</h1>
+          <div class="blocks">
+              {% for block in entry.matrixField %}
+                  <h2 class="blocks__title">{{ block.galleryTitlie }}</h2>
+                  <div class="images">
+                      {% set images = block.myImagesField.limit(2).coverFirst(true) %}
+
+                      {% if not images.count %}
+                          <div class="images__no-results">
+                              This gallery has no images at this time. Please check back later.
+                          </div>
+                      {% endif %}
+
+                      {% for image in entry.myImagesField.limit(2).coverFirst(true) %}
+                          <div class="images__image">
+                              <img src="{{ image.asset.url }}" alt="{{ image.title|default(entry.title) }}">
+                              <div class="images__image-caption">
+                                  {{ image.caption }}
+                              </div>
+                          </div>
+                      {% endfor %}
+                  </div>
+              {% endfor %}
+          </div>
+      {% endfor %}

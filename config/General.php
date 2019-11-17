@@ -5,17 +5,31 @@ declare(strict_types=1);
 namespace Config;
 
 use Config\Abstractions\SimpleModel;
+use function dirname;
 use function getenv;
 
+/**
+ * @method bool devMode()
+ * @method string pathToContentDirectory()
+ * @method string siteName()
+ * @method string twitterHandle()
+ * @method array stylesheets()
+ * @method array jsFiles()
+ */
 class General extends SimpleModel
 {
     public function __construct()
     {
         static::$devMode = getenv('DEV_MODE') === 'true';
+
+        static::$pathToContentDirectory = dirname(__DIR__) . '/content';
     }
 
     /** @var bool */
     public static $devMode = false;
+
+    /** @var string */
+    public static $pathToContentDirectory = '';
 
     /** @var string */
     public static $siteName = 'BuzzingPixel';

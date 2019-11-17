@@ -9,6 +9,8 @@ use function dirname;
 
 class TestConfig
 {
+    public const TESTS_BASE_PATH = __DIR__;
+
     /** @var ContainerInterface */
     public static $di;
 
