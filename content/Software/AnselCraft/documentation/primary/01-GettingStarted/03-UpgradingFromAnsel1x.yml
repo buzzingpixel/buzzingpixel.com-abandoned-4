@@ -9,5 +9,5 @@ content:
 
   - type: list
     content:
-      - `.all()` must be called to loop through ansel images (or use `.one()` to get a single image)
-      - `.first()` and `.find()` must be replaced with `.one()` and `.all()` respectively.
+      - "`.all()` must be called to loop through ansel images (or use `.one()` to get a single image)"
+      - "`.first()` and `.find()` must be replaced with `.one()` and `.all()` respectively."

@@ -108,7 +108,8 @@ content:
     content: Default customize title label
 
   - type: content
-    content: Use this to set newly created fields to have a default value for the title label.
+    content: |
+      Use this to set newly created fields to have a default value for the title label.
 
       The config override item is `defaultTitleLabel`.
 
