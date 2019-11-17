@@ -58,17 +58,23 @@ class CollectDocumentationVersionsFromPathTest extends TestCase
 
         self::assertNull($payload->getVersionBySlug('foo-bar'));
 
-        $this->validatePrimaryVersion(
-            $payload->getVersionBySlug('documentation')
-        );
+        $documentation = $payload->getVersionBySlug('documentation');
 
-        $this->validateV2(
-            $payload->getVersionBySlug('documentation-v2')
-        );
+        self::assertNotNull($documentation);
 
-        $this->validateA1(
-            $payload->getVersionBySlug('documentation-a1')
-        );
+        $this->validatePrimaryVersion($documentation);
+
+        $v2 = $payload->getVersionBySlug('documentation-v2');
+
+        self::assertNotNull($v2);
+
+        $this->validateV2($v2);
+
+        $a1 = $payload->getVersionBySlug('documentation-a1');
+
+        self::assertNotNull($a1);
+
+        $this->validateA1($a1);
     }
 
     private function validatePrimaryVersion(
@@ -82,6 +88,7 @@ class CollectDocumentationVersionsFromPathTest extends TestCase
         self::assertCount(4, $pages);
 
         $page1 = $version->getPageBySlug('');
+        self::assertNotNull($page1);
         self::assertSame('Getting Started', $page1->getTitle());
         self::assertSame('', $page1->getSlug());
 
@@ -111,6 +118,7 @@ class CollectDocumentationVersionsFromPathTest extends TestCase
         );
 
         $page4 = $version->getPageBySlug('templating');
+        self::assertNotNull($page4);
         self::assertSame('Templating', $page4->getTitle());
         self::assertSame('templating', $page4->getSlug());
 

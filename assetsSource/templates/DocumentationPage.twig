@@ -1,0 +1,51 @@
+{% do requireVariables({
+    metaPayload: 'App\\Content\\Meta\\MetaPayload',
+    uriPath: 'string',
+    activeHref: 'string',
+    activePage: 'App\\Content\\Documentation\\DocumentationPagePayload',
+    activeVersion: 'App\\Content\\Documentation\\DocumentationVersionPayload',
+    versions: 'App\\Content\\Documentation\\DocumentationVersionsPayload',
+}) %}
+
+{# @var \App\Content\Meta\MetaPayload metaPayload #}
+{# @var string uriPath #}
+{# @var string activeHref #}
+{# @var \App\Content\Documentation\DocumentationPagePayload activePage #}
+{# @var \App\Content\Documentation\DocumentationVersionPayload activeVersion #}
+{# @var \App\Content\Documentation\DocumentationVersionsPayload versions #}
+
+{% extends '_Layout.twig' %}
+
+{% set navItemsLeft = [
+    {
+        href: uriPath,
+        content: 'Features',
+    },
+    {
+        href: uriPath ~ '/changelog',
+        content: 'Changelog',
+    },
+] %}
+
+{% set navItemsRight = [] %}
+
+{% if versions.getSoftwareInfo().getHasDocumentation() %}
+    {% set navItemsRight = [{
+        href: uriPath ~ '/documentation',
+        content: 'Documentation',
+    }] %}
+{% endif %}
+
+{% block content %}
+    {% include 'Includes/TitleArea.twig' with {
+        title: versions.getSoftwareInfo().getTitle(),
+        subTitle: versions.getSoftwareInfo().getSubTitle(),
+        actionButtons: versions.getSoftwareInfo().getActionButtons(),
+    } only %}
+
+    {% include 'Includes/SubTitlePageNav.twig' with {
+        navItemsLeft: navItemsLeft,
+        navItemsRight: navItemsRight,
+        activeHref: activeHref,
+    } only %}
+{% endblock %}
