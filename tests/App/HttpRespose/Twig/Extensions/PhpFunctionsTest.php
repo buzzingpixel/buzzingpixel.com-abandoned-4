@@ -15,13 +15,17 @@ class PhpFunctionsTest extends TestCase
 
         $functions = $extension->getFunctions();
 
-        self::assertCount(2, $functions);
+        self::assertCount(3, $functions);
 
         $getClassFunction = $functions[0];
         self::assertSame('get_class', $getClassFunction->getName());
         self::assertSame('get_class', $getClassFunction->getCallable());
 
-        $uniqidFunction = $functions[1];
+        $getTypeFunction = $functions[1];
+        self::assertSame('gettype', $getTypeFunction->getName());
+        self::assertSame('gettype', $getTypeFunction->getCallable());
+
+        $uniqidFunction = $functions[2];
         self::assertSame('uniqid', $uniqidFunction->getName());
         self::assertSame('uniqid', $uniqidFunction->getCallable());
     }
