@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\HttpRespose\Twig\Extensions;
+namespace Tests\App\HttpResponse\Twig\Extensions;
 
-use App\HttpRespose\Twig\Extensions\TemplateExists;
+use App\HttpResponse\Twig\Extensions\TemplateExists;
 use PHPUnit\Framework\TestCase;
 use Tests\TestConfig;
 use Twig\Environment as TwigEnvironment;

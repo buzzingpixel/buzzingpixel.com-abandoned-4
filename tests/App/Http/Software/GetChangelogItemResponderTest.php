@@ -7,7 +7,7 @@ namespace Tests\App\Http\Software;
 use App\Content\Meta\MetaPayload;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetChangelogItemResponder;
-use App\HttpRespose\Minifier;
+use App\HttpResponse\Minifier;
 use MJErwin\ParseAChangelog\Release;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

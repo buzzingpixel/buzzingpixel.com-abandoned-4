@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\HttpRespose\Twig\Extensions;
+namespace Tests\App\HttpResponse\Twig\Extensions;
 
-use App\HttpRespose\Twig\Extensions\PhpFunctions;
+use App\HttpResponse\Twig\Extensions\PhpFunctions;
 use PHPUnit\Framework\TestCase;
 
 class PhpFunctionsTest extends TestCase

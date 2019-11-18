@@ -8,7 +8,7 @@ use App\Content\Meta\MetaPayload;
 use App\Content\Modules\ModulePayload;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetSoftwareResponder;
-use App\HttpRespose\Minifier;
+use App\HttpResponse\Minifier;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
 use Throwable;

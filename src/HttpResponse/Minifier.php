@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\HttpRespose;
+namespace App\HttpResponse;
 
 use Minify_HTML;
 

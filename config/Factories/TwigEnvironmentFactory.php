@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Config\Factories;
 
+use App\HttpResponse\Twig\Extensions\PhpFunctions;
+use App\HttpResponse\Twig\Extensions\RequireVariables;
 use App\HttpResponse\Twig\Extensions\Slugify;
-use App\HttpRespose\Twig\Extensions\PhpFunctions;
-use App\HttpRespose\Twig\Extensions\RequireVariables;
-use App\HttpRespose\Twig\Extensions\TemplateExists;
+use App\HttpResponse\Twig\Extensions\TemplateExists;
 use BuzzingPixel\TwigDumper\TwigDumper;
 use buzzingpixel\twiggetenv\GetEnvTwigExtension;
 use buzzingpixel\twigsmartypants\SmartypantsTwigExtension;

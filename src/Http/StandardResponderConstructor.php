@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http;
 
-use App\HttpRespose\Minifier;
+use App\HttpResponse\Minifier;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Twig\Environment as TwigEnvironment;
 

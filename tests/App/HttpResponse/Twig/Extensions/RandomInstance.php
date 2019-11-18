@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\HttpRespose\Twig\Extensions;
+namespace Tests\App\HttpResponse\Twig\Extensions;
 
 class RandomInstance
 {

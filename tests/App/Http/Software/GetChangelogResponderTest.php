@@ -9,7 +9,7 @@ use App\Content\Meta\MetaPayload;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetChangelogResponder;
 use App\HttpHelpers\Pagination\Pagination;
-use App\HttpRespose\Minifier;
+use App\HttpResponse\Minifier;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;

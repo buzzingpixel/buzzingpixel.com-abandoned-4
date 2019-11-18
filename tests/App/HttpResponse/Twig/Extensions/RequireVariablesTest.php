@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\HttpRespose\Twig\Extensions;
+namespace Tests\App\HttpResponse\Twig\Extensions;
 
-use App\HttpRespose\Twig\Extensions\RequireVariables;
+use App\HttpResponse\Twig\Extensions\RequireVariables;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 

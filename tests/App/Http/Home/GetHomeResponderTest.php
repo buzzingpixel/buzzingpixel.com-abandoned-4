@@ -7,7 +7,7 @@ namespace Tests\App\Http\Home;
 use App\Content\Meta\MetaPayload;
 use App\Content\Modules\ModulePayload;
 use App\Http\Home\GetHomeResponder;
-use App\HttpRespose\Minifier;
+use App\HttpResponse\Minifier;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
 use Throwable;

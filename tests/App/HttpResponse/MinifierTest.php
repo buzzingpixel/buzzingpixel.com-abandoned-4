@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\HttpRespose;
+namespace Tests\App\HttpResponse;
 
-use App\HttpRespose\Minifier;
+use App\HttpResponse\Minifier;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use function Safe\file_get_contents;

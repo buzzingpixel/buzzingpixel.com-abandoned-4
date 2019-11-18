@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\HttpRespose\Twig\Extensions;
+namespace App\HttpResponse\Twig\Extensions;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
