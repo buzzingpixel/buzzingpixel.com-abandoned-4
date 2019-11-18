@@ -18,6 +18,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/buzzingpixel/twig-switch" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/buzzingpixel/twig-widont" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cebe/markdown" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cocur/slugify" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/codedungeon/php-cli-colors" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/codedungeon/phpunit-result-printer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />

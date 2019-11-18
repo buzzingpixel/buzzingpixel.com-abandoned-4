@@ -23,6 +23,7 @@
         "buzzingpixel/twig-switch": "^1.0",
         "buzzingpixel/twig-widont": "^1.0",
         "cebe/markdown": "^1.2",
+        "cocur/slugify": "^3.2",
         "mjerwin/parseachangelog": "0.9.4",
         "mrclay/minify": "^3.0",
         "php-di/php-di": "^6.0",

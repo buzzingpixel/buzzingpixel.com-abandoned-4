@@ -143,6 +143,7 @@
       <path value="$PROJECT_DIR$/vendor/mjerwin/parseachangelog" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-phpunit" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-strict-rules" />
+      <path value="$PROJECT_DIR$/vendor/cocur/slugify" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

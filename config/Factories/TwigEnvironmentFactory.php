@@ -6,6 +6,7 @@ namespace Config\Factories;
 
 use App\HttpRespose\Twig\Extensions\PhpFunctions;
 use App\HttpRespose\Twig\Extensions\RequireVariables;
+use App\HttpRespose\Twig\Extensions\Slugify;
 use App\HttpRespose\Twig\Extensions\TemplateExists;
 use BuzzingPixel\TwigDumper\TwigDumper;
 use buzzingpixel\twiggetenv\GetEnvTwigExtension;
@@ -69,6 +70,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(GetEnvTwigExtension::class));
 
         $twig->addExtension(new TemplateExists($twig->getLoader()));
+
+        $twig->addExtension($di->get(Slugify::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
