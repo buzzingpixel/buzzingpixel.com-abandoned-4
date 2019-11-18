@@ -16,6 +16,23 @@
 
 {% extends '_Layout.twig' %}
 
+{% macro listItems(listItems, level) %}
+    <ul class="Documentation__ContentList Documentation__ContentList--Level{{ level }}{% if level > 1 %} Documentation__ContentList--IsSubList{% endif %}">
+        {% for listItem in listItems %}
+            <li class="Documentation__ContentListItem">
+                {% if gettype(listItem) == 'string' %}
+                    {{ listItem|smartypants }}
+                {% else %}
+                    {{ listItem.content|smartypants }}
+                    {% if listItem['children'] is defined and listItem['children'] is iterable %}
+                        {{ _self.listItems(listItem.children, level + 1) }}
+                    {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
 {% set navItemsLeft = [
     {
         href: uriPath,
@@ -48,4 +65,200 @@
         navItemsRight: navItemsRight,
         activeHref: activeHref,
     } only %}
+
+    <div class="Documentation">
+        <div class="Documentation__Inner">
+            <aside class="Documentation__Sidebar">
+                {% if versions.getVersions()|length %}
+                    <div class="Documentation__SidebarSection">
+                        <div class="Documentation__SidebarSectionTitle">
+                            Doc Versions
+                        </div>
+                        <ul class="Documentation__SidebarList">
+                            {% for version in versions.getVersions() %}
+                                <li class="Documentation__SidebarListItem">
+                                    <a
+                                        href="{{ uriPath }}/{{ version.getSlug() }}"
+                                        class="Documentation__SidebarListLink{% if activeVersion.getSlug() == version.getSlug() %} Documentation__SidebarListLink--IsActive{% endif %}"
+                                    >
+                                        {{ version.getTitle()|smartypants }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if activeVersion.getPages()|length %}
+                    <div class="Documentation__SidebarSection">
+                        <div class="Documentation__SidebarSectionTitle">
+                            Doc Pages
+                        </div>
+                        <ul class="Documentation__SidebarList">
+                            {% for page in activeVersion.getPages() %}
+                                <li class="Documentation__SidebarListItem">
+                                    <a
+                                        href="{{ uriPath }}/{{ activeVersion.getSlug() }}{% if page.getSlug() %}/{{ page.getSlug() }}{% endif %}"
+                                        class="Documentation__SidebarListLink{% if activePage.getSlug() == page.getSlug() %} Documentation__SidebarListLink--IsActive{% endif %}"
+                                    >
+                                        {{ page.getTitle()|smartypants }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if activePage.getSections()|length > 1 %}
+                    <div class="Documentation__SidebarSection Documentation__SidebarSection--IsHiddenAtMobile">
+                        <div class="Documentation__SidebarSectionTitle">
+                            Page Sections
+                        </div>
+                        <ul class="Documentation__SidebarList">
+                            {% for section in activePage.getSections() %}
+                                <li class="Documentation__SidebarListItem">
+                                    <a
+                                        href="#{{ section.getTitle()|slugify }}"
+                                        class="Documentation__SidebarListLink"
+                                    >
+                                        {{ section.getTitle()|smartypants }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </aside>
+            <section class="Documentation__Content">
+                <div class="Documentation__ContentInner">
+                    <h1
+                        id="{{ activePage.getTitle()|slugify }}"
+                        class="heading heading--level-1 Documentation__PageHeading"
+                    >
+                        <a
+                            href="#{{ activePage.getTitle()|slugify }}"
+                            class="Documentation__HeadingAnchor"
+                        >#</a>
+                        {{ activePage.getTitle()|smartypants }}
+                    </h1>
+                    {% for section in activePage.getSections() %}
+                        <div class="Documentation__Section">
+                            {% if section.getTitle() %}
+                                <h2
+                                    id="{{ section.getTitle()|slugify }}"
+                                    class="heading heading--level-2 Documentation__SectionHeading"
+                                >
+                                    <a
+                                        href="#{{ activePage.getTitle()|slugify }}"
+                                        class="Documentation__HeadingAnchor"
+                                    >#</a>
+                                    {{ section.getTitle()|smartypants }}
+                                </h2>
+                            {% endif %}
+                            <div class="Documentation__SectionContent">
+                                {% for contentItem in section.getContent() %}
+                                    {% switch contentItem.getName() %}
+                                        {% case 'Heading' %}
+                                            {% switch contentItem.getLevel() %}
+                                                {% case 4 %}
+                                                    <h4
+                                                        id="{{ contentItem.getContent()|slugify }}"
+                                                        class="heading heading--level-4 Documentation__SectionHeading Documentation__SectionHeading--Level4"
+                                                    >
+                                                        <a
+                                                            href="#{{ contentItem.getContent()|slugify }}"
+                                                            class="Documentation__HeadingAnchor"
+                                                        >#</a>
+                                                        {{ contentItem.getContent()|smartypants }}
+                                                    </h4>
+                                                {% case 5 %}
+                                                    <h5
+                                                        id="{{ contentItem.getContent()|slugify }}"
+                                                        class="heading heading--level-5 Documentation__SectionHeading Documentation__SectionHeading--Level5"
+                                                    >
+                                                        <a
+                                                            href="#{{ contentItem.getContent()|slugify }}"
+                                                            class="Documentation__HeadingAnchor"
+                                                        >#</a>
+                                                        {{ contentItem.getContent()|smartypants }}
+                                                    </h5>
+                                                {% case 6 %}
+                                                    <h6
+                                                        id="{{ contentItem.getContent()|slugify }}"
+                                                        class="heading heading--level-6 Documentation__SectionHeading Documentation__SectionHeading--Level6"
+                                                    >
+                                                        <a
+                                                            href="#{{ contentItem.getContent()|slugify }}"
+                                                            class="Documentation__HeadingAnchor"
+                                                        >#</a>
+                                                        {{ contentItem.getContent()|smartypants }}
+                                                    </h6>
+                                                {% default %}
+                                                    <h3
+                                                        id="{{ contentItem.getContent()|slugify }}"
+                                                        class="heading heading--level-3 Documentation__SectionHeading Documentation__SectionHeading--Level3"
+                                                    >
+                                                        <a
+                                                            href="#{{ contentItem.getContent()|slugify }}"
+                                                            class="Documentation__HeadingAnchor"
+                                                        >#</a>
+                                                        {{ contentItem.getContent()|smartypants }}
+                                                    </h3>
+                                            {% endswitch %}
+                                        {% case 'List' %}
+                                            {{ _self.listItems(contentItem.getListItems(), 1) }}
+                                        {% case 'Content' %}
+                                            <div class="Documentation__GeneralContent">
+                                                {{ contentItem.getContent()|smartypants }}
+                                            </div>
+                                        {% case 'Codeblock' %}
+                                            <div class="Documentation__CodeBlockWrapper">
+                                                {% if contentItem.getHeading() %}
+                                                    <div class="Documentation__CodeBlockHeading">
+                                                        {{ contentItem.getHeading()|smartypants }}
+                                                    </div>
+                                                {% endif %}
+                                                <pre class="codeblock Documentation__CodeBlock"><code class="language-{{ contentItem.getLang() }}">{{ contentItem.getContent() }}</code></pre>
+                                            </div>
+                                        {% case 'Image' %}
+                                            <div class="Documentation__Image">
+                                                <picture>
+                                                    {% for source in contentItem.getSources() %}
+                                                        <source
+                                                            srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                                                            media="{{ source.getMediaQuery() }}"
+                                                        >
+                                                    {% endfor %}
+                                                    <img
+                                                        src="{{ contentItem.getOneX() }}"
+                                                        {% if contentItem.getTwoX() %}
+                                                        srcset="{{ contentItem.getOneX() }} 1x, {{ contentItem.getTwoX() }} 2x"
+                                                        {% endif %}
+                                                        alt="{{ contentItem.getAlt()|smartypants }}"
+                                                        class="Documentation__ImageTag"
+                                                    >
+                                                </picture>
+                                            </div>
+                                        {% case 'Note' %}
+                                            <div class="Documentation__Note">
+                                                <div class="Note">
+                                                    {% if contentItem.getHeading() %}
+                                                        <div class="Note__Heading">
+                                                            {{ contentItem.getHeading()|smartypants }}
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="Note__Content">
+                                                        {{ contentItem.getContent()|smartypants }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% default %}
+                                            {{ dump(contentItem) }}
+                                    {% endswitch %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
 {% endblock %}
