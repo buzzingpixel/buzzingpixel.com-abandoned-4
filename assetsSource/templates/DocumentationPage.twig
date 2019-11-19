@@ -136,130 +136,128 @@
                         id="{{ activePage.getTitle()|slugify }}"
                         class="heading heading--level-1 Documentation__PageHeading"
                     >
-                        <a
-                            href="#{{ activePage.getTitle()|slugify }}"
-                            class="Documentation__HeadingAnchor"
-                        >#</a>
                         {{ activePage.getTitle()|smartypants }}
                     </h1>
-                    {% for section in activePage.getSections() %}
-                        <div class="Documentation__Section">
-                            {% if section.getTitle() %}
-                                <h2
-                                    id="{{ section.getTitle()|slugify }}"
-                                    class="heading heading--level-2 Documentation__SectionHeading"
-                                >
-                                    <a
-                                        href="#{{ activePage.getTitle()|slugify }}"
-                                        class="Documentation__HeadingAnchor"
-                                    >#</a>
-                                    {{ section.getTitle()|smartypants }}
-                                </h2>
-                            {% endif %}
-                            <div class="Documentation__SectionContent">
-                                {% for contentItem in section.getContent() %}
-                                    {% switch contentItem.getName() %}
-                                        {% case 'Heading' %}
-                                            {% switch contentItem.getLevel() %}
-                                                {% case 4 %}
-                                                    <h4
-                                                        id="{{ contentItem.getContent()|slugify }}"
-                                                        class="heading heading--level-4 Documentation__SectionHeading Documentation__SectionHeading--Level4"
-                                                    >
-                                                        <a
-                                                            href="#{{ contentItem.getContent()|slugify }}"
-                                                            class="Documentation__HeadingAnchor"
-                                                        >#</a>
-                                                        {{ contentItem.getContent()|smartypants }}
-                                                    </h4>
-                                                {% case 5 %}
-                                                    <h5
-                                                        id="{{ contentItem.getContent()|slugify }}"
-                                                        class="heading heading--level-5 Documentation__SectionHeading Documentation__SectionHeading--Level5"
-                                                    >
-                                                        <a
-                                                            href="#{{ contentItem.getContent()|slugify }}"
-                                                            class="Documentation__HeadingAnchor"
-                                                        >#</a>
-                                                        {{ contentItem.getContent()|smartypants }}
-                                                    </h5>
-                                                {% case 6 %}
-                                                    <h6
-                                                        id="{{ contentItem.getContent()|slugify }}"
-                                                        class="heading heading--level-6 Documentation__SectionHeading Documentation__SectionHeading--Level6"
-                                                    >
-                                                        <a
-                                                            href="#{{ contentItem.getContent()|slugify }}"
-                                                            class="Documentation__HeadingAnchor"
-                                                        >#</a>
-                                                        {{ contentItem.getContent()|smartypants }}
-                                                    </h6>
-                                                {% default %}
-                                                    <h3
-                                                        id="{{ contentItem.getContent()|slugify }}"
-                                                        class="heading heading--level-3 Documentation__SectionHeading Documentation__SectionHeading--Level3"
-                                                    >
-                                                        <a
-                                                            href="#{{ contentItem.getContent()|slugify }}"
-                                                            class="Documentation__HeadingAnchor"
-                                                        >#</a>
-                                                        {{ contentItem.getContent()|smartypants }}
-                                                    </h3>
-                                            {% endswitch %}
-                                        {% case 'List' %}
-                                            {{ _self.listItems(contentItem.getListItems(), 1) }}
-                                        {% case 'Content' %}
-                                            <div class="Documentation__GeneralContent">
-                                                {{ contentItem.getContent()|smartypants }}
-                                            </div>
-                                        {% case 'Codeblock' %}
-                                            <div class="Documentation__CodeBlockWrapper">
-                                                {% if contentItem.getHeading() %}
-                                                    <div class="Documentation__CodeBlockHeading">
-                                                        {{ contentItem.getHeading()|smartypants }}
-                                                    </div>
-                                                {% endif %}
-                                                <pre class="codeblock Documentation__CodeBlock"><code class="language-{{ contentItem.getLang() }}">{{ contentItem.getContent() }}</code></pre>
-                                            </div>
-                                        {% case 'Image' %}
-                                            <div class="Documentation__Image">
-                                                <picture>
-                                                    {% for source in contentItem.getSources() %}
-                                                        <source
-                                                            srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
-                                                            media="{{ source.getMediaQuery() }}"
+                    <div class="Documentation__Sections">
+                        {% for section in activePage.getSections() %}
+                            <div class="Documentation__Section">
+                                {% if section.getTitle() %}
+                                    <h2
+                                        id="{{ section.getTitle()|slugify }}"
+                                        class="heading heading--level-2 Documentation__SectionHeading"
+                                    >
+                                        <a
+                                            href="#{{ section.getTitle()|slugify }}"
+                                            class="Documentation__HeadingAnchor"
+                                        >#</a>
+                                        {{ section.getTitle()|smartypants }}
+                                    </h2>
+                                {% endif %}
+                                <div class="Documentation__SectionContent">
+                                    {% for contentItem in section.getContent() %}
+                                        {% switch contentItem.getName() %}
+                                            {% case 'Heading' %}
+                                                {% switch contentItem.getLevel() %}
+                                                    {% case 4 %}
+                                                        <h4
+                                                            id="{{ contentItem.getContent()|slugify }}"
+                                                            class="heading heading--level-4 Documentation__SectionHeading Documentation__SectionHeading--Level4"
                                                         >
-                                                    {% endfor %}
-                                                    <img
-                                                        src="{{ contentItem.getOneX() }}"
-                                                        {% if contentItem.getTwoX() %}
-                                                        srcset="{{ contentItem.getOneX() }} 1x, {{ contentItem.getTwoX() }} 2x"
-                                                        {% endif %}
-                                                        alt="{{ contentItem.getAlt()|smartypants }}"
-                                                        class="Documentation__ImageTag"
-                                                    >
-                                                </picture>
-                                            </div>
-                                        {% case 'Note' %}
-                                            <div class="Documentation__Note">
-                                                <div class="Note">
+                                                            <a
+                                                                href="#{{ contentItem.getContent()|slugify }}"
+                                                                class="Documentation__HeadingAnchor"
+                                                            >#</a>
+                                                            {{ contentItem.getContent()|smartypants }}
+                                                        </h4>
+                                                    {% case 5 %}
+                                                        <h5
+                                                            id="{{ contentItem.getContent()|slugify }}"
+                                                            class="heading heading--level-5 Documentation__SectionHeading Documentation__SectionHeading--Level5"
+                                                        >
+                                                            <a
+                                                                href="#{{ contentItem.getContent()|slugify }}"
+                                                                class="Documentation__HeadingAnchor"
+                                                            >#</a>
+                                                            {{ contentItem.getContent()|smartypants }}
+                                                        </h5>
+                                                    {% case 6 %}
+                                                        <h6
+                                                            id="{{ contentItem.getContent()|slugify }}"
+                                                            class="heading heading--level-6 Documentation__SectionHeading Documentation__SectionHeading--Level6"
+                                                        >
+                                                            <a
+                                                                href="#{{ contentItem.getContent()|slugify }}"
+                                                                class="Documentation__HeadingAnchor"
+                                                            >#</a>
+                                                            {{ contentItem.getContent()|smartypants }}
+                                                        </h6>
+                                                    {% default %}
+                                                        <h3
+                                                            id="{{ contentItem.getContent()|slugify }}"
+                                                            class="heading heading--level-3 Documentation__SectionHeading Documentation__SectionHeading--Level3"
+                                                        >
+                                                            <a
+                                                                href="#{{ contentItem.getContent()|slugify }}"
+                                                                class="Documentation__HeadingAnchor"
+                                                            >#</a>
+                                                            {{ contentItem.getContent()|smartypants }}
+                                                        </h3>
+                                                {% endswitch %}
+                                            {% case 'List' %}
+                                                {{ _self.listItems(contentItem.getListItems(), 1) }}
+                                            {% case 'Content' %}
+                                                <div class="Documentation__GeneralContent">
+                                                    {{ contentItem.getContent()|smartypants }}
+                                                </div>
+                                            {% case 'Codeblock' %}
+                                                <div class="Documentation__CodeBlockWrapper">
                                                     {% if contentItem.getHeading() %}
-                                                        <div class="Note__Heading">
+                                                        <div class="Documentation__CodeBlockHeading">
                                                             {{ contentItem.getHeading()|smartypants }}
                                                         </div>
                                                     {% endif %}
-                                                    <div class="Note__Content">
-                                                        {{ contentItem.getContent()|smartypants }}
+                                                    <pre class="codeblock Documentation__CodeBlock"><code class="language-{{ contentItem.getLang() }}">{{ contentItem.getContent() }}</code></pre>
+                                                </div>
+                                            {% case 'Image' %}
+                                                <div class="Documentation__Image">
+                                                    <picture>
+                                                        {% for source in contentItem.getSources() %}
+                                                            <source
+                                                                srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                                                                media="{{ source.getMediaQuery() }}"
+                                                            >
+                                                        {% endfor %}
+                                                        <img
+                                                            src="{{ contentItem.getOneX() }}"
+                                                            {% if contentItem.getTwoX() %}
+                                                            srcset="{{ contentItem.getOneX() }} 1x, {{ contentItem.getTwoX() }} 2x"
+                                                            {% endif %}
+                                                            alt="{{ contentItem.getAlt()|smartypants }}"
+                                                            class="Documentation__ImageTag"
+                                                        >
+                                                    </picture>
+                                                </div>
+                                            {% case 'Note' %}
+                                                <div class="Documentation__Note">
+                                                    <div class="Note">
+                                                        {% if contentItem.getHeading() %}
+                                                            <div class="Note__Heading">
+                                                                {{ contentItem.getHeading()|smartypants }}
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="Note__Content">
+                                                            {{ contentItem.getContent()|smartypants }}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        {% default %}
-                                            {{ dump(contentItem) }}
-                                    {% endswitch %}
-                                {% endfor %}
+                                            {% default %}
+                                                {{ dump(contentItem) }}
+                                        {% endswitch %}
+                                    {% endfor %}
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </section>
         </div>
