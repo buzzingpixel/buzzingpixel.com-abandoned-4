@@ -138,7 +138,7 @@
                     >
                         {{ activePage.getTitle()|smartypants }}
                     </h1>
-                    <div class="Documentation__Sections">
+                    <div class="Documentation__Sections" v-pre>
                         {% for section in activePage.getSections() %}
                             <div class="Documentation__Section">
                                 {% if section.getTitle() %}
