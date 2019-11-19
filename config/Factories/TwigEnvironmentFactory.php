@@ -10,6 +10,7 @@ use App\HttpResponse\Twig\Extensions\Slugify;
 use App\HttpResponse\Twig\Extensions\TemplateExists;
 use BuzzingPixel\TwigDumper\TwigDumper;
 use buzzingpixel\twiggetenv\GetEnvTwigExtension;
+use BuzzingPixel\TwigMarkdown\MarkdownTwigExtension;
 use buzzingpixel\twigsmartypants\SmartypantsTwigExtension;
 use buzzingpixel\twigswitch\SwitchTwigExtension;
 use buzzingpixel\twigwidont\WidontTwigExtension;
@@ -72,6 +73,8 @@ class TwigEnvironmentFactory
         $twig->addExtension(new TemplateExists($twig->getLoader()));
 
         $twig->addExtension($di->get(Slugify::class));
+
+        $twig->addExtension($di->get(MarkdownTwigExtension::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 

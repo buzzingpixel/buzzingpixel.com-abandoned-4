@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2479bc54ac698989d1a745150483e66",
+    "content-hash": "6fb97b5615fd160bc027fcbf2ab5811f",
     "packages": [
         {
             "name": "buzzingpixel/corbomite-config-collector",
@@ -140,6 +140,61 @@
             ],
             "description": "A Twig getenv function",
             "time": "2019-01-01T21:52:32+00:00"
+        },
+        {
+            "name": "buzzingpixel/twig-markdown",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/twig-markdown.git",
+                "reference": "a266856e464c1c85b32f35c659a09a14a73e1d76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-markdown/zipball/a266856e464c1c85b32f35c659a09a14a73e1d76",
+                "reference": "a266856e464c1c85b32f35c659a09a14a73e1d76",
+                "shasum": ""
+            },
+            "require": {
+                "buzzingpixel/corbomite-di": "^1.2",
+                "cebe/markdown": "^1.2",
+                "php": ">=7.2",
+                "twig/twig": "^2.10"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.26.2",
+                "doctrine/coding-standard": "^6.0",
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "phpmd/phpmd": "^2.6",
+                "phpstan/phpstan": "^0.11.5",
+                "phpstan/phpstan-deprecation-rules": "^0.11.0",
+                "phpunit/phpunit": "^8.1",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.4",
+                "symfony/var-dumper": "^4.2"
+            },
+            "type": "library",
+            "extra": {
+                "diConfigFilePath": "src/diConfig.php",
+                "twigExtensions": [
+                    "BuzzingPixel\\TwigMarkdown\\MarkdownTwigExtension"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "BuzzingPixel\\TwigMarkdown\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "TJ Draper",
+                    "email": "tj@buzzingpixel.com",
+                    "homepage": "https://buzzingpixel.com"
+                }
+            ],
+            "description": "A Twig Markdown filter",
+            "time": "2019-05-18T20:04:03+00:00"
         },
         {
             "name": "buzzingpixel/twig-smartypants",

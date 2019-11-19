@@ -144,6 +144,7 @@
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-phpunit" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-strict-rules" />
       <path value="$PROJECT_DIR$/vendor/cocur/slugify" />
+      <path value="$PROJECT_DIR$/vendor/buzzingpixel/twig-markdown" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
