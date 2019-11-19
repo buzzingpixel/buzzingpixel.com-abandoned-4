@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Content\Documentation;
 
+use cebe\markdown\GithubMarkdown;
 use Config\General;
 use DirectoryIterator;
 use Symfony\Component\Yaml\Yaml;
@@ -22,13 +23,17 @@ class CollectDocumentationVersionPayloadFromPath
     private $generalConfig;
     /** @var CollectDocumentationPagePayloadFromPath */
     private $collectDocumentationPagePayloadFromPath;
+    /** @var GithubMarkdown */
+    protected $markdownParser;
 
     public function __construct(
         General $generalConfig,
-        CollectDocumentationPagePayloadFromPath $collectDocumentationPagePayloadFromPath
+        CollectDocumentationPagePayloadFromPath $collectDocumentationPagePayloadFromPath,
+        GithubMarkdown $markdownParser
     ) {
         $this->generalConfig                           = $generalConfig;
         $this->collectDocumentationPagePayloadFromPath = $collectDocumentationPagePayloadFromPath;
+        $this->markdownParser                          = $markdownParser;
     }
 
     /**
@@ -74,7 +79,9 @@ class CollectDocumentationVersionPayloadFromPath
         $infoYaml = Yaml::parseFile($infoPath);
 
         return new DocumentationVersionPayload([
-            'title' => (string) ($infoYaml['title'] ?? ''),
+            'title' => $this->markdownParser->parseParagraph(
+                (string) ($infoYaml['title'] ?? '')
+            ),
             'slug' => 'documentation' . ($version !== 'primary' ? '-' . $version : ''),
             'version' => $version,
             'pages' => array_values(array_map(

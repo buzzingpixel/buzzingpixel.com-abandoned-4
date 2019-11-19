@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Content\Documentation;
 
+use cebe\markdown\GithubMarkdown;
 use Config\General;
 use DirectoryIterator;
 use IteratorIterator;
@@ -23,13 +24,17 @@ class CollectDocumentationPagePayloadFromPath
     private $generalConfig;
     /** @var CollectDocumentationPageSectionFromPath */
     private $collectDocumentationPageSectionFromPath;
+    /** @var GithubMarkdown */
+    protected $markdownParser;
 
     public function __construct(
         General $generalConfig,
-        CollectDocumentationPageSectionFromPath $collectDocumentationPageSectionFromPath
+        CollectDocumentationPageSectionFromPath $collectDocumentationPageSectionFromPath,
+        GithubMarkdown $markdownParser
     ) {
         $this->generalConfig                           = $generalConfig;
         $this->collectDocumentationPageSectionFromPath = $collectDocumentationPageSectionFromPath;
+        $this->markdownParser                          = $markdownParser;
     }
 
     /**
@@ -75,7 +80,9 @@ class CollectDocumentationPagePayloadFromPath
         $infoYaml = Yaml::parseFile($path . '/info.yml');
 
         return new DocumentationPagePayload([
-            'title' => (string) ($infoYaml['title'] ?? ''),
+            'title' => $this->markdownParser->parseParagraph(
+                (string) ($infoYaml['title'] ?? '')
+            ),
             'slug' => (string) ($infoYaml['slug'] ?? ''),
             'sections' => array_values(array_map(
                 function (string $fileName) use ($contentPath) {

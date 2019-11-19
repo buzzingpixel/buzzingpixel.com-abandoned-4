@@ -13,9 +13,11 @@ use App\Content\Documentation\DocumentationVersionPayload;
 use App\Content\Documentation\HeadingPayload;
 use App\Content\Documentation\ListPayload;
 use App\Content\Software\ExtractSoftwareInfoFromPath;
+use cebe\markdown\GithubMarkdown;
 use Config\General;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Tests\TestConfig;
 use Throwable;
 
 class CollectDocumentationVersionsFromPathTest extends TestCase
@@ -170,17 +172,20 @@ class CollectDocumentationVersionsFromPathTest extends TestCase
         );
 
         $collectDocumentationPageSectionFromPath = new CollectDocumentationPageSectionFromPath(
-            $generalConfig
+            $generalConfig,
+            TestConfig::$di->get(GithubMarkdown::class)
         );
 
         $collectDocumentationPagePayloadFromPath = new CollectDocumentationPagePayloadFromPath(
             $generalConfig,
-            $collectDocumentationPageSectionFromPath
+            $collectDocumentationPageSectionFromPath,
+            TestConfig::$di->get(GithubMarkdown::class)
         );
 
         $collectDocumentationVersionPayloadFromPath = new CollectDocumentationVersionPayloadFromPath(
             $generalConfig,
-            $collectDocumentationPagePayloadFromPath
+            $collectDocumentationPagePayloadFromPath,
+            TestConfig::$di->get(GithubMarkdown::class)
         );
 
         $this->collectDocumentationVersionsFromPath = new CollectDocumentationVersionsFromPath(

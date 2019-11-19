@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Content\Documentation;
 
 use App\Content\Modules\CommonTraits\MapYamlImageToPayload;
+use cebe\markdown\GithubMarkdown;
 use Config\General;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
@@ -19,11 +20,15 @@ class CollectDocumentationPageSectionFromPath
 
     /** @var General */
     private $generalConfig;
+    /** @var GithubMarkdown */
+    protected $markdownParser;
 
     public function __construct(
-        General $generalConfig
+        General $generalConfig,
+        GithubMarkdown $markdownParser
     ) {
-        $this->generalConfig = $generalConfig;
+        $this->generalConfig  = $generalConfig;
+        $this->markdownParser = $markdownParser;
     }
 
     /**
@@ -42,7 +47,9 @@ class CollectDocumentationPageSectionFromPath
         $parsedYaml = Yaml::parseFile($path);
 
         return new DocumentationPageSectionPayload([
-            'title' => (string) ($parsedYaml['title'] ?? ''),
+            'title' => $this->markdownParser->parseParagraph(
+                (string) ($parsedYaml['title'] ?? '')
+            ),
             'content' => array_values(array_map(
                 /**
                  * @param array<string, mixed> $item
@@ -79,7 +86,9 @@ class CollectDocumentationPageSectionFromPath
     {
         return new HeadingPayload([
             'level' => (int) ($item['level'] ?? 3),
-            'content' => (string) ($item['content'] ?? ''),
+            'content' => $this->markdownParser->parseParagraph(
+                (string) ($item['content'] ?? '')
+            ),
         ]);
     }
 
@@ -103,7 +112,9 @@ class CollectDocumentationPageSectionFromPath
     private function mapContentTypeToPayload(array $item) : ContentPayload
     {
         return new ContentPayload([
-            'content' => (string) ($item['content'] ?? ''),
+            'content' => $this->markdownParser->parse(
+                (string) ($item['content'] ?? '')
+            ),
         ]);
     }
 
@@ -130,7 +141,9 @@ class CollectDocumentationPageSectionFromPath
     {
         return new NotePayload([
             'heading' => (string) ($item['heading'] ?? ''),
-            'content' => (string) ($item['content'] ?? ''),
+            'content' => $this->markdownParser->parse(
+                (string) ($item['content'] ?? '')
+            ),
         ]);
     }
 }

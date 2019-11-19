@@ -21,9 +21,9 @@
         {% for listItem in listItems %}
             <li class="Documentation__ContentListItem">
                 {% if gettype(listItem) == 'string' %}
-                    {{ listItem|smartypants }}
+                    {{ listItem|markdownParseParagraph|smartypants }}
                 {% else %}
-                    {{ listItem.content|smartypants }}
+                    {{ listItem.content|markdownParseParagraph|smartypants }}
                     {% if listItem['children'] is defined and listItem['children'] is iterable %}
                         {{ _self.listItems(listItem.children, level + 1) }}
                     {% endif %}
