@@ -66,9 +66,12 @@
         activeHref: activeHref,
     } only %}
 
-    <div class="Documentation">
+    <div class="Documentation" ref="Documentation">
         <div class="Documentation__Inner">
-            <aside class="Documentation__Sidebar">
+            <aside
+                class="Documentation__Sidebar"
+                v-bind:class="{'Documentation__Sidebar--IsSticky': sidebarIsSticky}"
+            >
                 {% if versions.getVersions()|length %}
                     <div class="Documentation__SidebarSection">
                         <div class="Documentation__SidebarSectionTitle">
