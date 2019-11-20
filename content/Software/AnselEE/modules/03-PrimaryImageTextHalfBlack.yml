@@ -1,0 +1,14 @@
+type: PrimaryImageTextHalfBlack
+headline: Problem Solved
+image:
+  1x: /content-images/ansel-ee/ansel-field-type-tablet-desktop.png
+  2x: /content-images/ansel-ee/ansel-field-type-tablet-desktop-2x.png
+  alt: Ansel for ExpressionEngine Screenshot
+  sources:
+    - 1x: /content-images/ansel-ee/ansel-field-type-mobile.png
+      2x: /content-images/ansel-ee/ansel-field-type-mobile-2x.png
+      mediaQuery: "(min-width: 1px) and (max-width: 450px)"
+content: |
+  It's an old problem: how can images be constrained to fit any given context, make sure it meets minimum/maximum requirements, and still get the part of the image that's relevant?
+
+  Ansel puts you in charge by defining image fields with minimum and/or maximum requirements, aspect ratios, minimum/maximum number of images, and more. This means you don't need to worry if images are the right size — Ansel makes them the right size.

@@ -40,4 +40,10 @@ return static function (App $app) : void {
         '/software/ansel-craft/{versionString:documentation-[^\/]+}[/{pageSlug:[^\/]+}]',
         GetDocumentationPageAction::class
     );
+
+    // Ansel EE
+    $app->get(
+        '/software/ansel-ee',
+        GetSoftwareAction::class
+    );
 };

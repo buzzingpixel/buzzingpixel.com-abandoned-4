@@ -1,0 +1,12 @@
+title: Ansel
+subTitle: for ExpressionEngine
+forSale: true
+hasChangelog: true
+hasDocumentation: true
+downloadIsPublic: true
+hasDownloadLicenseAgrement: true
+actionButtons:
+  - href: /software/ansel-ee/download
+    content: Download
+  - href: /cart/add/ansel-ee
+    content: Add to Cart ($79)

@@ -1,0 +1,17 @@
+type: TextColumns
+backgroundColor: SpringWood
+columns:
+  - headline: Users Rejoice
+    content: |
+      Content managers can now upload any image with the peace of mind that nothing about the design or front end will break in any way. The image constraints have been defined and their image will live within those constraints.
+
+      And what if the action of the image they want to use is not in the frame? No problem. Use the crop lasso to select the correct portion of the image!
+
+  - headline: Powerful Templating
+    content: Ansel's ExpressionEngine template tags make getting your images into your front-end markup extremely easy. As well as obviously having access to the image url, you'll have access to height, width, image name, custom image fields, whether the image has been selected as a favorite, count, index, total results, and much, much more. And Ansel's tags are also namespaced so you won't run into any conflicts of any kind with nesting.
+
+  - headline: Treasury Integration
+    content: Ansel also integrates with Treasury — an ExpressionEngine add-on for storing files and images in remote locations like Amazon S3, or any location that can utilize FTP/SFTP protocols.
+
+  - headline: On-the-fly Image Manipulations
+    content: "Oh, and let's not leave out one of the most important parts: Ansel can manipulate images on the fly with simple tag parameters, altering crop, width, height, size, ratio, and even more."
