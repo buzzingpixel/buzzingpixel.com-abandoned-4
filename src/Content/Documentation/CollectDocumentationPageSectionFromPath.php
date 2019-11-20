@@ -140,7 +140,7 @@ class CollectDocumentationPageSectionFromPath
     private function mapNoteTypeToPayload(array $item) : NotePayload
     {
         return new NotePayload([
-            'heading' => (string) ($item['heading'] ?? ''),
+            'heading' => (string) ($item['heading'] ?? 'Note'),
             'content' => $this->markdownParser->parse(
                 (string) ($item['content'] ?? '')
             ),
