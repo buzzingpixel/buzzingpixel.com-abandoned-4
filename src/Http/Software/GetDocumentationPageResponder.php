@@ -26,16 +26,10 @@ class GetDocumentationPageResponder extends StandardResponderConstructor
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
-        $activeHref = $uriPath . '/' . $activeVersion->getSlug();
-
-        if ($activePage->getSlug() !== '') {
-            $activeHref .= '/' . $activePage->getSlug();
-        }
-
         $response->getBody()->write(($this->minifier)(
             $this->twigEnvironment->render('DocumentationPage.twig', [
                 'uriPath' => $uriPath,
-                'activeHref' => $activeHref,
+                'activeHref' => $uriPath . '/documentation',
                 'metaPayload' => $metaPayload,
                 'activePage' => $activePage,
                 'activeVersion' => $activeVersion,

@@ -110,19 +110,13 @@ class GetDocumentationPageResponderTest extends TestCase
             TwigEnvironment::class
         );
 
-        $activeHref = 'software/ansel-craft/documentation/test-version-slug';
-
-        if ($this->activePageSlug !== '') {
-            $activeHref .= '/' . $this->activePageSlug;
-        }
-
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
                 self::equalTo('DocumentationPage.twig'),
                 self::equalTo([
                     'uriPath' => 'software/ansel-craft/documentation',
-                    'activeHref' => $activeHref,
+                    'activeHref' => 'software/ansel-craft/documentation/documentation',
                     'metaPayload' => $this->metaPayload,
                     'activePage' => $this->activePage,
                     'activeVersion' => $this->activeVersion,
