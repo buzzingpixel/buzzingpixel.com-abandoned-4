@@ -135,7 +135,7 @@ class CollectDocumentationVersionsFromPathTest extends TestCase
 
         /** @var CodeblockPayload $page4Section1Content2CodeBlock */
         $page4Section1Content2CodeBlock = $page4Section1Content[1];
-        self::assertSame('Note', $page4Section1Content2CodeBlock->getHeading());
+        self::assertSame('Example', $page4Section1Content2CodeBlock->getHeading());
         self::assertSame('twig', $page4Section1Content2CodeBlock->getLang());
     }
 

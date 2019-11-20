@@ -127,7 +127,7 @@ class CollectDocumentationPageSectionFromPath
     {
         return new CodeblockPayload([
             'lang' => (string) ($item['lang'] ?? ''),
-            'heading' => (string) ($item['heading'] ?? 'Note'),
+            'heading' => (string) ($item['heading'] ?? 'Example'),
             'content' => (string) ($item['content'] ?? ''),
         ]);
     }
