@@ -211,7 +211,7 @@
                                                         {{ contentItem.getContent()|smartypants }}
                                                     </div>
                                                 {% case 'Codeblock' %}
-                                                    <div class="Documentation__CodeBlockWrapper">
+                                                    <div class="Documentation__CodeBlockWrapper{% if contentItem.getHeading() %} Documentation__CodeBlockWrapper--HasHeading{% endif %}">
                                                         {% if contentItem.getHeading() %}
                                                             <div class="Documentation__CodeBlockHeading">
                                                                 {{ contentItem.getHeading()|smartypants }}
