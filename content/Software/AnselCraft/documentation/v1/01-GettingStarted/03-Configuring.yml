@@ -225,10 +225,6 @@ content:
     content: "`forceGD`"
 
   - type: content
-    content: todo
-
-  - type: heading
-    level: 4
     content: |
       Forces Ansel to use [GD](http://php.net/manual/en/book.image.php) image processing for manipulating images. Normally, Ansel will auto-detect if [ImageMagick](https://www.imagemagick.org/) is installed/setup with PHP and use it for manipulating images. If for whatever reason you would like to force Ansel to use GD even though ImageMagick is available, make this setting `true`.
 

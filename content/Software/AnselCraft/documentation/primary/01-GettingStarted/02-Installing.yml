@@ -21,7 +21,7 @@ content:
 
   - type: heading
     level: 3
-    heading: Craft Plugin Store
+    content: Craft Plugin Store
 
   - type: content
     content: |
@@ -29,5 +29,4 @@ content:
 
       Use the plugin store in your Craft Control Panel to install Ansel.
 
-  - type: content
-    content: Either way, buying and licensing of Ansel for Craft is handled through Craft's plugin store. A site license is $79. Yearly renewals to access updates and support are $29.
+      Either way, buying and licensing of Ansel for Craft is handled through Craft's plugin store. A site license is $79. Yearly renewals to access updates and support are $29.
