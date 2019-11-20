@@ -4,16 +4,6 @@ export default {
     mounted () {
         const self = this;
 
-        self.$watch('sidebarIsSticky', (val) => {
-            if (val) {
-                self.setSticky();
-
-                return;
-            }
-
-            self.setNotSticky();
-        });
-
         window.addEventListener('scroll', () => {
             self.positionCheck();
         });
@@ -36,14 +26,6 @@ export default {
             }
 
             self.sidebarIsSticky = false;
-        },
-
-        setSticky () {
-            console.log('setSticky');
-        },
-
-        setNotSticky () {
-            console.log('setNotSticky');
         },
     },
 };
