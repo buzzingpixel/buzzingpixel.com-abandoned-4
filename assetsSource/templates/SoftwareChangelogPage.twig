@@ -73,7 +73,7 @@
                 </aside>
                 <div class="SidebarContent__Body">
                     {% for release in changelogPayload.getReleases() %}
-                        <div class="BoxContainer">
+                        <div class="BoxContainer UnClassedContent">
                             {% set permalink %}
                                 <a href="{{ pagination.base() }}/{{ release.getVersion() }}">
                                     Permalink
