@@ -6,6 +6,7 @@ namespace Tests\App\Http\Software;
 
 use App\Content\Changelog\ChangelogPayload;
 use App\Content\Changelog\ParseChangelogFromMarkdownFile;
+use App\Content\Changelog\Release;
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Meta\MetaPayload;
 use App\Content\Software\ExtractSoftwareInfoFromPath;
@@ -15,7 +16,6 @@ use App\Http\Software\GetChangelogResponder;
 use App\Http\Software\PathMap;
 use App\HttpHelpers\Pagination\Pagination;
 use App\HttpHelpers\Segments\ExtractUriSegments;
-use MJErwin\ParseAChangelog\Release;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;

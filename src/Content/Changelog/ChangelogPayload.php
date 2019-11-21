@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Content\Changelog;
 
 use App\Payload\SpecificPayload;
-use MJErwin\ParseAChangelog\Release;
 use ReflectionException;
 use function array_slice;
 use function array_walk;

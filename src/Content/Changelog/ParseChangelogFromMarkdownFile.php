@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Content\Changelog;
 
-use MJErwin\ParseAChangelog\Reader;
 use Throwable;
 use const FILTER_VALIDATE_URL;
 use function filter_var;
