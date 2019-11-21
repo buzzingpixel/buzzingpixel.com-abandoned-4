@@ -72,7 +72,7 @@
                 class="Documentation__Sidebar"
                 v-bind:class="{'Documentation__Sidebar--IsSticky': sidebarIsSticky}"
             >
-                {% if versions.getVersions()|length %}
+                {% if versions.getVersions()|length > 1 %}
                     <div class="Documentation__SidebarSection">
                         <div class="Documentation__SidebarSectionTitle">
                             Doc Versions
