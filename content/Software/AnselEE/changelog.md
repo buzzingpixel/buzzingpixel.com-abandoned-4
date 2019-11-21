@@ -228,7 +228,7 @@ PLEASE NOTE: Ansel used to try to compensate for limited memory situations in PH
 - Removed a stray `console.log` statement lurking in the Javascript
 
 ## 1.1.1 - 2016-04-25
-### Added
+### Added   
 - Instructions on how to use the Upload/Save directory field settings will now be shown above those settings when creating/editing an Ansel field. You can disable this in Ansel settings or with the config override (`$config['ansel']['hide_source_save_instructions'] = true;`).
 ### Fixed
 - Fixed a bug where the `{img:tag}` and `{img:url:resize}` tag variables could cause PHP warnings if no tag parameters provided

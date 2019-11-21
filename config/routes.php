@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
+use App\Http\Software\GetChangelogRawAction;
 use App\Http\Software\GetDocumentationPageAction;
 use App\Http\Software\GetSoftwareAction;
 use Slim\App;
@@ -29,6 +30,10 @@ return static function (App $app) : void {
         GetChangelogAction::class
     );
     $app->get(
+        '/software/ansel-craft/changelog/raw',
+        GetChangelogRawAction::class
+    );
+    $app->get(
         '/software/ansel-craft/changelog/{slug:[^\/]+}',
         GetChangelogItemAction::class
     );
@@ -49,6 +54,10 @@ return static function (App $app) : void {
     $app->get(
         '/software/ansel-ee/changelog[/page/{page:(?!(?:0|1)$)\d+}]',
         GetChangelogAction::class
+    );
+    $app->get(
+        '/software/ansel-ee/changelog/raw',
+        GetChangelogRawAction::class
     );
     $app->get(
         '/software/ansel-ee/changelog/{slug:[^\/]+}',
