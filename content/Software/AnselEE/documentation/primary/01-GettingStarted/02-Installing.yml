@@ -1,0 +1,17 @@
+title: Installing Or Updating
+
+content:
+  - type: content
+    content: Installing and updating Ansel is very easy.
+
+  - type: list
+    content:
+      - Download the Ansel zip file and unzip it
+      - content: Copy `system/user/addons/ansel` to the same directory location in your EE instance
+        children:
+          - If you are updating, replace the existing `ansel` directory
+      - content: Copy `themes/user/ansel` to the same directory location in your EE instance
+        children:
+          - If you are updating, replace the existing `ansel` directory
+      - Log in to your EE control panel and navigate to the Add-on Manager
+      - Scroll down to the "Third Party" section, locate "Ansel" in the list and click "Install" or "Update"

@@ -63,4 +63,12 @@ return static function (App $app) : void {
         '/software/ansel-ee/changelog/{slug:[^\/]+}',
         GetChangelogItemAction::class
     );
+    $app->get(
+        '/software/ansel-ee/{versionString:documentation}[/{pageSlug:[^\/]+}]',
+        GetDocumentationPageAction::class
+    );
+    $app->get(
+        '/software/ansel-ee/{versionString:documentation-[^\/]+}[/{pageSlug:[^\/]+}]',
+        GetDocumentationPageAction::class
+    );
 };
