@@ -17,7 +17,7 @@ content:
     content: |
       - The first thing you will want to do is visit the License page and enter your license key from your purchase.
 
-        The license page can by located by clicking on “Ansel” from the list of Add-ons in the Add-on Manager, then clicking on the “License” link in the sidebar.
+        The license page can by located by clicking on "Ansel" from the list of Add-ons in the Add-on Manager, then clicking on the "License" link in the sidebar.
 
   - type: note
     heading: Remember
@@ -28,7 +28,7 @@ content:
     content: Global Settings
 
   - type: content
-    content: Ansel has a number of other global settings you may wish to take advantage of. To access them, click on “Ansel” from the list of Add-ons in the Add-on Manager
+    content: Ansel has a number of other global settings you may wish to take advantage of. To access them, click on "Ansel" from the list of Add-ons in the Add-on Manager
 
   - type: note
     content: The following settings have config file overrides which you can use to keep your config in your config file.
