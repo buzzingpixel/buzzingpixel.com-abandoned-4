@@ -32,7 +32,7 @@ if "%cmd%" == "" (
 )
 
 if "%cmd%" == "up" (
-    docker-compose build
+    docker-compose -f docker-compose.yml -p buzzingpixel build
     docker-compose -f docker-compose.yml -p buzzingpixel up -d
     exit /b 0
 )
@@ -51,6 +51,7 @@ if "%cmd%" == "provision" (
     cd platform
     call yarn
     cd ..
+    docker exec -it --user root --workdir /opt/project buzzingpixel-php bash -c "php cli app-setup:setup-docker-database";
     exit /b 0
 )
 

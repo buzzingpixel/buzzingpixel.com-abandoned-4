@@ -18,6 +18,7 @@
     ],
     "require": {
         "php": "^7.3",
+        "ext-PDO": "^7.3",
         "buzzingpixel/twig-getenv": "^1.0",
         "buzzingpixel/twig-markdown": "^1.0",
         "buzzingpixel/twig-smartypants": "^1.0",

@@ -30,6 +30,18 @@ return [
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),
+    PDO::class => static function () {
+        return new PDO(
+            'pgsql:host=db;port=5432;dbname=buzzingpixel',
+            (string) getenv('DB_USER'),
+            (string) getenv('DB_PASSWORD'),
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ]
+        );
+    },
     ResponseFactoryInterface::class => autowire(ResponseFactory::class),
     TwigEnvironment::class => static function (ContainerInterface $di) {
         return (new TwigEnvironmentFactory())($di);

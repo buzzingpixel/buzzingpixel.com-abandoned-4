@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fb97b5615fd160bc027fcbf2ab5811f",
+    "content-hash": "90f1bdac3191fd03d6b4b78ccc726d7d",
     "packages": [
         {
             "name": "buzzingpixel/corbomite-config-collector",
@@ -488,6 +488,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -7289,7 +7290,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3"
+        "php": "^7.3",
+        "ext-pdo": "^7.3"
     },
     "platform-dev": []
 }

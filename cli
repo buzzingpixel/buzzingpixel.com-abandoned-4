@@ -19,6 +19,8 @@ if (class_exists(WhoopsRun::class)) {
     $app->setCatchExceptions(false);
 }
 
+$app->add($container->get(\Config\SetupDockerDatabase::class));
+
 $directory = new RecursiveDirectoryIterator(__DIR__ . '/src/Cli');
 $iterator = new RecursiveIteratorIterator($directory);
 $finalIterator = new RegexIterator(
