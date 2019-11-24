@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config;
 
+use Exception;
 use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,7 +16,10 @@ class SetupDockerDatabase extends Command
     /** @var string */
     protected static $defaultName = 'app-setup:setup-docker-database';
 
-    public function execute(InputInterface $input, OutputInterface $output) : void
+    /**
+     * @throws Exception
+     */
+    public function execute(InputInterface $input, OutputInterface $output) : int
     {
         $pdo = new PDO(
             'pgsql:host=db;port=5432',
@@ -28,21 +32,27 @@ class SetupDockerDatabase extends Command
             ]
         );
 
-        $check = $pdo->query(
+        $query = $pdo->query(
             "SELECT 1 from pg_database WHERE datname='buzzingpixel'"
-        )->fetch();
+        );
+
+        if ($query === false) {
+            throw new Exception('Unable to query database');
+        }
+
+        $check = $query->fetch();
 
         if ($check !== false) {
             $output->writeln(
                 '<fg=green>buzzingpixel database is already set up</>'
             );
 
-            return;
+            return 0;
         }
 
         $go = true;
 
-        if (! getenv('DB_USER')) {
+        if (getenv('DB_USER') === false) {
             $go = false;
 
             $output->writeln(
@@ -50,7 +60,7 @@ class SetupDockerDatabase extends Command
             );
         }
 
-        if (! getenv('DB_PASSWORD')) {
+        if (getenv('DB_PASSWORD') === false) {
             $go = false;
 
             $output->writeln(
@@ -59,7 +69,7 @@ class SetupDockerDatabase extends Command
         }
 
         if (! $go) {
-            return;
+            return 0;
         }
 
         $output->writeln(
@@ -82,5 +92,7 @@ class SetupDockerDatabase extends Command
         );
 
         $output->writeln('<fg=green>buzzingpixel database was created</>');
+
+        return 0;
     }
 }
