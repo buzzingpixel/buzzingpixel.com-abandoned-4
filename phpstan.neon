@@ -1,5 +1,6 @@
 parameters:
     level: max
+    bootstrap: phpstan-bootstrap.php
     ignoreErrors:
         -
             message: '#Variable method call on \$this\(App\\Payload\\SpecificPayload\)\.#'
