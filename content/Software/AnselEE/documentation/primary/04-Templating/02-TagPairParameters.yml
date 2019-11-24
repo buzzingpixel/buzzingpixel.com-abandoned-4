@@ -1,0 +1,88 @@
+title: Tag Pair Parameters
+
+content:
+  - type: content
+    content: "The following parameters are available to all tags:"
+
+  - type: codeblock
+    lang: ee
+    heading: Tag Pair Parameters
+    content: |
+      image_id="104|105"
+      not_image_id="106|110"
+
+      site_id="2"
+      not_site_id="1"
+
+      file_id="2|3" // EE file id
+      not_file_id="18|27"
+
+      original_location_type="ee|assets" // Possible values: ee|assets|treasury
+      not_original_location_type="treasury|ee"
+
+      original_file_id="34|45"
+      not_original_file_id="45|56"
+
+      upload_location_type="assets|treasury" // Possible values: ee|assets|treasury
+      not_upload_location_type="ee|assets"
+
+      upload_location_id="34|45"
+      not_upload_location_id="45|56"
+
+      filename="my_file" // do not include extension
+      not_filename="foo"
+
+      extension="jpg"
+      not_extension="jpg"
+
+      original_extension="png"
+      not_original_extension="png"
+
+      filesize="182827"
+      filesize="< 182827"
+      filesize="> 182827"
+
+      original_filesize="182827"
+      original_filesize="< 182827"
+      original_filesize="> 182827"
+
+      width="300"
+      width="< 300"
+      width="> 300"
+
+      height="300"
+      height="< 300"
+      height="> 300"
+
+      title="my title|my other title"
+      not_title="foo|baz"
+
+      caption="my caption|my other caption"
+      not_caption="foo|baz"
+
+      member_id="23|24"
+      not_member_id="56|23"
+
+      position="2"
+      position="< 2"
+      position="> 2"
+
+      cover_only="true"
+      skip_cover="yes"
+      show_disabled="y"
+
+      namespace="my_namespace" // Access variables as {my_namespace:var}
+
+      limit="4"
+
+      offset="4"
+
+      order_by="date:desc|order:asc"
+
+      random="yes" // Overrides order_by parameter
+
+      cover_first="yes"
+
+      manipulations="true" // Include EE directory manipulations (requires extra queries)
+
+      host="https://cdn.domain.com/"

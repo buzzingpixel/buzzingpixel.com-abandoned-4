@@ -1,0 +1,34 @@
+title: On the Fly Cropping and Resizing
+
+content:
+  - type: content
+    content: |
+      Ansel can crop and resize images on the fly. Doing so is very efficient because the cropped/resized image is cached after the first request for it is made. Any request for that cropped/resized image thereafter comes straight from the cache on disk.
+
+      Cropping/resizing is available to the `{img:url}` variable.
+
+  - type: codeblock
+    lang: ee
+    heading: On the Fly Cropping/Resizing parameters
+    content: |
+      width="400"
+      height="100"
+      crop="true"
+      background="d34747"
+      force_jpg="true"
+      quality="80"
+      scale_up="true"
+      cache_time="86400" // Defaults to forever
+
+  - type: codeblock
+    lang: ee
+    content: |
+      {img:url:resize
+          width="400"
+          height="100"
+          crop="true"
+          background="d34747"
+          force_jpg="true"
+          quality="80"
+          scale_up="true"
+      }
