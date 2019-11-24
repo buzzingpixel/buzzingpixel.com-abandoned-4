@@ -29,9 +29,18 @@ $finalIterator = new RegexIterator(
     RecursiveRegexIterator::GET_MATCH
 );
 
+$dir = __DIR__ . '/src';
+$dirArray = explode('/', $dir);
+
 foreach ($finalIterator as $files) {
     foreach ($files as $file) {
-        $command = $container->get('\App\Cli\\' . basename($file, '.php'));
+        $baseName = basename($file, '.php');
+        $fileNameArray = explode('/', $file);
+        $newFileNameArray = array_slice($fileNameArray, count($dirArray));
+        unset($newFileNameArray[count($newFileNameArray) - 1]);
+        $className = implode('\\', $newFileNameArray);
+        $className = '\App\\' . $className . '\\' . $baseName;
+        $command = $container->get($className);
         $app->add($command);
     }
 }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\CliServices\CliQuestionService;
 use App\Content\Changelog\ParseChangelogFromMarkdownFile;
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Modules\ExtractModulesFromPath;
@@ -10,10 +11,20 @@ use Config\Factories\TwigEnvironmentFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Psr7\Factory\ResponseFactory;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Twig\Environment as TwigEnvironment;
 use function DI\autowire;
 
 return [
+    CliQuestionService::class => static function (ContainerInterface $di) {
+        return new CliQuestionService(
+            $di->get(QuestionHelper::class),
+            $di->get(ArgvInput::class),
+            $di->get(ConsoleOutput::class)
+        );
+    },
     ExtractMetaFromPath::class => autowire(ExtractMetaFromPath::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'

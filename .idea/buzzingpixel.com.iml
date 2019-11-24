@@ -18,6 +18,13 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/buzzingpixel/twig-smartypants" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/buzzingpixel/twig-switch" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/buzzingpixel/twig-widont" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/core" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/database" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/datasource" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/utility" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cebe/markdown" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cocur/slugify" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/codedungeon/php-cli-colors" />
@@ -89,7 +96,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-server-handler" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-server-middleware" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/robmorgan/phinx" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/diff" />
@@ -106,6 +115,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/slim/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/slim/slim" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/config" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/console" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/event-dispatcher-contracts" />
