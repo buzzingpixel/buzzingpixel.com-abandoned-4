@@ -8,6 +8,7 @@ use App\Http\Software\GetChangelogItemAction;
 use App\Http\Software\GetChangelogRawAction;
 use App\Http\Software\GetDocumentationPageAction;
 use App\Http\Software\GetSoftwareAction;
+use App\Http\Tinker\GetTinkerAction;
 use Slim\App;
 
 return static function (App $app) : void {
@@ -16,6 +17,9 @@ return static function (App $app) : void {
 
     // Match anything except a forward slash
     // {slug:[^\/]+}
+
+    // Tinker
+    $app->get('/tinker', GetTinkerAction::class);
 
     // Home
     $app->get('/', GetHomeAction::class);
