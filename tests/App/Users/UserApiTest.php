@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
+use App\Users\Services\LogUserIn;
 use App\Users\Services\SaveUser;
 use App\Users\UserApi;
 use Exception;
@@ -74,6 +75,22 @@ class UserApiTest extends TestCase
         );
     }
 
+    public function testLogUserIn() : void
+    {
+        $payload = $this->userApi->logUserIn(
+            $this->userModel,
+            'FooBarPassword'
+        );
+
+        self::assertSame($payload, $this->payload);
+
+        self::assertCount(2, $this->callArgs);
+
+        self::assertSame($this->userModel, $this->callArgs[0]);
+
+        self::assertSame('FooBarPassword', $this->callArgs[1]);
+    }
+
     protected function setUp() : void
     {
         $this->callArgs = [];
@@ -113,6 +130,8 @@ class UserApiTest extends TestCase
                 return $this->mockFetchUserByEmailAddress();
             case FetchUserById::class:
                 return $this->mockFetchUserById();
+            case LogUserIn::class:
+                return $this->mockLogUserIn();
         }
 
         throw new Exception('Unknown class');
@@ -166,6 +185,23 @@ class UserApiTest extends TestCase
                 $this->callArgs = func_get_args();
 
                 return $this->userModel;
+            });
+
+        return $mock;
+    }
+
+    /**
+     * @return LogUserIn&MockObject
+     */
+    private function mockLogUserIn() : LogUserIn
+    {
+        $mock = $this->createMock(LogUserIn::class);
+
+        $mock->method('__invoke')
+            ->willReturnCallback(function () {
+                $this->callArgs = func_get_args();
+
+                return $this->payload;
             });
 
         return $mock;

@@ -10,9 +10,9 @@ use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use DateTimeImmutable;
 use DateTimeZone;
 use const PASSWORD_DEFAULT;
-use function password_hash;
 use function password_needs_rehash;
 use function password_verify;
+use function Safe\password_hash;
 use function Safe\strtotime;
 
 class LogUserIn
@@ -46,8 +46,9 @@ class LogUserIn
         }
 
         if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
+            /** @noinspection PhpUnhandledExceptionInspection */
             $user->setPasswordHash(
-                (string) password_hash(
+                password_hash(
                     $password,
                     PASSWORD_DEFAULT
                 )
