@@ -21,6 +21,7 @@ class TransformUserRecordToUserModel
 
         return new UserModel([
             'id' => $userRecord->id,
+            'isAdmin' => in_array($userRecord->is_admin, ['1', 1, true], true),
             'emailAddress' => $userRecord->email_address,
             'passwordHash' => $userRecord->password_hash,
             'isActive' => in_array($userRecord->is_active, ['1', 1, true], true),

@@ -44,6 +44,21 @@ class UserModel extends Model
         return $this->id;
     }
 
+    /** @var bool */
+    private $isAdmin = false;
+
+    public function setIsAdmin(bool $isAdmin) : UserModel
+    {
+        $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    public function isAdmin() : bool
+    {
+        return $this->isAdmin;
+    }
+
     /** @var string */
     private $emailAddress = '';
 

@@ -8,6 +8,9 @@ use App\Persistence\Record;
 
 class UserRecord extends Record
 {
+    /** @var string int|bool|string */
+    public $is_admin = '0';
+
     /** @var string */
     public $email_address = '';
 

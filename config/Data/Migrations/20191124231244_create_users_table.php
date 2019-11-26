@@ -16,6 +16,7 @@ class CreateUsersTable extends AbstractMigration
             'primary_key' => ['id'],
         ])
             ->addColumn('id', 'uuid', ['comment' => 'UUID is generated in code'])
+            ->addColumn('is_admin', 'boolean', ['default' => 0])
             ->addColumn('email_address', 'string')
             ->addColumn('password_hash', 'string')
             ->addColumn('is_active', 'boolean', ['default' => 0])

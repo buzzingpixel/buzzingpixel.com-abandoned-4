@@ -16,6 +16,8 @@ class TransformUserModelToUserRecord
 
         $userRecord->id = $userModel->getId();
 
+        $userRecord->is_admin = $userModel->isAdmin() ? '1' : '0';
+
         $userRecord->email_address = $userModel->getEmailAddress();
 
         $userRecord->password_hash = $userModel->getPasswordHash();
