@@ -32,7 +32,7 @@ class SaveNewRecord
 
         try {
             $statement = $this->pdo->prepare(
-                'INSERT INTO users (' . $into . ') VALUES (' . $values . ')'
+                'INSERT INTO ' . $record->getTableName() . ' (' . $into . ') VALUES (' . $values . ')'
             );
 
             $success = $statement->execute($record->getBindValues());

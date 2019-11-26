@@ -41,9 +41,13 @@ abstract class Record
             }
 
             return lcfirst(mb_substr($shortName, 0, mb_strlen($shortName) - 6)) . 's';
+
+            // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
             return '';
         }
+
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -65,9 +69,13 @@ abstract class Record
                 },
                 $properties
             );
+
+            // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
             return [];
         }
+
+        // @codeCoverageIgnoreEnd
     }
 
     /**
