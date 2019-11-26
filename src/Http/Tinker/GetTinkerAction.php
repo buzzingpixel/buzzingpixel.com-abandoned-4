@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Tinker;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use function dd;
@@ -11,6 +12,14 @@ use function getenv;
 
 class GetTinkerAction
 {
+    /** @var ContainerInterface */
+    private $di;
+
+    public function __construct(ContainerInterface $di)
+    {
+        $this->di = $di;
+    }
+
     /**
      * @throws HttpNotFoundException
      */
@@ -20,6 +29,6 @@ class GetTinkerAction
             throw new HttpNotFoundException($request);
         }
 
-        dd('Tinker');
+        dd('Tinker', $this->di);
     }
 }
