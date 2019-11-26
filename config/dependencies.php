@@ -7,6 +7,9 @@ use App\Content\Changelog\ParseChangelogFromMarkdownFile;
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Modules\ExtractModulesFromPath;
 use App\Content\Software\ExtractSoftwareInfoFromPath;
+use buzzingpixel\cookieapi\CookieApi;
+use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
+use buzzingpixel\cookieapi\PhpFunctions;
 use Config\Factories\TwigEnvironmentFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -16,6 +19,7 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Twig\Environment as TwigEnvironment;
 use function DI\autowire;
+use function DI\get;
 
 return [
     CliQuestionService::class => static function (ContainerInterface $di) {
@@ -25,6 +29,14 @@ return [
             $di->get(ConsoleOutput::class)
         );
     },
+    CookieApi::class => static function () {
+        return new CookieApi(
+            $_COOKIE,
+            (string) getenv('ENCRYPTION_KEY'),
+            new PhpFunctions()
+        );
+    },
+    CookieApiInterface::class => get(CookieApi::class),
     ExtractMetaFromPath::class => autowire(ExtractMetaFromPath::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'

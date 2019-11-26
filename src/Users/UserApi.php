@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
+use App\Users\Services\LogUserIn;
 use App\Users\Services\SaveUser;
 use Psr\Container\ContainerInterface;
 
@@ -43,5 +44,13 @@ class UserApi
         $service = $this->di->get(FetchUserById::class);
 
         return $service($id);
+    }
+
+    public function logUserIn(UserModel $user, string $password) : Payload
+    {
+        /** @var LogUserIn $service */
+        $service = $this->di->get(LogUserIn::class);
+
+        return $service($user, $password);
     }
 }
