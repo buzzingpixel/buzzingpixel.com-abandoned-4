@@ -16,7 +16,7 @@ class CreateScheduleTrackingTable extends AbstractMigration
             'primary_key' => ['id'],
         ])
             ->addColumn('id', 'uuid', ['comment' => 'UUID is generated in code'])
-            ->addColumn('is_admin', 'boolean', ['default' => 0])
+            ->addColumn('class', 'text')
             ->addColumn('is_running', 'boolean', [
                 'default' => 0,
                 'comment' => 'Whether the scheduled task is running',
