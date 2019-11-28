@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Tinker;
 
-use App\Persistence\Constants;
-use App\Persistence\UuidFactoryWithOrderedTimeCodec;
-use DateTimeImmutable;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
@@ -31,12 +28,6 @@ class GetTinkerAction
         if (getenv('DEV_MODE') !== 'true') {
             throw new HttpNotFoundException($request);
         }
-
-        $uuidFactory = $this->di->get(UuidFactoryWithOrderedTimeCodec::class);
-
-        $uuid = $uuidFactory->uuid1()->toString();
-
-        dd((new DateTimeImmutable())->format(Constants::POSTGRES_OUTPUT_FORMAT));
 
         dd('Tinker', $this->di);
     }
