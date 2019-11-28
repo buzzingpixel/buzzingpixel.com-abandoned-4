@@ -24,13 +24,17 @@ class TransformModelToRecord
 
         $record->last_run_end_at = '';
 
-        if ($model->getLastRunStartAt() !== null) {
-            $record->last_run_start_at = $model->getLastRunStartAt()
+        $lastRunStartAt = $model->getLastRunStartAt();
+
+        if ($lastRunStartAt !== null) {
+            $record->last_run_start_at = $lastRunStartAt
                 ->format(DateTimeInterface::ATOM);
         }
 
-        if ($model->getLastRunEndAt() !== null) {
-            $record->last_run_end_at = $model->getLastRunEndAt()
+        $lastRunEndAt = $model->getLastRunEndAt();
+
+        if ($lastRunEndAt !== null) {
+            $record->last_run_end_at = $lastRunEndAt
                 ->format(DateTimeInterface::ATOM);
         }
 

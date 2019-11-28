@@ -52,7 +52,8 @@ class TransformRecordToModel
                     1,
                     'true',
                     true,
-                ]
+                ],
+                true
             ),
             'lastRunStartAt' => $lastRunStartAt,
             'lastRunEndAt' => $lastRunEndAt,

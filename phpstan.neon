@@ -28,6 +28,15 @@ parameters:
         -
             message: '#Variable method call on \$this\(App\\Payload\\Model\)\.#'
             path: %currentWorkingDirectory%/src/Payload/Model.php
+        -
+            message: '#Cannot cast.*#'
+            path: %currentWorkingDirectory%/src/Schedule/Services/TranslateRunEvery.php
+        -
+            message: '#Call to function is_numeric\(\) with.*#'
+            path: %currentWorkingDirectory%/src/Schedule/Services/TranslateRunEvery.php
+        -
+            message: '#Only booleans are allowed in a negated boolean, string given\.#'
+            path: %currentWorkingDirectory%/src/Schedule/Services/SaveSchedule.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php

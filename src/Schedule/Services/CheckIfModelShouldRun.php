@@ -34,9 +34,13 @@ class CheckIfModelShouldRun
 
         $currentTimeStamp = $currentTime->getTimestamp();
 
-        $lastRunTimeStamp = $model->getLastRunStartAt() ?
-            $model->getLastRunStartAt()->getTimestamp():
-            0;
+        $lastRunStartAt = $model->getLastRunStartAt();
+
+        $lastRunTimeStamp = 0;
+
+        if ($lastRunStartAt !== null) {
+            $lastRunTimeStamp = $lastRunStartAt->getTimestamp();
+        }
 
         $oneHourInSeconds = 60 * 60;
 

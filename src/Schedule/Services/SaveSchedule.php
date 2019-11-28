@@ -39,7 +39,7 @@ class SaveSchedule
 
     public function __invoke(ScheduleItemModel $model) : Payload
     {
-        if (! $model->getClass()) {
+        if ($model->getClass() === '') {
             return new Payload(
                 Payload::STATUS_NOT_VALID,
                 ['message' => 'Class is required']

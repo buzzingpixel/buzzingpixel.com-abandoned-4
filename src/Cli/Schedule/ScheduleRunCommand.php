@@ -18,7 +18,7 @@ use Throwable;
 use function array_walk;
 use function count;
 
-class ScheduleRun extends Command
+class ScheduleRunCommand extends Command
 {
     /** @var string */
     protected static $defaultName = 'schedule:run';
@@ -46,7 +46,10 @@ class ScheduleRun extends Command
         parent::__construct();
     }
 
-    /** @var OutputInterface */
+    /**
+     * @var OutputInterface
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private $output;
 
     public function execute(InputInterface $input, OutputInterface $output) : ?int
@@ -133,8 +136,10 @@ class ScheduleRun extends Command
         $model->setLastRunStartAt($dateTime);
         ($this->saveSchedule)($model);
 
+        /** @psalm-suppress MixedAssignment */
         $class = $this->di->get($model->getClass());
 
+        /** @psalm-suppress MixedFunctionCall */
         $class();
 
         $dateTime = new DateTimeImmutable(
