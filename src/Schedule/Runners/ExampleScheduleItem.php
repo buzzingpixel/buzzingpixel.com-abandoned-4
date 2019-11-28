@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Schedule\Runners;
 
 use App\Schedule\Frequency;
-use const PHP_EOL;
+use function dump;
 
 class ExampleScheduleItem
 {
-    public const RUN_EVERY = Frequency::ALWAYS;
+    public const RUN_EVERY = Frequency::FIVE_MINUTES;
 
     public function __invoke() : void
     {
-        echo self::class . PHP_EOL . PHP_EOL;
+        dump(self::class);
     }
 }

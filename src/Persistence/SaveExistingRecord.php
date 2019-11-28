@@ -37,7 +37,7 @@ class SaveExistingRecord
                 $setSql[] = $field . '=:' . $field;
             }
 
-            $sql = 'UPDATE users SET ' .
+            $sql = 'UPDATE ' . $record->getTableName() . ' SET ' .
                 implode(', ', $setSql) .
                 ' WHERE id=:id';
 
