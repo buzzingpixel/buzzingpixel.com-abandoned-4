@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Schedule\Services;
 
 use App\Schedule\Models\ScheduleItemModel;
-use DateTimeImmutable;
+use App\Utilities\SystemClock;
 use Throwable;
 use function is_numeric;
 
@@ -13,10 +13,15 @@ class CheckIfModelShouldRun
 {
     /** @var TranslateRunEvery */
     private $translateRunEvery;
+    /** @var SystemClock */
+    private $systemClock;
 
-    public function __construct(TranslateRunEvery $translateRunEvery)
-    {
+    public function __construct(
+        TranslateRunEvery $translateRunEvery,
+        SystemClock $systemClock
+    ) {
         $this->translateRunEvery = $translateRunEvery;
+        $this->systemClock       = $systemClock;
     }
 
     public function check(ScheduleItemModel $model) : bool
@@ -30,7 +35,7 @@ class CheckIfModelShouldRun
 
     private function innerCheck(ScheduleItemModel $model) : bool
     {
-        $currentTime = new DateTimeImmutable();
+        $currentTime = $this->systemClock->getCurrentTime();
 
         $currentTimeStamp = $currentTime->getTimestamp();
 
@@ -121,7 +126,7 @@ class CheckIfModelShouldRun
             return true;
         }
 
-        // If we're running on Monday, and it's Monday, we should run
+        // If we're running on Friday, and it's Friday, we should run
         return $runEvery === 'fridayatmidnight' && $day === 'Friday';
     }
 }

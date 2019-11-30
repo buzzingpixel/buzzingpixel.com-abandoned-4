@@ -38,9 +38,11 @@ class TranslateRunEvery
      *   converted to seconds and returned
      * - Else the mapped value will be returned
      *
+     * @param float|int|string $val
+     *
      * @return float|int|string
      */
-    public function getTranslatedValue(string $val)
+    public function getTranslatedValue($val)
     {
         if (is_numeric($val)) {
             return ((int) $val) * 60;

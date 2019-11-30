@@ -130,6 +130,8 @@ class ScheduleRunCommandTest extends TestCase
 
                 $modelDateTime = $model->getLastRunStartAt();
 
+                self::assertInstanceOf(DateTimeImmutable::class, $modelDateTime);
+
                 $modelDateTimeFormat = $modelDateTime->format(
                     'Y-m-d H:i'
                 );
@@ -163,6 +165,8 @@ class ScheduleRunCommandTest extends TestCase
                 );
 
                 $modelDateTime = $model->getLastRunStartAt();
+
+                self::assertInstanceOf(DateTimeImmutable::class, $modelDateTime);
 
                 $modelDateTimeFormat = $modelDateTime->format(
                     'Y-m-d H:i'
@@ -261,6 +265,8 @@ class ScheduleRunCommandTest extends TestCase
 
                 $modelDateTime = $model->getLastRunStartAt();
 
+                self::assertInstanceOf(DateTimeImmutable::class, $modelDateTime);
+
                 $modelDateTimeFormat = $modelDateTime->format(
                     'Y-m-d H:i'
                 );
@@ -295,6 +301,8 @@ class ScheduleRunCommandTest extends TestCase
 
                 $modelDateTime = $model->getLastRunStartAt();
 
+                self::assertInstanceOf(DateTimeImmutable::class, $modelDateTime);
+
                 $modelDateTimeFormat = $modelDateTime->format(
                     'Y-m-d H:i'
                 );
@@ -305,6 +313,8 @@ class ScheduleRunCommandTest extends TestCase
                 );
 
                 $lastRun = $model->getLastRunEndAt();
+
+                self::assertInstanceOf(DateTimeImmutable::class, $lastRun);
 
                 $lastRunFormat = $lastRun->format('Y-m-d H:i');
 
@@ -461,7 +471,7 @@ class ScheduleRunCommandTest extends TestCase
     {
         $mock = $this->createMock(FetchSchedules::class);
 
-        if (! $schedulesPayload) {
+        if ($schedulesPayload === null) {
             $schedulesPayload = new SchedulesPayload();
         }
 
