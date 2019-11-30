@@ -7,7 +7,7 @@ namespace Tests\App\Schedule\Services;
 use App\Persistence\Constants;
 use App\Persistence\Schedule\ScheduleTrackingRecord;
 use App\Schedule\Frequency;
-use App\Schedule\Runners\ExampleScheduleItem;
+use App\Schedule\Runners\UserSessionGarbageCollection;
 use App\Schedule\Services\FetchSchedules;
 use App\Schedule\Transformers\TransformRecordToModel;
 use Config\Schedule;
@@ -67,7 +67,7 @@ class FetchSchedulesTest extends TestCase
     {
         $classes = [
             'Foo\Bar\Test\Class\One',
-            ExampleScheduleItem::class,
+            UserSessionGarbageCollection::class,
         ];
 
         $this->schedule->expects(self::once())
@@ -110,8 +110,8 @@ class FetchSchedulesTest extends TestCase
 
         $schedule2 = $schedules[1];
         self::assertSame('', $schedule2->getId());
-        self::assertSame(ExampleScheduleItem::class, $schedule2->getClass());
-        self::assertSame(Frequency::FIVE_MINUTES, $schedule2->getRunEvery());
+        self::assertSame(UserSessionGarbageCollection::class, $schedule2->getClass());
+        self::assertSame(Frequency::DAY_AT_MIDNIGHT, $schedule2->getRunEvery());
         self::assertFalse($schedule2->isRunning());
         self::assertNull($schedule2->getLastRunStartAt());
         self::assertNull($schedule2->getLastRunEndAt());
@@ -121,7 +121,7 @@ class FetchSchedulesTest extends TestCase
     {
         $classes = [
             'Foo\Bar\Test\Class\One',
-            ExampleScheduleItem::class,
+            UserSessionGarbageCollection::class,
         ];
 
         $this->schedule->expects(self::once())
@@ -202,8 +202,8 @@ class FetchSchedulesTest extends TestCase
 
         $schedule2 = $schedules[1];
         self::assertSame('', $schedule2->getId());
-        self::assertSame(ExampleScheduleItem::class, $schedule2->getClass());
-        self::assertSame(Frequency::FIVE_MINUTES, $schedule2->getRunEvery());
+        self::assertSame(UserSessionGarbageCollection::class, $schedule2->getClass());
+        self::assertSame(Frequency::DAY_AT_MIDNIGHT, $schedule2->getRunEvery());
         self::assertFalse($schedule2->isRunning());
         self::assertNull($schedule2->getLastRunStartAt());
         self::assertNull($schedule2->getLastRunEndAt());
