@@ -74,6 +74,11 @@ class ScheduleRunCommand extends Command
                 [$this, 'processScheduleItem']
             );
         } catch (Throwable $e) {
+            $output->writeln(
+                '<fg=red>An unknown error occurred</>'
+            );
+
+            return 1;
         }
 
         return 0;
@@ -91,7 +96,7 @@ class ScheduleRunCommand extends Command
             ($this->saveSchedule)($model);
 
             $this->output->writeln(
-                '<fg=red>There was a problem running a scheduled command.</>'
+                '<fg=red>There was a problem running a scheduled command</>'
             );
 
             $this->output->writeln(
