@@ -46,7 +46,7 @@ class DeleteUser
     private function deleteUser(UserModel $user) : void
     {
         $statement = $this->pdo->prepare(
-            'DELETE FROM users WHERE guid=:id'
+            'DELETE FROM users WHERE id=:id'
         );
 
         $statement->execute([':id' => $user->getId()]);
@@ -55,7 +55,7 @@ class DeleteUser
     private function deleteUserSessions(UserModel $user) : void
     {
         $statement = $this->pdo->prepare(
-            'DELETE FROM user_sessions WHERE guid=:user_id'
+            'DELETE FROM user_sessions WHERE user_id=:user_id'
         );
 
         $statement->execute([':user_id' => $user->getId()]);
@@ -64,7 +64,7 @@ class DeleteUser
     private function deletePasswordResetTokens(UserModel $user) : void
     {
         $statement = $this->pdo->prepare(
-            'DELETE FROM user_password_reset_tokens WHERE guid=:user_id'
+            'DELETE FROM user_password_reset_tokens WHERE user_id=:user_id'
         );
 
         $statement->execute([':user_id' => $user->getId()]);

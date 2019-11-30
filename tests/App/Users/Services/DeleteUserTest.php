@@ -32,7 +32,7 @@ class DeleteUserTest extends TestCase
         $this->pdo->expects(self::at(1))
             ->method('prepare')
             ->with(self::equalTo(
-                'DELETE FROM users WHERE guid=:id'
+                'DELETE FROM users WHERE id=:id'
             ))
             ->willThrowException(new Exception());
 
@@ -75,7 +75,7 @@ class DeleteUserTest extends TestCase
         $this->pdo->expects(self::at(1))
             ->method('prepare')
             ->with(self::equalTo(
-                'DELETE FROM users WHERE guid=:id'
+                'DELETE FROM users WHERE id=:id'
             ))
             ->willReturn($statementForDeleteUser);
 
@@ -97,7 +97,7 @@ class DeleteUserTest extends TestCase
         $this->pdo->expects(self::at(2))
             ->method('prepare')
             ->with(self::equalTo(
-                'DELETE FROM user_sessions WHERE guid=:user_id'
+                'DELETE FROM user_sessions WHERE user_id=:user_id'
             ))
             ->willReturn($statementForDeleteSession);
 
@@ -119,7 +119,7 @@ class DeleteUserTest extends TestCase
         $this->pdo->expects(self::at(3))
             ->method('prepare')
             ->with(self::equalTo(
-                'DELETE FROM user_password_reset_tokens WHERE guid=:user_id'
+                'DELETE FROM user_password_reset_tokens WHERE user_id=:user_id'
             ))
             ->willReturn($statementForDeleteTokens);
 
