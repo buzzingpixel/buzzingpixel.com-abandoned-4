@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Schedule\Runners;
 
 use App\Schedule\Frequency;
-use function dump;
 
 class ExampleScheduleItem
 {
@@ -13,6 +12,5 @@ class ExampleScheduleItem
 
     public function __invoke() : void
     {
-        dump(self::class);
     }
 }
