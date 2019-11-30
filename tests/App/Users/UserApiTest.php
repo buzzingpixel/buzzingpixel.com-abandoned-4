@@ -6,6 +6,7 @@ namespace Tests\App\Users;
 
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
+use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\LogUserIn;
@@ -91,6 +92,19 @@ class UserApiTest extends TestCase
         self::assertSame('FooBarPassword', $this->callArgs[1]);
     }
 
+    public function testDeleteUser() : void
+    {
+        $payload = $this->userApi->deleteUser(
+            $this->userModel
+        );
+
+        self::assertSame($payload, $this->payload);
+
+        self::assertCount(1, $this->callArgs);
+
+        self::assertSame($this->userModel, $this->callArgs[0]);
+    }
+
     protected function setUp() : void
     {
         $this->callArgs = [];
@@ -132,6 +146,8 @@ class UserApiTest extends TestCase
                 return $this->mockFetchUserById();
             case LogUserIn::class:
                 return $this->mockLogUserIn();
+            case DeleteUser::class:
+                return $this->mockDeleteUser();
         }
 
         throw new Exception('Unknown class');
@@ -196,6 +212,23 @@ class UserApiTest extends TestCase
     private function mockLogUserIn() : LogUserIn
     {
         $mock = $this->createMock(LogUserIn::class);
+
+        $mock->method('__invoke')
+            ->willReturnCallback(function () {
+                $this->callArgs = func_get_args();
+
+                return $this->payload;
+            });
+
+        return $mock;
+    }
+
+    /**
+     * @return DeleteUser&MockObject
+     */
+    private function mockDeleteUser() : DeleteUser
+    {
+        $mock = $this->createMock(DeleteUser::class);
 
         $mock->method('__invoke')
             ->willReturnCallback(function () {

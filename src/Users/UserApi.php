@@ -6,6 +6,7 @@ namespace App\Users;
 
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
+use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\LogUserIn;
@@ -52,5 +53,13 @@ class UserApi
         $service = $this->di->get(LogUserIn::class);
 
         return $service($user, $password);
+    }
+
+    public function deleteUser(UserModel $user) : Payload
+    {
+        /** @var DeleteUser $service */
+        $service = $this->di->get(DeleteUser::class);
+
+        return $service($user);
     }
 }
