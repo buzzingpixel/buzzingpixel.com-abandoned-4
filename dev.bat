@@ -81,17 +81,17 @@ if "%cmd%" == "phpcs" (
 )
 
 if "%cmd%" == "psalm" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "chmod +x /app/vendor/bin/psalm && /app/vendor/bin/psalm"
+    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/vimeo/psalm/psalm"
     exit /b 0
 )
 
 if "%cmd%" == "phpstan" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "chmod +x /app/vendor/bin/phpstan && /app/vendor/bin/phpstan analyse config public/index.php src tests cli"
+    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/phpstan/phpstan/bin/phpstan analyse config public/index.php src tests cli"
     exit /b 0
 )
 
 if "%cmd%" == "phpunit" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "chmod +x /app/vendor/bin/phpunit && /app/vendor/bin/phpunit --configuration /app/phpunit.xml %allArgsExceptFirst%"
+    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/phpunit/phpunit/phpunit --configuration /app/phpunit.xml %allArgsExceptFirst%"
     exit /b 0
 )
 
