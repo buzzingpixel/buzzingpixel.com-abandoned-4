@@ -147,7 +147,7 @@ class SaveNewRecordTest extends TestCase
 
         self::assertSame(
             [
-                'message' => 'Created user with id TestId',
+                'message' => 'Created record with id TestId',
                 'id' => 'TestId',
             ],
             $payload->getResult()

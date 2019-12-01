@@ -8,7 +8,6 @@ use App\Persistence\Constants;
 use App\Persistence\SaveExistingRecord;
 use App\Persistence\Users\UserSessionRecord;
 use App\Users\Models\UserModel;
-use buzzingpixel\cookieapi\CookieApi;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -19,7 +18,7 @@ use function time;
 
 class FetchLoggedInUser
 {
-    /** @var CookieApi */
+    /** @var CookieApiInterface */
     private $cookieApi;
     /** @var PDO */
     private $pdo;

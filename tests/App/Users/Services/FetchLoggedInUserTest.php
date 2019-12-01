@@ -223,6 +223,7 @@ class FetchLoggedInUserTest extends TestCase
 
         $currentTime = new DateTimeImmutable();
 
+        /** @var DateTimeImmutable $updatedLastTouchedAt */
         $updatedLastTouchedAt = DateTimeImmutable::createFromFormat(
             DateTimeInterface::ATOM,
             $userSessionRecord->last_touched_at

@@ -42,7 +42,7 @@ class SaveNewRecord
             }
 
             return new Payload(Payload::STATUS_CREATED, [
-                'message' => 'Created user with id ' . $record->id,
+                'message' => 'Created record with id ' . $record->id,
                 'id' => $record->id,
             ]);
         } catch (Throwable $e) {

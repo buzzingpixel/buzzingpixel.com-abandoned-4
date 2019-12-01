@@ -10,6 +10,7 @@ use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
+use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogUserIn;
 use App\Users\Services\SaveUser;
 use App\Users\UserApi;
@@ -113,6 +114,19 @@ class UserApiTest extends TestCase
         self::assertSame($userModel, $this->userModel);
     }
 
+    public function testGeneratePasswordResetToken() : void
+    {
+        $payload = $this->userApi->generatePasswordResetToken(
+            $this->userModel
+        );
+
+        self::assertSame($payload, $this->payload);
+
+        self::assertCount(1, $this->callArgs);
+
+        self::assertSame($this->userModel, $this->callArgs[0]);
+    }
+
     protected function setUp() : void
     {
         $this->callArgs = [];
@@ -158,6 +172,8 @@ class UserApiTest extends TestCase
                 return $this->mockDeleteUser();
             case FetchLoggedInUser::class:
                 return $this->mockFetchLoggedInUser();
+            case GeneratePasswordResetToken::class:
+                return $this->mockGeneratePasswordResetToken();
         }
 
         throw new Exception('Unknown class');
@@ -260,6 +276,25 @@ class UserApiTest extends TestCase
         $mock->method('__invoke')
             ->willReturnCallback(function () {
                 return $this->userModel;
+            });
+
+        return $mock;
+    }
+
+    /**
+     * @return GeneratePasswordResetToken&MockObject
+     */
+    private function mockGeneratePasswordResetToken() : GeneratePasswordResetToken
+    {
+        $mock = $this->createMock(
+            GeneratePasswordResetToken::class
+        );
+
+        $mock->method('__invoke')
+            ->willReturnCallback(function () {
+                $this->callArgs = func_get_args();
+
+                return $this->payload;
             });
 
         return $mock;
