@@ -12,6 +12,7 @@ use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
 use App\Users\Services\GeneratePasswordResetToken;
+use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
 use App\Users\Services\SaveUser;
 use Psr\Container\ContainerInterface;
@@ -88,5 +89,13 @@ class UserApi
         $service = $this->di->get(FetchUserByResetToken::class);
 
         return $service($token);
+    }
+
+    public function logCurrentUserOut() : Payload
+    {
+        /** @var LogCurrentUserOut $service */
+        $service = $this->di->get(LogCurrentUserOut::class);
+
+        return $service();
     }
 }
