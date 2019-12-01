@@ -7,6 +7,7 @@ namespace Tests\App\Users;
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
+use App\Users\Services\FetchLoggedInUser;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\LogUserIn;
@@ -105,6 +106,13 @@ class UserApiTest extends TestCase
         self::assertSame($this->userModel, $this->callArgs[0]);
     }
 
+    public function testFetchLoggedInUser() : void
+    {
+        $userModel = $this->userApi->fetchLoggedInUser();
+
+        self::assertSame($userModel, $this->userModel);
+    }
+
     protected function setUp() : void
     {
         $this->callArgs = [];
@@ -148,6 +156,8 @@ class UserApiTest extends TestCase
                 return $this->mockLogUserIn();
             case DeleteUser::class:
                 return $this->mockDeleteUser();
+            case FetchLoggedInUser::class:
+                return $this->mockFetchLoggedInUser();
         }
 
         throw new Exception('Unknown class');
@@ -235,6 +245,21 @@ class UserApiTest extends TestCase
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
+            });
+
+        return $mock;
+    }
+
+    /**
+     * @return FetchLoggedInUser&MockObject
+     */
+    private function mockFetchLoggedInUser() : FetchLoggedInUser
+    {
+        $mock = $this->createMock(FetchLoggedInUser::class);
+
+        $mock->method('__invoke')
+            ->willReturnCallback(function () {
+                return $this->userModel;
             });
 
         return $mock;
