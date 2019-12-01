@@ -10,6 +10,7 @@ use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
+use App\Users\Services\FetchUserByResetToken;
 use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogUserIn;
 use App\Users\Services\SaveUser;
@@ -79,5 +80,13 @@ class UserApi
         $service = $this->di->get(GeneratePasswordResetToken::class);
 
         return $service($user);
+    }
+
+    public function fetchUserByResetToken(string $token) : ?UserModel
+    {
+        /** @var FetchUserByResetToken $service */
+        $service = $this->di->get(FetchUserByResetToken::class);
+
+        return $service($token);
     }
 }
