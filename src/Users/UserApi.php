@@ -14,6 +14,7 @@ use App\Users\Services\FetchUserByResetToken;
 use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
+use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use Psr\Container\ContainerInterface;
 
@@ -97,5 +98,13 @@ class UserApi
         $service = $this->di->get(LogCurrentUserOut::class);
 
         return $service();
+    }
+
+    public function resetPasswordByToken(string $token, string $newPassword) : Payload
+    {
+        /** @var ResetPasswordByToken $service */
+        $service = $this->di->get(ResetPasswordByToken::class);
+
+        return $service($token, $newPassword);
     }
 }
