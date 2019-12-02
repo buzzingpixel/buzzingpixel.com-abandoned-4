@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Admin\GetAdminAction;
 use App\Http\Home\GetHomeAction;
@@ -38,6 +39,7 @@ return static function (App $app) : void {
 
     // Account
     $app->post('/account/register', PostRegisterAction::class);
+    $app->post('/account/log-in', PostLogInAction::class);
 
     // Ansel Craft
     $app->get(
