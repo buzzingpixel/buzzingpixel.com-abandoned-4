@@ -15,7 +15,8 @@ class RequireLoginResponder extends StandardResponderConstructor
      * @throws Throwable
      */
     public function __invoke(
-        MetaPayload $metaPayload
+        MetaPayload $metaPayload,
+        string $redirectTo
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
@@ -23,7 +24,10 @@ class RequireLoginResponder extends StandardResponderConstructor
             ($this->minifier)(
                 $this->twigEnvironment->render(
                     'LogIn.twig',
-                    ['metaPayload' => $metaPayload]
+                    [
+                        'metaPayload' => $metaPayload,
+                        'redirectTo' => $redirectTo,
+                    ]
                 )
             )
         );

@@ -37,7 +37,8 @@ class RequireLogInAction
 
         if (! $user) {
             return ($this->responder)(
-                new MetaPayload(['metaTitle' => 'Log In'])
+                new MetaPayload(['metaTitle' => 'Log In']),
+                $request->getUri()->getPath()
             );
         }
 

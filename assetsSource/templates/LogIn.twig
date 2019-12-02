@@ -3,19 +3,51 @@
 
 {% do requireVariables({
     metaPayload: 'App\\Content\\Meta\\MetaPayload',
+    redirectTo: 'string',
 }) %}
 
 {# @var \App\Content\Meta\MetaPayload metaPayload #}
+{# @var string redirectTo #}
 
 {% extends '_Layout.twig' %}
 
-{% set csrf %}
+{% set hiddenInputs %}
     <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
     <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+    <input type="hidden" name="redirect_to" value="{{ redirectTo }}">
 {% endset %}
 
+{% set message = flash('LoginFormMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% set activeTab = 'logIn' %}
+{% if message['result']['active'] is defined %}
+    {% set activeTab = message.result.active %}
+{% endif %}
+
 {% block content %}
-    <section class="LogInForm" ref="LogInForm">
+    <section
+        class="LogInForm"
+        ref="LogInForm"
+        data-active-tab="{{ activeTab }}"
+    >
+        {% if message['status'] is defined %}
+            {% set class = 'Message--IsError' %}
+            {% if message.status == 'SUCCESSFUL' %}
+                {% set class = 'Message--IsSuccess' %}
+            {% endif %}
+            <div class="LogInForm__Message">
+                <div
+                    class="Message {{ class }}"
+                >
+                    <div class="Message__Inner">
+                        {{ message.result.message|default('There was a problem with your submission')|smartypants|widont }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <div class="LogInForm__Inner">
             <ul class="LogInForm__Tabs">
                 <li
@@ -61,7 +93,7 @@
                 :class="{'LogInForm__Form--IsActive': activeTab === 'logIn'}"
                 :aria-hidden="activeTab === 'logIn' ? 'false' : 'true'"
             >
-                {{ csrf }}
+                {{ hiddenInputs }}
                 <h2 class="LogInForm__FormHeading">
                     Log In
                 </h2>
@@ -69,13 +101,33 @@
                     <label for="LogInEmailAddress" class="label LogInForm__Label">
                         Email Address
                     </label>
-                    <input type="email" id="LogInEmailAddress" name="email_address" class="input LogInForm__Input">
+                    <input
+                        type="email"
+                        id="LogInEmailAddress"
+                        name="email_address"
+                        class="input LogInForm__Input{% if activeTab == 'logIn' and message['result']['inputs']['emailAddress'] is defined %} input--has-error{% endif %}"
+                    >
+                    {% if activeTab == 'logIn' and message['result']['inputs']['emailAddress'] is defined %}
+                        <div class="LogInForm__InputMessage">
+                            {{ message['result']['inputs']['emailAddress']|smartypants }}
+                        </div>
+                    {% endif %}
                 </fieldset>
                 <fieldset class="fieldset LogInForm__FieldSet">
                     <label for="LogInPassword" class="label LogInForm__Label">
                         Password
                     </label>
-                    <input type="password" id="LogInPassword" name="password" class="input LogInForm__Input">
+                    <input
+                        type="password"
+                        id="LogInPassword"
+                        name="password"
+                        class="input LogInForm__Input{% if activeTab == 'password' and message['result']['inputs']['password'] is defined %} input--has-error{% endif %}"
+                    >
+                    {% if activeTab == 'logIn' and message['result']['inputs']['password'] is defined %}
+                        <div class="LogInForm__InputMessage">
+                            {{ message['result']['inputs']['password']|smartypants }}
+                        </div>
+                    {% endif %}
                 </fieldset>
                 <fieldset class="fieldset LogInForm__FieldSet LogInForm__FieldSet--IsButtonContainer">
                     <input class="button LogInForm__Button" type="submit" value="Log In">
@@ -90,7 +142,7 @@
                 :class="{'LogInForm__Form--IsActive': activeTab === 'register'}"
                 :aria-hidden="activeTab === 'register' ? 'false' : 'true'"
             >
-                {{ csrf }}
+                {{ hiddenInputs }}
                 <h2 class="LogInForm__FormHeading">
                     Register
                 </h2>
@@ -98,19 +150,49 @@
                     <label for="RegisterEmailAddress" class="label LogInForm__Label">
                         Email Address
                     </label>
-                    <input type="email" id="RegisterEmailAddress" name="email_address" class="input LogInForm__Input">
+                    <input
+                        type="email"
+                        id="RegisterEmailAddress"
+                        name="email_address"
+                        class="input LogInForm__Input{% if activeTab == 'register' and message['result']['inputs']['emailAddress'] is defined %} input--has-error{% endif %}"
+                    >
+                    {% if activeTab == 'register' and message['result']['inputs']['emailAddress'] is defined %}
+                        <div class="LogInForm__InputMessage">
+                            {{ message['result']['inputs']['emailAddress']|smartypants }}
+                        </div>
+                    {% endif %}
                 </fieldset>
                 <fieldset class="fieldset LogInForm__FieldSet">
                     <label for="RegisterPassword" class="label LogInForm__Label">
                         Password
                     </label>
-                    <input type="password" id="RegisterPassword" name="password" class="input LogInForm__Input">
+                    <input
+                        type="password"
+                        id="RegisterPassword"
+                        name="password"
+                        class="input LogInForm__Input{% if activeTab == 'register' and message['result']['inputs']['password'] is defined %} input--has-error{% endif %}"
+                    >
+                    {% if activeTab == 'register' and message['result']['inputs']['password'] is defined %}
+                        <div class="LogInForm__InputMessage">
+                            {{ message['result']['inputs']['password']|smartypants }}
+                        </div>
+                    {% endif %}
                 </fieldset>
                 <fieldset class="fieldset LogInForm__FieldSet">
                     <label for="RegisterConfirmPassword" class="label LogInForm__Label">
                         Confirm Password
                     </label>
-                    <input type="password" id="RegisterConfirmPassword" name="confirm_password" class="input LogInForm__Input">
+                    <input
+                        type="password"
+                        id="RegisterConfirmPassword"
+                        name="confirm_password"
+                        class="input LogInForm__Input{% if activeTab == 'register' and message['result']['inputs']['confirmPassword'] is defined %} input--has-error{% endif %}"
+                    >
+                    {% if activeTab == 'register' and message['result']['inputs']['confirmPassword'] is defined %}
+                        <div class="LogInForm__InputMessage">
+                            {{ message['result']['inputs']['confirmPassword']|smartypants }}
+                        </div>
+                    {% endif %}
                 </fieldset>
                 <fieldset class="fieldset LogInForm__FieldSet LogInForm__FieldSet--IsButtonContainer">
                     <input class="button LogInForm__Button" type="submit" value="Register">
@@ -125,7 +207,7 @@
                 :class="{'LogInForm__Form--IsActive': activeTab === 'forgot'}"
                 :aria-hidden="activeTab === 'forgot' ? 'false' : 'true'"
             >
-                {{ csrf }}
+                {{ hiddenInputs }}
                 <h2 class="LogInForm__FormHeading">
                     Reset Password
                 </h2>
@@ -133,7 +215,17 @@
                     <label for="ResetEmailAddress" class="label LogInForm__Label">
                         Email Address
                     </label>
-                    <input type="email" id="ResetEmailAddress" name="email_address" class="input LogInForm__Input">
+                    <input
+                        type="email"
+                        id="ResetEmailAddress"
+                        name="email_address"
+                        class="input LogInForm__Input{% if activeTab == 'forgot' and message['result']['inputs']['emailAddress'] is defined %} input--has-error{% endif %}"
+                    >
+                    {% if activeTab == 'forgot' and message['result']['inputs']['emailAddress'] is defined %}
+                        <div class="LogInForm__InputMessage">
+                            {{ message['result']['inputs']['emailAddress']|smartypants }}
+                        </div>
+                    {% endif %}
                 </fieldset>
                 <fieldset class="fieldset LogInForm__FieldSet LogInForm__FieldSet--IsButtonContainer">
                     <input class="button LogInForm__Button" type="submit" value="Request Reset Email">

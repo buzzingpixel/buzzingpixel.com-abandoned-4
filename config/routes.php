@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Admin\GetAdminAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
@@ -24,6 +25,9 @@ return static function (App $app) : void {
     // Tinker
     $app->get('/tinker', GetTinkerAction::class);
 
+    // Home
+    $app->get('/', GetHomeAction::class);
+
     // Admin
     // phpcs:disable
     $app->group('/admin', function () use ($app) : void {
@@ -32,8 +36,8 @@ return static function (App $app) : void {
         ->add(RequireLogInAction::class);
     // phpcs:enable
 
-    // Home
-    $app->get('/', GetHomeAction::class);
+    // Account
+    $app->post('/account/register', PostRegisterAction::class);
 
     // Ansel Craft
     $app->get(

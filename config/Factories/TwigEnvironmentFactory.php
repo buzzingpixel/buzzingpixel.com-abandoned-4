@@ -17,6 +17,7 @@ use buzzingpixel\twigwidont\WidontTwigExtension;
 use Config\Footer;
 use Config\General;
 use Config\MainMenu;
+use Knlv\Slim\Views\TwigMessages;
 use Psr\Container\ContainerInterface;
 use Slim\Csrf\Guard as Csrf;
 use Throwable;
@@ -76,6 +77,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(Slugify::class));
 
         $twig->addExtension($di->get(MarkdownTwigExtension::class));
+
+        $twig->addExtension($di->get(TwigMessages::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
