@@ -53,6 +53,8 @@
                 </li>
             </ul>
             <form
+                method="post"
+                accept-charset="UTF-8"
                 aria-hidden="false"
                 aria-labelledby="LogInTab"
                 action="/account/log-in" class="LogInForm__Form"
@@ -80,6 +82,8 @@
                 </fieldset>
             </form>
             <form
+                method="post"
+                accept-charset="UTF-8"
                 aria-hidden="true"
                 aria-labelledby="RegisterTab"
                 action="/account/register" class="LogInForm__Form"
@@ -109,10 +113,12 @@
                     <input type="password" id="RegisterConfirmPassword" name="confirm_password" class="input LogInForm__Input">
                 </fieldset>
                 <fieldset class="fieldset LogInForm__FieldSet LogInForm__FieldSet--IsButtonContainer">
-                    <input class="button LogInForm__Button" type="submit" value="Log In">
+                    <input class="button LogInForm__Button" type="submit" value="Register">
                 </fieldset>
             </form>
             <form
+                method="post"
+                accept-charset="UTF-8"
                 aria-hidden="true"
                 aria-labelledby="ForgotPasswordTab"
                 action="/account/request-password-reset" class="LogInForm__Form"
