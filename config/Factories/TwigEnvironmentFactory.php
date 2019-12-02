@@ -18,6 +18,7 @@ use Config\Footer;
 use Config\General;
 use Config\MainMenu;
 use Psr\Container\ContainerInterface;
+use Slim\Csrf\Guard as Csrf;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
 use Twig\Extension\DebugExtension;
@@ -81,6 +82,8 @@ class TwigEnvironmentFactory
         $twig->addGlobal('MainMenu', $di->get(MainMenu::class));
 
         $twig->addGlobal('Footer', $di->get(Footer::class));
+
+        $twig->addGlobal('csrf', $di->get(Csrf::class));
 
         return $twig;
     }

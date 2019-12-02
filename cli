@@ -3,24 +3,28 @@
 
 declare(strict_types=1);
 
+use Config\SetupDockerDatabase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 use Whoops\Run as WhoopsRun;
 
+// Run bootstrap and get di container
 $bootstrap = require __DIR__ . '/config/bootstrap.php';
-
 /** @var ContainerInterface $container */
 $container = $bootstrap();
 
+// Create application
 $app = $container->get(Application::class);
 
-// Use Whoops to catch the exception
+// Use Whoops to catch the exceptions is Whoops exists
 if (class_exists(WhoopsRun::class)) {
     $app->setCatchExceptions(false);
 }
 
-$app->add($container->get(\Config\SetupDockerDatabase::class));
+// Add the config command for setting up the database
+$app->add($container->get(SetupDockerDatabase::class));
 
+// Get directory iterator for iterating our path for CLI commands
 $directory = new RecursiveDirectoryIterator(__DIR__ . '/src/Cli');
 $iterator = new RecursiveIteratorIterator($directory);
 $finalIterator = new RegexIterator(
@@ -29,9 +33,12 @@ $finalIterator = new RegexIterator(
     RecursiveRegexIterator::GET_MATCH
 );
 
+// We need an array of directories up to the source directory
 $dir = __DIR__ . '/src';
 $dirArray = explode('/', $dir);
 
+// Iterate through each CLI command file, get the class from the DI, and add
+// it to the application
 foreach ($finalIterator as $files) {
     foreach ($files as $file) {
         $baseName = basename($file, '.php');
@@ -45,5 +52,6 @@ foreach ($finalIterator as $files) {
     }
 }
 
+// Run the application
 /** @noinspection PhpUnhandledExceptionInspection */
 $app->run();
