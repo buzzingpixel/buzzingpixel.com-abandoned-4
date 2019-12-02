@@ -13,6 +13,9 @@ use buzzingpixel\cookieapi\PhpFunctions;
 use Config\Factories\TwigEnvironmentFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Slim\Csrf\Guard as CsrfGuard;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Factory\ResponseFactory;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -37,6 +40,20 @@ return [
         );
     },
     CookieApiInterface::class => get(CookieApi::class),
+    CsrfGuard::class => static function (ContainerInterface $di) {
+        $responseFactory = $di->get(ResponseFactoryInterface::class);
+        $guard           = new CsrfGuard($responseFactory);
+        $guard->setFailureHandler(
+            static function (ServerRequestInterface $request) : void {
+                throw new HttpBadRequestException(
+                    $request,
+                    'Invalid CSRF Token'
+                );
+            }
+        );
+
+        return $guard;
+    },
     ExtractMetaFromPath::class => autowire(ExtractMetaFromPath::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
