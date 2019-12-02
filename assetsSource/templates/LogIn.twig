@@ -1,0 +1,142 @@
+{# Twig Globals #}
+{# @var \Slim\Csrf\Guard csrf #}
+
+{% do requireVariables({
+    metaPayload: 'App\\Content\\Meta\\MetaPayload',
+}) %}
+
+{# @var \App\Content\Meta\MetaPayload metaPayload #}
+
+{% extends '_Layout.twig' %}
+
+{% set csrf %}
+    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+{% endset %}
+
+{% block content %}
+    <section class="LogInForm" ref="LogInForm">
+        <div class="LogInForm__Inner">
+            <ul class="LogInForm__Tabs">
+                <li
+                    role="presentation"
+                    aria-selected="true"
+                    id="LogInTab"
+                    class="LogInForm__Tab"
+                    :class="{'LogInForm__Tab--IsActive': activeTab === 'logIn'}"
+                    :aria-selected="activeTab === 'logIn' ? 'true' : 'false'"
+                    @click="activeTab = 'logIn'"
+                >
+                    Log In
+                </li>
+                <li
+                    role="presentation"
+                    aria-selected="false"
+                    id="RegisterTab"
+                    class="LogInForm__Tab"
+                    :class="{'LogInForm__Tab--IsActive': activeTab === 'register'}"
+                    :aria-selected="activeTab === 'register' ? 'true' : 'false'"
+                    @click="activeTab = 'register'"
+                >
+                    Register
+                </li>
+                <li
+                    role="presentation"
+                    aria-selected="false"
+                    id="ForgotPasswordTab"
+                    class="LogInForm__Tab"
+                    :class="{'LogInForm__Tab--IsActive': activeTab === 'forgot'}"
+                    :aria-selected="activeTab === 'forgot' ? 'true' : 'false'"
+                    @click="activeTab = 'forgot'"
+                >
+                    Forgot Password
+                </li>
+            </ul>
+            <form
+                aria-hidden="false"
+                aria-labelledby="LogInTab"
+                action="/account/log-in" class="LogInForm__Form"
+                :class="{'LogInForm__Form--IsActive': activeTab === 'logIn'}"
+                :aria-hidden="activeTab === 'logIn' ? 'false' : 'true'"
+            >
+                {{ csrf }}
+                <h2 class="LogInForm__FormHeading">
+                    Log In
+                </h2>
+                <fieldset class="fieldset LogInForm__FieldSet">
+                    <label for="LogInEmailAddress" class="label LogInForm__Label">
+                        Email Address
+                    </label>
+                    <input type="email" id="LogInEmailAddress" name="email_address" class="input LogInForm__Input">
+                </fieldset>
+                <fieldset class="fieldset LogInForm__FieldSet">
+                    <label for="LogInPassword" class="label LogInForm__Label">
+                        Password
+                    </label>
+                    <input type="password" id="LogInPassword" name="password" class="input LogInForm__Input">
+                </fieldset>
+                <fieldset class="fieldset LogInForm__FieldSet LogInForm__FieldSet--IsButtonContainer">
+                    <input class="button LogInForm__Button" type="submit" value="Log In">
+                </fieldset>
+            </form>
+            <form
+                aria-hidden="true"
+                aria-labelledby="RegisterTab"
+                action="/account/register" class="LogInForm__Form"
+                :class="{'LogInForm__Form--IsActive': activeTab === 'register'}"
+                :aria-hidden="activeTab === 'register' ? 'false' : 'true'"
+            >
+                {{ csrf }}
+                <h2 class="LogInForm__FormHeading">
+                    Register
+                </h2>
+                <fieldset class="fieldset LogInForm__FieldSet">
+                    <label for="RegisterEmailAddress" class="label LogInForm__Label">
+                        Email Address
+                    </label>
+                    <input type="email" id="RegisterEmailAddress" name="email_address" class="input LogInForm__Input">
+                </fieldset>
+                <fieldset class="fieldset LogInForm__FieldSet">
+                    <label for="RegisterPassword" class="label LogInForm__Label">
+                        Password
+                    </label>
+                    <input type="password" id="RegisterPassword" name="password" class="input LogInForm__Input">
+                </fieldset>
+                <fieldset class="fieldset LogInForm__FieldSet">
+                    <label for="RegisterConfirmPassword" class="label LogInForm__Label">
+                        Confirm Password
+                    </label>
+                    <input type="password" id="RegisterConfirmPassword" name="confirm_password" class="input LogInForm__Input">
+                </fieldset>
+                <fieldset class="fieldset LogInForm__FieldSet LogInForm__FieldSet--IsButtonContainer">
+                    <input class="button LogInForm__Button" type="submit" value="Log In">
+                </fieldset>
+            </form>
+            <form
+                aria-hidden="true"
+                aria-labelledby="ForgotPasswordTab"
+                action="/account/request-password-reset" class="LogInForm__Form"
+                :class="{'LogInForm__Form--IsActive': activeTab === 'forgot'}"
+                :aria-hidden="activeTab === 'forgot' ? 'false' : 'true'"
+            >
+                {{ csrf }}
+                <h2 class="LogInForm__FormHeading">
+                    Reset Password
+                </h2>
+                <fieldset class="fieldset LogInForm__FieldSet">
+                    <label for="ResetEmailAddress" class="label LogInForm__Label">
+                        Email Address
+                    </label>
+                    <input type="email" id="ResetEmailAddress" name="email_address" class="input LogInForm__Input">
+                </fieldset>
+                <fieldset class="fieldset LogInForm__FieldSet LogInForm__FieldSet--IsButtonContainer">
+                    <input class="button LogInForm__Button" type="submit" value="Request Reset Email">
+                </fieldset>
+            </form>
+            <small class="LogInForm__FinePrint">
+                By using this site, logging in, or registering, you agree to abide by the <a href="/terms">terms&nbsp;of&nbsp;service</a>,
+                <a href="/privacy">privacy&nbsp;policy</a>, and <a href="/cookies">cookie&nbsp;policy</a>.
+            </small>
+        </div>
+    </section>
+{% endblock %}

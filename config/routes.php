@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Admin\GetAdminAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -9,6 +10,8 @@ use App\Http\Software\GetChangelogRawAction;
 use App\Http\Software\GetDocumentationPageAction;
 use App\Http\Software\GetSoftwareAction;
 use App\Http\Tinker\GetTinkerAction;
+use App\HttpRouteMiddleware\RequireAdmin\RequireAdminAction;
+use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Slim\App;
 
 return static function (App $app) : void {
@@ -20,6 +23,14 @@ return static function (App $app) : void {
 
     // Tinker
     $app->get('/tinker', GetTinkerAction::class);
+
+    // Admin
+    // phpcs:disable
+    $app->group('/admin', function () use ($app) : void {
+        $app->get('/admin', GetAdminAction::class);
+    })->add(RequireAdminAction::class)
+        ->add(RequireLogInAction::class);
+    // phpcs:enable
 
     // Home
     $app->get('/', GetHomeAction::class);
