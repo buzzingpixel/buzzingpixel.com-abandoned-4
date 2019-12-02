@@ -1,0 +1,21 @@
+{% do requireVariables({
+    metaPayload: 'App\\Content\\Meta\\MetaPayload',
+}) %}
+
+{# @var \App\Content\Meta\MetaPayload metaPayload #}
+
+{% extends '_Layout.twig' %}
+
+{% block content %}
+    <div class="StandaloneMessage">
+        <div class="StandaloneMessage__Inner">
+            <div
+                class="Message Message--IsWarning Message--TextIsCentered"
+            >
+                <div class="Message__Inner">
+                    You are not authorized to access this area of the&nbsp;site.
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
