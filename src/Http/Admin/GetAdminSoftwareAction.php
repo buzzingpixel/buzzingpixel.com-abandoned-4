@@ -24,7 +24,7 @@ class GetAdminSoftwareAction
     {
         return ($this->responder)(
             'Admin/Software.twig',
-            'Admin',
+            'Software | Admin',
             'software'
         );
     }
