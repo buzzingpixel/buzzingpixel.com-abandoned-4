@@ -35,7 +35,7 @@ class RequireLogInAction
     ) : ResponseInterface {
         $user = $this->userApi->fetchLoggedInUser();
 
-        if (! $user) {
+        if ($user === null) {
             return ($this->responder)(
                 new MetaPayload(['metaTitle' => 'Log In']),
                 $request->getUri()->getPath()

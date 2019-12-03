@@ -6,8 +6,8 @@ namespace App\Http\Account\LogIn;
 
 use App\Payload\Payload;
 use App\Users\UserApi;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class PostLogInAction
 {
@@ -24,15 +24,15 @@ class PostLogInAction
         $this->userApi   = $userApi;
     }
 
-    public function __invoke(RequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
         $postData = $request->getParsedBody();
 
-        $emailAddress = $postData['email_address'] ?? '';
+        $emailAddress = (string) ($postData['email_address'] ?? '');
 
-        $password = $postData['password'] ?? '';
+        $password = (string) ($postData['password'] ?? '');
 
-        $redirectTo = $postData['redirect_to'] ?? '/';
+        $redirectTo = (string) ($postData['redirect_to'] ?? '/');
 
         $user = $this->userApi->fetchUserByEmailAddress($emailAddress);
 

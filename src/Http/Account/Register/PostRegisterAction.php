@@ -7,8 +7,8 @@ namespace App\Http\Account\Register;
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\SaveUser;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class PostRegisterAction
 {
@@ -25,17 +25,17 @@ class PostRegisterAction
         $this->saveUser  = $saveUser;
     }
 
-    public function __invoke(RequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
         $postData = $request->getParsedBody();
 
-        $emailAddress = $postData['email_address'] ?? '';
+        $emailAddress = (string) ($postData['email_address'] ?? '');
 
-        $password = $postData['password'] ?? '';
+        $password = (string) ($postData['password'] ?? '');
 
-        $confirmPassword = $postData['confirm_password'] ?? '';
+        $confirmPassword = (string) ($postData['confirm_password'] ?? '');
 
-        $redirectTo = $postData['redirect_to'] ?? '/';
+        $redirectTo = (string) ($postData['redirect_to'] ?? '/');
 
         if ($password !== $confirmPassword) {
             return ($this->responder)(
