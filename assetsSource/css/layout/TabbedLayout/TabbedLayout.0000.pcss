@@ -1,0 +1,42 @@
+.TabbedLayout__Inner {
+    padding: 40px 14px;
+}
+
+.TabbedLayout__Heading {
+    padding-left: 14px;
+    padding-right: 14px;
+    text-align: center;
+}
+
+.TabbedLayout__Tabs {
+    font-size: 14px;
+    list-style: none;
+    margin: 0 0 14px;
+    text-align: center;
+}
+
+.TabbedLayout__Tab {
+    display: inline-block;
+    line-height: 1.6em;
+    margin: 4px 2px;
+}
+
+.TabbedLayout__TabLink {
+    border-radius: 4px;
+    color: var(--baseColor);
+    display: block;
+    padding: 3px 8px;
+    text-decoration: none;
+}
+
+.TabbedLayout__TabLink:hover {
+    background-color: var(--GoldSand);
+    color: var(--baseColor);
+    text-decoration: none;
+}
+
+.TabbedLayout__TabLink--IsActive,
+.TabbedLayout__TabLink--IsActive:hover {
+    cursor: default;
+    background-color: var(--Whiskey);
+}

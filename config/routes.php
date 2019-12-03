@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Admin\GetAdminAction;
+use App\Http\Admin\GetAdminSoftwareAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -33,8 +34,9 @@ return static function (App $app) : void {
     // phpcs:disable
     $app->group('/admin', function () use ($app) : void {
         $app->get('/admin', GetAdminAction::class);
+        $app->get('/admin/software', GetAdminSoftwareAction::class);
     })->add(RequireAdminAction::class)
-        ->add(RequireLogInAction::class);
+    ->add(RequireLogInAction::class);
     // phpcs:enable
 
     // Account
