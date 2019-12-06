@@ -3,6 +3,7 @@
 set composerDockerImage=composer:1.9.0
 set cypressDockerImage=cypress/included:3.5.0
 set nodeDockerImage=node:12.12.0
+set composeFiles=-f docker-compose.yml -f docker-compose-dev.yml -f docker-compose-local-dev-sync.yml
 
 set cmd=%1
 set allArgs=%*
@@ -32,14 +33,13 @@ if "%cmd%" == "" (
 )
 
 if "%cmd%" == "up" (
-    docker-compose -f docker-compose.yml -p buzzingpixel build
-    docker-compose -f docker-compose.yml -p buzzingpixel up -d
+    docker-compose %composeFiles% -p buzzingpixel build
+    docker-compose %composeFiles% -p buzzingpixel up -d
     exit /b 0
 )
 
 if "%cmd%" == "down" (
-    docker kill buzzingpixel-utility
-    docker-compose -f docker-compose.yml -p buzzingpixel down
+    docker-compose %composeFiles% -p buzzingpixel down
     exit /b 0
 )
 

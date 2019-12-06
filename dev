@@ -32,6 +32,14 @@ allArgs=${@};
 allArgsExceptFirst=${@:2};
 secondArg=${2};
 
+isMacOs=false;
+composeFiles="-f docker-compose.yml -f docker-compose.dev.yml";
+
+if [[ "$(uname)" = "Darwin" ]] || [[ "$(uname)" = "darwin" ]]; then
+    isMacOs=true;
+    composeFiles="-f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.dev.sync.yml";
+fi
+
 ## If no command provided, list commands
 if [[ -z "${cmd}" ]]; then
     valid=true;
@@ -54,22 +62,26 @@ if [[ -z "${cmd}" ]]; then
 fi
 
 if [[ "${cmd}" = "up" ]]; then
-    docker-compose -f docker-compose.yml -p buzzingpixel build;
-    docker-compose -f docker-compose.yml -p buzzingpixel up -d;
+    docker-compose ${composeFiles} -p buzzingpixel build;
+    docker-compose ${composeFiles} -p buzzingpixel up -d;
     exit 0;
 fi
 
 if [[ "${cmd}" = "down" ]]; then
-    docker kill buzzingpixel-utility;
-    docker-compose -f docker-compose.yml -p buzzingpixel down;
+    docker-compose ${composeFiles} -p buzzingpixel down;
     exit 0;
 fi
 
 if [[ "${cmd}" = "provision" ]]; then
     docker build -t buzzingpixel:php-dev docker/php-dev;
     docker run -it -v ${PWD}:/app -v buzzingpixel_composer-home-volume:/composer-home-volume --env COMPOSER_HOME=/composer-home-volume -w /app ${composerDockerImage} bash -c "composer install";
-    docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn";
-    docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn run fab --build-only";
+    if [[ "${isMacOs}" = "provision" ]]; then
+        docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn";
+        docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn run fab --build-only";
+    else
+        docker run -it -v ${PWD}:/app -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn";
+        docker run -it -v ${PWD}:/app -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn run fab --build-only";
+    fi
     (cd platform && yarn && cd ..)
     docker exec -it --user root --workdir /opt/project buzzingpixel-php bash -c "php cli app-setup:setup-docker-database";
     exit 0;
@@ -86,7 +98,11 @@ if [[ "${cmd}" = "cli" ]]; then
 fi
 
 if [[ "${cmd}" = "yarn" ]]; then
-    docker run -it -p 3000:3000 -p 3001:3001 -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app --network=buzzingpixel_common-buzzingpixel-network ${nodeDockerImage} bash -c "${allArgs}";
+    if [[ "${isMacOs}" = "provision" ]]; then
+        docker run -it -p 3000:3000 -p 3001:3001 -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app --network=buzzingpixel_common-buzzingpixel-network ${nodeDockerImage} bash -c "${allArgs}";
+    else
+        docker run -it -p 3000:3000 -p 3001:3001 -v ${PWD}:/app -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app --network=buzzingpixel_common-buzzingpixel-network ${nodeDockerImage} bash -c "${allArgs}";
+    fi
     exit 0;
 fi
 
@@ -116,7 +132,11 @@ if [[ "${cmd}" = "phpunit" ]]; then
 fi
 
 if [[ "${cmd}" = "eslint" ]]; then
-    docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "node_modules/.bin/eslint assetsSource/js/*";
+    if [[ "${isMacOs}" = "provision" ]]; then
+        docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "node_modules/.bin/eslint assetsSource/js/*";
+    else
+        docker run -it -v ${PWD}:/app -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "node_modules/.bin/eslint assetsSource/js/*";
+    fi
     exit 0;
 fi
 

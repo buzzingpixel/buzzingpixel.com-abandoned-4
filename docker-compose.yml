@@ -1,18 +1,6 @@
 version: '3.7'
 
 services:
-  utility:
-    env_file: .env
-    image: buzzingpixel/utility:1.1.0
-    container_name: buzzingpixel-utility
-    environment:
-      HOSTNAME: buzzingpixel-utility
-    volumes:
-      - .:/var/www:delegated
-      - node-modules-volume:/node-modules-volume
-    command: bash -c "chmod +x /var/www/scripts/dev/devUtilityScript.sh && /var/www/scripts/dev/devUtilityScript.sh"
-    networks:
-      common-buzzingpixel-network:
   web:
     env_file: .env
     build:
@@ -20,15 +8,10 @@ services:
     container_name: buzzingpixel-web
     environment:
       HOSTNAME: buzzingpixel-web
-    ports:
-      - 26087:443
     volumes:
       - .:/opt/project:delegated
       - ./docker/web/nginx.conf:/etc/nginx/conf.d/nginx.conf
-    networks:
-      common-buzzingpixel-network:
-        aliases:
-          - buzzingpixel.localtest.me
+
   php:
     env_file: .env
     build:
@@ -39,9 +22,8 @@ services:
       COMPOSER_HOME: /composer-home-volume
     volumes:
       - .:/opt/project:delegated
-      - composer-home-volume:/composer-home-volume:delegated
-    networks:
-      common-buzzingpixel-network:
+      - composer-home-volume:/composer-home-volume
+
   db:
     env_file: .env
     build:
@@ -49,19 +31,10 @@ services:
     container_name: buzzingpixel-db
     environment:
       HOSTNAME: buzzingpixel-db
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 18974:5432
     volumes:
       - db-volume:/var/lib/postgresql/data
-    networks:
-      common-buzzingpixel-network:
 
 volumes:
   composer-home-volume:
   db-volume:
-  node-modules-volume:
   yarn-cache-volume:
-
-networks:
-  common-buzzingpixel-network:
