@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Http\Account\LogIn;
+namespace Tests\App\Http\Account\Register;
 
-use App\Http\Account\LogIn\PostLogInResponder;
+use App\Http\Account\Register\PostRegisterResponder;
 use App\Payload\Payload;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Slim\Flash\Messages as FlashMessages;
 use Slim\Psr7\Factory\ResponseFactory;
 
-class PostLogInResponderTest extends TestCase
+class PostRegisterResponderTest extends TestCase
 {
-    /** @var PostLogInResponder */
+    /** @var PostRegisterResponder */
     private $responder;
 
     /** @var Payload */
@@ -60,14 +60,14 @@ class PostLogInResponderTest extends TestCase
     }
 
     private function internalSetUp(
-        string $payloadStatus = Payload::STATUS_SUCCESSFUL
+        string $payloadStatus = Payload::STATUS_CREATED
     ) : void {
         $this->payload = new Payload(
             $payloadStatus,
             ['foo' => 'bar']
         );
 
-        $this->responder = new PostLogInResponder(
+        $this->responder = new PostRegisterResponder(
             $this->mockFlashMessages($this->payload),
             new ResponseFactory()
         );
@@ -80,10 +80,7 @@ class PostLogInResponderTest extends TestCase
     {
         $mock = $this->createMock(FlashMessages::class);
 
-        if ($payload->getStatus() === Payload::STATUS_SUCCESSFUL) {
-            $mock->expects(self::never())
-                ->method(self::anything());
-        } else {
+        if ($payload->getStatus() !== Payload::STATUS_CREATED) {
             $mock->expects(self::once())
                 ->method('addMessage')
                 ->with(
@@ -91,6 +88,16 @@ class PostLogInResponderTest extends TestCase
                     [
                         'status' => $payload->getStatus(),
                         'result' => $payload->getResult(),
+                    ]
+                );
+        } else {
+            $mock->expects(self::once())
+                ->method('addMessage')
+                ->with(
+                    self::equalTo('LoginFormMessage'),
+                    [
+                        'status' => Payload::STATUS_SUCCESSFUL,
+                        'result' => ['message' => 'Your registration was successful. You can now log in.'],
                     ]
                 );
         }
