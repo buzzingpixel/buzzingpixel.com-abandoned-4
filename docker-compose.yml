@@ -11,6 +11,10 @@ services:
     volumes:
       - .:/opt/project:delegated
       - ./docker/web/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    networks:
+      common-buzzingpixel-network:
+        aliases:
+          - buzzingpixel.localtest.me
 
   php:
     env_file: .env
@@ -23,6 +27,8 @@ services:
     volumes:
       - .:/opt/project:delegated
       - composer-home-volume:/composer-home-volume
+    networks:
+      common-buzzingpixel-network:
 
   db:
     env_file: .env
@@ -33,8 +39,13 @@ services:
       HOSTNAME: buzzingpixel-db
     volumes:
       - db-volume:/var/lib/postgresql/data
+    networks:
+      common-buzzingpixel-network:
 
 volumes:
   composer-home-volume:
   db-volume:
   yarn-cache-volume:
+
+networks:
+  common-buzzingpixel-network:
