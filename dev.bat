@@ -3,7 +3,7 @@
 set composerDockerImage=composer:1.9.0
 set cypressDockerImage=cypress/included:3.5.0
 set nodeDockerImage=node:12.12.0
-set composeFiles=-f docker-compose.yml -f docker-compose-dev.yml -f docker-compose-local-dev-sync.yml
+set composeFiles=-f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.dev.sync.yml
 
 set cmd=%1
 set allArgs=%*
@@ -44,14 +44,14 @@ if "%cmd%" == "down" (
 )
 
 if "%cmd%" == "provision" (
-    docker build -t buzzingpixel:php-dev docker/php-dev;
+    docker build -t buzzingpixel:php-dev docker/php-dev
     docker run -it -v %cd%:/app -v buzzingpixel_composer-home-volume:/composer-home-volume --env COMPOSER_HOME=/composer-home-volume -w /app %composerDockerImage% bash -c "composer install"
     docker run -it -v %cd%:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app %nodeDockerImage% bash -c "yarn"
     docker run -it -v %cd%:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app %nodeDockerImage% bash -c "yarn run fab --build-only"
     cd platform
     call yarn
     cd ..
-    docker exec -it --user root --workdir /opt/project buzzingpixel-php bash -c "php cli app-setup:setup-docker-database";
+    docker exec -it --user root --workdir /opt/project buzzingpixel-php bash -c "php cli app-setup:setup-docker-database"
     exit /b 0
 )
 
@@ -66,7 +66,7 @@ if "%cmd%" == "cli" (
 )
 
 if "%cmd%" == "yarn" (
-    docker run -it -p 3000:3000 -p 3001:3001 -v %cd%:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app --network=buzzingpixel_common-buzzingpixel-network %nodeDockerImage% bash -c "%allArgs%";
+    docker run -it -p 3000:3000 -p 3001:3001 -v %cd%:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app --network=buzzingpixel_common-buzzingpixel-network %nodeDockerImage% bash -c "%allArgs%"
     exit /b 0
 )
 
