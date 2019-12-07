@@ -68,16 +68,19 @@ class RequireLogInActionTest extends TestCase
 
         self::assertSame($this->response, $response);
 
-        self::assertCount(2, $argHolder->args);
+        /** @var mixed[] $args */
+        $args = $argHolder->args;
+
+        self::assertCount(2, $args);
 
         /** @var MetaPayload|null $metaPayLoad */
-        $metaPayLoad = $argHolder->args[0];
+        $metaPayLoad = $args[0];
 
         self::assertInstanceOf(MetaPayload::class, $metaPayLoad);
 
         self::assertSame('Log In', $metaPayLoad->getMetaTitle());
 
-        self::assertSame('/foo/path', $argHolder->args[1]);
+        self::assertSame('/foo/path', $args[1]);
     }
 
     /**
