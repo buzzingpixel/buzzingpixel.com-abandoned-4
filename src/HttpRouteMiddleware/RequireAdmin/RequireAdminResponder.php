@@ -18,14 +18,10 @@ class RequireAdminResponder extends StandardResponderConstructor
     {
         $response = $this->responseFactory->createResponse();
 
-        $response->getBody()->write(
-            ($this->minifier)(
-                $this->twigEnvironment->render(
-                    'Unauthorized.twig',
-                    ['metaPayload' => $metaPayload]
-                )
-            )
-        );
+        $response->getBody()->write($this->twigEnvironment->render(
+            'Unauthorized.twig',
+            ['metaPayload' => $metaPayload]
+        ));
 
         return $response;
     }

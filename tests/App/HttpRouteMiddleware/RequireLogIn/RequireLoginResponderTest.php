@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\HttpRouteMiddleware\RequireLogIn;
 
 use App\Content\Meta\MetaPayload;
-use App\HttpResponse\Minifier;
 use App\HttpRouteMiddleware\RequireLogIn\RequireLoginResponder;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -38,23 +37,15 @@ class RequireLoginResponderTest extends TestCase
 
         $responseFactory = new ResponseFactory();
 
-        $minifier = $this->createMock(Minifier::class);
-
-        $minifier->expects(self::once())
-            ->method('__invoke')
-            ->with(self::equalTo('TwigRenderReturnContent'))
-            ->willReturn('MinifierReturnContent');
-
         $response = (new RequireLoginResponder(
             $responseFactory,
             $twigEnvironment,
-            $minifier
         ))($metaPayload, '/foo/bar/redirect');
 
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
-            'MinifierReturnContent',
+            'TwigRenderReturnContent',
             (string) $response->getBody()
         );
     }

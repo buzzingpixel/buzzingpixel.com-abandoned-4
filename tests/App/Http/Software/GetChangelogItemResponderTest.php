@@ -7,7 +7,6 @@ namespace Tests\App\Http\Software;
 use App\Content\Meta\MetaPayload;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetChangelogItemResponder;
-use App\HttpResponse\Minifier;
 use MJErwin\ParseAChangelog\Release;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -45,7 +44,7 @@ class GetChangelogItemResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
-            'MinifierOutput',
+            'TwigRenderOutput',
             $response->getBody()->__toString()
         );
     }
@@ -63,7 +62,6 @@ class GetChangelogItemResponderTest extends TestCase
         $this->responder = new GetChangelogItemResponder(
             TestConfig::$di->get(ResponseFactory::class),
             $this->mockTwigEnvironment(),
-            $this->mockMinifier()
         );
     }
 
@@ -91,20 +89,5 @@ class GetChangelogItemResponderTest extends TestCase
             ->willReturn('TwigRenderOutput');
 
         return $twigEnvironment;
-    }
-
-    /**
-     * @return Minifier&MockObject
-     */
-    private function mockMinifier()
-    {
-        $minifier = $this->createMock(Minifier::class);
-
-        $minifier->expects(self::once())
-            ->method('__invoke')
-            ->with(self::equalTo('TwigRenderOutput'))
-            ->willReturn('MinifierOutput');
-
-        return $minifier;
     }
 }

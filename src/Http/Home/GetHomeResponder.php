@@ -21,11 +21,12 @@ class GetHomeResponder extends StandardResponderConstructor
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
-        $response->getBody()->write(($this->minifier)(
-            $this->twigEnvironment->render('StandardPage.twig', [
+        $response->getBody()->write($this->twigEnvironment->render(
+            'StandardPage.twig',
+            [
                 'metaPayload' => $metaPayload,
                 'modulePayload' => $modulePayload,
-            ])
+            ]
         ));
 
         return $response;

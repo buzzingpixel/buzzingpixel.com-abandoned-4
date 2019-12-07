@@ -9,7 +9,6 @@ use App\Content\Documentation\DocumentationVersionPayload;
 use App\Content\Documentation\DocumentationVersionsPayload;
 use App\Content\Meta\MetaPayload;
 use App\Http\Software\GetDocumentationPageResponder;
-use App\HttpResponse\Minifier;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -54,7 +53,7 @@ class GetDocumentationPageResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
-            'MinifierRenderOutput',
+            'TwigRenderOutput',
             $response->getBody()->__toString()
         );
     }
@@ -79,7 +78,7 @@ class GetDocumentationPageResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
-            'MinifierRenderOutput',
+            'TwigRenderOutput',
             $response->getBody()->__toString()
         );
     }
@@ -97,7 +96,6 @@ class GetDocumentationPageResponderTest extends TestCase
         $this->responder = new GetDocumentationPageResponder(
             TestConfig::$di->get(ResponseFactory::class),
             $this->mockTwigEnvironment(),
-            $this->mockMinifier()
         );
     }
 
@@ -126,21 +124,6 @@ class GetDocumentationPageResponderTest extends TestCase
             ->willReturn('TwigRenderOutput');
 
         return $twigEnvironment;
-    }
-
-    /**
-     * @return Minifier&MockObject
-     */
-    private function mockMinifier()
-    {
-        $minifier = $this->createMock(Minifier::class);
-
-        $minifier->expects(self::once())
-            ->method('__invoke')
-            ->with(self::equalTo('TwigRenderOutput'))
-            ->willReturn('MinifierRenderOutput');
-
-        return $minifier;
     }
 
     /**

@@ -24,13 +24,14 @@ class GetSoftwareResponder extends StandardResponderConstructor
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
-        $response->getBody()->write(($this->minifier)(
-            $this->twigEnvironment->render('SoftwarePage.twig', [
+        $response->getBody()->write($this->twigEnvironment->render(
+            'SoftwarePage.twig',
+            [
                 'metaPayload' => $metaPayload,
                 'modulePayload' => $modulePayload,
                 'softwareInfoPayload' => $softwareInfoPayload,
                 'uriPath' => $uriPath,
-            ])
+            ]
         ));
 
         return $response;

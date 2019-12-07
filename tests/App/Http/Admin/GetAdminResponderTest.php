@@ -6,7 +6,6 @@ namespace Tests\App\Http\Admin;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
-use App\HttpResponse\Minifier;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use stdClass;
@@ -38,19 +37,11 @@ class GetAdminResponderTest extends TestCase
                 }
             );
 
-        $minifier = $this->createMock(Minifier::class);
-
-        $minifier->expects(self::once())
-            ->method('__invoke')
-            ->with(self::equalTo('FooTwigOutput'))
-            ->willReturn('FooMinifierOutput');
-
         $responder = new GetAdminResponder(
             TestConfig::$di->get(
                 ResponseFactoryInterface::class
             ),
             $twig,
-            $minifier
         );
 
         $response = $responder(
@@ -62,7 +53,7 @@ class GetAdminResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
-            'FooMinifierOutput',
+            'FooTwigOutput',
             $response->getBody()->__toString()
         );
 

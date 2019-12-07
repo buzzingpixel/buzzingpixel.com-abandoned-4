@@ -33,11 +33,11 @@ return static function (App $app) : void {
     // Admin
     // phpcs:disable
     $app->group('/admin', function () use ($app) : void {
+    // phpcs:enable
         $app->get('/admin', GetAdminAction::class);
         $app->get('/admin/software', GetAdminSoftwareAction::class);
     })->add(RequireAdminAction::class)
     ->add(RequireLogInAction::class);
-    // phpcs:enable
 
     // Account
     $app->post('/account/register', PostRegisterAction::class);

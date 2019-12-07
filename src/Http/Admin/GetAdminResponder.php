@@ -21,19 +21,15 @@ class GetAdminResponder extends StandardResponderConstructor
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
-        $response->getBody()->write(
-            ($this->minifier)(
-                $this->twigEnvironment->render(
-                    $template,
-                    [
-                        'metaPayload' => new MetaPayload(
-                            ['metaTitle' => $metaTitle]
-                        ),
-                        'activeTab' => $activeTab,
-                    ]
-                )
-            )
-        );
+        $response->getBody()->write($this->twigEnvironment->render(
+            $template,
+            [
+                'metaPayload' => new MetaPayload(
+                    ['metaTitle' => $metaTitle]
+                ),
+                'activeTab' => $activeTab,
+            ]
+        ));
 
         return $response;
     }

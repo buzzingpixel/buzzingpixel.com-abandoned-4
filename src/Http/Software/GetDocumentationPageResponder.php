@@ -26,15 +26,16 @@ class GetDocumentationPageResponder extends StandardResponderConstructor
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
-        $response->getBody()->write(($this->minifier)(
-            $this->twigEnvironment->render('DocumentationPage.twig', [
+        $response->getBody()->write($this->twigEnvironment->render(
+            'DocumentationPage.twig',
+            [
                 'uriPath' => $uriPath,
                 'activeHref' => $uriPath . '/documentation',
                 'metaPayload' => $metaPayload,
                 'activePage' => $activePage,
                 'activeVersion' => $activeVersion,
                 'versions' => $versions,
-            ])
+            ]
         ));
 
         return $response;

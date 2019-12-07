@@ -24,14 +24,15 @@ class GetChangelogItemResponder extends StandardResponderConstructor
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
-        $response->getBody()->write(($this->minifier)(
-            $this->twigEnvironment->render('SoftwareChangelogItemPage.twig', [
+        $response->getBody()->write($this->twigEnvironment->render(
+            'SoftwareChangelogItemPage.twig',
+            [
                 'metaPayload' => $metaPayload,
                 'release' => $release,
                 'softwareInfoPayload' => $softwareInfoPayload,
                 'uriPath' => $uriPath,
                 'activeHref' => $uriPath . '/changelog',
-            ])
+            ]
         ));
 
         return $response;

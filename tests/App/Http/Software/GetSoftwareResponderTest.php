@@ -8,7 +8,6 @@ use App\Content\Meta\MetaPayload;
 use App\Content\Modules\ModulePayload;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetSoftwareResponder;
-use App\HttpResponse\Minifier;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
 use Throwable;
@@ -44,17 +43,9 @@ class GetSoftwareResponderTest extends TestCase
 
         $responseFactory = new ResponseFactory();
 
-        $minifier = $this->createMock(Minifier::class);
-
-        $minifier->expects(self::once())
-            ->method('__invoke')
-            ->with(self::equalTo('TwigRenderReturnContent'))
-            ->willReturn('MinifierReturnContent');
-
         $response = (new GetSoftwareResponder(
             $responseFactory,
             $twigEnvironment,
-            $minifier
         ))(
             $metaPayload,
             $modulePayload,
@@ -64,6 +55,9 @@ class GetSoftwareResponderTest extends TestCase
 
         self::assertSame(200, $response->getStatusCode());
 
-        self::assertSame('MinifierReturnContent', (string) $response->getBody());
+        self::assertSame(
+            'TwigRenderReturnContent',
+            (string) $response->getBody()
+        );
     }
 }

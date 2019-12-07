@@ -9,7 +9,6 @@ use App\Content\Meta\MetaPayload;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetChangelogResponder;
 use App\HttpHelpers\Pagination\Pagination;
-use App\HttpResponse\Minifier;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -38,8 +37,6 @@ class GetChangelogResponderTest extends TestCase
 
     /** @var MockObject&Environment */
     private $twigEnvironment;
-    /** @var Minifier&MockObject */
-    private $minifier;
 
     /**
      * @throws Throwable
@@ -58,7 +55,7 @@ class GetChangelogResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
-            'MiniferRenderOutputTest',
+            'TwigRenderOutputTest',
             $response->getBody()->__toString()
         );
     }
@@ -75,12 +72,10 @@ class GetChangelogResponderTest extends TestCase
         $this->softwareInfoPayload = new SoftwareInfoPayload();
 
         $this->mockTwigEnvironment();
-        $this->mockMinifier();
 
         $this->responder = new GetChangelogResponder(
             TestConfig::$di->get(ResponseFactory::class),
             $this->twigEnvironment,
-            $this->minifier
         );
     }
 
@@ -103,15 +98,5 @@ class GetChangelogResponderTest extends TestCase
                 ])
             )
             ->willReturn('TwigRenderOutputTest');
-    }
-
-    private function mockMinifier() : void
-    {
-        $this->minifier = $this->createMock(Minifier::class);
-
-        $this->minifier->expects(self::once())
-            ->method('__invoke')
-            ->with(self::equalTo('TwigRenderOutputTest'))
-            ->willReturn('MiniferRenderOutputTest');
     }
 }
