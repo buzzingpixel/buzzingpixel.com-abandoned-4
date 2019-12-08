@@ -8,6 +8,7 @@ use App\Persistence\RecordQueryFactory;
 use App\Persistence\Software\SoftwareRecord;
 use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareModel;
+use App\Software\Models\SoftwareVersionModel;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
 use function array_map;
@@ -44,6 +45,7 @@ class FetchSoftwareBySlug
             return null;
         }
 
+        /** @var SoftwareVersionRecord[] $versionRecords */
         $versionRecords = ($this->recordQueryFactory)(
             new SoftwareVersionRecord()
         )
@@ -53,12 +55,15 @@ class FetchSoftwareBySlug
             ->withOrder('version', 'desc')
             ->all();
 
+        /** @var SoftwareVersionModel[] $versionModels */
+        $versionModels = array_map(
+            $this->softwareVersionRecordToModel,
+            $versionRecords
+        );
+
         return ($this->softwareRecordToModel)(
             $softwareRecord,
-            array_map(
-                $this->softwareVersionRecordToModel,
-                $versionRecords
-            ),
+            $versionModels,
         );
     }
 }

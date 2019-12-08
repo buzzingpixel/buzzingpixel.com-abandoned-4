@@ -46,7 +46,9 @@ class RecordQuery
         $val,
         string $operator = '='
     ) : RecordQuery {
-        $clone                             = clone $this;
+        $clone = clone $this;
+
+        /** @psalm-suppress MixedArrayAssignment */
         $clone->where[$this->whereGroup][] = [
             'col' => $col,
             'val' => $val,
@@ -69,6 +71,8 @@ class RecordQuery
     ) : RecordQuery {
         $clone = clone $this;
         $clone->whereGroup++;
+
+        /** @psalm-suppress MixedArrayAssignment */
         $clone->where[$clone->whereGroup][] = [
             'col' => $col,
             'val' => $val,
@@ -125,10 +129,13 @@ class RecordQuery
     {
         $statement = $this->executeStatement();
 
-        return $statement->fetchAll(
+        /** @var Record[] $records */
+        $records = $statement->fetchAll(
             PDO::FETCH_CLASS,
             get_class($this->recordClass)
         );
+
+        return $records;
     }
 
     /**
@@ -140,6 +147,10 @@ class RecordQuery
 
         $bind = [];
 
+        /**
+         * @var int $key
+         * @var array<int, array<string, string>> $whereGroup
+         */
         foreach ($this->where as $key => $whereGroup) {
             if ($key === 0) {
                 $sql .= ' WHERE (';
@@ -171,6 +182,10 @@ class RecordQuery
             $sql .= ')';
         }
 
+        /**
+         * @var int $key
+         * @var array<string, string> $order
+         */
         foreach ($this->order as $key => $order) {
             if ($key === 0) {
                 $sql .= ' ORDER BY';
@@ -193,9 +208,15 @@ class RecordQuery
     {
         $sqlAndBind = $this->getSqlAndBind();
 
-        $statement = $this->pdo->prepare($sqlAndBind['sql']);
+        /** @var string $sql */
+        $sql = $sqlAndBind['sql'];
 
-        $statement->execute($sqlAndBind['bind']);
+        $statement = $this->pdo->prepare($sql);
+
+        /** @var array<string, string> $bind */
+        $bind = $sqlAndBind['bind'];
+
+        $statement->execute($bind);
 
         return $statement;
     }
