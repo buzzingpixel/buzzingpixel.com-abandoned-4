@@ -17,6 +17,9 @@ parameters:
             message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
             path: %currentWorkingDirectory%/src/Users/Models/UserModel.php
         -
+            message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/src/Software/Models/SoftwareVersionModel.php
+        -
             message: '#Only booleans are allowed in a negated boolean, string given\.#'
             path: %currentWorkingDirectory%/src/Persistence/SaveNewRecord.php
         -
