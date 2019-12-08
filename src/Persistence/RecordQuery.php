@@ -91,7 +91,11 @@ class RecordQuery
     ) : RecordQuery {
         $direction = mb_strtoupper($direction);
 
-        if (! in_array($direction, ['ASC', 'DESC'])) {
+        if (! in_array(
+            $direction,
+            ['ASC', 'DESC'],
+            true
+        )) {
             throw new InvalidArgumentException(
                 'Direction must be asc or desc',
             );
