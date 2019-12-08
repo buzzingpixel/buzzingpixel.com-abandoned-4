@@ -77,7 +77,7 @@ class SoftwareModel extends Model
      */
     public function setVersions(array $versions) : SoftwareModel
     {
-        $this->versions = array_walk(
+        array_walk(
             $versions,
             [$this, 'addVersion']
         );

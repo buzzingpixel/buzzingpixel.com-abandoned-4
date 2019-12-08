@@ -44,7 +44,7 @@ class SoftwareVersionModel extends Model
         return $this->id;
     }
 
-    /** @var SoftwareModel */
+    /** @var SoftwareModel|null */
     private $software;
 
     public function setSoftware(SoftwareModel $software) : SoftwareVersionModel
@@ -54,7 +54,7 @@ class SoftwareVersionModel extends Model
         return $this;
     }
 
-    public function getSoftware() : SoftwareModel
+    public function getSoftware() : ?SoftwareModel
     {
         return $this->software;
     }
