@@ -14,17 +14,20 @@ class TransformUserRecordToUserModel
 {
     public function __invoke(UserRecord $userRecord) : UserModel
     {
-        $createdAt = DateTimeImmutable::createFromFormat(
-            Constants::POSTGRES_OUTPUT_FORMAT,
-            $userRecord->created_at
-        );
-
         return new UserModel([
             'id' => $userRecord->id,
-            'isAdmin' => in_array($userRecord->is_admin, ['1', 1, true], true),
+            'isAdmin' => in_array(
+                $userRecord->is_admin,
+                ['1', 1, true],
+                true,
+            ),
             'emailAddress' => $userRecord->email_address,
             'passwordHash' => $userRecord->password_hash,
-            'isActive' => in_array($userRecord->is_active, ['1', 1, true], true),
+            'isActive' => in_array(
+                $userRecord->is_active,
+                ['1', 1, true],
+                true,
+            ),
             'firstName' => $userRecord->first_name,
             'lastName' => $userRecord->last_name,
             'displayName' => $userRecord->display_name,
@@ -35,7 +38,10 @@ class TransformUserRecordToUserModel
             'billingAddress' => $userRecord->billing_address,
             'billingCity' => $userRecord->billing_city,
             'billingPostalCode' => $userRecord->billing_postal_code,
-            'createdAt' => $createdAt,
+            'createdAt' => DateTimeImmutable::createFromFormat(
+                Constants::POSTGRES_OUTPUT_FORMAT,
+                $userRecord->created_at
+            ),
         ]);
     }
 }

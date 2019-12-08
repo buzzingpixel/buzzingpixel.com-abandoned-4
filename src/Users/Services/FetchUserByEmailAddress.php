@@ -34,7 +34,7 @@ class FetchUserByEmailAddress
 
             $statement->execute([':email' => $emailAddress]);
 
-            /** @var UserRecord|null $userRecord */
+            /** @var UserRecord|bool $userRecord */
             $userRecord = $statement->fetchObject(UserRecord::class);
 
             $isInstance = $userRecord instanceof UserRecord;
