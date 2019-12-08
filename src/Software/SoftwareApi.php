@@ -6,6 +6,7 @@ namespace App\Software;
 
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
+use App\Software\Services\FetchAllSoftware;
 use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Services\SaveSoftware;
 use Psr\Container\ContainerInterface;
@@ -34,5 +35,16 @@ class SoftwareApi
         $service = $this->di->get(FetchSoftwareBySlug::class);
 
         return $service($slug);
+    }
+
+    /**
+     * @return SoftwareModel[]
+     */
+    public function fetchAllSoftware() : array
+    {
+        /** @var FetchAllSoftware $service */
+        $service = $this->di->get(FetchAllSoftware::class);
+
+        return $service();
     }
 }

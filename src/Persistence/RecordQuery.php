@@ -9,6 +9,7 @@ use LogicException;
 use PDO;
 use PDOStatement;
 use function get_class;
+use function implode;
 use function in_array;
 use function mb_strtoupper;
 use function uniqid;
@@ -163,6 +164,28 @@ class RecordQuery
             }
 
             foreach ($whereGroup as $groupKey => $groupVal) {
+                if ($groupVal['operator'] === 'IN') {
+                    $in = [];
+
+                    foreach ($groupVal['val'] as $val) {
+                        $id = uniqid('', false);
+
+                        $bindKey = ':' . $groupVal['col'] . '_' . $id;
+
+                        $in[] = $bindKey;
+
+                        $bind[$bindKey] = $val;
+                    }
+
+                    $sql .= $groupVal['col'] . ' IN (';
+
+                    $sql .= implode(',', $in);
+
+                    $sql .= ')';
+
+                    continue;
+                }
+
                 $id = uniqid('', false);
 
                 $bindKey = ':' . $groupVal['col'] . '_' . $id;
