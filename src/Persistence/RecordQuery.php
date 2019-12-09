@@ -167,11 +167,10 @@ class RecordQuery
                 if ($groupVal['operator'] === 'IN') {
                     $in = [];
 
-                    /**
-                     * @var string $val
-                     * @psalm-suppress InvalidIterator
-                     */
-                    foreach ($groupVal['val'] as $val) {
+                    /** @var string[] $groupValVal */
+                    $groupValVal = $groupVal['val'];
+
+                    foreach ($groupValVal as $val) {
                         $id = uniqid('', false);
 
                         $bindKey = ':' . $groupVal['col'] . '_' . $id;
