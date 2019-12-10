@@ -11,6 +11,7 @@ use App\Software\Models\SoftwareModel;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
 use function array_map;
+use function count;
 
 class FetchAllSoftware
 {
@@ -42,6 +43,10 @@ class FetchAllSoftware
         )
             ->withOrder('name', 'asc')
             ->all();
+
+        if (count($records) < 1) {
+            return [];
+        }
 
         $softwareIds = array_map(
             static function (SoftwareRecord $record) {
