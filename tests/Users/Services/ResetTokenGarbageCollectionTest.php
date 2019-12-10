@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Users\Services;
+namespace Tests\Users\Services;
 
 use App\Persistence\Constants;
 use App\Users\Services\ResetTokenGarbageCollection;

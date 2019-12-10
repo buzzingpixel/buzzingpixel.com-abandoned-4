@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Users;
+namespace Tests\Users;
 
 use App\Payload\Payload;
 use App\Users\Models\UserModel;

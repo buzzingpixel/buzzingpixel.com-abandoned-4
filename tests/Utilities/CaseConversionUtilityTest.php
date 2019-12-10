@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Utilities;
+namespace Tests\Utilities;
 
 use App\Utilities\CaseConversionUtility;
 use PHPUnit\Framework\TestCase;
