@@ -12,7 +12,6 @@ use function get_class;
 use function implode;
 use function in_array;
 use function mb_strtoupper;
-use function uniqid;
 
 class RecordQuery
 {
@@ -152,6 +151,8 @@ class RecordQuery
 
         $bind = [];
 
+        $idIncrement = 0;
+
         /**
          * @var int $key
          * @var array<int, array<string, string>> $whereGroup
@@ -170,14 +171,20 @@ class RecordQuery
                     /** @var string[] $groupValVal */
                     $groupValVal = $groupVal['val'];
 
-                    foreach ($groupValVal as $val) {
-                        $id = uniqid('', false);
+                    foreach ((array) $groupValVal as $val) {
+                        $idIncrement++;
+
+                        $id = $idIncrement;
 
                         $bindKey = ':' . $groupVal['col'] . '_' . $id;
 
                         $in[] = $bindKey;
 
                         $bind[$bindKey] = $val;
+                    }
+
+                    if ($groupKey !== 0) {
+                        $sql .= ' AND ';
                     }
 
                     $sql .= $groupVal['col'] . ' IN (';
@@ -189,24 +196,23 @@ class RecordQuery
                     continue;
                 }
 
-                $id = uniqid('', false);
+                $idIncrement++;
+
+                $id = $idIncrement;
 
                 $bindKey = ':' . $groupVal['col'] . '_' . $id;
 
                 $bind[$bindKey] = $groupVal['val'];
 
-                if ($groupKey === 0) {
-                    $sql .= $groupVal['col'] .
-                        ' ' .
-                        $groupVal['operator'] .
-                        ' '
-                        . $bindKey;
-                } else {
-                    $sql .= ' AND ' .
-                        $groupVal['col'] .
-                        $groupVal['operator'] .
-                        $bindKey;
+                if ($groupKey !== 0) {
+                    $sql .= ' AND ';
                 }
+
+                $sql .= $groupVal['col'] .
+                    ' ' .
+                    $groupVal['operator'] .
+                    ' '
+                    . $bindKey;
             }
 
             $sql .= ')';
