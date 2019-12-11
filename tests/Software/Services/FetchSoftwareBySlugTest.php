@@ -302,6 +302,7 @@ class FetchSoftwareBySlugTest extends TestCase
 
         self::assertCount(2, $versions);
 
+        /** @var SoftwareVersionModel|null $versionModel1 */
         $versionModel1 = $versions[0];
         self::assertInstanceOf(
             SoftwareVersionModel::class,
@@ -334,6 +335,7 @@ class FetchSoftwareBySlugTest extends TestCase
             $releasedOn1->format(DateTimeInterface::ATOM)
         );
 
+        /** @var SoftwareVersionModel|null $versionModel2 */
         $versionModel2 = $versions[1];
         self::assertInstanceOf(
             SoftwareVersionModel::class,

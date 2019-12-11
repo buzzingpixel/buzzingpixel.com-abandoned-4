@@ -40,6 +40,18 @@ parameters:
         -
             message: '#Only booleans are allowed in a negated boolean, string given\.#'
             path: %currentWorkingDirectory%/src/Schedule/Services/SaveSchedule.php
+        -
+            message: '#Offset 0 does not exist on array\(\)\.#'
+            path: %currentWorkingDirectory%/tests/Software/Services/SaveSoftwareTest.php
+        -
+            message: '#Offset 1 does not exist on array\(\)\.#'
+            path: %currentWorkingDirectory%/tests/Software/Services/SaveSoftwareTest.php
+        -
+            message: "#Call to static method PHPUnit\\\\Framework\\\\Assert::assertInstanceOf\\(\\) with 'DateTimeImmutable' and DateTimeImmutable will always evaluate to true\\.#"
+            path: %currentWorkingDirectory%/tests/Software/Services/FetchSoftwareBySlugTest.php
+        -
+            message: "#Casting to array<string> something that's already array<string>\\.#"
+            path: %currentWorkingDirectory%/src/Persistence/RecordQuery.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php
