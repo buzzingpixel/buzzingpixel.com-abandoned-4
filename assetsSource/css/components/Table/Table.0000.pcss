@@ -1,0 +1,34 @@
+.Table {
+    /* Reset */
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+
+    background-color: #fff;
+    border: 1px solid var(--LightGray);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+}
+
+.Table__HeadControlCol {
+    background-color: var(--AquaHaze);
+    padding: 8px;
+    text-align: right;
+}
+
+.Table__HeadRow {
+    background-color: var(--AquaHaze2);
+    font-weight: bold;
+}
+
+.Table__HeadCol,
+.Table__Col {
+    padding: 8px;
+}
+
+.Table__Row:nth-child(even) {
+    background-color: var(--AquaHaze);
+}

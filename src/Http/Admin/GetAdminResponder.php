@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Admin;
 
-use App\Content\Meta\MetaPayload;
 use App\Http\StandardResponderConstructor;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
@@ -12,23 +11,19 @@ use Throwable;
 class GetAdminResponder extends StandardResponderConstructor
 {
     /**
+     * @param array $context
+     *
      * @throws Throwable
      */
     public function __invoke(
         string $template,
-        string $metaTitle,
-        string $activeTab
+        array $context
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
             $template,
-            [
-                'metaPayload' => new MetaPayload(
-                    ['metaTitle' => $metaTitle]
-                ),
-                'activeTab' => $activeTab,
-            ]
+            $context,
         ));
 
         return $response;
