@@ -1,21 +1,63 @@
 {% extends 'Admin/_AdminLayout.twig' %}
 
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
 {% block adminContent %}
     <form
         method="post"
-        action="/admin/softare/create"
         class="form StandardForm StandardForm--IsMaxWidth800"
+        enctype="multipart/form-data"
     >
         <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
         <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
         <h2 class="StandardForm__Heading">Create New Software</h2>
+        {% if message['status'] is defined %}
+            {% set class = 'Message--IsError' %}
+            {% if message.status == 'SUCCESSFUL' %}
+                {% set class = 'Message--IsSuccess' %}
+            {% endif %}
+            <div class="StandardForm__Message">
+                <div
+                    class="Message {{ class }}"
+                >
+                    <div class="Message__Inner">
+                        {{ message.result.message|default('There was a problem with your submission')|smartypants|widont }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <div class="StandardForm__FieldSet">
             <label for="name" class="label StandardForm__Label">Name</label>
-            <input type="text" id="name" name="name" class="input StandardForm__Input">
+            <input
+                type="text"
+                id="name"
+                name="name"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['name'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['name'] ?? '' }}"
+            >
+            {% if message['result']['inputMessages']['name'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['name']|smartypants }}
+                </div>
+            {% endif %}
         </div>
         <div class="StandardForm__FieldSet">
             <label for="slug" class="label StandardForm__Label">Slug</label>
-            <input type="text" id="slug" name="slug" class="input StandardForm__Input">
+            <input
+                type="text"
+                id="slug"
+                name="slug"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['slug'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['slug'] ?? '' }}"
+            >
+            {% if message['result']['inputMessages']['slug'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['slug']|smartypants }}
+                </div>
+            {% endif %}
         </div>
         <div class="StandardForm__FieldSet StandardForm__Fieldset--ForCheckbox">
             <label
@@ -29,9 +71,17 @@
                     value="true"
                     id="for_sale"
                     class="checkbox StandardForm__Checkbox"
+                    {% if (message['result']['inputValues']['for_sale'] ?? false) %}
+                    checked
+                    {% endif %}
                 >
                 <span class="StandardForm__CheckMark"></span>
             </label>
+            {% if message['result']['inputMessages']['for_sale'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['for_sale']|smartypants }}
+                </div>
+            {% endif %}
         </div>
         <div class="StandardForm__FieldSet">
             <label for="major_version" class="label StandardForm__Label">
@@ -41,8 +91,14 @@
                 type="text"
                 id="major_version"
                 name="major_version"
-                class="input StandardForm__Input"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['major_version'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['major_version'] ?? '' }}"
             >
+            {% if message['result']['inputMessages']['major_version'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['major_version']|smartypants }}
+                </div>
+            {% endif %}
         </div>
         <div class="StandardForm__FieldSet">
             <label for="version" class="label StandardForm__Label">
@@ -52,8 +108,14 @@
                 type="text"
                 id="version"
                 name="version"
-                class="input StandardForm__Input"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['version'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['version'] ?? '' }}"
             >
+            {% if message['result']['inputMessages']['version'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['version']|smartypants }}
+                </div>
+            {% endif %}
         </div>
         <div class="StandardForm__FieldSet">
             <label for="download_file" class="label StandardForm__Label">
@@ -65,6 +127,11 @@
                 name="download_file"
                 class="input StandardForm__Input StandardForm__Input--IsFileField"
             >
+            {% if message['result']['inputMessages']['download_file'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['download_file']|smartypants }}
+                </div>
+            {% endif %}
         </div>
         <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
             <input

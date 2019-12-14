@@ -7,6 +7,7 @@ use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Admin\GetAdminAction;
 use App\Http\Admin\GetAdminSoftwareAction;
 use App\Http\Admin\GetAdminSoftwareCreateAction;
+use App\Http\Admin\PostAdminSoftwareCreateAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -40,6 +41,10 @@ return static function (App $app) : void {
         $app->get(
             '/admin/software/create',
             GetAdminSoftwareCreateAction::class
+        );
+        $app->post(
+            '/admin/software/create',
+            PostAdminSoftwareCreateAction::class
         );
     })->add(RequireAdminAction::class)
     ->add(RequireLogInAction::class);
