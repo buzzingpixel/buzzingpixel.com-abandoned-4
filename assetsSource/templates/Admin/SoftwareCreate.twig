@@ -1,0 +1,77 @@
+{% extends 'Admin/_AdminLayout.twig' %}
+
+{% block adminContent %}
+    <form
+        method="post"
+        action="/admin/softare/create"
+        class="form StandardForm StandardForm--IsMaxWidth800"
+    >
+        <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+        <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+        <h2 class="StandardForm__Heading">Create New Software</h2>
+        <div class="StandardForm__FieldSet">
+            <label for="name" class="label StandardForm__Label">Name</label>
+            <input type="text" id="name" name="name" class="input StandardForm__Input">
+        </div>
+        <div class="StandardForm__FieldSet">
+            <label for="slug" class="label StandardForm__Label">Slug</label>
+            <input type="text" id="slug" name="slug" class="input StandardForm__Input">
+        </div>
+        <div class="StandardForm__FieldSet StandardForm__Fieldset--ForCheckbox">
+            <label
+                for="for_sale"
+                class="label StandardForm__Label StandardForm__Label--ForCheckbox"
+            >
+                For Sale?
+                <input
+                    type="checkbox"
+                    name="for_sale"
+                    value="true"
+                    id="for_sale"
+                    class="checkbox StandardForm__Checkbox"
+                >
+                <span class="StandardForm__CheckMark"></span>
+            </label>
+        </div>
+        <div class="StandardForm__FieldSet">
+            <label for="major_version" class="label StandardForm__Label">
+                Initial Major Version
+            </label>
+            <input
+                type="text"
+                id="major_version"
+                name="major_version"
+                class="input StandardForm__Input"
+            >
+        </div>
+        <div class="StandardForm__FieldSet">
+            <label for="version" class="label StandardForm__Label">
+                Initial Version
+            </label>
+            <input
+                type="text"
+                id="version"
+                name="version"
+                class="input StandardForm__Input"
+            >
+        </div>
+        <div class="StandardForm__FieldSet">
+            <label for="download_file" class="label StandardForm__Label">
+                File Download
+            </label>
+            <input
+                type="file"
+                id="download_file"
+                name="download_file"
+                class="input StandardForm__Input StandardForm__Input--IsFileField"
+            >
+        </div>
+        <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
+            <input
+                class="button"
+                type="submit"
+                value="Create"
+            >
+        </div>
+    </form>
+{% endblock %}

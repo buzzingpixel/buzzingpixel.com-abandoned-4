@@ -4,6 +4,8 @@
 
 {% extends '_Layout.twig' %}
 
+{% set breadcrumbs = breadcrumbs ?? [] %}
+
 {% macro tab(tabSlug, tabName, activeTab) %}
     <li class="TabbedLayout__Tab">
         <a
@@ -16,6 +18,11 @@
 {% endmacro %}
 
 {% block content %}
+    {% if breadcrumbs|length > 0 %}
+        {% include 'Includes/BreadCrumbs.twig' with {
+            breadcrumbs: breadcrumbs,
+        } only %}
+    {% endif %}
     <div class="TabbedLayout">
         <div class="TabbedLayout__Inner">
             <h1 class="heading heading--level-3 TabbedLayout__Heading">Admin Controls</h1>
