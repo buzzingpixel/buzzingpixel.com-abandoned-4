@@ -9,6 +9,7 @@ use App\Http\Admin\GetAdminSoftwareAction;
 use App\Http\Admin\GetAdminSoftwareCreateAction;
 use App\Http\Admin\GetAdminSoftwareViewAction;
 use App\Http\Admin\PostAdminSoftwareCreateAction;
+use App\Http\Admin\PostSoftwareDeleteAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -50,6 +51,10 @@ return static function (App $app) : void {
         $app->get(
             '/admin/software/view/{slug}',
             GetAdminSoftwareViewAction::class
+        );
+        $app->post(
+            '/admin/software/delete',
+            PostSoftwareDeleteAction::class
         );
     })->add(RequireAdminAction::class)
     ->add(RequireLogInAction::class);
