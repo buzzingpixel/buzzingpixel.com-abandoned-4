@@ -6,7 +6,9 @@ namespace App\Software;
 
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
+use App\Software\Models\SoftwareVersionModel;
 use App\Software\Services\DeleteSoftware;
+use App\Software\Services\DeleteSoftwareVersion;
 use App\Software\Services\FetchAllSoftware;
 use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Services\SaveSoftware;
@@ -53,6 +55,13 @@ class SoftwareApi
     {
         /** @var DeleteSoftware $service */
         $service = $this->di->get(DeleteSoftware::class);
+
+        $service($model);
+    }
+
+    public function deleteSoftwareVersion(SoftwareVersionModel $model) : void
+    {
+        $service = $this->di->get(DeleteSoftwareVersion::class);
 
         $service($model);
     }

@@ -31,7 +31,7 @@
         <table class="Table">
             <thead class="Table__Head">
                 <tr class="Table__HeadControlRow">
-                    <td class="Table__HeadControlCol" colspan="4">
+                    <td class="Table__HeadControlCol" colspan="2">
                         <form action="/admin/software/delete" method="post" style="display: inline-block" ref="FormSubmitConfirm" @submit="confirmSubmit">
                             <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
                             <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
@@ -81,6 +81,16 @@
         <h3 class="TableLayout__Heading">Versions</h3>
         <table class="Table">
             <thead class="Table__Head">
+                <tr class="Table__HeadControlRow">
+                    <td class="Table__HeadControlCol" colspan="5">
+                        <a
+                            href="/admin/software/{{ softwareModel.getSlug() }}/add-version"
+                            class="button"
+                        >
+                            Add New Version
+                        </a>
+                    </td>
+                </tr>
                 <tr class="Table__HeadRow">
                     <td class="Table__HeadCol">Major Version</td>
                     <td class="Table__HeadCol">Version</td>
@@ -108,7 +118,8 @@
                             <form action="/admin/software/version/delete" method="post" style="display: inline-block">
                                 <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
                                 <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
-                                <input type="hidden" name="slug" value="{{ version.getId() }}">
+                                <input type="hidden" name="software_slug" value="{{ version.getSoftware().getSlug() }}">
+                                <input type="hidden" name="id" value="{{ version.getId() }}">
                                 <input class="button" type="submit" value="Delete">
                             </form>
                         </td>
