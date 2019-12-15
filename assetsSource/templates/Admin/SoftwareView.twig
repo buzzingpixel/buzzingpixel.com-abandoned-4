@@ -1,0 +1,120 @@
+{% do requireVariables({
+    softwareModel: 'App\\Software\\Models\\SoftwareModel',
+}) %}
+
+{# @var \App\Software\Models\SoftwareModel softwareModel #}
+
+{% extends 'Admin/_AdminLayout.twig' %}
+
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% block adminContent %}
+    <div class="TableLayout">
+        {% if message['status'] is defined %}
+            {% set class = 'Message--IsError' %}
+            {% if message.status == 'SUCCESSFUL' %}
+                {% set class = 'Message--IsSuccess' %}
+            {% endif %}
+            <div class="TableLayout__Message">
+                <div
+                    class="Message {{ class }}"
+                >
+                    <div class="Message__Inner">
+                        {{ message.result.message|default('')|smartypants|widont }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <table class="Table">
+            <thead class="Table__Head">
+                <tr class="Table__HeadControlRow">
+                    <td class="Table__HeadControlCol" colspan="4">
+                        <form action="/admin/software/delete" method="post" style="display: inline-block">
+                            <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                            <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                            <input type="hidden" name="slug" value="{{ softwareModel.getSlug() }}">
+                            <input class="button" type="submit" value="Delete">
+                        </form>
+                        <a
+                            href="/admin/software/edit/{{ softwareModel.getSlug() }}"
+                            class="button"
+                        >
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                <tr class="Table__HeadRow">
+                    <td class="Table__HeadCol">Item</td>
+                    <td class="Table__HeadCol">Value</td>
+                </tr>
+            </thead>
+            <tbody class="Table__Body">
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        Name
+                    </td>
+                    <td class="Table__Col">
+                        {{ softwareModel.getName()|smartypants }}
+                    </td>
+                </tr>
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        Slug
+                    </td>
+                    <td class="Table__Col">
+                        {{ softwareModel.getSlug() }}
+                    </td>
+                </tr>
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        For Sale?
+                    </td>
+                    <td class="Table__Col">
+                        {{ softwareModel.isForSale() ? 'Yes' : 'No' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="TableLayout__Heading">Versions</h3>
+        <table class="Table">
+            <thead class="Table__Head">
+                <tr class="Table__HeadRow">
+                    <td class="Table__HeadCol">Major Version</td>
+                    <td class="Table__HeadCol">Version</td>
+                    <td class="Table__HeadCol">Download File</td>
+                    <td class="Table__HeadCol">Release Date</td>
+                    <td class="Table__HeadCol"></td>
+                </tr>
+            </thead>
+            <tbody class="Table__Body">
+                {% for version in softwareModel.getVersions() %}
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            {{ version.getMajorVersion() }}
+                        </td>
+                        <td class="Table__Col">
+                            {{ version.getVersion() }}
+                        </td>
+                        <td class="Table__Col">
+                            {{ version.getDownloadFile() }}
+                        </td>
+                        <td class="Table__Col">
+                            {{ version.getReleasedOn().format('Y-m-d h:i a') }}
+                        </td>
+                        <td class="Table__Col">
+                            <form action="/admin/software/version/delete" method="post" style="display: inline-block">
+                                <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                                <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                                <input type="hidden" name="slug" value="{{ version.getId() }}">
+                                <input class="button" type="submit" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

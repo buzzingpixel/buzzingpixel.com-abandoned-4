@@ -17,7 +17,7 @@ class GetAdminResponder extends StandardResponderConstructor
      */
     public function __invoke(
         string $template,
-        array $context
+        array $context = []
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
