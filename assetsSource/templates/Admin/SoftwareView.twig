@@ -32,7 +32,7 @@
             <thead class="Table__Head">
                 <tr class="Table__HeadControlRow">
                     <td class="Table__HeadControlCol" colspan="4">
-                        <form action="/admin/software/delete" method="post" style="display: inline-block">
+                        <form action="/admin/software/delete" method="post" style="display: inline-block" ref="FormSubmitConfirm" @submit="confirmSubmit">
                             <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
                             <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
                             <input type="hidden" name="slug" value="{{ softwareModel.getSlug() }}">

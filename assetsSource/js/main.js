@@ -1,22 +1,23 @@
 /* eslint-disable no-new */
 
 // Import Components
-import WindowResizeWatcher from './WindowResizeWatcher.js';
-import Menu from './Components/Menu.js';
 import Documentation from './Components/Documentation.js';
-import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
+import FormSubmitConfirm from './Components/FormSubmitConfirm.js';
 import LogInForm from './Components/LogInForm.js';
+import Menu from './Components/Menu.js';
+import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
+import WindowResizeWatcher from './WindowResizeWatcher.js';
 
 // Set up window resize watching
 new WindowResizeWatcher();
 
 // Run the Main menu
-// noinspection TypeScriptUMDGlobal
+// noinspection TypeScriptUMDGlobal,JSValidateTypes
 new Vue(Menu);
 
 // Run the Documentation sidebar
 if (document.querySelector('[ref="Documentation"]')) {
-    // noinspection TypeScriptUMDGlobal
+    // noinspection TypeScriptUMDGlobal,JSValidateTypes
     new Vue(Documentation);
 }
 
@@ -29,5 +30,12 @@ if (document.querySelector('code')
 
 // Run LogInForm
 if (document.querySelector('[ref="LogInForm"]')) {
+    // noinspection TypeScriptUMDGlobal,JSValidateTypes
     new Vue(LogInForm);
+}
+
+// Run form submit config
+if (document.querySelector('[ref="FormSubmitConfirm"]')) {
+    // noinspection TypeScriptUMDGlobal,JSValidateTypes
+    new Vue(FormSubmitConfirm);
 }
