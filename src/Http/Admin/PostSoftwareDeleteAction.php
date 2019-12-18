@@ -46,15 +46,18 @@ class PostSoftwareDeleteAction
                     'result' => ['message' => 'Something went wrong trying to delete the software'],
                 ]
             );
-        } else {
-            $this->flashMessages->addMessage(
-                'PostMessage',
-                [
-                    'status' => Payload::STATUS_SUCCESSFUL,
-                    'result' => ['message' => 'Software was deleted successfully'],
-                ]
-            );
+
+            return $this->responseFactory->createResponse(303)
+                ->withHeader('Location', '/admin/software');
         }
+
+        $this->flashMessages->addMessage(
+            'PostMessage',
+            [
+                'status' => Payload::STATUS_SUCCESSFUL,
+                'result' => ['message' => 'Software was deleted successfully'],
+            ]
+        );
 
         $this->softwareApi->deleteSoftware($software);
 

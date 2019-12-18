@@ -8,7 +8,6 @@ use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use App\Software\SoftwareApi;
-use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function count;
@@ -17,7 +16,7 @@ class PostAdminSoftwareCreateAction
 {
     /** @var PostAdminSoftwareCreateResponder */
     private $responder;
-    /** @var UserApi */
+    /** @var SoftwareApi */
     private $softwareApi;
 
     public function __construct(
@@ -40,7 +39,7 @@ class PostAdminSoftwareCreateAction
             'version' => $postData['version'] ?? '',
         ];
 
-        $downloadFile = $request->getUploadedFiles()['download_file'] ?? [];
+        // $downloadFile = $request->getUploadedFiles()['download_file'] ?? [];
 
         $inputMessages = [];
 
@@ -91,7 +90,7 @@ class PostAdminSoftwareCreateAction
             return ($this->responder)(
                 new Payload(
                     Payload::STATUS_NOT_VALID,
-                    ['message' => 'An unknown error occured'],
+                    ['message' => 'An unknown error occurred'],
                 ),
             );
         }

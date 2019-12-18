@@ -61,6 +61,7 @@ class SoftwareApi
 
     public function deleteSoftwareVersion(SoftwareVersionModel $model) : void
     {
+        /** @var DeleteSoftwareVersion $service */
         $service = $this->di->get(DeleteSoftwareVersion::class);
 
         $service($model);
