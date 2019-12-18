@@ -22,7 +22,8 @@ if "%cmd%" == "" (
     echo   .\dev cli [args]
     echo   .\dev yarn [args]
     echo   .\dev composer [args]
-    echo   .\dev phpcs [args]
+    echo   .\dev phpcs
+    echo   .\dev phpcbf
     echo   .\dev psalm
     echo   .\dev phpstan
     echo   .\dev phpunit [args]
@@ -77,6 +78,11 @@ if "%cmd%" == "composer" (
 
 if "%cmd%" == "phpcs" (
     docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;"
+    exit /b 0
+)
+
+if "%cmd%" == "phpcbf" (
+    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcbf --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcbf src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --using-cache=no;"
     exit /b 0
 )
 

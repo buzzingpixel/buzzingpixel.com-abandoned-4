@@ -52,6 +52,7 @@ if [[ -z "${cmd}" ]]; then
     printf "  ./dev yarn [args]\n";
     printf "  ./dev composer [args]\n";
     printf "  ./dev phpcs\n";
+    printf "  ./dev phpcbf\n";
     printf "  ./dev psalm\n";
     printf "  ./dev phpstan\n";
     printf "  ./dev phpunit [args]\n";
@@ -113,6 +114,11 @@ fi
 
 if [[ "${cmd}" = "phpcs" ]]; then
     docker run -it -v ${PWD}:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;";
+    exit 0;
+fi
+
+if [[ "${cmd}" = "phpcbf" ]]; then
+    docker run -it -v ${PWD}:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcbf --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcbf src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --using-cache=no;";
     exit 0;
 fi
 
