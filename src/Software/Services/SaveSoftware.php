@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Persistence\SaveExistingRecord;
 use App\Persistence\SaveNewRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
+use App\SecureStorage\Services\SaveFileToSecureStorage;
 use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use App\Software\Transformers\TransformSoftwareModelToRecord;
@@ -31,6 +32,8 @@ class SaveSoftware
     private $transformSoftwareModelToRecord;
     /** @var TransformSoftwareVersionModelToRecord */
     private $transformSoftwareVersionModelToRecord;
+    /** @var SaveFileToSecureStorage */
+    private $saveFileToSecureStorage;
 
     public function __construct(
         PDO $pdo,
@@ -38,7 +41,8 @@ class SaveSoftware
         SaveNewRecord $saveNewRecord,
         SaveExistingRecord $saveExistingRecord,
         TransformSoftwareModelToRecord $transformSoftwareModelToRecord,
-        TransformSoftwareVersionModelToRecord $transformSoftwareVersionModelToRecord
+        TransformSoftwareVersionModelToRecord $transformSoftwareVersionModelToRecord,
+        SaveFileToSecureStorage $saveFileToSecureStorage
     ) {
         $this->pdo                                   = $pdo;
         $this->uuidFactory                           = $uuidFactory;
@@ -46,6 +50,7 @@ class SaveSoftware
         $this->saveExistingRecord                    = $saveExistingRecord;
         $this->transformSoftwareModelToRecord        = $transformSoftwareModelToRecord;
         $this->transformSoftwareVersionModelToRecord = $transformSoftwareVersionModelToRecord;
+        $this->saveFileToSecureStorage               = $saveFileToSecureStorage;
     }
 
     public function __invoke(SoftwareModel $model) : Payload
@@ -102,6 +107,29 @@ class SaveSoftware
      */
     protected function saveVersion(SoftwareVersionModel $model) : void
     {
+        $newDownloadFile = $model->getNewDownloadFile();
+
+        /** @var SoftwareModel $software */
+        $software = $model->getSoftware();
+
+        if ($newDownloadFile !== null) {
+            /** @psalm-suppress PossiblyNullReference */
+            $slug = $software->getSlug();
+
+            $saveFilePayload = ($this->saveFileToSecureStorage)(
+                $newDownloadFile,
+                $slug
+            );
+
+            if ($saveFilePayload->getStatus() === Payload::STATUS_SUCCESSFUL) {
+                /** @psalm-suppress PossiblyNullOperand */
+                $fileName = $newDownloadFile->getClientFilename();
+
+                /** @psalm-suppress PossiblyNullOperand */
+                $model->setDownloadFile($slug . '/' . $fileName);
+            }
+        }
+
         if ($model->getId() === '') {
             $model->setId(
                 $this->uuidFactory->uuid1()->toString()

@@ -7,6 +7,7 @@ namespace App\Software\Models;
 use App\Payload\Model;
 use DateTimeImmutable;
 use DateTimeZone;
+use Psr\Http\Message\UploadedFileInterface;
 
 class SoftwareVersionModel extends Model
 {
@@ -102,6 +103,19 @@ class SoftwareVersionModel extends Model
     public function getDownloadFile() : string
     {
         return $this->downloadFile;
+    }
+
+    /** @var UploadedFileInterface|null */
+    private $newDownloadFile;
+
+    public function setNewDownloadFile(?UploadedFileInterface $newDownloadFile) : void
+    {
+        $this->newDownloadFile = $newDownloadFile;
+    }
+
+    public function getNewDownloadFile() : ?UploadedFileInterface
+    {
+        return $this->newDownloadFile;
     }
 
     /** @var DateTimeImmutable */

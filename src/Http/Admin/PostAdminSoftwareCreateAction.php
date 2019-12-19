@@ -10,6 +10,7 @@ use App\Software\Models\SoftwareVersionModel;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use function count;
 
 class PostAdminSoftwareCreateAction
@@ -39,7 +40,8 @@ class PostAdminSoftwareCreateAction
             'version' => $postData['version'] ?? '',
         ];
 
-        // $downloadFile = $request->getUploadedFiles()['download_file'] ?? [];
+        /** @var UploadedFileInterface|null $downloadFile */
+        $downloadFile = $request->getUploadedFiles()['download_file'] ?? null;
 
         $inputMessages = [];
 
@@ -80,6 +82,7 @@ class PostAdminSoftwareCreateAction
                 new SoftwareVersionModel([
                     'majorVersion' => $inputValues['major_version'],
                     'version' => $inputValues['version'],
+                    'newDownloadFile' => $downloadFile,
                 ]),
             ],
         ]);

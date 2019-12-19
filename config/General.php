@@ -10,7 +10,9 @@ use function getenv;
 
 /**
  * @method bool devMode()
+ * @method string rootPath()
  * @method string pathToContentDirectory()
+ * @method string pathToSecureStorageDirectory()
  * @method string siteName()
  * @method string twitterHandle()
  * @method array stylesheets()
@@ -20,16 +22,28 @@ class General extends SimpleModel
 {
     public function __construct()
     {
+        $rootPath = dirname(__DIR__);
+
         static::$devMode = getenv('DEV_MODE') === 'true';
 
-        static::$pathToContentDirectory = dirname(__DIR__) . '/content';
+        static::$rootPath = $rootPath;
+
+        static::$pathToContentDirectory = $rootPath . '/content';
+
+        static::$pathToSecureStorageDirectory = $rootPath . '/secure-storage';
     }
 
     /** @var bool */
     public static $devMode = false;
 
     /** @var string */
+    public static $rootPath = '';
+
+    /** @var string */
     public static $pathToContentDirectory = '';
+
+    /** @var string */
+    public static $pathToSecureStorageDirectory = '';
 
     /** @var string */
     public static $siteName = 'BuzzingPixel';
