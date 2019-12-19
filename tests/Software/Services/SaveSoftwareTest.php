@@ -10,6 +10,7 @@ use App\Persistence\SaveNewRecord;
 use App\Persistence\Software\SoftwareRecord;
 use App\Persistence\Software\SoftwareVersionRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
+use App\SecureStorage\Services\SaveFileToSecureStorage;
 use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use App\Software\Services\SaveSoftware;
@@ -53,6 +54,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -111,6 +115,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -189,6 +196,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -267,6 +277,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -346,6 +359,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -425,6 +441,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -522,6 +541,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -645,6 +667,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
@@ -743,6 +768,9 @@ class SaveSoftwareTest extends TestCase
             ),
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
+            ),
+            TestConfig::$di->get(
+                SaveFileToSecureStorage::class
             )
         );
 
