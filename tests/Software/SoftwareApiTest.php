@@ -6,6 +6,9 @@ namespace Tests\Software;
 
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
+use App\Software\Models\SoftwareVersionModel;
+use App\Software\Services\DeleteSoftware;
+use App\Software\Services\DeleteSoftwareVersion;
 use App\Software\Services\FetchAllSoftware;
 use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Services\SaveSoftware;
@@ -21,6 +24,8 @@ class SoftwareApiTest extends TestCase
 
     /** @var SoftwareModel */
     private $softwareModel;
+    /** @var SoftwareVersionModel */
+    private $softwareVersionModel;
     /** @var string */
     private $slug;
 
@@ -53,9 +58,21 @@ class SoftwareApiTest extends TestCase
         );
     }
 
+    public function testDeleteSoftware() : void
+    {
+        $this->api->deleteSoftware($this->softwareModel);
+    }
+
+    public function testDeleteSoftwareVersion() : void
+    {
+        $this->api->deleteSoftwareVersion($this->softwareVersionModel);
+    }
+
     protected function setUp() : void
     {
         $this->softwareModel = new SoftwareModel();
+
+        $this->softwareVersionModel = new SoftwareVersionModel();
 
         $this->slug = 'foo-slug';
 
@@ -69,8 +86,9 @@ class SoftwareApiTest extends TestCase
     {
         $di = $this->createMock(ContainerInterface::class);
 
-        $di->method('get')
-            ->willReturnCallback([$this, 'diGetCallback']);
+        $di->method('get')->willReturnCallback(
+            [$this, 'diGetCallback']
+        );
 
         return $di;
     }
@@ -90,6 +108,14 @@ class SoftwareApiTest extends TestCase
 
         if ($class === FetchAllSoftware::class) {
             return $this->mockFetchAllSoftware();
+        }
+
+        if ($class === DeleteSoftware::class) {
+            return $this->mockDeleteSoftware();
+        }
+
+        if ($class === DeleteSoftwareVersion::class) {
+            return $this->mockDeleteSoftwareVersion();
         }
 
         return null;
@@ -140,6 +166,32 @@ class SoftwareApiTest extends TestCase
         $mock->expects(self::once())
             ->method('__invoke')
             ->willReturn([$this->softwareModel]);
+
+        return $mock;
+    }
+
+    /**
+     * @return DeleteSoftware&MockObject
+     */
+    private function mockDeleteSoftware() : DeleteSoftware
+    {
+        $mock = $this->createMock(DeleteSoftware::class);
+
+        $mock->expects(self::once())
+            ->method('__invoke');
+
+        return $mock;
+    }
+
+    /**
+     * @return DeleteSoftwareVersion&MockObject
+     */
+    private function mockDeleteSoftwareVersion() : DeleteSoftwareVersion
+    {
+        $mock = $this->createMock(DeleteSoftwareVersion::class);
+
+        $mock->expects(self::once())
+            ->method('__invoke');
 
         return $mock;
     }
