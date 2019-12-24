@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Http\Admin;
 
-use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -46,8 +45,7 @@ class GetAdminResponderTest extends TestCase
 
         $response = $responder(
             'Foo/Template.twig',
-            'Foo Title',
-            'foo-tab'
+            ['foo' => 'context'],
         );
 
         self::assertSame(200, $response->getStatusCode());
@@ -70,21 +68,9 @@ class GetAdminResponderTest extends TestCase
         /** @var mixed[] $context */
         $context = $args[1];
 
-        self::assertCount(2, $context);
-
-        /** @var MetaPayload|null $metaPayload */
-        $metaPayload = $context['metaPayload'];
-
-        self::assertInstanceOf(
-            MetaPayload::class,
-            $metaPayload
-        );
-
         self::assertSame(
-            'Foo Title',
-            $metaPayload->getMetaTitle()
+            ['foo' => 'context'],
+            $context
         );
-
-        self::assertSame('foo-tab', $context['activeTab']);
     }
 }
