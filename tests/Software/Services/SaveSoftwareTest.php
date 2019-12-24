@@ -21,6 +21,7 @@ use DateTimeInterface;
 use Exception;
 use PDO;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 use Tests\TestConfig;
 
@@ -728,7 +729,7 @@ class SaveSoftwareTest extends TestCase
             ->willReturn(true);
 
         $pdo->expects(self::at(1))
-            ->method('rollBack')
+            ->method('commit')
             ->willReturn(true);
 
         $saveCallHolder       = new stdClass();
@@ -756,6 +757,25 @@ class SaveSoftwareTest extends TestCase
                 }
             );
 
+        $newDownloadFile = $this->createMock(
+            UploadedFileInterface::class
+        );
+
+        $newDownloadFile->method('getClientFilename')
+            ->willReturn('foo-client-filename');
+
+        $saveFileToSecureStorage = $this->createMock(
+            SaveFileToSecureStorage::class
+        );
+
+        $saveFileToSecureStorage->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($newDownloadFile),
+                self::equalTo('foo-slug')
+            )
+            ->willreturn(new Payload(Payload::STATUS_SUCCESSFUL));
+
         $service = new SaveSoftware(
             $pdo,
             TestConfig::$di->get(
@@ -769,9 +789,7 @@ class SaveSoftwareTest extends TestCase
             TestConfig::$di->get(
                 TransformSoftwareVersionModelToRecord::class
             ),
-            TestConfig::$di->get(
-                SaveFileToSecureStorage::class
-            )
+            $saveFileToSecureStorage,
         );
 
         $releasedOn1 = new DateTimeImmutable('100 days ago');
@@ -788,6 +806,7 @@ class SaveSoftwareTest extends TestCase
                     'majorVersion' => '4',
                     'version' => '4.0.0',
                     'downloadFile' => '/bar/baz/download',
+                    'newDownloadFile' => $newDownloadFile,
                     'releasedOn' => $releasedOn1,
                 ]),
                 new SoftwareVersionModel([
@@ -824,7 +843,7 @@ class SaveSoftwareTest extends TestCase
         self::assertSame('4.0.0', $versionRecord1->version);
 
         self::assertSame(
-            '/bar/baz/download',
+            'foo-slug/foo-client-filename',
             $versionRecord1->download_file
         );
 
