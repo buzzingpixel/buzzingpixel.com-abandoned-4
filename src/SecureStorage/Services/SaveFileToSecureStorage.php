@@ -9,7 +9,6 @@ use Config\General;
 use Psr\Http\Message\UploadedFileInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
-use function dd;
 
 class SaveFileToSecureStorage
 {
@@ -46,8 +45,6 @@ class SaveFileToSecureStorage
 
             return new Payload(Payload::STATUS_SUCCESSFUL);
         } catch (Throwable $e) {
-            dd($e);
-
             return new Payload(Payload::STATUS_ERROR);
         }
     }
