@@ -92,7 +92,7 @@ class PostAdminSoftwareCreateAction
         if ($payload->getStatus() !== Payload::STATUS_CREATED) {
             return ($this->responder)(
                 new Payload(
-                    Payload::STATUS_NOT_VALID,
+                    Payload::STATUS_NOT_CREATED,
                     ['message' => 'An unknown error occurred'],
                 ),
             );
