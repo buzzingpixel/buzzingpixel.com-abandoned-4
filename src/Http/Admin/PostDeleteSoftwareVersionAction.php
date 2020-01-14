@@ -37,7 +37,7 @@ class PostDeleteSoftwareVersionAction
         $postData = $request->getParsedBody();
 
         $software = $this->softwareApi->fetchSoftwareBySlug(
-            $slug = (string) ($postData['software_slug'] ?? '')
+            (string) ($postData['software_slug'] ?? '')
         );
 
         if ($software === null) {
