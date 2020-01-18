@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Admin;
+namespace App\Http\Admin\Software;
 
 use App\Payload\Payload;
 use Psr\Http\Message\ResponseFactoryInterface;

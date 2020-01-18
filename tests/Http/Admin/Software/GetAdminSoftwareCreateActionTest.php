@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Admin;
+namespace Tests\Http\Admin\Software;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
-use App\Http\Admin\GetAdminSoftwareCreateAction;
+use App\Http\Admin\Software\GetAdminSoftwareCreateAction;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use stdClass;

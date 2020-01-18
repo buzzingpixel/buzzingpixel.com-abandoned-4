@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Admin;
+namespace App\Http\Admin\Software;
 
 use App\Content\Meta\MetaPayload;
+use App\Http\Admin\GetAdminResponder;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;

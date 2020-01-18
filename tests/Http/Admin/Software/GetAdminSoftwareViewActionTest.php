@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Admin;
+namespace Tests\Http\Admin\Software;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
-use App\Http\Admin\GetAdminSoftwareViewAction;
+use App\Http\Admin\Software\GetAdminSoftwareViewAction;
 use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;
 use PHPUnit\Framework\TestCase;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Admin;
+namespace Tests\Http\Admin\Software;
 
-use App\Http\Admin\PostAdminSoftwareCreateAction;
-use App\Http\Admin\PostAdminSoftwareCreateResponder;
+use App\Http\Admin\Software\PostAdminSoftwareCreateAction;
+use App\Http\Admin\Software\PostAdminSoftwareCreateResponder;
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;

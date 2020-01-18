@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Admin;
+namespace Tests\Http\Admin\Software;
 
-use App\Http\Admin\PostAdminSoftwareCreateResponder;
+use App\Http\Admin\Software\PostAdminSoftwareCreateResponder;
 use App\Payload\Payload;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
