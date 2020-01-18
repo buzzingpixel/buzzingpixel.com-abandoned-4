@@ -1,0 +1,99 @@
+{% do requireVariables({
+    softwareVersion: 'App\\Software\\Models\\SoftwareVersionModel',
+}) %}
+
+{# @var \App\Software\Models\SoftwareVersionModel softwareVersion #}
+
+{% extends 'Admin/_AdminLayout.twig' %}
+
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% block adminContent %}
+    <form
+        method="post"
+        class="form StandardForm StandardForm--IsMaxWidth800"
+        enctype="multipart/form-data"
+    >
+        <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+        <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+        <h2 class="StandardForm__Heading">Edit Version "{{ softwareVersion.getVersion }}" of "{{ softwareVersion.getSoftware().getName()|smartypants }}"</h2>
+        {% if message['status'] is defined %}
+            {% set class = 'Message--IsError' %}
+            {% if message.status == 'SUCCESSFUL' %}
+                {% set class = 'Message--IsSuccess' %}
+            {% endif %}
+            <div class="StandardForm__Message">
+                <div
+                    class="Message {{ class }}"
+                >
+                    <div class="Message__Inner">
+                        {{ message.result.message|default('There was a problem with your submission')|smartypants|widont }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="StandardForm__FieldSet">
+            <label for="major_version" class="label StandardForm__Label">
+                Major Version
+            </label>
+            <input
+                type="text"
+                id="major_version"
+                name="major_version"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['major_version'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['major_version'] ?? softwareVersion.getMajorVersion() }}"
+            >
+            {% if message['result']['inputMessages']['major_version'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['major_version']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="StandardForm__FieldSet">
+            <label for="version" class="label StandardForm__Label">
+                Version
+            </label>
+            <input
+                type="text"
+                id="version"
+                name="version"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['version'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['version'] ?? softwareVersion.getVersion() }}"
+            >
+            {% if message['result']['inputMessages']['version'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['version']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="StandardForm__FieldSet">
+            <label for="new_download_file" class="label StandardForm__Label">
+                New File Download
+            </label>
+            {% if softwareVersion.getDownloadFile() %}
+                Currently: {{ softwareVersion.getDownloadFile() }}
+            {% endif %}
+            <input
+                type="file"
+                id="new_download_file"
+                name="new_download_file"
+                class="input StandardForm__Input StandardForm__Input--IsFileField"
+            >
+            {% if message['result']['inputMessages']['new_download_file'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['new_download_file']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
+            <input
+                class="button"
+                type="submit"
+                value="Submit"
+            >
+        </div>
+    </form>
+{% endblock %}

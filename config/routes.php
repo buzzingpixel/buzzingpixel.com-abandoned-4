@@ -8,6 +8,7 @@ use App\Http\Admin\GetAdminAction;
 use App\Http\Admin\Software\GetAdminSoftwareAction;
 use App\Http\Admin\Software\GetAdminSoftwareCreateAction;
 use App\Http\Admin\Software\GetAdminSoftwareEditAction;
+use App\Http\Admin\Software\GetAdminSoftwareVersionEditAction;
 use App\Http\Admin\Software\GetAdminSoftwareViewAction;
 use App\Http\Admin\Software\PostAdminSoftwareCreateAction;
 use App\Http\Admin\Software\PostAdminSoftwareDeleteAction;
@@ -65,6 +66,10 @@ return static function (App $app) : void {
         $app->post(
             '/admin/software/edit/{slug}',
             PostAdminSoftwareEditAction::class
+        );
+        $app->get(
+            '/admin/software/version/edit/{id}',
+            GetAdminSoftwareVersionEditAction::class
         );
         $app->post(
             '/admin/software/delete/{id}',
