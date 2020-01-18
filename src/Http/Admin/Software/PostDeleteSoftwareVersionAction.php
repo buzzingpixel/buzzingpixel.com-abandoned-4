@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Admin\Software;
 
 use App\Payload\Payload;
-use App\Software\Models\SoftwareVersionModel;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Flash\Messages as FlashMessages;
-use function array_filter;
 
 class PostDeleteSoftwareVersionAction
 {
@@ -34,13 +32,11 @@ class PostDeleteSoftwareVersionAction
 
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $postData = $request->getParsedBody();
-
-        $software = $this->softwareApi->fetchSoftwareBySlug(
-            (string) ($postData['software_slug'] ?? '')
+        $softwareVersion = $this->softwareApi->fetchSoftwareVersionById(
+            (string) $request->getAttribute('id')
         );
 
-        if ($software === null) {
+        if ($softwareVersion === null) {
             $this->flashMessages->addMessage(
                 'PostMessage',
                 [
@@ -53,29 +49,7 @@ class PostDeleteSoftwareVersionAction
                 ->withHeader('Location', '/admin/software');
         }
 
-        $id = (string) ($postData['id'] ?? '');
-
-        $versionMatch = array_filter(
-            $software->getVersions(),
-            static function (SoftwareVersionModel $model) use ($id) : bool {
-                return $model->getId() === $id;
-            }
-        );
-
-        if (! isset($versionMatch[0])) {
-            $this->flashMessages->addMessage(
-                'PostMessage',
-                [
-                    'status' => Payload::STATUS_ERROR,
-                    'result' => ['message' => 'Something went wrong trying to delete the software'],
-                ]
-            );
-
-            return $this->responseFactory->createResponse(303)
-                ->withHeader('Location', '/admin/software');
-        }
-
-        $this->softwareApi->deleteSoftwareVersion($versionMatch[0]);
+        $this->softwareApi->deleteSoftwareVersion($softwareVersion);
 
         $this->flashMessages->addMessage(
             'PostMessage',
@@ -88,7 +62,8 @@ class PostDeleteSoftwareVersionAction
         return $this->responseFactory->createResponse(303)
             ->withHeader(
                 'Location',
-                '/admin/software/view/' . $software->getSlug()
+                '/admin/software/view/' .
+                    $softwareVersion->getSoftware()->getSlug()
             );
     }
 }

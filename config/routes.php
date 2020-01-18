@@ -71,7 +71,7 @@ return static function (App $app) : void {
             PostSoftwareDeleteAction::class
         );
         $app->post(
-            '/admin/software/version/delete',
+            '/admin/software/version/delete/{id}',
             PostDeleteSoftwareVersionAction::class
         );
     })->add(RequireAdminAction::class)

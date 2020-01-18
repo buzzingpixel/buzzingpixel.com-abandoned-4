@@ -12,6 +12,7 @@ use App\Software\Services\DeleteSoftwareVersion;
 use App\Software\Services\FetchAllSoftware;
 use App\Software\Services\FetchSoftwareById;
 use App\Software\Services\FetchSoftwareBySlug;
+use App\Software\Services\FetchSoftwareVersionById;
 use App\Software\Services\SaveSoftware;
 use Psr\Container\ContainerInterface;
 
@@ -58,6 +59,14 @@ class SoftwareApi
         $service = $this->di->get(FetchAllSoftware::class);
 
         return $service();
+    }
+
+    public function fetchSoftwareVersionById(string $id) : ?SoftwareVersionModel
+    {
+        /** @var FetchSoftwareVersionById $service */
+        $service = $this->di->get(FetchSoftwareVersionById::class);
+
+        return $service($id);
     }
 
     public function deleteSoftware(SoftwareModel $model) : void
