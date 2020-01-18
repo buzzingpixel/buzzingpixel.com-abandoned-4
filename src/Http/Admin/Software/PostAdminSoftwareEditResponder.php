@@ -47,7 +47,7 @@ class PostAdminSoftwareEditResponder
                 'PostMessage',
                 [
                     'status' => Payload::STATUS_SUCCESSFUL,
-                    'result' => ['message' => 'Successfully created new software'],
+                    'result' => ['message' => 'Successfully edited software'],
                 ]
             );
         }

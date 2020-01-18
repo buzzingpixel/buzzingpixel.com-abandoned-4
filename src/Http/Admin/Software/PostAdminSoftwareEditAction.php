@@ -40,8 +40,8 @@ class PostAdminSoftwareEditAction
             'for_sale' => ($postData['for_sale'] ?? '') === 'true',
         ];
 
-        $softwareModel = $this->softwareApi->fetchSoftwareById(
-            (string) $inputValues['id']
+        $softwareModel = $this->softwareApi->fetchSoftwareBySlug(
+            (string) $request->getAttribute('slug')
         );
 
         if ($softwareModel === null) {

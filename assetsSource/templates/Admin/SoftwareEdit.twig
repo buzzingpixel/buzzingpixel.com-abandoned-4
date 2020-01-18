@@ -19,7 +19,6 @@
     >
         <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
         <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
-        <input type="hidden" name="id" value="{{ softwareModel.getId() }}">
         <h2 class="StandardForm__Heading">Edit "{{ softwareModel.getName()|smartypants }}"</h2>
         {% if message['status'] is defined %}
             {% set class = 'Message--IsError' %}
