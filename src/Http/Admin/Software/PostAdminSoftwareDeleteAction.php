@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Flash\Messages as FlashMessages;
 
-class PostDeleteSoftwareVersionAction
+class PostAdminSoftwareDeleteAction
 {
     /** @var FlashMessages */
     private $flashMessages;
@@ -32,11 +32,11 @@ class PostDeleteSoftwareVersionAction
 
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $softwareVersion = $this->softwareApi->fetchSoftwareVersionById(
-            (string) $request->getAttribute('id')
+        $software = $this->softwareApi->fetchSoftwareById(
+            $slug = (string) $request->getAttribute('id')
         );
 
-        if ($softwareVersion === null) {
+        if ($software === null) {
             $this->flashMessages->addMessage(
                 'PostMessage',
                 [
@@ -49,21 +49,17 @@ class PostDeleteSoftwareVersionAction
                 ->withHeader('Location', '/admin/software');
         }
 
-        $this->softwareApi->deleteSoftwareVersion($softwareVersion);
+        $this->softwareApi->deleteSoftware($software);
 
         $this->flashMessages->addMessage(
             'PostMessage',
             [
                 'status' => Payload::STATUS_SUCCESSFUL,
-                'result' => ['message' => 'Version was deleted successfully'],
+                'result' => ['message' => 'Software was deleted successfully'],
             ]
         );
 
         return $this->responseFactory->createResponse(303)
-            ->withHeader(
-                'Location',
-                '/admin/software/view/' .
-                    $softwareVersion->getSoftware()->getSlug()
-            );
+            ->withHeader('Location', '/admin/software');
     }
 }

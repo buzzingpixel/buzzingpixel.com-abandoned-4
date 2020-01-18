@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Http\Admin\Software;
 
-use App\Http\Admin\Software\PostDeleteSoftwareVersionAction;
+use App\Http\Admin\Software\PostAdminSoftwareVersionDeleteAction;
 use App\Payload\Payload;
 use App\Software\SoftwareApi;
 use PHPUnit\Framework\TestCase;
@@ -57,7 +57,7 @@ class PostDeleteSoftwareVersionActionTest extends TestCase
             ->with(self::equalTo(''))
             ->willReturn(null);
 
-        $action = new PostDeleteSoftwareVersionAction(
+        $action = new PostAdminSoftwareVersionDeleteAction(
             $flashApi,
             $responseFactory,
             $softwareApi,
