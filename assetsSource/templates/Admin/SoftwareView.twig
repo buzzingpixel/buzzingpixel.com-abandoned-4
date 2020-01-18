@@ -122,6 +122,14 @@
                                 <input type="hidden" name="id" value="{{ version.getId() }}">
                                 <input class="button" type="submit" value="Delete">
                             </form>
+                            &nbsp;
+                            <form action="/admin/software/version/edit/{{ version.getId() }}" method="post" style="display: inline-block">
+                                <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                                <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                                <input type="hidden" name="software_slug" value="{{ version.getSoftware().getSlug() }}">
+                                <input type="hidden" name="id" value="{{ version.getId() }}">
+                                <input class="button" type="submit" value="Edit">
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
