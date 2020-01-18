@@ -28,6 +28,7 @@ class PhpFunctions extends AbstractExtension
     {
         return array_map(
             static function ($phpFunction) {
+                /** @psalm-suppress InvalidArgument */
                 return new TwigFunction($phpFunction, $phpFunction);
             },
             $this->functions

@@ -50,7 +50,10 @@ class RequireVariables extends AbstractExtension
                 // @codeCoverageIgnoreEnd
             }
 
-            /** @psalm-suppress MixedAssignment */
+            /**
+             * @psalm-suppress MixedAssignment
+             * @psalm-suppress PossiblyUndefinedArrayOffset
+             */
             $val = $context[$var];
 
             $varType = gettype($val);

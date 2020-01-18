@@ -52,6 +52,30 @@ parameters:
         -
             message: "#Casting to array<string> something that's already array<string>\\.#"
             path: %currentWorkingDirectory%/src/Persistence/RecordQuery.php
+        -
+            message: "#Offset 0 does not exist on array\\(\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/PostAdminSoftwareCreateResponderTest.php
+        -
+            message: "#Offset 1 does not exist on array\\('PostMessage'\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/PostAdminSoftwareCreateResponderTest.php
+        -
+            message: "#Offset 0 does not exist on array\\(\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
+        -
+            message: "#Offset 1 does not exist on array\\('Admin\\/SoftwareView…'\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
+        -
+            message: "#Offset 0 does not exist on array\\(\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareCreateActionTest.php
+        -
+            message: "#Offset 1 does not exist on array\\('Admin…'\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareCreateActionTest.php
+        -
+            message: "#Offset 0 does not exist on array\\(\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareActionTest.php
+        -
+            message: "#Offset 1 does not exist on array\\('Admin\\/Software.twig'\\)\\.#"
+            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareActionTest.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php

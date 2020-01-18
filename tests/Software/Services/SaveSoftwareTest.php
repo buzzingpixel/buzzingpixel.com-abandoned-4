@@ -774,7 +774,7 @@ class SaveSoftwareTest extends TestCase
                 self::equalTo($newDownloadFile),
                 self::equalTo('foo-slug')
             )
-            ->willreturn(new Payload(Payload::STATUS_SUCCESSFUL));
+            ->willReturn(new Payload(Payload::STATUS_SUCCESSFUL));
 
         $service = new SaveSoftware(
             $pdo,
