@@ -7,6 +7,7 @@ use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Admin\GetAdminAction;
 use App\Http\Admin\Software\GetAdminSoftwareAction;
 use App\Http\Admin\Software\GetAdminSoftwareCreateAction;
+use App\Http\Admin\Software\GetAdminSoftwareEditAction;
 use App\Http\Admin\Software\GetAdminSoftwareViewAction;
 use App\Http\Admin\Software\PostAdminSoftwareCreateAction;
 use App\Http\Admin\Software\PostDeleteSoftwareVersionAction;
@@ -40,7 +41,10 @@ return static function (App $app) : void {
     $app->group('/admin', function () use ($app) : void {
     // phpcs:enable
         $app->get('/admin', GetAdminAction::class);
-        $app->get('/admin/software', GetAdminSoftwareAction::class);
+        $app->get(
+            '/admin/software',
+            GetAdminSoftwareAction::class
+        );
         $app->get(
             '/admin/software/create',
             GetAdminSoftwareCreateAction::class
@@ -52,6 +56,10 @@ return static function (App $app) : void {
         $app->get(
             '/admin/software/view/{slug}',
             GetAdminSoftwareViewAction::class
+        );
+        $app->get(
+            '/admin/software/edit/{slug}',
+            GetAdminSoftwareEditAction::class
         );
         $app->post(
             '/admin/software/delete',

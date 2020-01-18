@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
 
-class GetAdminSoftwareViewAction
+class GetAdminSoftwareEditAction
 {
     /** @var GetAdminResponder */
     private $responder;
@@ -41,10 +41,10 @@ class GetAdminSoftwareViewAction
         }
 
         return ($this->responder)(
-            'Admin/SoftwareView.twig',
+            'Admin/SoftwareEdit.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => $softwareModel->getName() . ' | Admin']
+                    ['metaTitle' => 'Edit ' . $softwareModel->getName() . ' | Admin']
                 ),
                 'activeTab' => 'software',
                 'breadcrumbs' => [
@@ -52,7 +52,7 @@ class GetAdminSoftwareViewAction
                         'href' => '/admin/software',
                         'content' => 'Software Admin',
                     ],
-                    ['content' => 'View Software'],
+                    ['content' => 'Edit Software'],
                 ],
                 'softwareModel' => $softwareModel,
             ],
