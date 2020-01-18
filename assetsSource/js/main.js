@@ -35,7 +35,10 @@ if (document.querySelector('[ref="LogInForm"]')) {
 }
 
 // Run form submit config
-if (document.querySelector('[ref="FormSubmitConfirm"]')) {
+document.querySelectorAll('[ref="FormSubmitConfirm"]').forEach((el) => {
+    const obj = Object.assign({}, FormSubmitConfirm);
+    obj.el = el;
+
     // noinspection TypeScriptUMDGlobal,JSValidateTypes
-    new Vue(FormSubmitConfirm);
-}
+    new Vue(obj);
+});

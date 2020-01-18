@@ -120,7 +120,13 @@
                             {{ version.getReleasedOn().format('Y-m-d h:i a') }}
                         </td>
                         <td class="Table__Col">
-                            <form action="/admin/software/version/delete/{{ version.getId() }}" method="post" style="display: inline-block">
+                            <form
+                                action="/admin/software/version/delete/{{ version.getId() }}"
+                                method="post"
+                                style="display: inline-block"
+                                ref="FormSubmitConfirm"
+                                @submit="confirmSubmit"
+                            >
                                 <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
                                 <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
                                 <input class="button" type="submit" value="Delete">
