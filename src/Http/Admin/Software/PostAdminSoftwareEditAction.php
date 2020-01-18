@@ -34,7 +34,6 @@ class PostAdminSoftwareEditAction
         $postData = $request->getParsedBody();
 
         $inputValues = [
-            'id' => $postData['id'] ?? '',
             'name' => $postData['name'] ?? '',
             'slug' => $postData['slug'] ?? '',
             'for_sale' => ($postData['for_sale'] ?? '') === 'true',
@@ -47,7 +46,8 @@ class PostAdminSoftwareEditAction
         if ($softwareModel === null) {
             throw new HttpBadRequestException(
                 $request,
-                'Software for specified ID ' . $inputValues['id'] .
+                'Software for specified Slug ' .
+                    (string) $request->getAttribute('slug') .
                     ' could not be found',
             );
         }
