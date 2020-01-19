@@ -63,6 +63,8 @@ if [[ -z "${cmd}" ]]; then
 fi
 
 if [[ "${cmd}" = "up" ]]; then
+    chmod -R 0777 storage;
+    chmod -R 0777 secure-storage;
     docker-compose ${composeFiles} -p buzzingpixel build;
     docker-compose ${composeFiles} -p buzzingpixel up -d;
     exit 0;

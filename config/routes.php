@@ -14,6 +14,7 @@ use App\Http\Admin\Software\PostAdminSoftwareCreateAction;
 use App\Http\Admin\Software\PostAdminSoftwareDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareEditAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionDeleteAction;
+use App\Http\Admin\Software\PostAdminSoftwareVersionEditAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -70,6 +71,10 @@ return static function (App $app) : void {
         $app->get(
             '/admin/software/version/edit/{id}',
             GetAdminSoftwareVersionEditAction::class
+        );
+        $app->post(
+            '/admin/software/version/edit/{id}',
+            PostAdminSoftwareVersionEditAction::class
         );
         $app->post(
             '/admin/software/delete/{id}',
