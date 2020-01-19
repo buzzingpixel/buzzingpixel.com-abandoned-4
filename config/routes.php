@@ -6,6 +6,7 @@ use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Admin\GetAdminAction;
 use App\Http\Admin\Software\GetAdminSoftwareAction;
+use App\Http\Admin\Software\GetAdminSoftwareAddVersion;
 use App\Http\Admin\Software\GetAdminSoftwareCreateAction;
 use App\Http\Admin\Software\GetAdminSoftwareEditAction;
 use App\Http\Admin\Software\GetAdminSoftwareVersionEditAction;
@@ -46,43 +47,47 @@ return static function (App $app) : void {
         $app->get('/admin', GetAdminAction::class);
         $app->get(
             '/admin/software',
-            GetAdminSoftwareAction::class
+            GetAdminSoftwareAction::class,
         );
         $app->get(
             '/admin/software/create',
-            GetAdminSoftwareCreateAction::class
+            GetAdminSoftwareCreateAction::class,
         );
         $app->post(
             '/admin/software/create',
-            PostAdminSoftwareCreateAction::class
+            PostAdminSoftwareCreateAction::class,
         );
         $app->get(
             '/admin/software/view/{slug}',
-            GetAdminSoftwareViewAction::class
+            GetAdminSoftwareViewAction::class,
         );
         $app->get(
             '/admin/software/edit/{slug}',
-            GetAdminSoftwareEditAction::class
+            GetAdminSoftwareEditAction::class,
         );
         $app->post(
             '/admin/software/edit/{slug}',
-            PostAdminSoftwareEditAction::class
+            PostAdminSoftwareEditAction::class,
         );
         $app->get(
             '/admin/software/version/edit/{id}',
-            GetAdminSoftwareVersionEditAction::class
+            GetAdminSoftwareVersionEditAction::class,
         );
         $app->post(
             '/admin/software/version/edit/{id}',
-            PostAdminSoftwareVersionEditAction::class
+            PostAdminSoftwareVersionEditAction::class,
         );
         $app->post(
             '/admin/software/delete/{id}',
-            PostAdminSoftwareDeleteAction::class
+            PostAdminSoftwareDeleteAction::class,
         );
         $app->post(
             '/admin/software/version/delete/{id}',
-            PostAdminSoftwareVersionDeleteAction::class
+            PostAdminSoftwareVersionDeleteAction::class,
+        );
+        $app->get(
+            '/admin/software/{slug}/add-version',
+            GetAdminSoftwareAddVersion::class,
         );
     })->add(RequireAdminAction::class)
     ->add(RequireLogInAction::class);
