@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Admin\Software;
 
 use App\Payload\Payload;
+use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -41,6 +42,9 @@ class PostAdminSoftwareVersionEditAction
             throw new HttpNotFoundException($request);
         }
 
+        /** @var SoftwareModel $software */
+        $software = $softwareVersion->getSoftware();
+
         $postData = $request->getParsedBody();
 
         $inputValues = [
@@ -72,19 +76,17 @@ class PostAdminSoftwareVersionEditAction
                     ],
                 ),
                 $softwareVersion->getId(),
-                $softwareVersion->getSoftware()->getSlug(),
+                $software->getSlug(),
             );
         }
 
         $softwareVersion->setMajorVersion(
-            $inputValues['major_version']
+            (string) $inputValues['major_version']
         );
-        $softwareVersion->setVersion($inputValues['version']);
+        $softwareVersion->setVersion((string) $inputValues['version']);
         $softwareVersion->setNewDownloadFile($downloadFile);
 
-        $payload = $this->softwareApi->saveSoftware(
-            $softwareVersion->getSoftware()
-        );
+        $payload = $this->softwareApi->saveSoftware($software);
 
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             return ($this->responder)(
@@ -93,14 +95,14 @@ class PostAdminSoftwareVersionEditAction
                     ['message' => 'An unknown error occurred'],
                 ),
                 $softwareVersion->getId(),
-                $softwareVersion->getSoftware()->getSlug(),
+                $software->getSlug(),
             );
         }
 
         return ($this->responder)(
             $payload,
             $softwareVersion->getId(),
-            $softwareVersion->getSoftware()->getSlug(),
+            $software->getSlug(),
         );
     }
 }

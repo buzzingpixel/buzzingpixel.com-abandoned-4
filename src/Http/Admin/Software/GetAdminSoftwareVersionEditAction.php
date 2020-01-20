@@ -6,6 +6,7 @@ namespace App\Http\Admin\Software;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
+use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -40,6 +41,9 @@ class GetAdminSoftwareVersionEditAction
             throw new HttpNotFoundException($request);
         }
 
+        /** @var SoftwareModel $software */
+        $software = $softwareVersion->getSoftware();
+
         return ($this->responder)(
             'Admin/SoftwareVersionEdit.twig',
             [
@@ -47,7 +51,7 @@ class GetAdminSoftwareVersionEditAction
                     [
                         'metaTitle' => 'Edit Version ' .
                         $softwareVersion->getVersion() . ' of ' .
-                        $softwareVersion->getSoftware()->getName() . ' | Admin',
+                            $software->getName() . ' | Admin',
                     ]
                 ),
                 'activeTab' => 'software',
@@ -58,8 +62,8 @@ class GetAdminSoftwareVersionEditAction
                     ],
                     [
                         'href' => '/admin/software/view/' .
-                            $softwareVersion->getSoftware()->getSlug(),
-                        'content' => $softwareVersion->getSoftware()->getName(),
+                            $software->getSlug(),
+                        'content' => $software->getName(),
                     ],
                     ['content' => 'Edit Version'],
                 ],

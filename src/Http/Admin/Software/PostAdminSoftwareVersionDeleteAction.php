@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Admin\Software;
 
 use App\Payload\Payload;
+use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -59,11 +60,14 @@ class PostAdminSoftwareVersionDeleteAction
             ]
         );
 
+        /** @var SoftwareModel $software */
+        $software = $softwareVersion->getSoftware();
+
         return $this->responseFactory->createResponse(303)
             ->withHeader(
                 'Location',
                 '/admin/software/view/' .
-                    $softwareVersion->getSoftware()->getSlug()
+                    $software->getSlug()
             );
     }
 }

@@ -78,8 +78,8 @@ class PostAdminSoftwareEditAction
             );
         }
 
-        $softwareModel->setName($inputValues['name']);
-        $softwareModel->setSlug($inputValues['slug']);
+        $softwareModel->setName((string) $inputValues['name']);
+        $softwareModel->setSlug((string) $inputValues['slug']);
         $softwareModel->setIsForSale($inputValues['for_sale']);
 
         $payload = $this->softwareApi->saveSoftware($softwareModel);
