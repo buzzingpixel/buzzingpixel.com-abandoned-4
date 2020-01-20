@@ -11,6 +11,19 @@ use function array_walk;
 class SoftwareInfoPayload extends SpecificPayload
 {
     /** @var string */
+    private $slug = '';
+
+    protected function setSlug(string $slug) : void
+    {
+        $this->slug = $slug;
+    }
+
+    public function getSlug() : string
+    {
+        return $this->slug;
+    }
+
+    /** @var string */
     private $title = '';
 
     protected function setTitle(string $title) : void
