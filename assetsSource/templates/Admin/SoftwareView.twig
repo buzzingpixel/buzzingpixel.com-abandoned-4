@@ -6,6 +6,9 @@
 
 {% extends 'Admin/_AdminLayout.twig' %}
 
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
 {% set message = flash('PostMessage') %}
 {% if message[0] is defined %}
     {% set message = message[0] %}
@@ -117,7 +120,7 @@
                             {{ version.getDownloadFile() }}
                         </td>
                         <td class="Table__Col">
-                            {{ version.getReleasedOn().format('Y-m-d h:i a') }}
+                            {{ version.getReleasedOn().setTimezone(user.getTimezone()).format('Y-m-d h:i a') }}
                         </td>
                         <td class="Table__Col">
                             <form

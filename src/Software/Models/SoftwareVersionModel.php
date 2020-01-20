@@ -121,7 +121,7 @@ class SoftwareVersionModel extends Model
     /** @var DateTimeImmutable */
     private $releasedOn;
 
-    protected function setReleasedOn(DateTimeImmutable $releasedOn) : void
+    public function setReleasedOn(DateTimeImmutable $releasedOn) : void
     {
         $this->releasedOn = $releasedOn;
     }

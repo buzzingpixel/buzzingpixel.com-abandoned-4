@@ -7,6 +7,10 @@ namespace App\Http\Admin\Software;
 use App\Payload\Payload;
 use App\Software\Models\SoftwareVersionModel;
 use App\Software\SoftwareApi;
+use App\Users\Models\UserModel;
+use App\Users\UserApi;
+use DateTimeImmutable;
+use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -20,13 +24,17 @@ class PostAdminSoftwareAddVersionAction
     private $softwareApi;
     /** @var PostAdminSoftwareAddVersionResponder */
     private $responder;
+    /** @var UserApi */
+    private $userApi;
 
     public function __construct(
         SoftwareApi $softwareApi,
-        PostAdminSoftwareAddVersionResponder $responder
+        PostAdminSoftwareAddVersionResponder $responder,
+        UserApi $userApi
     ) {
         $this->softwareApi = $softwareApi;
         $this->responder   = $responder;
+        $this->userApi     = $userApi;
     }
 
     /**
@@ -42,12 +50,25 @@ class PostAdminSoftwareAddVersionAction
             throw new HttpNotFoundException($request);
         }
 
+        /** @var UserModel $user */
+        $user = $this->userApi->fetchLoggedInUser();
+
+        $now = new DateTimeImmutable(
+            'now',
+            $user->getTimezone()
+        );
+
         $postData = $request->getParsedBody();
 
         $inputValues = [
             'major_version' => $postData['major_version'] ?? '',
             'version' => $postData['version'] ?? '',
+            'released_on' => $postData['released_on'] ?? '',
         ];
+
+        if ($inputValues['released_on'] === '') {
+            $inputValues['released_on'] = $now->format('Y-m-d h:i A');
+        }
 
         $inputMessages = [];
 
@@ -76,11 +97,23 @@ class PostAdminSoftwareAddVersionAction
         /** @var UploadedFileInterface|null $downloadFile */
         $downloadFile = $request->getUploadedFiles()['download_file'] ?? null;
 
+        /** @var DateTimeImmutable $releasedOn */
+        $releasedOn = DateTimeImmutable::createFromFormat(
+            'Y-m-d h:i A',
+            (string) $inputValues['released_on'],
+            $user->getTimezone()
+        );
+
+        $releasedOn = $releasedOn->setTimezone(
+            new DateTimeZone('UTC')
+        );
+
         $software->addVersion(
             new SoftwareVersionModel([
                 'majorVersion' => $inputValues['major_version'],
                 'version' => $inputValues['version'],
                 'newDownloadFile' => $downloadFile,
+                'releasedOn' => $releasedOn,
             ]),
         );
 

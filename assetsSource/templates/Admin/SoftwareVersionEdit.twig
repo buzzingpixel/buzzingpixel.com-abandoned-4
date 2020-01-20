@@ -6,6 +6,9 @@
 
 {% extends 'Admin/_AdminLayout.twig' %}
 
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
 {% set message = flash('PostMessage') %}
 {% if message[0] is defined %}
     {% set message = message[0] %}
@@ -85,6 +88,25 @@
             {% if message['result']['inputMessages']['new_download_file'] is defined %}
                 <div class="StandardForm__InputErrorMessage">
                     {{ message['result']['inputMessages']['new_download_file']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="StandardForm__FieldSet">
+            <label for="released_on" class="label StandardForm__Label">
+                Released On
+            </label>
+            <input
+                type="text"
+                id="released_on"
+                name="released_on"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['released_on'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['released_on'] ?? softwareVersion.releasedOn.setTimezone(user.getTimezone()).format('Y-m-d h:i A') }}"
+                ref="flatpickr"
+            >
+            {% if message['result']['inputMessages']['released_on'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['released_on']|smartypants }}
                 </div>
             {% endif %}
         </div>

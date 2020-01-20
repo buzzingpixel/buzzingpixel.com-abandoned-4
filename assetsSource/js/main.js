@@ -7,6 +7,7 @@ import LogInForm from './Components/LogInForm.js';
 import Menu from './Components/Menu.js';
 import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
 import WindowResizeWatcher from './WindowResizeWatcher.js';
+import Flatpickr from './Components/Flatpickr.js';
 
 // Set up window resize watching
 new WindowResizeWatcher();
@@ -42,3 +43,9 @@ document.querySelectorAll('[ref="FormSubmitConfirm"]').forEach((el) => {
     // noinspection TypeScriptUMDGlobal,JSValidateTypes
     new Vue(obj);
 });
+
+// Flatpickr
+const flatpickrEls = document.querySelectorAll('[ref="flatpickr"]');
+if (flatpickrEls.length > 0) {
+    new Flatpickr(flatpickrEls);
+}
