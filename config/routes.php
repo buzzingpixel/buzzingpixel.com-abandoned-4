@@ -11,6 +11,7 @@ use App\Http\Admin\Software\GetAdminSoftwareCreateAction;
 use App\Http\Admin\Software\GetAdminSoftwareEditAction;
 use App\Http\Admin\Software\GetAdminSoftwareVersionEditAction;
 use App\Http\Admin\Software\GetAdminSoftwareViewAction;
+use App\Http\Admin\Software\PostAdminSoftwareAddVersionAction;
 use App\Http\Admin\Software\PostAdminSoftwareCreateAction;
 use App\Http\Admin\Software\PostAdminSoftwareDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareEditAction;
@@ -88,6 +89,10 @@ return static function (App $app) : void {
         $app->get(
             '/admin/software/{slug}/add-version',
             GetAdminSoftwareAddVersion::class,
+        );
+        $app->post(
+            '/admin/software/{slug}/add-version',
+            PostAdminSoftwareAddVersionAction::class
         );
     })->add(RequireAdminAction::class)
     ->add(RequireLogInAction::class);
