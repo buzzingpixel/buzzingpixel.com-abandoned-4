@@ -18,7 +18,16 @@ class UserModel extends Model
         parent::__construct($vars);
 
         /** @psalm-suppress UninitializedProperty */
-        if ($this->createdAt instanceof DateTimeImmutable) {
+        $timeZoneInstance = $this->timezone instanceof DateTimeZone;
+
+        if (! $timeZoneInstance) {
+            $this->timezone = new DateTimeZone('America/Chicago');
+        }
+
+        /** @psalm-suppress UninitializedProperty */
+        $createdAtInstance = $this->createdAt instanceof DateTimeImmutable;
+
+        if ($createdAtInstance) {
             return;
         }
 
@@ -117,6 +126,24 @@ class UserModel extends Model
     public function isActive() : bool
     {
         return $this->isActive;
+    }
+
+    /**
+     * @var DateTimeZone
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    private $timezone;
+
+    public function setTimezone(DateTimeZone $timezone) : UserModel
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    public function getTimezone() : DateTimeZone
+    {
+        return $this->timezone;
     }
 
     /** @var string */
@@ -269,7 +296,10 @@ class UserModel extends Model
         return $this->billingPostalCode;
     }
 
-    /** @var DateTimeImmutable */
+    /**
+     * @var DateTimeImmutable
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private $createdAt;
 
     protected function setCreatedAt(DateTimeImmutable $createdAt) : void

@@ -21,6 +21,9 @@ class UserRecord extends Record
     public $is_active = '1';
 
     /** @var string */
+    public $timezone = '';
+
+    /** @var string */
     public $first_name = '';
 
     /** @var string */

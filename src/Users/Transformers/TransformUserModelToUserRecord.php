@@ -24,6 +24,8 @@ class TransformUserModelToUserRecord
 
         $userRecord->is_active = $userModel->isActive() ? '1' : '0';
 
+        $userRecord->timezone = $userModel->getTimezone()->getName();
+
         $userRecord->first_name = $userModel->getFirstName();
 
         $userRecord->last_name = $userModel->getLastName();

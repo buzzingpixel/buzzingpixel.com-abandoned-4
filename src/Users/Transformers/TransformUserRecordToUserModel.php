@@ -8,6 +8,7 @@ use App\Persistence\Constants;
 use App\Persistence\Users\UserRecord;
 use App\Users\Models\UserModel;
 use DateTimeImmutable;
+use DateTimeZone;
 use function in_array;
 
 class TransformUserRecordToUserModel
@@ -28,6 +29,7 @@ class TransformUserRecordToUserModel
                 ['1', 1, true],
                 true,
             ),
+            'timezone' => new DateTimeZone($userRecord->timezone),
             'firstName' => $userRecord->first_name,
             'lastName' => $userRecord->last_name,
             'displayName' => $userRecord->display_name,
