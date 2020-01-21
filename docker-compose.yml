@@ -39,6 +39,7 @@ services:
       HOSTNAME: buzzingpixel-db
     volumes:
       - db-volume:/var/lib/postgresql/data
+      - .:/opt/project:delegated
     networks:
       common-buzzingpixel-network:
 
