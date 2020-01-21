@@ -16,7 +16,10 @@ class CreateCartTable extends AbstractMigration
             'primary_key' => ['id'],
         ])
             ->addColumn('id', 'uuid', ['comment' => 'UUID is generated in code'])
-            ->addColumn('user_id', 'uuid', ['comment' => "User's id"])
+            ->addColumn('user_id', 'uuid', [
+                'comment' => "User's id",
+                'null' => true,
+            ])
             ->addColumn('total_items', 'smallinteger', ['signed' => false])
             ->addColumn('total_quantity', 'smallinteger', ['signed' => false])
             ->addColumn('last_touched_at', 'datetime', ['timezone' => true])

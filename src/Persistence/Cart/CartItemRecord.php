@@ -9,6 +9,9 @@ use App\Persistence\Record;
 class CartItemRecord extends Record
 {
     /** @var string */
+    protected static $tableName = 'cart_items';
+
+    /** @var string */
     public $cart_id = '';
 
     /** @var string */

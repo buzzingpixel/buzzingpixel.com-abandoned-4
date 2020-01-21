@@ -9,7 +9,10 @@ use App\Persistence\Record;
 class CartRecord extends Record
 {
     /** @var string */
-    public $user_id = '';
+    protected static $tableName = 'cart';
+
+    /** @var string|null */
+    public $user_id;
 
     /** @var string */
     public $total_items = '';
