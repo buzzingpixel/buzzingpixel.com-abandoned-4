@@ -155,7 +155,7 @@ class RecordQuery
 
         /**
          * @var int $key
-         * @var array<int, array<string, string>> $whereGroup
+         * @var array<int, array<string, string|null>> $whereGroup
          */
         foreach ($this->where as $key => $whereGroup) {
             if ($key === 0) {
@@ -176,7 +176,7 @@ class RecordQuery
 
                         $id = $idIncrement;
 
-                        $bindKey = ':' . $groupVal['col'] . '_' . $id;
+                        $bindKey = ':' . ((string) $groupVal['col']) . '_' . $id;
 
                         $in[] = $bindKey;
 
@@ -187,7 +187,7 @@ class RecordQuery
                         $sql .= ' AND ';
                     }
 
-                    $sql .= $groupVal['col'] . ' IN (';
+                    $sql .= ((string) $groupVal['col']) . ' IN (';
 
                     $sql .= implode(',', $in);
 
@@ -196,23 +196,34 @@ class RecordQuery
                     continue;
                 }
 
-                $idIncrement++;
-
-                $id = $idIncrement;
-
-                $bindKey = ':' . $groupVal['col'] . '_' . $id;
-
-                $bind[$bindKey] = $groupVal['val'];
-
                 if ($groupKey !== 0) {
                     $sql .= ' AND ';
                 }
 
-                $sql .= $groupVal['col'] .
-                    ' ' .
-                    $groupVal['operator'] .
-                    ' '
-                    . $bindKey;
+                if ($groupVal['val'] === null ||
+                    $groupVal['val'] === 'null' ||
+                    $groupVal['val'] === 'NULL'
+                ) {
+                    if ($groupVal['operator'] === '!=') {
+                        $sql .= ((string) $groupVal['col']) . ' IS NOT NULL';
+                    } else {
+                        $sql .= ((string) $groupVal['col']) . ' IS NULL';
+                    }
+                } else {
+                    $idIncrement++;
+
+                    $id = $idIncrement;
+
+                    $bindKey = ':' . ((string) $groupVal['col']) . '_' . $id;
+
+                    $bind[$bindKey] = $groupVal['val'];
+
+                    $sql .= ((string) $groupVal['col']) .
+                        ' ' .
+                        ((string) $groupVal['operator']) .
+                        ' '
+                        . $bindKey;
+                }
             }
 
             $sql .= ')';

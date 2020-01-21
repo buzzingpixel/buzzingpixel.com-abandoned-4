@@ -11,7 +11,7 @@ use Throwable;
 class GetAdminResponder extends StandardResponderConstructor
 {
     /**
-     * @param array $context
+     * @param mixed[] $context
      *
      * @throws Throwable
      */
