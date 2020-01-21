@@ -6,10 +6,33 @@ namespace App\Cart\Models;
 
 use App\Payload\Model;
 use App\Users\Models\UserModel;
+use DateTimeImmutable;
+use DateTimeZone;
 use function array_walk;
 
 class CartModel extends Model
 {
+    /**
+     * @inheritDoc
+     */
+    public function __construct(array $vars = [])
+    {
+        parent::__construct($vars);
+
+        /** @psalm-suppress UninitializedProperty */
+        $createdAtInstance = $this->createdAt instanceof DateTimeImmutable;
+
+        if ($createdAtInstance) {
+            return;
+        }
+
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->createdAt = new DateTimeImmutable(
+            'now',
+            new DateTimeZone('UTC')
+        );
+    }
+
     /** @var string */
     private $id = '';
 
@@ -70,7 +93,7 @@ class CartModel extends Model
         return $this->totalQuantity;
     }
 
-    /** @var CartItemModel */
+    /** @var CartItemModel[] */
     private $items = [];
 
     /**
@@ -78,6 +101,8 @@ class CartModel extends Model
      */
     public function setItems(array $items) : CartModel
     {
+        $this->items = [];
+
         array_walk($items, [$this, 'addItem']);
 
         return $this;
@@ -92,8 +117,29 @@ class CartModel extends Model
         return $this;
     }
 
-    public function getItems() : CartItemModel
+    /**
+     * @return CartItemModel[]
+     */
+    public function getItems() : array
     {
         return $this->items;
+    }
+
+    /**
+     * @var DateTimeImmutable
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    private $createdAt;
+
+    protected function setCreatedAt(DateTimeImmutable $createdAt) : CartModel
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt() : DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Cart\Models;
 
+use App\Payload\Model;
 use App\Software\Models\SoftwareModel;
 
-class CartItemModel
+class CartItemModel extends Model
 {
     /** @var string */
     private $id = '';
