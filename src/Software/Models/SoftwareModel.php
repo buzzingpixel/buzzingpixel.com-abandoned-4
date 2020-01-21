@@ -85,11 +85,13 @@ class SoftwareModel extends Model
         return $this;
     }
 
-    public function addVersion(SoftwareVersionModel $softwareVersionModel) : void
+    public function addVersion(SoftwareVersionModel $softwareVersionModel) : SoftwareModel
     {
         $softwareVersionModel->setSoftware($this);
 
         $this->versions[] = $softwareVersionModel;
+
+        return $this;
     }
 
     /**
