@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Admin\GetAdminAction;
@@ -100,6 +101,8 @@ return static function (App $app) : void {
     // Account
     $app->post('/account/register', PostRegisterAction::class);
     $app->post('/account/log-in', PostLogInAction::class);
+    $app->get('/account/log-out', GetLogOutAction::class);
+    $app->post('/account/log-out', GetLogOutAction::class);
 
     // Ansel Craft
     $app->get(
