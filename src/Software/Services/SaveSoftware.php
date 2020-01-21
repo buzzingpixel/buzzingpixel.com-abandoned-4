@@ -70,9 +70,9 @@ class SaveSoftware
 
             array_walk($versions, [$this, 'saveVersion']);
 
-            if ($isNew) {
-                $record = ($this->transformSoftwareModelToRecord)($model);
+            $record = ($this->transformSoftwareModelToRecord)($model);
 
+            if ($isNew) {
                 $payload = ($this->saveNewRecord)($record);
 
                 if ($payload->getStatus() === Payload::STATUS_CREATED) {
@@ -83,8 +83,6 @@ class SaveSoftware
 
                 throw new Exception('Unknown error saving version');
             }
-
-            $record = ($this->transformSoftwareModelToRecord)($model);
 
             $payload = ($this->saveExistingRecord)($record);
 
