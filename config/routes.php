@@ -18,6 +18,7 @@ use App\Http\Admin\Software\PostAdminSoftwareDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareEditAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionEditAction;
+use App\Http\Cart\GetAddToCart;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -154,5 +155,11 @@ return static function (App $app) : void {
     $app->get(
         '/software/ansel-ee/{versionString:documentation-[^\/]+}[/{pageSlug:[^\/]+}]',
         GetDocumentationPageAction::class
+    );
+
+    // Cart
+    $app->get(
+        '/cart/add/{slug}',
+        GetAddToCart::class
     );
 };
