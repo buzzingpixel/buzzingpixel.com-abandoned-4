@@ -18,7 +18,8 @@ use App\Http\Admin\Software\PostAdminSoftwareDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareEditAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionEditAction;
-use App\Http\Cart\GetAddToCart;
+use App\Http\Cart\GetAddToCartAction;
+use App\Http\Cart\GetCartAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -158,8 +159,6 @@ return static function (App $app) : void {
     );
 
     // Cart
-    $app->get(
-        '/cart/add/{slug}',
-        GetAddToCart::class
-    );
+    $app->get('/cart', GetCartAction::class);
+    $app->get('/cart/add/{slug}', GetAddToCartAction::class);
 };

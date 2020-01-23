@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Cart;
 
 use App\Cart\Models\CartModel;
+use App\Cart\Services\AddItemToCurrentUsersCart;
 use App\Cart\Services\FetchCurrentUserCart;
 use App\Cart\Services\SaveCart;
 use App\Payload\Payload;
+use App\Software\Models\SoftwareModel;
 use Psr\Container\ContainerInterface;
 
 class CartApi
@@ -34,5 +36,12 @@ class CartApi
         $service = $this->di->get(SaveCart::class);
 
         return $service($cart);
+    }
+
+    public function addItemToCurrentUsersCart(SoftwareModel $software) : void
+    {
+        $service = $this->di->get(AddItemToCurrentUsersCart::class);
+
+        $service($software);
     }
 }
