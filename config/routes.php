@@ -20,6 +20,8 @@ use App\Http\Admin\Software\PostAdminSoftwareVersionDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionEditAction;
 use App\Http\Cart\GetAddToCartAction;
 use App\Http\Cart\GetCartAction;
+use App\Http\Cart\GetCartUpdateQuantityAction;
+use App\Http\Cart\GetClearCartAction;
 use App\Http\Home\GetHomeAction;
 use App\Http\Software\GetChangelogAction;
 use App\Http\Software\GetChangelogItemAction;
@@ -161,4 +163,9 @@ return static function (App $app) : void {
     // Cart
     $app->get('/cart', GetCartAction::class);
     $app->get('/cart/add/{slug}', GetAddToCartAction::class);
+    $app->get(
+        '/cart/update-quantity/{slug}/{quantity:\d+}',
+        GetCartUpdateQuantityAction::class
+    );
+    $app->get('/cart/clear', GetClearCartAction::class);
 };

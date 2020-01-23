@@ -6,8 +6,10 @@ namespace App\Cart;
 
 use App\Cart\Models\CartModel;
 use App\Cart\Services\AddItemToCurrentUsersCart;
+use App\Cart\Services\ClearCart;
 use App\Cart\Services\FetchCurrentUserCart;
 use App\Cart\Services\SaveCart;
+use App\Cart\Services\UpdateCartItemQuantity;
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
 use Psr\Container\ContainerInterface;
@@ -40,8 +42,27 @@ class CartApi
 
     public function addItemToCurrentUsersCart(SoftwareModel $software) : void
     {
+        /** @var AddItemToCurrentUsersCart $service */
         $service = $this->di->get(AddItemToCurrentUsersCart::class);
 
         $service($software);
+    }
+
+    public function updateCartItemQuantity(
+        int $quantity,
+        SoftwareModel $software
+    ) : void {
+        /** @var UpdateCartItemQuantity $service */
+        $service = $this->di->get(UpdateCartItemQuantity::class);
+
+        $service($quantity, $software);
+    }
+
+    public function clearCart() : void
+    {
+        /** @var ClearCart $service */
+        $service = $this->di->get(ClearCart::class);
+
+        $service();
     }
 }
