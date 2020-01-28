@@ -1,0 +1,45 @@
+{% do requireVariables({
+    cart: 'App\\Cart\\Models\\CartModel',
+}) %}
+
+{# @var \App\Cart\Models\CartModel cart #}
+
+{% extends '_Layout.twig' %}
+
+{% block content %}
+    <div class="Cart">
+        <div class="Cart__Info">
+            <div class="CartInfo__Item">
+                <div class="CartInfo__ItemKey">Items</div>
+                <div class="CartInfo__ItemValue">
+                    {{ cart.getTotalItems() }}
+                </div>
+            </div>
+            <div class="CartInfo__Item">
+                <div class="CartInfo__ItemKey">Quantity</div>
+                <div class="CartInfo__ItemValue">{{ cart.getTotalQuantity() }}</div>
+            </div>
+            <div class="CartInfo__Item">
+                <div class="CartInfo__ItemKey">Subtotal</div>
+                <div class="CartInfo__ItemValue">$0.00</div>
+            </div>
+            <div class="CartInfo__Item">
+                <div class="CartInfo__ItemKey">Tax</div>
+                <div class="CartInfo__ItemValue">$0.00</div>
+            </div>
+            <div class="CartInfo__Item">
+                <div class="CartInfo__ItemKey">Total</div>
+                <div class="CartInfo__ItemValue">$0.00</div>
+            </div>
+            <div class="CartInfo__Item">
+                <a
+                    href="#0"
+                    class="button CartInfo__Button"
+                >
+                    Pay Now
+                </a>
+            </div>
+        </div>
+        <div class="Cart__Items"></div>
+    </div>
+{% endblock %}

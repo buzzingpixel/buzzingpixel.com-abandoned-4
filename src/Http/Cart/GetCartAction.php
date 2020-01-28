@@ -5,22 +5,27 @@ declare(strict_types=1);
 namespace App\Http\Cart;
 
 use App\Cart\CartApi;
-use function dd;
+use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 class GetCartAction
 {
     /** @var CartApi */
     private $cartApi;
+    /** @var GetCartResponder */
+    private $responder;
 
-    public function __construct(CartApi $cartApi)
+    public function __construct(CartApi $cartApi, GetCartResponder $responder)
     {
-        $this->cartApi = $cartApi;
+        $this->cartApi   = $cartApi;
+        $this->responder = $responder;
     }
 
-    public function __invoke() : void
+    /**
+     * @throws Throwable
+     */
+    public function __invoke() : ResponseInterface
     {
-        $cart = $this->cartApi->fetchCurrentUserCart();
-
-        dd($cart);
+        return ($this->responder)($this->cartApi->fetchCurrentUserCart());
     }
 }
