@@ -12,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use function count;
+use function is_numeric;
 
 class PostAdminSoftwareCreateAction
 {
@@ -36,6 +37,9 @@ class PostAdminSoftwareCreateAction
             'name' => $postData['name'] ?? '',
             'slug' => $postData['slug'] ?? '',
             'for_sale' => ($postData['for_sale'] ?? '') === 'true',
+            'price' => $postData['price'] ?? '',
+            'renewal_price' => $postData['renewal_price'] ?? '',
+            'subscription' => ($postData['subscription'] ?? '') === 'true',
             'major_version' => $postData['major_version'] ?? '',
             'version' => $postData['version'] ?? '',
         ];
@@ -51,6 +55,14 @@ class PostAdminSoftwareCreateAction
 
         if ($inputValues['slug'] === '') {
             $inputMessages['slug'] = 'Slug is required';
+        }
+
+        if (! is_numeric($inputValues['price'])) {
+            $inputMessages['price'] = 'Price must be specified as integer or float';
+        }
+
+        if (! is_numeric($inputValues['renewal_price'])) {
+            $inputMessages['renewal_price'] = 'Renewal Price must be specified as integer or float';
         }
 
         if ($inputValues['major_version'] === '') {
@@ -78,6 +90,9 @@ class PostAdminSoftwareCreateAction
             'name' => $inputValues['name'],
             'slug' => $inputValues['slug'],
             'isForSale' => $inputValues['for_sale'],
+            'price' => (float) $inputValues['price'],
+            'renewalPrice' => (float) $inputValues['renewal_price'],
+            'isSubscription' => $inputValues['subscription'],
             'versions' => [
                 new SoftwareVersionModel([
                     'majorVersion' => $inputValues['major_version'],

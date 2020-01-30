@@ -84,6 +84,65 @@
             {% endif %}
         </div>
         <div class="StandardForm__FieldSet">
+            <label for="price" class="label StandardForm__Label">
+                Price
+            </label>
+            <input
+                type="text"
+                id="price"
+                name="price"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['price'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['price'] ?? '0' }}"
+            >
+            {% if message['result']['inputMessages']['price'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['price']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="StandardForm__FieldSet">
+            <label for="renewal_price" class="label StandardForm__Label">
+                Renewal Price
+            </label>
+            <input
+                type="text"
+                id="renewal_price"
+                name="renewal_price"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['renewal_price'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['renewal_price'] ?? '0' }}"
+            >
+            {% if message['result']['inputMessages']['renewal_price'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['renewal_price']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="StandardForm__FieldSet StandardForm__Fieldset--ForCheckbox">
+            <label
+                for="subscription"
+                class="label StandardForm__Label StandardForm__Label--ForCheckbox"
+            >
+                Subscription?
+                <input
+                    type="checkbox"
+                    name="subscription"
+                    value="true"
+                    id="subscription"
+                    class="checkbox StandardForm__Checkbox"
+                    {% if (message['result']['inputValues']['subscription'] ?? false) %}
+                    checked
+                    {% endif %}
+                >
+                <span class="StandardForm__CheckMark"></span>
+            </label>
+            {% if message['result']['inputMessages']['subscription'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['subscription']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="StandardForm__FieldSet">
             <label for="major_version" class="label StandardForm__Label">
                 Initial Major Version
             </label>
