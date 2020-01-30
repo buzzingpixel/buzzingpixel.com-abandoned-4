@@ -32,7 +32,7 @@
             <table class="Table">
                 <thead class="Table__Head">
                     <tr class="Table__HeadControlRow">
-                        <td class="Table__HeadControlCol" colspan="4">
+                        <td class="Table__HeadControlCol" colspan="7">
                             <a
                                 href="/admin/software/create"
                                 class="button"
@@ -45,6 +45,9 @@
                         <td class="Table__HeadCol">Name</td>
                         <td class="Table__HeadCol">Slug</td>
                         <td class="Table__HeadCol">For Sale?</td>
+                        <td class="Table__HeadCol">Price</td>
+                        <td class="Table__HeadCol">Renewal Price</td>
+                        <td class="Table__HeadCol">Subscription?</td>
                         <td class="Table__HeadCol"></td>
                     </tr>
                 </thead>
@@ -59,6 +62,15 @@
                             </td>
                             <td class="Table__Col">
                                 {{ model.isForSale() ? 'Yes' : 'No' }}
+                            </td>
+                            <td class="Table__Col">
+                                ${{ model.getPrice()|number_format(2) }}
+                            </td>
+                            <td class="Table__Col">
+                                ${{ model.getRenewalPrice()|number_format(2) }}
+                            </td>
+                            <td class="Table__Col">
+                                {{ model.isSubscription() ? 'Yes' : 'No' }}
                             </td>
                             <td class="Table__Col">
                                 <a href="/admin/software/view/{{ model.getSlug() }}">

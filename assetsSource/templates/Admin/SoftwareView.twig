@@ -84,13 +84,37 @@
                         {{ softwareModel.isForSale() ? 'Yes' : 'No' }}
                     </td>
                 </tr>
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        Price
+                    </td>
+                    <td class="Table__Col">
+                        ${{ softwareModel.getPrice()|number_format(2) }}
+                    </td>
+                </tr>
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        Renewal Price
+                    </td>
+                    <td class="Table__Col">
+                        ${{ softwareModel.getRenewalPrice()|number_format(2) }}
+                    </td>
+                </tr>
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        Subscription?
+                    </td>
+                    <td class="Table__Col">
+                        {{ softwareModel.isSubscription() ? 'Yes' : 'No' }}
+                    </td>
+                </tr>
             </tbody>
         </table>
         <h3 class="TableLayout__Heading">Versions</h3>
         <table class="Table">
             <thead class="Table__Head">
                 <tr class="Table__HeadControlRow">
-                    <td class="Table__HeadControlCol" colspan="5">
+                    <td class="Table__HeadControlCol" colspan="6">
                         <a
                             href="/admin/software/{{ softwareModel.getSlug() }}/add-version"
                             class="button"
@@ -103,6 +127,7 @@
                     <td class="Table__HeadCol">Major Version</td>
                     <td class="Table__HeadCol">Version</td>
                     <td class="Table__HeadCol">Download File</td>
+                    <td class="Table__HeadCol">Upgrade Price</td>
                     <td class="Table__HeadCol">Release Date</td>
                     <td class="Table__HeadCol"></td>
                 </tr>
@@ -118,6 +143,9 @@
                         </td>
                         <td class="Table__Col">
                             {{ version.getDownloadFile() }}
+                        </td>
+                        <td class="Table__Col">
+                            {{ version.getUpgradePrice()|number_format(2) }}
                         </td>
                         <td class="Table__Col">
                             {{ version.getReleasedOn().setTimezone(user.getTimezone()).format('Y-m-d h:i a') }}
