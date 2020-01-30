@@ -24,5 +24,8 @@ class SoftwareVersionRecord extends Record
     public $download_file = '';
 
     /** @var string */
+    public $upgrade_price = '0.0';
+
+    /** @var string */
     public $released_on = '';
 }

@@ -69,6 +69,51 @@ class SoftwareModel extends Model
         return $this->isForSale;
     }
 
+    /** @var float */
+    private $price = 0.0;
+
+    public function setPrice(float $price) : SoftwareModel
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPrice() : float
+    {
+        return $this->price;
+    }
+
+    /** @var float */
+    private $renewalPrice = 0.0;
+
+    public function setRenewalPrice(float $renewalPrice) : SoftwareModel
+    {
+        $this->renewalPrice = $renewalPrice;
+
+        return $this;
+    }
+
+    public function getRenewalPrice() : float
+    {
+        return $this->renewalPrice;
+    }
+
+    /** @var bool */
+    private $isSubscription = false;
+
+    public function setIsSubscription(bool $isSubscription) : SoftwareModel
+    {
+        $this->isSubscription = $isSubscription;
+
+        return $this;
+    }
+
+    public function isSubscription() : bool
+    {
+        return $this->isSubscription;
+    }
+
     /** @var SoftwareVersionModel[] */
     private $versions = [];
 

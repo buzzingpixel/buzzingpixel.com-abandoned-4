@@ -118,6 +118,21 @@ class SoftwareVersionModel extends Model
         return $this->newDownloadFile;
     }
 
+    /** @var float */
+    private $upgradePrice = 0.0;
+
+    public function setUpgradePrice(float $upgradePrice) : SoftwareVersionModel
+    {
+        $this->upgradePrice = $upgradePrice;
+
+        return $this;
+    }
+
+    public function getUpgradePrice() : float
+    {
+        return $this->upgradePrice;
+    }
+
     /** @var DateTimeImmutable */
     private $releasedOn;
 

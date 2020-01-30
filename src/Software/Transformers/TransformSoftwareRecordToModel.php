@@ -27,6 +27,13 @@ class TransformSoftwareRecordToModel
                 ['1', 1, true],
                 true
             ),
+            'price' => (float) $record->price,
+            'renewalPrice' => (float) $record->renewal_price,
+            'isSubscription' => in_array(
+                $record->is_subscription,
+                ['1', 1, true],
+                true
+            ),
             'versions' => $versions,
         ]);
     }

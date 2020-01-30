@@ -28,6 +28,8 @@ class TransformSoftwareVersionModelToRecord
 
         $record->download_file = $model->getDownloadFile();
 
+        $record->upgrade_price = (string) $model->getUpgradePrice();
+
         $record->released_on = $model->getReleasedOn()->format(
             DateTimeInterface::ATOM
         );

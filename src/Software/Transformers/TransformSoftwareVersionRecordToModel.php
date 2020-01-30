@@ -19,6 +19,7 @@ class TransformSoftwareVersionRecordToModel
             'majorVersion' => $record->major_version,
             'version' => $record->version,
             'downloadFile' => $record->download_file,
+            'upgradePrice' => (float) $record->upgrade_price,
             'releasedOn' => DateTimeImmutable::createFromFormat(
                 Constants::POSTGRES_OUTPUT_FORMAT,
                 $record->released_on

@@ -21,6 +21,12 @@ class TransformSoftwareModelToRecord
 
         $record->is_for_sale = $model->isForSale() ? '1' : '0';
 
+        $record->price = (string) $model->getPrice();
+
+        $record->renewal_price = (string) $model->getRenewalPrice();
+
+        $record->is_subscription = $model->isSubscription() ? '1' : '0';
+
         return $record;
     }
 }
