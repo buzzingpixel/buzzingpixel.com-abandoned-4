@@ -21,11 +21,18 @@ class AddNewSoftwareFields extends AbstractMigration
                 ]
             )
             ->addColumn(
+                'renewal_price',
+                'float',
+                [
+                    'after' => 'price',
+                    'default' => '0.0',
+                ]
+            )
+            ->addColumn(
                 'is_subscription',
                 'boolean',
                 [
-
-                    'after' => 'price',
+                    'after' => 'renewal_price',
                     'default' => 0,
                 ]
             )
