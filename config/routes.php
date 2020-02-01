@@ -18,6 +18,7 @@ use App\Http\Admin\Software\PostAdminSoftwareDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareEditAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionEditAction;
+use App\Http\Ajax\User\GetPayloadAction;
 use App\Http\Cart\GetAddToCartAction;
 use App\Http\Cart\GetCartAction;
 use App\Http\Cart\GetCartUpdateQuantityAction;
@@ -168,4 +169,7 @@ return static function (App $app) : void {
         GetCartUpdateQuantityAction::class
     );
     $app->get('/cart/clear', GetClearCartAction::class);
+
+    // Ajax
+    $app->get('/ajax/user/payload', GetPayloadAction::class);
 };

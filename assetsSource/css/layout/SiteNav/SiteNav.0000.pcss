@@ -79,6 +79,7 @@
     display: block;
     height: 30px;
     margin: 0 6px;
+    position: relative;
     width: 30px;
 }
 
@@ -99,4 +100,35 @@
 
 .SiteNav__MobileOpener:hover {
     color: var(--AquaIsland);
+}
+
+.SiteNav__IconBadge {
+    background-color: var(--Meteor);
+    border-radius: 50%;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.36);
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    height: 22px;
+    line-height: 0;
+    opacity: 0;
+    padding: 3px;
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    width: 22px;
+}
+
+.SiteNav__IconBadge--IsActive {
+    opacity: 0.9;
+}
+
+.SiteNav__IconBadgeInner {
+    display: block;
+    font-size: 11px;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(46%, -44%);
 }

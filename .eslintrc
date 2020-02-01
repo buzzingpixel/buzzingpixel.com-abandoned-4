@@ -9,7 +9,8 @@
     },
     "globals": {
         "Vue": true,
-        "VueRouter": true
+        "VueRouter": true,
+        "axios": true
     },
     "parserOptions": {
         "parser": "babel-eslint"

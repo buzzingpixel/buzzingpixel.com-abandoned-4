@@ -1,4 +1,5 @@
 import { EventBus } from '../EventBus.js';
+import Loader from '../Helpers/Loader.js';
 
 export default {
     el: '[ref="SiteNav"]',
@@ -33,7 +34,22 @@ export default {
             self.activateDesktopMenu(val);
         });
 
-        document.getElementById('SiteContent').addEventListener('click', self.siteContentClick);
+        self.$watch('cartTotalQuantity', (val) => {
+            self.cartBadgeIsActive = val > 0;
+        });
+
+        document.getElementById('SiteContent')
+            .addEventListener('click', self.siteContentClick);
+
+        const js = 'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js';
+
+        Loader.loadJs(js).then(() => {
+            // noinspection JSUnresolvedVariable,ES6ModulesDependencies
+            axios.get('/ajax/user/payload')
+                .then((obj) => {
+                    self.cartTotalQuantity = obj.data.cart.totalQuantity;
+                });
+        });
     },
 
     data () {
@@ -41,6 +57,8 @@ export default {
             isActive: false,
             siteNavMouseLeaveTimer: 0,
             subNavActionInProgress: false,
+            cartBadgeIsActive: false,
+            cartTotalQuantity: 0,
         };
     },
 

@@ -7,6 +7,7 @@ namespace App\Cart\Models;
 use App\Payload\Model;
 use App\Users\Models\UserModel;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use function array_walk;
 
@@ -141,5 +142,37 @@ class CartModel extends Model
     public function getCreatedAt() : DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function asArray(bool $excludeId = true) : array
+    {
+        $array = [];
+
+        if (! $excludeId) {
+            $array['id'] = $this->getId();
+        }
+
+        $array['user'] = null;
+
+        $user = $this->getUser();
+
+        if ($user) {
+            $array['user'] = $this->getUser()->asArray($excludeId);
+        }
+
+        $array['totalItems'] = $this->getTotalItems();
+
+        $array['totalQuantity'] = $this->getTotalQuantity();
+
+        // TODO: generate items
+
+        $array['createdAt'] = $this->getCreatedAt()->format(
+            DateTimeInterface::ATOM
+        );
+
+        return $array;
     }
 }

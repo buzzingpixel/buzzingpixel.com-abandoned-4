@@ -62,7 +62,18 @@
             <a
                 href="/cart"
                 class="SiteNav__IconsItemLink SiteNav__IconsItemLink--IsCartIcon"
+                ref="SiteNav__CartIcon"
             >
+                {% verbatim %}
+                    <span
+                        class="SiteNav__IconBadge"
+                        v-bind:class="{'SiteNav__IconBadge--IsActive': cartBadgeIsActive}"
+                    >
+                        <span class="SiteNav__IconBadgeInner">
+                            {{ cartTotalQuantity }}
+                        </span>
+                    </span>
+                {% endverbatim %}
                 {% include 'Svg/Cart.svg' only %}
             </a>
         </li>

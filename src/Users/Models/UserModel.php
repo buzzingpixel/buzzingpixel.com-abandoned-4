@@ -6,6 +6,7 @@ namespace App\Users\Models;
 
 use App\Payload\Model;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 
 class UserModel extends Model
@@ -310,5 +311,54 @@ class UserModel extends Model
     public function getCreatedAt() : DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function asArray(bool $excludeId = true) : array
+    {
+        $array = [];
+
+        if (! $excludeId) {
+            $array['id'] = $this->getId();
+        }
+
+        $array['isAdmin'] = $this->isAdmin();
+
+        $array['emailAddress'] = $this->getEmailAddress();
+
+        // Lets not put this in the array for now
+        // $array['passwordHash'] = $this->getPasswordHash();
+
+        $array['isActive'] = $this->isActive();
+
+        $array['timezone'] = $this->getTimezone()->getName();
+
+        $array['firstName'] = $this->getFirstName();
+
+        $array['lastName'] = $this->getLastName();
+
+        $array['displayName'] = $this->getDisplayName();
+
+        $array['billingName'] = $this->getBillingName();
+
+        $array['billingCompany'] = $this->getBillingCompany();
+
+        $array['billingPhone'] = $this->getBillingPhone();
+
+        $array['billingCountry'] = $this->getBillingCountry();
+
+        $array['billingAddress'] = $this->getBillingAddress();
+
+        $array['billingCity'] = $this->getBillingCity();
+
+        $array['billingPostalCode'] = $this->getBillingPostalCode();
+
+        $array['createdAt'] = $this->getCreatedAt()->format(
+            DateTimeInterface::ATOM
+        );
+
+        return $array;
     }
 }
