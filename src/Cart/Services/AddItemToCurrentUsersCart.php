@@ -35,6 +35,8 @@ class AddItemToCurrentUsersCart
             $item->setQuantity($item->getQuantity() + 1);
 
             $added = true;
+
+            break;
         }
 
         if (! $added) {
