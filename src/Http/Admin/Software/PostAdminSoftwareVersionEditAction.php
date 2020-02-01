@@ -17,6 +17,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
 use function count;
+use function is_numeric;
 
 class PostAdminSoftwareVersionEditAction
 {
@@ -59,6 +60,7 @@ class PostAdminSoftwareVersionEditAction
             'major_version' => $postData['major_version'] ?? '',
             'version' => $postData['version'] ?? '',
             'released_on' => $postData['released_on'] ?? '',
+            'upgrade_price' => $postData['upgrade_price'] ?? '',
         ];
 
         /** @var UploadedFileInterface|null $downloadFile */
@@ -72,6 +74,10 @@ class PostAdminSoftwareVersionEditAction
 
         if ($inputValues['version'] === '') {
             $inputMessages['version'] = 'Version is required';
+        }
+
+        if (! is_numeric($inputValues['upgrade_price'])) {
+            $inputMessages['upgrade_price'] = 'Upgrade Price must be specified as integer or float';
         }
 
         if ($inputValues['released_on'] === '') {
@@ -114,6 +120,10 @@ class PostAdminSoftwareVersionEditAction
         $softwareVersion->setVersion((string) $inputValues['version']);
 
         $softwareVersion->setNewDownloadFile($downloadFile);
+
+        $softwareVersion->setUpgradePrice(
+            (float) $inputValues['upgrade_price']
+        );
 
         $softwareVersion->setReleasedOn($releasedOn);
 

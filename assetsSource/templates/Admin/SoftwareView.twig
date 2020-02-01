@@ -145,7 +145,7 @@
                             {{ version.getDownloadFile() }}
                         </td>
                         <td class="Table__Col">
-                            {{ version.getUpgradePrice()|number_format(2) }}
+                            ${{ version.getUpgradePrice()|number_format(2) }}
                         </td>
                         <td class="Table__Col">
                             {{ version.getReleasedOn().setTimezone(user.getTimezone()).format('Y-m-d h:i a') }}
