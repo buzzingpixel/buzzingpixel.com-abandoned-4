@@ -159,8 +159,8 @@ class CartModel extends Model
 
         $user = $this->getUser();
 
-        if ($user) {
-            $array['user'] = $this->getUser()->asArray($excludeId);
+        if ($user !== null) {
+            $array['user'] = $user->asArray($excludeId);
         }
 
         $array['totalItems'] = $this->getTotalItems();

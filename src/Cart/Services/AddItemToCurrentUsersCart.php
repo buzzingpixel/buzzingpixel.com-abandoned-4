@@ -25,7 +25,7 @@ class AddItemToCurrentUsersCart
         $added = false;
 
         foreach ($cart->getItems() as $item) {
-            /** @var SoftwareModel $software */
+            /** @var SoftwareModel $itemSoftware */
             $itemSoftware = $item->getSoftware();
 
             if ($itemSoftware->getSlug() !== $software->getSlug()) {

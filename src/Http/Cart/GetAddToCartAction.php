@@ -35,7 +35,7 @@ class GetAddToCartAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $slug = $request->getAttribute('slug');
+        $slug = (string) $request->getAttribute('slug');
 
         $software = $this->softwareApi->fetchSoftwareBySlug($slug);
 
