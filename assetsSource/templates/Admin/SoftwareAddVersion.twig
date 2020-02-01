@@ -86,6 +86,23 @@
             {% endif %}
         </div>
         <div class="StandardForm__FieldSet">
+            <label for="upgrade_price" class="label StandardForm__Label">
+                Upgrade Price
+            </label>
+            <input
+                type="text"
+                id="upgrade_price"
+                name="upgrade_price"
+                class="input StandardForm__Input{% if message['result']['inputMessages']['upgrade_price'] is defined %} input--has-error{% endif %}"
+                value="{{ message['result']['inputValues']['upgrade_price'] ?? '0' }}"
+            >
+            {% if message['result']['inputMessages']['upgrade_price'] is defined %}
+                <div class="StandardForm__InputErrorMessage">
+                    {{ message['result']['inputMessages']['upgrade_price']|smartypants }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="StandardForm__FieldSet">
             <label for="released_on" class="label StandardForm__Label">
                 Released On
             </label>
