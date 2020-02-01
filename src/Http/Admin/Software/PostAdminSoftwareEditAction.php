@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use function count;
+use function is_numeric;
 
 class PostAdminSoftwareEditAction
 {
@@ -37,6 +38,9 @@ class PostAdminSoftwareEditAction
             'name' => $postData['name'] ?? '',
             'slug' => $postData['slug'] ?? '',
             'for_sale' => ($postData['for_sale'] ?? '') === 'true',
+            'price' => $postData['price'] ?? '',
+            'renewal_price' => $postData['renewal_price'] ?? '',
+            'subscription' => ($postData['subscription'] ?? '') === 'true',
         ];
 
         $softwareModel = $this->softwareApi->fetchSoftwareBySlug(
@@ -64,6 +68,14 @@ class PostAdminSoftwareEditAction
             $inputMessages['slug'] = 'Slug is required';
         }
 
+        if (! is_numeric($inputValues['price'])) {
+            $inputMessages['price'] = 'Price must be specified as integer or float';
+        }
+
+        if (! is_numeric($inputValues['renewal_price'])) {
+            $inputMessages['renewal_price'] = 'Renewal Price must be specified as integer or float';
+        }
+
         if (count($inputMessages) > 0) {
             return ($this->responder)(
                 new Payload(
@@ -81,6 +93,13 @@ class PostAdminSoftwareEditAction
         $softwareModel->setName((string) $inputValues['name']);
         $softwareModel->setSlug((string) $inputValues['slug']);
         $softwareModel->setIsForSale($inputValues['for_sale']);
+        $softwareModel->setPrice((float) $inputValues['price']);
+        $softwareModel->setRenewalPrice(
+            (float) $inputValues['renewal_price']
+        );
+        $softwareModel->setIsSubscription(
+            $inputValues['subscription']
+        );
 
         $payload = $this->softwareApi->saveSoftware($softwareModel);
 
