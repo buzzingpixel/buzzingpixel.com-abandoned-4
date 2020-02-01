@@ -39,6 +39,7 @@ class TransformUserRecordToUserModel
             'billingCountry' => $userRecord->billing_country,
             'billingAddress' => $userRecord->billing_address,
             'billingCity' => $userRecord->billing_city,
+            'billingStateAbbr' => $userRecord->billing_state_abbr,
             'billingPostalCode' => $userRecord->billing_postal_code,
             'createdAt' => DateTimeImmutable::createFromFormat(
                 Constants::POSTGRES_OUTPUT_FORMAT,

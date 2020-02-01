@@ -44,6 +44,8 @@ class TransformUserModelToUserRecord
 
         $userRecord->billing_city = $userModel->getBillingCity();
 
+        $userRecord->billing_state_abbr = $userModel->getBillingStateAbbr();
+
         $userRecord->billing_postal_code = $userModel->getBillingPostalCode();
 
         $userRecord->created_at = $userModel->getCreatedAt()->format(DateTimeInterface::ATOM);

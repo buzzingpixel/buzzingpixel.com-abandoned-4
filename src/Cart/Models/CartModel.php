@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Cart\Models;
 
 use App\Payload\Model;
+use App\Software\Models\SoftwareModel;
 use App\Users\Models\UserModel;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -174,5 +175,38 @@ class CartModel extends Model
         );
 
         return $array;
+    }
+
+    public function calculateSubTotal() : float
+    {
+        $subTotal = 0;
+
+        foreach ($this->getItems() as $item) {
+            /** @var SoftwareModel $itemSoftware */
+            $itemSoftware = $item->getSoftware();
+
+            $subTotal = $itemSoftware->getPrice() * $item->getQuantity();
+        }
+
+        return (float) $subTotal;
+    }
+
+    public function calculateTax() : float
+    {
+        /** @var UserModel $user */
+        $user = $this->getUser();
+
+        // We only charge sales tax in TN
+        if ($user->getBillingStateAbbr() !== 'TN') {
+            return 0.0;
+        }
+
+        // TN tax is 7%
+        return (float) $this->calculateSubTotal() * 0.07;
+    }
+
+    public function calculateTotal() : float
+    {
+        return (float) $this->calculateSubTotal() + $this->calculateTax();
     }
 }

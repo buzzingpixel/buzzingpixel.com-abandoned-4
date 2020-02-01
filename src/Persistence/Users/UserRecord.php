@@ -51,6 +51,9 @@ class UserRecord extends Record
     public $billing_city = '';
 
     /** @var string */
+    public $billing_state_abbr = '';
+
+    /** @var string */
     public $billing_postal_code = '';
 
     /** @var string */
