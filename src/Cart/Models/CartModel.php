@@ -193,8 +193,11 @@ class CartModel extends Model
 
     public function calculateTax() : float
     {
-        /** @var UserModel $user */
         $user = $this->getUser();
+
+        if ($user === null) {
+            return 0.0;
+        }
 
         // We only charge sales tax in TN
         if ($user->getBillingStateAbbr() !== 'TN') {
