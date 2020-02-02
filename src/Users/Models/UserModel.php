@@ -282,6 +282,7 @@ class UserModel extends Model
         return $this->billingCity;
     }
 
+    /** @var string */
     private $billingStateAbbr = '';
 
     public function setBillingStateAbbr(string $billingStateAbbr) : UserModel

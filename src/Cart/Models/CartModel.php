@@ -205,11 +205,11 @@ class CartModel extends Model
         }
 
         // TN tax is 7%
-        return (float) $this->calculateSubTotal() * 0.07;
+        return $this->calculateSubTotal() * 0.07;
     }
 
     public function calculateTotal() : float
     {
-        return (float) $this->calculateSubTotal() + $this->calculateTax();
+        return $this->calculateSubTotal() + $this->calculateTax();
     }
 }
