@@ -12,6 +12,7 @@ use function get_class;
 use function implode;
 use function in_array;
 use function mb_strtoupper;
+use function trim;
 
 class RecordQuery
 {
@@ -106,6 +107,28 @@ class RecordQuery
             'col' => $column,
             'dir' => $direction,
         ];
+
+        return $clone;
+    }
+
+    /** @var int|null */
+    private $limit;
+
+    public function withLimit(?int $limit) : RecordQuery
+    {
+        $clone        = clone $this;
+        $clone->limit = $limit;
+
+        return $clone;
+    }
+
+    /** @var int */
+    private $offset = 0;
+
+    public function withOffset(int $offset) : RecordQuery
+    {
+        $clone         = clone $this;
+        $clone->offset = $offset;
 
         return $clone;
     }
@@ -243,7 +266,15 @@ class RecordQuery
             $sql .= ' ' . $order['col'] . ' ' . $order['dir'];
         }
 
-        $sql .= ';';
+        if ($this->offset > 0) {
+            $sql .= ' OFFSET ' . $this->offset;
+        }
+
+        if ($this->limit !== null) {
+            $sql .= ' LIMIT ' . $this->limit;
+        }
+
+        $sql = trim($sql) . ';';
 
         return [
             'sql' => $sql,

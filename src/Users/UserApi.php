@@ -8,9 +8,11 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
+use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
+use App\Users\Services\FetchUsersByLimitOffset;
 use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
@@ -106,5 +108,24 @@ class UserApi
         $service = $this->di->get(ResetPasswordByToken::class);
 
         return $service($token, $newPassword);
+    }
+
+    public function fetchTotalUsers() : int
+    {
+        /** @var FetchTotalUsers $service */
+        $service = $this->di->get(FetchTotalUsers::class);
+
+        return $service();
+    }
+
+    /**
+     * @return UserModel[]
+     */
+    public function fetchUsersByLimitOffset(?int $limit = null, int $offset = 0) : array
+    {
+        /** @var FetchUsersByLimitOffset $service */
+        $service = $this->di->get(FetchUsersByLimitOffset::class);
+
+        return $service($limit, $offset);
     }
 }
