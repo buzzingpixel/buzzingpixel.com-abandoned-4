@@ -10,54 +10,73 @@
     <div class="Cart">
         <div class="Cart__Info">
             <div class="CartInfo__Item">
-                <div class="CartInfo__ItemKey">Items</div>
+                <div class="CartInfo__ItemKey">Items:</div>
                 <div class="CartInfo__ItemValue">
                     {{ cart.getTotalItems() }}
                 </div>
             </div>
             <div class="CartInfo__Item">
-                <div class="CartInfo__ItemKey">Quantity</div>
+                <div class="CartInfo__ItemKey">Quantity:</div>
                 <div class="CartInfo__ItemValue">{{ cart.getTotalQuantity() }}</div>
             </div>
             <div class="CartInfo__Item">
-                <div class="CartInfo__ItemKey">Subtotal</div>
+                <div class="CartInfo__ItemKey">Subtotal:</div>
                 <div class="CartInfo__ItemValue">${{ cart.calculateSubTotal()|number_format(2) }}</div>
             </div>
             {% if cart.calculateTax() > 0 %}
                 <div class="CartInfo__Item">
-                    <div class="CartInfo__ItemKey">Tax</div>
+                    <div class="CartInfo__ItemKey">Tax:</div>
                     <div class="CartInfo__ItemValue">${{ cart.calculateTax()|number_format(2) }}</div>
                 </div>
             {% endif %}
             <div class="CartInfo__Item">
-                <div class="CartInfo__ItemKey">Total</div>
+                <div class="CartInfo__ItemKey">Total:</div>
                 <div class="CartInfo__ItemValue">${{ cart.calculateTotal()|number_format(2) }}</div>
             </div>
-            <div class="CartInfo__Item">
-                <a
-                    href="{% if cart.getUser() %}#0{% else %}/cart/log-in{% endif %}"
-                    class="button CartInfo__Button"
-                >
-                    {% if cart.getUser() %}Pay Now{% else %}Log In To Pay{% endif %}
-                </a>
-            </div>
+            {% if cart.getItems()|length > 0 %}
+                <div class="CartInfo__Item">
+                    <a
+                        href="{% if cart.getUser() %}#0{% else %}/cart/log-in{% endif %}"
+                        class="button CartInfo__Button"
+                    >
+                        {% if cart.getUser() %}Pay Now{% else %}Log In To Pay{% endif %}
+                    </a>
+                </div>
+            {% endif %}
         </div>
         <div class="Cart__Items">
-            {% for item in cart.getItems() %}
-                <div class="Cart__Item">
-                    <div class="Cart__ItemTitle">{{ item.getSoftware().getName()|smartypants }}</div>
-                    <div class="Cart__ItemPrice">${{ item.getSoftware().getPrice()|number_format(2) }}</div>
-                    <div class="Cart__ItemQuantity">
-                        <label>
-                            <input
-                                type="text"
-                                class="input Cart__ItemQuantityInput"
-                                value="{{ item.getQuantity() }}"
-                            >
-                        </label>
+            <div class="Cart__ItemsInner">
+                {% if cart.getItems()|length < 1 %}
+                    <div class="Cart__Item">
+                        <div class="Cart__ItemInner">
+                            <div class="Cart__ItemEmptyNotice">
+                                You don't have anything in your cart yet. But that's easy to fix. Up above in the menu, select one of the products from the "software" menu!
+                            </div>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endif %}
+                {% for item in cart.getItems() %}
+                    <div class="Cart__Item">
+                        <div class="Cart__ItemInner">
+                            <div class="Cart__ItemLeft">
+                                <div class="Cart__ItemTitle">{{ item.getSoftware().getName()|smartypants }}</div>
+                            </div>
+                            <div class="Cart__ItemRight">
+                                <div class="Cart__ItemPrice">${{ item.getSoftware().getPrice()|number_format(2) }}</div>
+                                <div class="Cart__ItemQuantity">
+                                    <label>
+                                        <input
+                                            type="text"
+                                            class="input Cart__ItemQuantityInput"
+                                            value="{{ item.getQuantity() }}"
+                                        >
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
