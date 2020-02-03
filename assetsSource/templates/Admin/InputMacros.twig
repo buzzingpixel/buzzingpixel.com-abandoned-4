@@ -1,0 +1,74 @@
+{% macro displayMessage(message = {}) %}
+    {% if message['status'] is defined %}
+        {% set class = 'Message--IsError' %}
+        {% if message.status == 'SUCCESSFUL' %}
+            {% set class = 'Message--IsSuccess' %}
+        {% endif %}
+        <div class="StandardForm__Message">
+            <div
+                class="Message {{ class }}"
+            >
+                <div class="Message__Inner">
+                    {{ message.result.message|default('There was a problem with your submission')|smartypants|widont }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro textInput(label, name, value = '', message = {}, type = "text") %}
+    <div class="StandardForm__FieldSet">
+        <label for="{{ name }}" class="label StandardForm__Label">
+            {{ label }}
+        </label>
+        <input
+            type="{{ type }}"
+            id="{{ name }}"
+            name="{{ name }}"
+            class="input StandardForm__Input{% if message['result']['inputMessages'][name] is defined %} input--has-error{% endif %}"
+            value="{{ message['result']['inputValues'][name] ?? value }}"
+        >
+        {% if message['result']['inputMessages'][name] is defined %}
+            <div class="StandardForm__InputErrorMessage">
+                {{ message['result']['inputMessages'][name]|smartypants }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro checkbox(label, name, isChecked, message = {}) %}
+    <div class="StandardForm__FieldSet StandardForm__Fieldset--ForCheckbox">
+        <label
+            for="{{ name }}"
+            class="label StandardForm__Label StandardForm__Label--ForCheckbox"
+        >
+            {{ label }}
+            <input
+                type="checkbox"
+                name="{{ name }}"
+                value="true"
+                id="{{ name }}"
+                class="checkbox StandardForm__Checkbox"
+                {% if (message['result']['inputValues'][name] ?? false) %}
+                checked
+                {% endif %}
+            >
+            <span class="StandardForm__CheckMark"></span>
+        </label>
+        {% if message['result']['inputMessages'][name] is defined %}
+            <div class="StandardForm__InputErrorMessage">
+                {{ message['result']['inputMessages'][name]|smartypants }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro submitButton(label) %}
+    <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
+        <input
+            class="button"
+            type="submit"
+            value="{{ label }}"
+        >
+    </div>
+{% endmacro %}
