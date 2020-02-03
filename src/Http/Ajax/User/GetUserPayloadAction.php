@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use function Safe\json_encode;
 
-class GetPayloadAction
+class GetUserPayloadAction
 {
     /** @var CartApi */
     private $cartApi;

@@ -17,19 +17,6 @@ $bootstrap = require dirname(__DIR__) . '/config/bootstrap.php';
 /** @var ContainerInterface $container */
 $container = $bootstrap();
 
-// // TODO: Temp
-// $container->get(Slim\Flash\Messages::class)->addMessage('LoginFormMessage', [
-//     'status' => Payload::STATUS_NOT_VALID,
-//     'result' => [
-//         'message' => 'Password confirmation must match password',
-//         'active' => 'register',
-//         'inputs' => [
-//             'password' => 'Password must match Password Confirmation',
-//             'confirm_password' => 'Password Confirmation must match password',
-//         ],
-//     ],
-// ]);
-
 // Create application
 AppFactory::setContainer($container);
 $app = AppFactory::create();
@@ -39,7 +26,7 @@ $httpMiddleWares = require dirname(__DIR__) . '/config/httpAppMiddlewares.php';
 $httpMiddleWares($app);
 
 // Register routes
-$routes = require dirname(__DIR__) . '/config/routes.php';
+$routes = require dirname(__DIR__) . '/config/Routes/index.php';
 $routes($app);
 
 // Use factory to get the ServerRequest
