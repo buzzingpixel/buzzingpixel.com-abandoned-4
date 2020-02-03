@@ -15,123 +15,21 @@
 {% endif %}
 
 {% block adminContent %}
-    <form
-        method="post"
-        class="form StandardForm StandardForm--IsMaxWidth800"
-        enctype="multipart/form-data"
-    >
-        <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
-        <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
-        <h2 class="StandardForm__Heading">Edit Version "{{ softwareVersion.getVersion }}" of "{{ softwareVersion.getSoftware().getName()|smartypants }}"</h2>
-        {% if message['status'] is defined %}
-            {% set class = 'Message--IsError' %}
-            {% if message.status == 'SUCCESSFUL' %}
-                {% set class = 'Message--IsSuccess' %}
-            {% endif %}
-            <div class="StandardForm__Message">
-                <div
-                    class="Message {{ class }}"
-                >
-                    <div class="Message__Inner">
-                        {{ message.result.message|default('There was a problem with your submission')|smartypants|widont }}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        <div class="StandardForm__FieldSet">
-            <label for="major_version" class="label StandardForm__Label">
-                Major Version
-            </label>
-            <input
-                type="text"
-                id="major_version"
-                name="major_version"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['major_version'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['major_version'] ?? softwareVersion.getMajorVersion() }}"
-            >
-            {% if message['result']['inputMessages']['major_version'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['major_version']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="version" class="label StandardForm__Label">
-                Version
-            </label>
-            <input
-                type="text"
-                id="version"
-                name="version"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['version'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['version'] ?? softwareVersion.getVersion() }}"
-            >
-            {% if message['result']['inputMessages']['version'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['version']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="new_download_file" class="label StandardForm__Label">
-                New File Download
-            </label>
-            {% if softwareVersion.getDownloadFile() %}
-                Currently: {{ softwareVersion.getDownloadFile() }}
-            {% endif %}
-            <input
-                type="file"
-                id="new_download_file"
-                name="new_download_file"
-                class="input StandardForm__Input StandardForm__Input--IsFileField"
-            >
-            {% if message['result']['inputMessages']['new_download_file'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['new_download_file']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="upgrade_price" class="label StandardForm__Label">
-                Upgrade Price
-            </label>
-            <input
-                type="text"
-                id="upgrade_price"
-                name="upgrade_price"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['upgrade_price'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['upgrade_price'] ?? softwareVersion.getUpgradePrice() }}"
-            >
-            {% if message['result']['inputMessages']['upgrade_price'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['upgrade_price']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="released_on" class="label StandardForm__Label">
-                Released On
-            </label>
-            <input
-                type="text"
-                id="released_on"
-                name="released_on"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['released_on'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['released_on'] ?? softwareVersion.releasedOn.setTimezone(user.getTimezone()).format('Y-m-d h:i A') }}"
-                ref="flatpickr"
-            >
-            {% if message['result']['inputMessages']['released_on'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['released_on']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
-            <input
-                class="button"
-                type="submit"
-                value="Submit"
-            >
-        </div>
-    </form>
+    {% embed 'StandardForm/StandardFormEmbed.twig' with {
+        heading: 'Edit Version "' ~ softwareVersion.getVersion() ~ '" of ' ~ softwareVersion.getSoftware().getName() ~ '"',
+        message: message,
+        submitButtonContent: 'Submit',
+        softwareVersion: softwareVersion,
+        user: user,
+    } only %}
+        {% block standardFormContent %}
+            {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+            {{ inputs.textInput('Major Version', 'major_version', softwareVersion.getMajorVersion(), message) }}
+            {{ inputs.textInput('Version', 'version', softwareVersion.getVersion(), message) }}
+            {% set afterLabelHtml = softwareVersion.getDownloadFile() ? 'Currently: ' ~ softwareVersion.getDownloadFile() : '' %}
+            {{ inputs.fileChoser('New File Download', 'new_download_file', '', message, afterLabelHtml) }}
+            {{ inputs.textInput('Upgrade Price', 'upgrade_price', softwareVersion.getUpgradePrice(), message) }}
+            {{ inputs.dateChooser('Released On', 'released_on', softwareVersion.releasedOn.setTimezone(user.getTimezone()).format('Y-m-d h:i A'), message) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

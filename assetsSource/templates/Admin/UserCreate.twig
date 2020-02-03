@@ -5,33 +5,25 @@
     {% set message = message[0] %}
 {% endif %}
 
-{% import "Admin/InputMacros.twig" as inputs %}
-
 {% block adminContent %}
-    <form
-        method="post"
-        class="form StandardForm StandardForm--IsMaxWidth800"
-        enctype="multipart/form-data"
-    >
-        <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
-        <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
-
-        <h2 class="StandardForm__Heading">Create New User</h2>
-
-        {{ inputs.displayMessage(message) }}
-
-        {{ inputs.checkbox('Admin?', 'is_admin', message) }}
-        {{ inputs.textInput('Email', 'email_address', '', message, 'email') }}
-        {{ inputs.textInput('Password', 'password', '', message, 'password') }}
-        {{ inputs.textInput('First Name', 'first_name', '', message) }}
-        {{ inputs.textInput('Last Name', 'last_name', '', message) }}
-        {{ inputs.textInput('Display Name', 'display_name', '', message) }}
-        {{ inputs.textInput('Billing Name', 'billing_name', '', message) }}
-        {{ inputs.textInput('Billing Company', 'billing_company', '', message) }}
-        {{ inputs.textInput('Billing Phone', 'billing_phone', '', message) }}
-        {{ inputs.textInput('Billing Address', 'billing_address', '', message) }}
-        {{ inputs.textInput('Billing Postal Code', 'billing_phone', '', message) }}
-
-        {{ inputs.submitButton('Create') }}
-    </form>
+    {% embed 'StandardForm/StandardFormEmbed.twig' with {
+        heading: 'Create New User',
+        message: message,
+        submitButtonContent: 'Create',
+    } only %}
+        {% block standardFormContent %}
+            {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+            {{ inputs.checkbox('Admin?', 'is_admin', false, message) }}
+            {{ inputs.textInput('Email', 'email_address', '', message, 'email') }}
+            {{ inputs.textInput('Password', 'password', '', message, 'password') }}
+            {{ inputs.textInput('First Name', 'first_name', '', message) }}
+            {{ inputs.textInput('Last Name', 'last_name', '', message) }}
+            {{ inputs.textInput('Display Name', 'display_name', '', message) }}
+            {{ inputs.textInput('Billing Name', 'billing_name', '', message) }}
+            {{ inputs.textInput('Billing Company', 'billing_company', '', message) }}
+            {{ inputs.textInput('Billing Phone', 'billing_phone', '', message) }}
+            {{ inputs.textInput('Billing Address', 'billing_address', '', message) }}
+            {{ inputs.textInput('Billing Postal Code', 'billing_phone', '', message) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

@@ -49,12 +49,55 @@
                 value="true"
                 id="{{ name }}"
                 class="checkbox StandardForm__Checkbox"
-                {% if (message['result']['inputValues'][name] ?? false) %}
+                {% if (message['result']['inputValues'][name] ?? isChecked) %}
                 checked
                 {% endif %}
             >
             <span class="StandardForm__CheckMark"></span>
         </label>
+        {% if message['result']['inputMessages'][name] is defined %}
+            <div class="StandardForm__InputErrorMessage">
+                {{ message['result']['inputMessages'][name]|smartypants }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro fileChoser(label, name, message = {}, afterLabelHtml = '') %}
+    <div class="StandardForm__FieldSet">
+        <label for="{{ name }}" class="label StandardForm__Label">
+            {{ label }}
+        </label>
+        {% if afterLabelHtml %}
+            {{ afterLabelHtml|raw }}
+        {% endif %}
+        <input
+            type="file"
+            id="{{ name }}"
+            name="{{ name }}"
+            class="input StandardForm__Input StandardForm__Input--IsFileField"
+        >
+        {% if message['result']['inputMessages'][name] is defined %}
+            <div class="StandardForm__InputErrorMessage">
+                {{ message['result']['inputMessages'][name]|smartypants }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro dateChooser(label, name, value, message = {}) %}
+    <div class="StandardForm__FieldSet">
+        <label for="{{ name }}" class="label StandardForm__Label">
+            {{ label }}
+        </label>
+        <input
+            type="text"
+            id="{{ name }}"
+            name="{{ name }}"
+            class="input StandardForm__Input{% if message['result']['inputMessages'][name] is defined %} input--has-error{% endif %}"
+            value="{{ message['result']['inputValues'][name] ?? value }}"
+            ref="flatpickr"
+        >
         {% if message['result']['inputMessages'][name] is defined %}
             <div class="StandardForm__InputErrorMessage">
                 {{ message['result']['inputMessages'][name]|smartypants }}

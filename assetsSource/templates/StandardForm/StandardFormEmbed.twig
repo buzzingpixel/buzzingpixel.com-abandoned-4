@@ -1,0 +1,29 @@
+{% set method = (block('method') ?? method ?? 'post') %}
+{% set heading = (block('heading') ?? heading ?? false) %}
+{% set submitButtonContent = (block('submitButtonContent') ?? submitButtonContent ?? false) %}
+{% set message = message ?? {} %}
+
+{% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+
+<form
+    method="{{ method }}"
+    class="form StandardForm StandardForm--IsMaxWidth800"
+    enctype="multipart/form-data"
+>
+    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+
+    {% if heading %}
+        <h2 class="StandardForm__Heading">
+            {{ heading|smartypants }}
+        </h2>
+    {% endif %}
+
+    {{ inputs.displayMessage(message) }}
+
+    {{ block('standardFormContent') ?? standardFormContent ?? '' }}
+
+    {% if submitButtonContent %}
+        {{ inputs.submitButton(submitButtonContent) }}
+    {% endif %}
+</form>

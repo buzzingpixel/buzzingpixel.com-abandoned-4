@@ -5,199 +5,25 @@
     {% set message = message[0] %}
 {% endif %}
 
-{% block adminContent %}
-    <form
-        method="post"
-        class="form StandardForm StandardForm--IsMaxWidth800"
-        enctype="multipart/form-data"
-    >
-        <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
-        <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
-        <h2 class="StandardForm__Heading">Create New Software</h2>
-        {% if message['status'] is defined %}
-            {% set class = 'Message--IsError' %}
-            {% if message.status == 'SUCCESSFUL' %}
-                {% set class = 'Message--IsSuccess' %}
-            {% endif %}
-            <div class="StandardForm__Message">
-                <div
-                    class="Message {{ class }}"
-                >
-                    <div class="Message__Inner">
-                        {{ message.result.message|default('There was a problem with your submission')|smartypants|widont }}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        <div class="StandardForm__FieldSet">
-            <label for="name" class="label StandardForm__Label">Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['name'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['name'] ?? '' }}"
-            >
-            {% if message['result']['inputMessages']['name'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['name']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="slug" class="label StandardForm__Label">Slug</label>
-            <input
-                type="text"
-                id="slug"
-                name="slug"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['slug'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['slug'] ?? '' }}"
-            >
-            {% if message['result']['inputMessages']['slug'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['slug']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet StandardForm__Fieldset--ForCheckbox">
-            <label
-                for="for_sale"
-                class="label StandardForm__Label StandardForm__Label--ForCheckbox"
-            >
-                For Sale?
-                <input
-                    type="checkbox"
-                    name="for_sale"
-                    value="true"
-                    id="for_sale"
-                    class="checkbox StandardForm__Checkbox"
-                    {% if (message['result']['inputValues']['for_sale'] ?? false) %}
-                    checked
-                    {% endif %}
-                >
-                <span class="StandardForm__CheckMark"></span>
-            </label>
-            {% if message['result']['inputMessages']['for_sale'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['for_sale']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="price" class="label StandardForm__Label">
-                Price
-            </label>
-            <input
-                type="text"
-                id="price"
-                name="price"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['price'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['price'] ?? '0' }}"
-            >
-            {% if message['result']['inputMessages']['price'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['price']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="renewal_price" class="label StandardForm__Label">
-                Renewal Price
-            </label>
-            <input
-                type="text"
-                id="renewal_price"
-                name="renewal_price"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['renewal_price'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['renewal_price'] ?? '0' }}"
-            >
-            {% if message['result']['inputMessages']['renewal_price'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['renewal_price']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
+{% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
 
-        <div class="StandardForm__FieldSet StandardForm__Fieldset--ForCheckbox">
-            <label
-                for="subscription"
-                class="label StandardForm__Label StandardForm__Label--ForCheckbox"
-            >
-                Subscription?
-                <input
-                    type="checkbox"
-                    name="subscription"
-                    value="true"
-                    id="subscription"
-                    class="checkbox StandardForm__Checkbox"
-                    {% if (message['result']['inputValues']['subscription'] ?? false) %}
-                    checked
-                    {% endif %}
-                >
-                <span class="StandardForm__CheckMark"></span>
-            </label>
-            {% if message['result']['inputMessages']['subscription'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['subscription']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="major_version" class="label StandardForm__Label">
-                Initial Major Version
-            </label>
-            <input
-                type="text"
-                id="major_version"
-                name="major_version"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['major_version'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['major_version'] ?? '' }}"
-            >
-            {% if message['result']['inputMessages']['major_version'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['major_version']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="version" class="label StandardForm__Label">
-                Initial Version
-            </label>
-            <input
-                type="text"
-                id="version"
-                name="version"
-                class="input StandardForm__Input{% if message['result']['inputMessages']['version'] is defined %} input--has-error{% endif %}"
-                value="{{ message['result']['inputValues']['version'] ?? '' }}"
-            >
-            {% if message['result']['inputMessages']['version'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['version']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet">
-            <label for="download_file" class="label StandardForm__Label">
-                File Download
-            </label>
-            <input
-                type="file"
-                id="download_file"
-                name="download_file"
-                class="input StandardForm__Input StandardForm__Input--IsFileField"
-            >
-            {% if message['result']['inputMessages']['download_file'] is defined %}
-                <div class="StandardForm__InputErrorMessage">
-                    {{ message['result']['inputMessages']['download_file']|smartypants }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
-            <input
-                class="button"
-                type="submit"
-                value="Create"
-            >
-        </div>
-    </form>
+{% block adminContent %}
+    {% embed 'StandardForm/StandardFormEmbed.twig' with {
+        heading: 'Create New Software',
+        message: message,
+        submitButtonContent: 'Create',
+    } only %}
+        {% block standardFormContent %}
+            {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+            {{ inputs.textInput('Name', 'name', '', message) }}
+            {{ inputs.textInput('Slug', 'slug', '', message) }}
+            {{ inputs.checkbox('For Sale?', 'for_sale', false, message) }}
+            {{ inputs.textInput('Price', 'price', '0', message) }}
+            {{ inputs.textInput('Renewal Price', 'renewal_price', '0', message) }}
+            {{ inputs.checkbox('Subscription?', 'subscription', false, message) }}
+            {{ inputs.textInput('Initial Major Version', 'major_version', '', message) }}
+            {{ inputs.textInput('Initial Version', 'version', '', message) }}
+            {{ inputs.fileChoser('File Download', 'download_file', '', message) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
