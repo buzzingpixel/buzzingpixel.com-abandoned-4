@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use LogicException;
 use PDO;
 use PDOStatement;
+use function count;
 use function get_class;
 use function implode;
 use function in_array;
@@ -71,7 +72,10 @@ class RecordQuery
         string $operator = '='
     ) : RecordQuery {
         $clone = clone $this;
-        $clone->whereGroup++;
+
+        if (count($clone->where) > 0) {
+            $clone->whereGroup++;
+        }
 
         /** @psalm-suppress MixedArrayAssignment */
         $clone->where[$clone->whereGroup][] = [

@@ -31,11 +31,17 @@
             </div>
         {% endif %}
         <form class="TableLayout__BasicSearch" action="/admin/users/search">
+            {% if searchTerm is defined %}
+                <a href="/admin/users">&laquo; back</a>
+            {% endif %}
             <input
                 type="text"
                 class="input TableLayout__BasicSearchInput"
                 name="q"
                 placeholder="Search Users"
+                {% if searchTerm is defined %}
+                value="{{ searchTerm }}"
+                {% endif %}
             >
         </form>
         {% include 'Includes/Pagination.twig' with {

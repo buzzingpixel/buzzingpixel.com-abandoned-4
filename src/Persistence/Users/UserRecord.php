@@ -58,4 +58,25 @@ class UserRecord extends Record
 
     /** @var string */
     public $created_at = '';
+
+    /**
+     * @return array<string, string>
+     */
+    public function getSearchableFields() : array
+    {
+        return [
+            'email_address' => 'email_address',
+            'first_name' => 'first_name',
+            'last_name' => 'last_name',
+            'display_name' => 'display_name',
+            'billing_name' => 'billing_name',
+            'billing_company' => 'billing_company',
+            'billing_phone' => 'billing_phone',
+            'billing_country' => 'billing_country',
+            'billing_address' => 'billing_address',
+            'billing_city' => 'billing_city',
+            'billing_state_abbr' => 'billing_state_abbr',
+            'billing_postal_code' => 'billing_postal_code',
+        ];
+    }
 }

@@ -13,6 +13,7 @@ use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
 use App\Users\Services\FetchUsersByLimitOffset;
+use App\Users\Services\FetchUsersBySearch;
 use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
@@ -127,5 +128,16 @@ class UserApi
         $service = $this->di->get(FetchUsersByLimitOffset::class);
 
         return $service($limit, $offset);
+    }
+
+    /**
+     * @return UserModel[]
+     */
+    public function fetchUsersBySearch(string $query, ?int $limit = null, int $offset = 0) : array
+    {
+        /** @var FetchUsersBySearch $service */
+        $service = $this->di->get(FetchUsersBySearch::class);
+
+        return $service($query, $limit, $offset);
     }
 }
