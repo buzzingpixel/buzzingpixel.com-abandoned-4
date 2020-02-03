@@ -19,6 +19,9 @@ return static function (App $app) : void {
 
         $softwareRoutes = require __DIR__ . '/Software.php';
         $softwareRoutes($r);
+
+        $userRoutes = require __DIR__ . '/Users.php';
+        $userRoutes($r);
     })->add(RequireAdminAction::class)
     ->add(RequireLogInAction::class);
 };

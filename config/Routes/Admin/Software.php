@@ -14,30 +14,37 @@ use App\Http\Admin\Software\PostAdminSoftwareDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareEditAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionDeleteAction;
 use App\Http\Admin\Software\PostAdminSoftwareVersionEditAction;
+use Config\NoOp;
 use Slim\Routing\RouteCollectorProxy;
 
 return static function (RouteCollectorProxy $r) : void {
-    $r->get('/software', GetAdminSoftwareAction::class);
+    $r->group('/software', function (RouteCollectorProxy $r) : void {
+        // We have to use $this so PHPCS will be happy and not convert to
+        // static function. $this is an instance of the DI Container
+        $this->get(NoOp::class)();
 
-    $r->get('/software/create', GetAdminSoftwareCreateAction::class);
+        $r->get('', GetAdminSoftwareAction::class);
 
-    $r->post('/software/create', PostAdminSoftwareCreateAction::class);
+        $r->get('/create', GetAdminSoftwareCreateAction::class);
 
-    $r->get('/software/view/{slug}', GetAdminSoftwareViewAction::class);
+        $r->post('/create', PostAdminSoftwareCreateAction::class);
 
-    $r->get('/software/edit/{slug}', GetAdminSoftwareEditAction::class);
+        $r->get('/view/{slug}', GetAdminSoftwareViewAction::class);
 
-    $r->post('/software/edit/{slug}', PostAdminSoftwareEditAction::class);
+        $r->get('/edit/{slug}', GetAdminSoftwareEditAction::class);
 
-    $r->get('/software/version/edit/{id}', GetAdminSoftwareVersionEditAction::class);
+        $r->post('/edit/{slug}', PostAdminSoftwareEditAction::class);
 
-    $r->post('/software/version/edit/{id}', PostAdminSoftwareVersionEditAction::class);
+        $r->get('/version/edit/{id}', GetAdminSoftwareVersionEditAction::class);
 
-    $r->post('/software/delete/{id}', PostAdminSoftwareDeleteAction::class);
+        $r->post('/version/edit/{id}', PostAdminSoftwareVersionEditAction::class);
 
-    $r->post('/software/version/delete/{id}', PostAdminSoftwareVersionDeleteAction::class);
+        $r->post('/delete/{id}', PostAdminSoftwareDeleteAction::class);
 
-    $r->get('/software/{slug}/add-version', GetAdminSoftwareAddVersion::class);
+        $r->post('/version/delete/{id}', PostAdminSoftwareVersionDeleteAction::class);
 
-    $r->post('/software/{slug}/add-version', PostAdminSoftwareAddVersionAction::class);
+        $r->get('/{slug}/add-version', GetAdminSoftwareAddVersion::class);
+
+        $r->post('/{slug}/add-version', PostAdminSoftwareAddVersionAction::class);
+    });
 };

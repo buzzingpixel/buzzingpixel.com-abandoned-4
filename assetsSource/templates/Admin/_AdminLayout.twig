@@ -28,6 +28,7 @@
             <h1 class="heading heading--level-3 TabbedLayout__Heading">Admin Controls</h1>
             <ul class="TabbedLayout__Tabs">
                 {{ _self.tab('software', 'Software', activeTab) }}
+                {{ _self.tab('users', 'Users', activeTab) }}
             </ul>
             <div class="TabbedLayout__Content">
                 {{ block('adminContent') ?? '' }}

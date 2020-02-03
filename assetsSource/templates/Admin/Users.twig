@@ -1,0 +1,88 @@
+{% do requireVariables({
+    userModels: 'array',
+    pagination: 'App\\HttpHelpers\\Pagination\\Pagination',
+}) %}
+
+{# @var \App\Users\Models\UserModel[] userModels #}
+{# @var \App\HttpHelpers\Pagination\Pagination pagination #}
+
+{% extends 'Admin/_AdminLayout.twig' %}
+
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% block adminContent %}
+    <div class="TableLayout">
+        {% if message['status'] is defined %}
+            {% set class = 'Message--IsError' %}
+            {% if message.status == 'SUCCESSFUL' %}
+                {% set class = 'Message--IsSuccess' %}
+            {% endif %}
+            <div class="TableLayout__Message">
+                <div
+                    class="Message {{ class }}"
+                >
+                    <div class="Message__Inner">
+                        {{ message.result.message|default('')|smartypants|widont }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <form class="TableLayout__BasicSearch" action="/admin/users/search">
+            <input
+                type="text"
+                class="input TableLayout__BasicSearchInput"
+                name="q"
+                placeholder="Search Users"
+            >
+        </form>
+        {% include 'Includes/Pagination.twig' with {
+            pagination: pagination
+        } only %}
+        <table class="Table">
+            <thead class="Table__Head">
+                <tr class="Table__HeadControlRow">
+                    <td class="Table__HeadControlCol" colspan="7">
+                        <a
+                            href="/admin/users/create"
+                            class="button"
+                        >
+                            New
+                        </a>
+                    </td>
+                </tr>
+                <tr class="Table__HeadRow">
+                    <td class="Table__HeadCol">Admin</td>
+                    <td class="Table__HeadCol">Email</td>
+                    <td class="Table__HeadCol">First Name</td>
+                    <td class="Table__HeadCol">Last Name</td>
+                    <td class="Table__HeadCol">Display Name</td>
+                    <td class="Table__HeadCol"></td>
+                </tr>
+            </thead>
+            <tbody class="Table__Body">
+                {% for model in userModels %}
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            {% if model.isAdmin() %}Yes{% else %}No{% endif %}
+                        </td>
+                        <td class="Table__Col">{{ model.getEmailAddress() }}</td>
+                        <td class="Table__Col">{{ model.getFirstName() }}</td>
+                        <td class="Table__Col">{{ model.getLastName() }}</td>
+                        <td class="Table__Col">{{ model.getDisplayName }}</td>
+                        <td class="Table__Col">
+                            <a href="/admin/users/view/{{ model.getId() }}">
+                                More&nbsp;&raquo;
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include 'Includes/Pagination.twig' with {
+            pagination: pagination
+        } only %}
+    </div>
+{% endblock %}
