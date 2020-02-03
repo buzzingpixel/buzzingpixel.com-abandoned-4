@@ -212,4 +212,22 @@ class CartModel extends Model
     {
         return $this->calculateSubTotal() + $this->calculateTax();
     }
+
+    public function canPurchase() : bool
+    {
+        $user = $this->getUser();
+
+        if ($user === null) {
+            return false;
+        }
+
+        return $user->getFirstName() !== '' &&
+            $user->getLastName() !== '' &&
+            $user->getBillingName() !== '' &&
+            $user->getBillingCountry() !== '' &&
+            $user->getBillingAddress() !== '' &&
+            $user->getBillingCity() !== '' &&
+            $user->getBillingPostalCode() !== '' &&
+            $user->getBillingStateAbbr() !== '';
+    }
 }

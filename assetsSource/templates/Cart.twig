@@ -35,11 +35,23 @@
             </div>
             {% if cart.getItems()|length > 0 %}
                 <div class="CartInfo__Item">
+                    {% set link = '/cart/log-in' %}
+                    {% set linkContent = 'Log In To Pay' %}
+                    {% if cart.getUser() %}
+                        {% if cart.canPurchase() %}
+                            {% set link = '#0' %}
+                            {% set linkContent = 'Pay Now' %}
+                        {% else %}
+                            {# TODO: Make sure /account is correct link #}
+                            {% set link = '/account' %}
+                            {% set linkContent = 'Complete Profile to Pay' %}
+                        {% endif %}
+                    {% endif %}
                     <a
-                        href="{% if cart.getUser() %}#0{% else %}/cart/log-in{% endif %}"
+                        href="{{ link }}"
                         class="button CartInfo__Button"
                     >
-                        {% if cart.getUser() %}Pay Now{% else %}Log In To Pay{% endif %}
+                        {{ linkContent }}
                     </a>
                 </div>
             {% endif %}
