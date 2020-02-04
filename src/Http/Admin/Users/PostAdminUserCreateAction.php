@@ -15,15 +15,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 use function count;
 
-class PostUserCreateAction
+class PostAdminUserCreateAction
 {
-    /** @var PostUserCreateResponder */
+    /** @var PostAdminUserCreateResponder */
     private $responder;
     /** @var UserApi */
     private $userApi;
 
     public function __construct(
-        PostUserCreateResponder $responder,
+        PostAdminUserCreateResponder $responder,
         UserApi $userApi
     ) {
         $this->responder = $responder;

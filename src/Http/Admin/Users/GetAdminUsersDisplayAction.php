@@ -13,8 +13,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+use function count;
 
-class GetSearchUsersDisplayAction
+class GetAdminUsersDisplayAction
 {
     /** @var ExtractUriSegments */
     private $extractUriSegments;
@@ -46,17 +47,14 @@ class GetSearchUsersDisplayAction
 
         $offset = $pageZeroIndex * $limit;
 
-        $query = (string) ($request->getQueryParams()['q'] ?? '');
-
-        if ($query === null || $query === '') {
-            throw new HttpNotFoundException($request);
-        }
-
-        $userModels = $this->userApi->fetchUsersBySearch(
-            '%' . $query . '%',
+        $userModels = $this->userApi->fetchUsersByLimitOffset(
             $limit,
             $offset
         );
+
+        if (count($userModels) < 1) {
+            throw new HttpNotFoundException($request);
+        }
 
         $pagination = (new Pagination())->withBase($uriSegments->getPathSansPagination())
             ->withCurrentPage($uriSegments->getPageNum())
@@ -67,12 +65,11 @@ class GetSearchUsersDisplayAction
             'Admin/Users.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => 'User Search | Admin']
+                    ['metaTitle' => 'Users | Admin']
                 ),
                 'activeTab' => 'users',
                 'userModels' => $userModels,
                 'pagination' => $pagination,
-                'searchTerm' => $query,
             ]
         );
     }

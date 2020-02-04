@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Http\Admin\Users\GetSearchUsersDisplayAction;
-use App\Http\Admin\Users\GetUserCreateAction;
-use App\Http\Admin\Users\GetUsersDisplayAction;
-use App\Http\Admin\Users\PostUserCreateAction;
+use App\Http\Admin\Users\GetAdminSearchUsersDisplayAction;
+use App\Http\Admin\Users\GetAdminUserCreateAction;
+use App\Http\Admin\Users\GetAdminUsersDisplayAction;
+use App\Http\Admin\Users\PostAdminUserCreateAction;
 use Config\NoOp;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -15,12 +15,12 @@ return static function (RouteCollectorProxy $r) : void {
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
 
-        $r->get('[/page/{page:(?!(?:0|1)$)\d+}]', GetUsersDisplayAction::class);
+        $r->get('[/page/{page:(?!(?:0|1)$)\d+}]', GetAdminUsersDisplayAction::class);
 
-        $r->get('/search[/page/{page:(?!(?:0|1)$)\d+}]', GetSearchUsersDisplayAction::class);
+        $r->get('/search[/page/{page:(?!(?:0|1)$)\d+}]', GetAdminSearchUsersDisplayAction::class);
 
-        $r->get('/create', GetUserCreateAction::class);
+        $r->get('/create', GetAdminUserCreateAction::class);
 
-        $r->post('/create', PostUserCreateAction::class);
+        $r->post('/create', PostAdminUserCreateAction::class);
     });
 };

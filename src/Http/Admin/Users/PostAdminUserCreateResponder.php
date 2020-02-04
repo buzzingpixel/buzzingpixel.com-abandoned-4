@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Flash\Messages as FlashMessages;
 
-class PostUserCreateResponder
+class PostAdminUserCreateResponder
 {
     /** @var FlashMessages */
     private $flashMessages;

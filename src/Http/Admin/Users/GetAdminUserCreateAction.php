@@ -9,7 +9,7 @@ use App\Http\Admin\GetAdminResponder;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-class GetUserCreateAction
+class GetAdminUserCreateAction
 {
     /** @var GetAdminResponder */
     private $responder;
