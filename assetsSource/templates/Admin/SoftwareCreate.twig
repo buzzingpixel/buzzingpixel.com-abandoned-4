@@ -5,8 +5,6 @@
     {% set message = message[0] %}
 {% endif %}
 
-{% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
-
 {% block adminContent %}
     {% embed 'StandardForm/StandardFormEmbed.twig' with {
         heading: 'Create New Software',

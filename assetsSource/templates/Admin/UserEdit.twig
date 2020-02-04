@@ -1,0 +1,37 @@
+{% do requireVariables({
+    user: 'App\\Users\\Models\\UserModel',
+}) %}
+
+{# @var \App\Users\Models\UserModel user #}
+
+{% extends 'Admin/_AdminLayout.twig' %}
+
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% block adminContent %}
+    {% embed 'StandardForm/StandardFormEmbed.twig' with {
+        heading: 'Edit "' ~ user.getEmailAddress() ~ '"',
+        message: message,
+        submitButtonContent: 'Submit',
+        user: user,
+    } only %}
+        {% block standardFormContent %}
+            {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+            {{ inputs.checkbox('Admin?', 'is_admin', user.isAdmin(), message) }}
+            {{ inputs.textInput('Email', 'email_address', user.getEmailAddress(), message, 'email') }}
+            {{ inputs.timeZoneChooser('Timezone', 'timezone', user.getTimezone().getName(), message) }}
+            {{ inputs.textInput('First Name', 'first_name', user.getFirstName(), message) }}
+            {{ inputs.textInput('Last Name', 'last_name', user.getLastName(), message) }}
+            {{ inputs.textInput('Display Name', 'display_name', user.getDisplayName(), message) }}
+            {{ inputs.textInput('Billing Name', 'billing_name', user.getBillingName(), message) }}
+            {{ inputs.textInput('Billing Company', 'billing_company', user.getBillingCompany(), message) }}
+            {{ inputs.textInput('Billing Phone', 'billing_phone', user.getBillingPhone(), message) }}
+            {{ inputs.textInput('Billing Address', 'billing_address', user.getBillingAddress(), message) }}
+            {{ inputs.countryChooser('Billing Country', 'billing_country', user.getBillingCountry(), message) }}
+            {{ inputs.textInput('Billing Postal Code', 'billing_postal_code', user.getBillingPostalCode(), message) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
