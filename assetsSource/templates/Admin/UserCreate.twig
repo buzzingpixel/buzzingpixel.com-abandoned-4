@@ -23,6 +23,7 @@
             {{ inputs.textInput('Billing Company', 'billing_company', '', message) }}
             {{ inputs.textInput('Billing Phone', 'billing_phone', '', message) }}
             {{ inputs.textInput('Billing Address', 'billing_address', '', message) }}
+            {{ inputs.countryChooser('Billing Country', 'billing_country', 'US', message) }}
             {{ inputs.textInput('Billing Postal Code', 'billing_phone', '', message) }}
         {% endblock %}
     {% endembed %}
