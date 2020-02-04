@@ -12,80 +12,66 @@
 {% endif %}
 
 {% block adminContent %}
-    <div class="TableLayout">
-        {% if message['status'] is defined %}
-            {% set class = 'Message--IsError' %}
-            {% if message.status == 'SUCCESSFUL' %}
-                {% set class = 'Message--IsSuccess' %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        message: message,
+        softwareModels: softwareModels,
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadControlRow">
+                <td class="Table__HeadControlCol" colspan="7">
+                    <a
+                        href="/admin/software/create"
+                        class="button"
+                    >
+                        New
+                    </a>
+                </td>
+            </tr>
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Name</td>
+                <td class="Table__HeadCol">Slug</td>
+                <td class="Table__HeadCol">For Sale?</td>
+                <td class="Table__HeadCol">Price</td>
+                <td class="Table__HeadCol">Renewal Price</td>
+                <td class="Table__HeadCol">Subscription?</td>
+                <td class="Table__HeadCol"></td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            {% if softwareModels|length < 1 %}
+                <tr class="Table__Row Table__Row--IsNoResultsRow">
+                    <td class="Table__Col Table__Col--IsNoResultsRow" colspan="7">
+                        No software has been added yet.
+                    </td>
+                </tr>
             {% endif %}
-            <div class="TableLayout__Message">
-                <div
-                    class="Message {{ class }}"
-                >
-                    <div class="Message__Inner">
-                        {{ message.result.message|default('')|smartypants|widont }}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        <table class="Table">
-            <thead class="Table__Head">
-                <tr class="Table__HeadControlRow">
-                    <td class="Table__HeadControlCol" colspan="7">
-                        <a
-                            href="/admin/software/create"
-                            class="button"
-                        >
-                            New
+            {% for model in softwareModels %}
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        {{ model.getName()|smartypants }}
+                    </td>
+                    <td class="Table__Col">
+                        {{ model.getSlug() }}
+                    </td>
+                    <td class="Table__Col">
+                        {{ model.isForSale() ? 'Yes' : 'No' }}
+                    </td>
+                    <td class="Table__Col">
+                        ${{ model.getPrice()|number_format(2) }}
+                    </td>
+                    <td class="Table__Col">
+                        ${{ model.getRenewalPrice()|number_format(2) }}
+                    </td>
+                    <td class="Table__Col">
+                        {{ model.isSubscription() ? 'Yes' : 'No' }}
+                    </td>
+                    <td class="Table__Col">
+                        <a href="/admin/software/view/{{ model.getSlug() }}">
+                            More&nbsp;&raquo;
                         </a>
                     </td>
                 </tr>
-                <tr class="Table__HeadRow">
-                    <td class="Table__HeadCol">Name</td>
-                    <td class="Table__HeadCol">Slug</td>
-                    <td class="Table__HeadCol">For Sale?</td>
-                    <td class="Table__HeadCol">Price</td>
-                    <td class="Table__HeadCol">Renewal Price</td>
-                    <td class="Table__HeadCol">Subscription?</td>
-                    <td class="Table__HeadCol"></td>
-                </tr>
-            </thead>
-            <tbody class="Table__Body">
-                {% if softwareModels|length < 1 %}
-                    <tr class="Table__Row Table__Row--IsNoResultsRow">
-                        <td class="Table__Col Table__Col--IsNoResultsRow" colspan="7">
-                            No software has been added yet.
-                        </td>
-                    </tr>
-                {% endif %}
-                {% for model in softwareModels %}
-                    <tr class="Table__Row">
-                        <td class="Table__Col">
-                            {{ model.getName()|smartypants }}
-                        </td>
-                        <td class="Table__Col">
-                            {{ model.getSlug() }}
-                        </td>
-                        <td class="Table__Col">
-                            {{ model.isForSale() ? 'Yes' : 'No' }}
-                        </td>
-                        <td class="Table__Col">
-                            ${{ model.getPrice()|number_format(2) }}
-                        </td>
-                        <td class="Table__Col">
-                            ${{ model.getRenewalPrice()|number_format(2) }}
-                        </td>
-                        <td class="Table__Col">
-                            {{ model.isSubscription() ? 'Yes' : 'No' }}
-                        </td>
-                        <td class="Table__Col">
-                            <a href="/admin/software/view/{{ model.getSlug() }}">
-                                More&nbsp;&raquo;
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
