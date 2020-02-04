@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Admin\Users\GetAdminSearchUsersDisplayAction;
 use App\Http\Admin\Users\GetAdminUserCreateAction;
 use App\Http\Admin\Users\GetAdminUsersDisplayAction;
+use App\Http\Admin\Users\GetAdminUserViewAction;
 use App\Http\Admin\Users\PostAdminUserCreateAction;
 use Config\NoOp;
 use Slim\Routing\RouteCollectorProxy;
@@ -22,5 +23,7 @@ return static function (RouteCollectorProxy $r) : void {
         $r->get('/create', GetAdminUserCreateAction::class);
 
         $r->post('/create', PostAdminUserCreateAction::class);
+
+        $r->get('/view/{id}', GetAdminUserViewAction::class);
     });
 };

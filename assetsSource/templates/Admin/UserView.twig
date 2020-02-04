@@ -1,0 +1,180 @@
+{% do requireVariables({
+    user: 'App\\Users\\Models\\UserModel',
+}) %}
+
+{# @var \App\Users\Models\UserModel user #}
+
+{% extends 'Admin/_AdminLayout.twig' %}
+
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{# @var \App\Users\Models\UserModel loggedInUser #}
+{% set loggedInUser = fetchLoggedInUser() %}
+
+{% block adminContent %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        message: message,
+        user: user,
+        loggedInUser: loggedInUser,
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadControlRow">
+                <td class="Table__HeadControlCol" colspan="2">
+                    <form
+                        action="/admin/users/delete/{{ user.getId() }}"
+                        method="post"
+                        style="display: inline-block"
+                        ref="FormSubmitConfirm"
+                        @submit="confirmSubmit"
+                    >
+                        <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                        <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                        <input class="button" type="submit" value="Delete">
+                    </form>
+                    <a
+                        href="/admin/users/edit/{{ user.getId() }}"
+                        class="button"
+                    >
+                        Edit
+                    </a>
+                </td>
+            </tr>
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Item</td>
+                <td class="Table__HeadCol">Value</td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Admin?
+                </td>
+                <td class="Table__Col">
+                    {{ user.isAdmin() ? 'Yes' : 'No' }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Email
+                </td>
+                <td class="Table__Col">
+                    {{ user.getEmailAddress() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    First name
+                </td>
+                <td class="Table__Col">
+                    {{ user.getFirstName() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Last name
+                </td>
+                <td class="Table__Col">
+                    {{ user.getLastName() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Display Name
+                </td>
+                <td class="Table__Col">
+                    {{ user.getDisplayName() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing Name
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingName() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing Company
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingCompany() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing Phone
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingPhone() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing Address
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingAddress() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing City
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingCity() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing State
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingStateAbbr() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing Postal Code
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingPostalCode() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Billing Country
+                </td>
+                <td class="Table__Col">
+                    {{ user.getBillingCountry() }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Created At
+                </td>
+                <td class="Table__Col">
+                    {{
+                        user.getCreatedAt()
+                            .setTimezone(loggedInUser.getTimezone())
+                            .format('Y-m-d h:i a')
+                    }} ({{ loggedInUser.getTimezone().getName() }})
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    User Timezone
+                </td>
+                <td class="Table__Col">
+                    {{ user.getTimezone().getName() }}
+                </td>
+            </tr>
+        {% endblock %}
+    {% endembed %}
+    {# TODO: Add user licesnes #}
+    <br>
+    <strong>TODO: Add user licenses</strong>
+{% endblock %}
