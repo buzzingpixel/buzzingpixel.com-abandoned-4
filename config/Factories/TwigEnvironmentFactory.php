@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Factories;
 
+use App\HttpResponse\Twig\Extensions\Countries;
 use App\HttpResponse\Twig\Extensions\FetchLoggedInUser;
 use App\HttpResponse\Twig\Extensions\PhpFunctions;
 use App\HttpResponse\Twig\Extensions\RequireVariables;
@@ -82,6 +83,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(TwigMessages::class));
 
         $twig->addExtension($di->get(FetchLoggedInUser::class));
+
+        $twig->addExtension($di->get(Countries::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
