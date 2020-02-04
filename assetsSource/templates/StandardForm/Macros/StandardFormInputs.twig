@@ -119,7 +119,14 @@
         >
             <option value="">Choose country&hellip;</option>
             {% for country in countries() %}
-                <option value="{{ country.alpha2 }}">{{ country.name }}</option>
+                <option
+                    value="{{ country.alpha2 }}"
+                    {% if value == country.alpha2 %}
+                    selected
+                    {% endif %}
+                >
+                    {{ country.name }}
+                </option>
             {% endfor %}
         </select>
         {% if message['result']['inputMessages'][name] is defined %}
