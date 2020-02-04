@@ -10,6 +10,7 @@ use App\HttpResponse\Twig\Extensions\PhpFunctions;
 use App\HttpResponse\Twig\Extensions\RequireVariables;
 use App\HttpResponse\Twig\Extensions\Slugify;
 use App\HttpResponse\Twig\Extensions\TemplateExists;
+use App\HttpResponse\Twig\Extensions\TimeZoneList;
 use BuzzingPixel\TwigDumper\TwigDumper;
 use buzzingpixel\twiggetenv\GetEnvTwigExtension;
 use BuzzingPixel\TwigMarkdown\MarkdownTwigExtension;
@@ -85,6 +86,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(FetchLoggedInUser::class));
 
         $twig->addExtension($di->get(Countries::class));
+
+        $twig->addExtension($di->get(TimeZoneList::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
