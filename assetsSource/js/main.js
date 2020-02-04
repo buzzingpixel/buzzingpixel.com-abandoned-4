@@ -8,6 +8,7 @@ import Menu from './Components/Menu.js';
 import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
 import WindowResizeWatcher from './WindowResizeWatcher.js';
 import Flatpickr from './Components/Flatpickr.js';
+import Selects from './Components/Selects.js';
 
 // Set up window resize watching
 new WindowResizeWatcher();
@@ -48,4 +49,10 @@ document.querySelectorAll('[ref="FormSubmitConfirm"]').forEach((el) => {
 const flatpickrEls = document.querySelectorAll('[ref="flatpickr"]');
 if (flatpickrEls.length > 0) {
     new Flatpickr(flatpickrEls);
+}
+
+// Selects
+const selectEls = document.querySelectorAll('[ref="select"]');
+if (selectEls.length > 0) {
+    new Selects(selectEls);
 }

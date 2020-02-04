@@ -106,6 +106,30 @@
     </div>
 {% endmacro %}
 
+{% macro countryChooser(label, name, value = '', message = {}) %}
+    <div class="StandardForm__FieldSet">
+        <label for="{{ name }}" class="label StandardForm__Label">
+            {{ label }}
+        </label>
+        <select
+            name="{{ name }}"
+            id="{{ name }}"
+            class="select StandardForm__Input{% if message['result']['inputMessages'][name] is defined %} input--has-error{% endif %}"
+            ref="select"
+        >
+            <option value="">Choose country&hellip;</option>
+            {% for country in countries() %}
+                <option value="{{ country.alpha2 }}">{{ country.name }}</option>
+            {% endfor %}
+        </select>
+        {% if message['result']['inputMessages'][name] is defined %}
+            <div class="StandardForm__InputErrorMessage">
+                {{ message['result']['inputMessages'][name]|smartypants }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% macro submitButton(label) %}
     <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
         <input
