@@ -14,7 +14,7 @@ class AddTimzoneToUserTable extends AbstractMigration
         $this->table('users')
             ->addColumn('timezone', 'string', [
                 'after' => 'is_active',
-                'default' => 'America/Chicago',
+                'default' => 'US/Central',
             ])
             ->update();
     }

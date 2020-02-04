@@ -22,7 +22,7 @@ class UserModel extends Model
         $timeZoneInstance = $this->timezone instanceof DateTimeZone;
 
         if (! $timeZoneInstance) {
-            $this->timezone = new DateTimeZone('America/Chicago');
+            $this->timezone = new DateTimeZone('US/Central');
         }
 
         /** @psalm-suppress UninitializedProperty */
