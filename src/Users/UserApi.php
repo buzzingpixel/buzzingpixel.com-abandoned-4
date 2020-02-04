@@ -17,6 +17,7 @@ use App\Users\Services\FetchUsersBySearch;
 use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
+use App\Users\Services\PostalCodeService;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use Psr\Container\ContainerInterface;
@@ -139,5 +140,24 @@ class UserApi
         $service = $this->di->get(FetchUsersBySearch::class);
 
         return $service($query, $limit, $offset);
+    }
+
+    public function validatePostalCode(string $postalCode, string $alpha2Country) : bool
+    {
+        /** @var PostalCodeService $service */
+        $service = $this->di->get(PostalCodeService::class);
+
+        return $service->validatePostalCode(
+            $postalCode,
+            $alpha2Country
+        );
+    }
+
+    public function fillModelFromPostalCode(UserModel $model) : void
+    {
+        /** @var PostalCodeService $service */
+        $service = $this->di->get(PostalCodeService::class);
+
+        $service->fillModelFromPostalCode($model);
     }
 }
