@@ -16,6 +16,7 @@
             {{ inputs.checkbox('Admin?', 'is_admin', false, message) }}
             {{ inputs.textInput('Email', 'email_address', '', message, 'email') }}
             {{ inputs.textInput('Password', 'password', '', message, 'password') }}
+            {{ inputs.timeZoneChooser('Timezone', 'timezone', 'US/Central', message) }}
             {{ inputs.textInput('First Name', 'first_name', '', message) }}
             {{ inputs.textInput('Last Name', 'last_name', '', message) }}
             {{ inputs.textInput('Display Name', 'display_name', '', message) }}
@@ -24,7 +25,7 @@
             {{ inputs.textInput('Billing Phone', 'billing_phone', '', message) }}
             {{ inputs.textInput('Billing Address', 'billing_address', '', message) }}
             {{ inputs.countryChooser('Billing Country', 'billing_country', 'US', message) }}
-            {{ inputs.textInput('Billing Postal Code', 'billing_phone', '', message) }}
+            {{ inputs.textInput('Billing Postal Code', 'billing_postal_code', '', message) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

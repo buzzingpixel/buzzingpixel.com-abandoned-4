@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Admin\Users\GetSearchUsersDisplayAction;
 use App\Http\Admin\Users\GetUserCreateAction;
 use App\Http\Admin\Users\GetUsersDisplayAction;
+use App\Http\Admin\Users\PostUserCreateAction;
 use Config\NoOp;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -19,5 +20,7 @@ return static function (RouteCollectorProxy $r) : void {
         $r->get('/search[/page/{page:(?!(?:0|1)$)\d+}]', GetSearchUsersDisplayAction::class);
 
         $r->get('/create', GetUserCreateAction::class);
+
+        $r->post('/create', PostUserCreateAction::class);
     });
 };
