@@ -16,7 +16,7 @@ class Selects {
 
         Loader.loadJs('https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js').then(() => {
             els.forEach((el) => {
-                // eslint-disable-next-line no-undef
+                // eslint-disable-next-line no-undef,no-new
                 new Choices(el);
             });
         });
