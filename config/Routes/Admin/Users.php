@@ -8,6 +8,7 @@ use App\Http\Admin\Users\GetAdminUserEditAction;
 use App\Http\Admin\Users\GetAdminUsersDisplayAction;
 use App\Http\Admin\Users\GetAdminUserViewAction;
 use App\Http\Admin\Users\PostAdminUserCreateAction;
+use App\Http\Admin\Users\PostAdminUserEditAction;
 use Config\NoOp;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -28,5 +29,7 @@ return static function (RouteCollectorProxy $r) : void {
         $r->get('/view/{id}', GetAdminUserViewAction::class);
 
         $r->get('/edit/{id}', GetAdminUserEditAction::class);
+
+        $r->post('/edit/{id}', PostAdminUserEditAction::class);
     });
 };
