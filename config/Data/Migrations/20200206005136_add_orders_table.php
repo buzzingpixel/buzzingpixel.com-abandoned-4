@@ -40,7 +40,7 @@ class AddOrdersTable extends AbstractMigration
             )
             ->addColumn(
                 'stripe_amount',
-                'integer',
+                'float',
                 ['signed' => false]
             )
             ->addColumn(

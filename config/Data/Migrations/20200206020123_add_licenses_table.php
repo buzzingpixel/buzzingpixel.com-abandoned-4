@@ -38,18 +38,23 @@ class AddLicensesTable extends AbstractMigration
                 ['default' => '']
             )
             ->addColumn(
-                'notes',
+                'last_available_version',
                 'string',
+                ['default' => '']
+            )
+            ->addColumn(
+                'notes',
+                'text',
                 ['default' => '']
             )
             ->addColumn(
                 'authorized_domains',
-                'string',
+                'text',
                 ['default' => '']
             )
             ->addColumn(
                 'is_disabled',
-                'boolean',
+                'text',
                 ['default' => 0]
             )
             ->create();

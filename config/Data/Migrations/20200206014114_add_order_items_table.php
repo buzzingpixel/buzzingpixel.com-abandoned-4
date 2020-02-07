@@ -50,12 +50,12 @@ class AddOrderItemsTable extends AbstractMigration
             )
             ->addColumn(
                 'price',
-                'integer',
+                'float',
                 ['signed' => false]
             )
             ->addColumn(
                 'original_price',
-                'integer',
+                'float',
                 ['signed' => false]
             )
             ->addColumn(
