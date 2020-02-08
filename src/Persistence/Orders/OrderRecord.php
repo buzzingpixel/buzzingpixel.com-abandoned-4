@@ -8,23 +8,19 @@ use App\Persistence\Record;
 
 class OrderRecord extends Record
 {
-    /** @var string */
-    protected static $tableName = 'orders';
+    protected static string $tableName = 'orders';
 
     /** @var int|string */
     public $old_order_number = 0;
 
-    /** @var string */
-    public $user_id = '';
+    public string $user_id = '';
 
-    /** @var string */
-    public $stripe_id = '';
+    public string $stripe_id = '';
 
     /** @var int|float|string */
     public $stripe_amount = 0;
 
-    /** @var string */
-    public $stripe_balance_transaction = '';
+    public string $stripe_balance_transaction = '';
 
     /** @var int|bool|string */
     public $stripe_captured = '1';
@@ -32,8 +28,7 @@ class OrderRecord extends Record
     /** @var int|string */
     public $stripe_created = 0;
 
-    /** @var string */
-    public $stripe_currency = '';
+    public string $stripe_currency = '';
 
     /** @var int|bool|string */
     public $stripe_paid = '1';
@@ -47,33 +42,23 @@ class OrderRecord extends Record
     /** @var float|int|string */
     public $total = 0;
 
-    /** @var string */
-    public $name = '';
+    public string $name = '';
 
-    /** @var string */
-    public $company = '';
+    public string $company = '';
 
-    /** @var string */
-    public $phone_number = '';
+    public string $phone_number = '';
 
-    /** @var string */
-    public $country = '';
+    public string $country = '';
 
-    /** @var string */
-    public $address = '';
+    public string $address = '';
 
-    /** @var string */
-    public $address_continued = '';
+    public string $address_continued = '';
 
-    /** @var string */
-    public $city = '';
+    public string $city = '';
 
-    /** @var string */
-    public $state = '';
+    public string $state = '';
 
-    /** @var string */
-    public $postal_code = '';
+    public string $postal_code = '';
 
-    /** @var string */
-    public $date = '';
+    public string $date = '';
 }

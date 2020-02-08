@@ -8,21 +8,22 @@ use InvalidArgumentException;
 use LogicException;
 use PDO;
 use PDOStatement;
+use function assert;
 use function count;
 use function get_class;
 use function implode;
 use function in_array;
+use function is_bool;
+use function is_int;
+use function is_string;
 use function mb_strtoupper;
 use function trim;
 
 class RecordQuery
 {
-    /** @var bool */
-    private $isInstantiated = false;
-    /** @var Record */
-    private $recordClass;
-    /** @var PDO */
-    private $pdo;
+    private bool $isInstantiated = false;
+    private Record $recordClass;
+    private PDO $pdo;
 
     public function __construct(Record $recordClass, PDO $pdo)
     {
@@ -38,7 +39,7 @@ class RecordQuery
     }
 
     /** @var mixed[] */
-    private $where = [];
+    private array $where = [];
 
     /**
      * @param mixed $val
@@ -60,8 +61,7 @@ class RecordQuery
         return $clone;
     }
 
-    /** @var int */
-    private $whereGroup = 0;
+    private int $whereGroup = 0;
 
     /**
      * @param mixed $val
@@ -88,7 +88,7 @@ class RecordQuery
     }
 
     /** @var mixed[] */
-    private $order = [];
+    private array $order = [];
 
     public function withOrder(
         string $column,
@@ -115,8 +115,7 @@ class RecordQuery
         return $clone;
     }
 
-    /** @var int|null */
-    private $limit;
+    private ?int $limit = null;
 
     public function withLimit(?int $limit) : RecordQuery
     {
@@ -126,8 +125,7 @@ class RecordQuery
         return $clone;
     }
 
-    /** @var int */
-    private $offset = 0;
+    private int $offset = 0;
 
     public function withOffset(int $offset) : RecordQuery
     {
@@ -141,10 +139,11 @@ class RecordQuery
     {
         $statement = $this->executeStatement();
 
-        /** @var Record|bool $record */
         $record = $statement->fetchObject(
             get_class($this->recordClass)
         );
+
+        assert($record instanceof Record || is_bool($record));
 
         if ($record instanceof Record) {
             return $record;
@@ -181,10 +180,10 @@ class RecordQuery
         $idIncrement = 0;
 
         /**
-         * @var int $key
          * @var array<int, array<string, string|null>> $whereGroup
          */
         foreach ($this->where as $key => $whereGroup) {
+            assert(is_int($key));
             if ($key === 0) {
                 $sql .= ' WHERE (';
             } else {
@@ -257,10 +256,10 @@ class RecordQuery
         }
 
         /**
-         * @var int $key
          * @var array<string, string> $order
          */
         foreach ($this->order as $key => $order) {
+            assert(is_int($key));
             if ($key === 0) {
                 $sql .= ' ORDER BY';
             } else {
@@ -290,8 +289,8 @@ class RecordQuery
     {
         $sqlAndBind = $this->getSqlAndBind();
 
-        /** @var string $sql */
         $sql = $sqlAndBind['sql'];
+        assert(is_string($sql));
 
         $statement = $this->pdo->prepare($sql);
 

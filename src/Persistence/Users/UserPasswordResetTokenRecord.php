@@ -6,14 +6,13 @@ namespace App\Persistence\Users;
 
 use App\Persistence\Record;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+
 class UserPasswordResetTokenRecord extends Record
 {
-    /** @var string */
-    protected static $tableName = 'user_password_reset_tokens';
+    protected static string $tableName = 'user_password_reset_tokens';
 
-    /** @var string */
-    public $user_id = '';
+    public string $user_id = '';
 
-    /** @var string */
-    public $created_at = '';
+    public string $created_at = '';
 }

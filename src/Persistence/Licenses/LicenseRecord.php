@@ -6,31 +6,25 @@ namespace App\Persistence\Licenses;
 
 use App\Persistence\Record;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+
 class LicenseRecord extends Record
 {
-    /** @var string */
-    protected static $tableName = 'licenses';
+    protected static string $tableName = 'licenses';
 
-    /** @var string */
-    public $item_key = '';
+    public string $item_key = '';
 
-    /** @var string */
-    public $item_title = '';
+    public string $item_title = '';
 
-    /** @var string */
-    public $major_version = '';
+    public string $major_version = '';
 
-    /** @var string */
-    public $version = '';
+    public string $version = '';
 
-    /** @var string */
-    public $last_available_version = '';
+    public string $last_available_version = '';
 
-    /** @var string */
-    public $notes = '';
+    public string $notes = '';
 
-    /** @var string */
-    public $authorized_domains = '';
+    public string $authorized_domains = '';
 
     /** @var int|bool|string */
     public $is_disabled = '1';

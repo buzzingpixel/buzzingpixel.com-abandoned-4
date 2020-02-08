@@ -6,26 +6,21 @@ namespace App\Persistence\Software;
 
 use App\Persistence\Record;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+
 class SoftwareVersionRecord extends Record
 {
-    /** @var string */
-    protected static $tableName = 'software_versions';
+    protected static string $tableName = 'software_versions';
 
-    /** @var string */
-    public $software_id = '';
+    public string $software_id = '';
 
-    /** @var string */
-    public $major_version = '';
+    public string $major_version = '';
 
-    /** @var string */
-    public $version = '';
+    public string $version = '';
 
-    /** @var string */
-    public $download_file = '';
+    public string $download_file = '';
 
-    /** @var string */
-    public $upgrade_price = '0.0';
+    public string $upgrade_price = '0.0';
 
-    /** @var string */
-    public $released_on = '';
+    public string $released_on = '';
 }

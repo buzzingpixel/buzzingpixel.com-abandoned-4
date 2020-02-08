@@ -6,17 +6,15 @@ namespace App\Persistence\Cart;
 
 use App\Persistence\Record;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+
 class CartItemRecord extends Record
 {
-    /** @var string */
-    protected static $tableName = 'cart_items';
+    protected static string $tableName = 'cart_items';
 
-    /** @var string */
-    public $cart_id = '';
+    public string $cart_id = '';
 
-    /** @var string */
-    public $item_slug = '';
+    public string $item_slug = '';
 
-    /** @var string */
-    public $quantity = '';
+    public string $quantity = '';
 }

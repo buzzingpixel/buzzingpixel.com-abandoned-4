@@ -6,17 +6,15 @@ namespace App\Persistence\Users;
 
 use App\Persistence\Record;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+
 class UserSessionRecord extends Record
 {
-    /** @var string */
-    protected static $tableName = 'user_sessions';
+    protected static string $tableName = 'user_sessions';
 
-    /** @var string */
-    public $user_id = '';
+    public string $user_id = '';
 
-    /** @var string */
-    public $created_at = '';
+    public string $created_at = '';
 
-    /** @var string */
-    public $last_touched_at = '';
+    public string $last_touched_at = '';
 }

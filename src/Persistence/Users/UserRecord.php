@@ -6,58 +6,47 @@ namespace App\Persistence\Users;
 
 use App\Persistence\Record;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+
 class UserRecord extends Record
 {
+    protected static string $tableName = 'users';
+
     /** @var string int|bool|string */
-    public $is_admin = '0';
+    public string $is_admin = '0';
 
-    /** @var string */
-    public $email_address = '';
+    public string $email_address = '';
 
-    /** @var string */
-    public $password_hash = '';
+    public string $password_hash = '';
 
     /** @var int|bool|string */
     public $is_active = '1';
 
-    /** @var string */
-    public $timezone = '';
+    public string $timezone = '';
 
-    /** @var string */
-    public $first_name = '';
+    public string $first_name = '';
 
-    /** @var string */
-    public $last_name = '';
+    public string $last_name = '';
 
-    /** @var string */
-    public $display_name = '';
+    public string $display_name = '';
 
-    /** @var string */
-    public $billing_name = '';
+    public string $billing_name = '';
 
-    /** @var string */
-    public $billing_company = '';
+    public string $billing_company = '';
 
-    /** @var string */
-    public $billing_phone = '';
+    public string $billing_phone = '';
 
-    /** @var string */
-    public $billing_country = '';
+    public string $billing_country = '';
 
-    /** @var string */
-    public $billing_address = '';
+    public string $billing_address = '';
 
-    /** @var string */
-    public $billing_city = '';
+    public string $billing_city = '';
 
-    /** @var string */
-    public $billing_state_abbr = '';
+    public string $billing_state_abbr = '';
 
-    /** @var string */
-    public $billing_postal_code = '';
+    public string $billing_postal_code = '';
 
-    /** @var string */
-    public $created_at = '';
+    public string $created_at = '';
 
     /**
      * @return array<string, string>

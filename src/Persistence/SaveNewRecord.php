@@ -12,8 +12,7 @@ use function implode;
 
 class SaveNewRecord
 {
-    /** @var PDO */
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(PDO $pdo)
     {

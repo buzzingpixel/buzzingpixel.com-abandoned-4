@@ -16,11 +16,9 @@ use function strrev;
 
 abstract class Record
 {
-    /** @var string */
-    protected static $tableName = '';
+    protected static string $tableName = '';
 
-    /** @var string */
-    public $id = '';
+    public string $id = '';
 
     public function getTableName() : string
     {
