@@ -41,7 +41,7 @@ class GeneratePasswordResetToken
         /** @noinspection PhpUnhandledExceptionInspection */
         $record->id = $this->uuidFactory->uuid1()->toString();
 
-        $record->user_id = $user->getId();
+        $record->user_id = $user->id;
 
         $record->created_at = $currentDate->format(DateTimeInterface::ATOM);
 

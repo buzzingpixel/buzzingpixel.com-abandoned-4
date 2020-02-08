@@ -43,7 +43,7 @@ class GetAdminUserEditAction
             'Admin/UserEdit.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => 'Edit ' . $user->getEmailAddress() . ' | Admin']
+                    ['metaTitle' => 'Edit ' . $user->emailAddress . ' | Admin']
                 ),
                 'activeTab' => 'users',
                 'breadcrumbs' => [

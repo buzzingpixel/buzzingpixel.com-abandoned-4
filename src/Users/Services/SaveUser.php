@@ -10,12 +10,11 @@ use App\Persistence\SaveNewRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserModelToUserRecord;
+use App\Utilities\SimpleValidator;
 use Ramsey\Uuid\UuidFactoryInterface;
 use function count;
-use function filter_var;
 use function mb_strlen;
 use function password_hash;
-use const FILTER_VALIDATE_EMAIL;
 use const PASSWORD_DEFAULT;
 
 class SaveUser
@@ -49,15 +48,15 @@ class SaveUser
     {
         $errors = [];
 
-        if ($userModel->getPasswordHash() === '' && $userModel->getNewPassword() === '') {
+        if ($userModel->passwordHash === '' && $userModel->newPassword === '') {
             $errors['password'] = 'Password is required';
         }
 
-        if (filter_var($userModel->getEmailAddress(), FILTER_VALIDATE_EMAIL) === false) {
+        if (! SimpleValidator::email($userModel->emailAddress)) {
             $errors['emailAddress'] = 'A valid email address is required';
         }
 
-        $newPass = $userModel->getNewPassword();
+        $newPass = $userModel->newPassword;
 
         if ($newPass !== '' && mb_strlen($newPass) < self::MIN_PASSWORD_LENGTH) {
             $errors['password'] = 'Password is too short';
@@ -68,15 +67,13 @@ class SaveUser
         }
 
         if ($newPass !== '') {
-            $userModel->setPasswordHash(
-                (string) password_hash(
-                    $newPass,
-                    PASSWORD_DEFAULT
-                )
+            $userModel->passwordHash = (string) password_hash(
+                $newPass,
+                PASSWORD_DEFAULT
             );
         }
 
-        if ($userModel->getId() === '') {
+        if ($userModel->id === '') {
             return $this->saveNewUser($userModel);
         }
 
@@ -85,7 +82,7 @@ class SaveUser
 
     private function saveNewUser(UserModel $userModel) : Payload
     {
-        $email = $userModel->getEmailAddress();
+        $email = $userModel->emailAddress;
 
         $existingUser = ($this->fetchUserByEmailAddress)($email);
 
@@ -96,7 +93,7 @@ class SaveUser
         }
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $userModel->setId($this->uuidFactory->uuid1()->toString());
+        $userModel->id = $this->uuidFactory->uuid1()->toString();
 
         $userRecord = ($this->transformUserModelToUserRecord)($userModel);
 
@@ -105,11 +102,11 @@ class SaveUser
 
     private function saveExistingUser(UserModel $userModel) : Payload
     {
-        $existingUser = ($this->fetchUserById)($userModel->getId());
+        $existingUser = ($this->fetchUserById)($userModel->id);
 
         if ($existingUser === null) {
             return new Payload(Payload::STATUS_NOT_FOUND, [
-                'message' => 'User with id ' . $userModel->getId() . ' not found',
+                'message' => 'User with id ' . $userModel->id . ' not found',
             ]);
         }
 

@@ -21,7 +21,7 @@ class TransformCartModelToRecord
         $user = $model->getUser();
 
         if ($user !== null) {
-            $record->user_id = $user->getId();
+            $record->user_id = $user->id;
         }
 
         $record->total_items = (string) $model->getTotalItems();

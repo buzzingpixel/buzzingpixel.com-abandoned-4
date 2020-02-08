@@ -29,7 +29,7 @@
             {% set afterLabelHtml = softwareVersion.getDownloadFile() ? 'Currently: ' ~ softwareVersion.getDownloadFile() : '' %}
             {{ inputs.fileChoser('New File Download', 'new_download_file', '', message, afterLabelHtml) }}
             {{ inputs.textInput('Upgrade Price', 'upgrade_price', softwareVersion.getUpgradePrice(), message) }}
-            {{ inputs.dateChooser('Released On', 'released_on', softwareVersion.releasedOn.setTimezone(user.getTimezone()).format('Y-m-d h:i A'), message) }}
+            {{ inputs.dateChooser('Released On', 'released_on', softwareVersion.releasedOn.setTimezone(user.timezone).format('Y-m-d h:i A'), message) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

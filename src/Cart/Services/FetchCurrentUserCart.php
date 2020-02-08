@@ -66,7 +66,7 @@ class FetchCurrentUserCart
             null;
 
         $userCart = $user !== null ?
-            ($this->fetchCartByUserId)($user->getId()) :
+            ($this->fetchCartByUserId)($user->id) :
             null;
 
         if ($cookieCart !== null && $userCart !== null) {

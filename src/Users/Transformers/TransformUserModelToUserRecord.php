@@ -16,41 +16,43 @@ class TransformUserModelToUserRecord
     {
         $userRecord = new UserRecord();
 
-        $userRecord->id = $userModel->getId();
+        $userRecord->id = $userModel->id;
 
-        $userRecord->is_admin = $userModel->isAdmin() ? '1' : '0';
+        $userRecord->is_admin = $userModel->isAdmin ? '1' : '0';
 
-        $userRecord->email_address = $userModel->getEmailAddress();
+        $userRecord->email_address = $userModel->emailAddress;
 
-        $userRecord->password_hash = $userModel->getPasswordHash();
+        $userRecord->password_hash = $userModel->passwordHash;
 
-        $userRecord->is_active = $userModel->isActive() ? '1' : '0';
+        $userRecord->is_active = $userModel->isActive ? '1' : '0';
 
-        $userRecord->timezone = $userModel->getTimezone()->getName();
+        $userRecord->timezone = $userModel->timezone->getName();
 
-        $userRecord->first_name = $userModel->getFirstName();
+        $userRecord->first_name = $userModel->firstName;
 
-        $userRecord->last_name = $userModel->getLastName();
+        $userRecord->last_name = $userModel->lastName;
 
-        $userRecord->display_name = $userModel->getDisplayName();
+        $userRecord->display_name = $userModel->displayName;
 
-        $userRecord->billing_name = $userModel->getBillingName();
+        $userRecord->billing_name = $userModel->billingName;
 
-        $userRecord->billing_company = $userModel->getBillingCompany();
+        $userRecord->billing_company = $userModel->billingCompany;
 
-        $userRecord->billing_phone = $userModel->getBillingPhone();
+        $userRecord->billing_phone = $userModel->billingPhone;
 
-        $userRecord->billing_country = $userModel->getBillingCountry();
+        $userRecord->billing_country = $userModel->billingCountry;
 
-        $userRecord->billing_address = $userModel->getBillingAddress();
+        $userRecord->billing_address = $userModel->billingAddress;
 
-        $userRecord->billing_city = $userModel->getBillingCity();
+        $userRecord->billing_city = $userModel->billingCity;
 
-        $userRecord->billing_state_abbr = $userModel->getBillingStateAbbr();
+        $userRecord->billing_state_abbr = $userModel->billingStateAbbr;
 
-        $userRecord->billing_postal_code = $userModel->getBillingPostalCode();
+        $userRecord->billing_postal_code = $userModel->billingPostalCode;
 
-        $userRecord->created_at = $userModel->getCreatedAt()->format(DateTimeInterface::ATOM);
+        $userRecord->created_at = $userModel->createdAt->format(
+            DateTimeInterface::ATOM
+        );
 
         return $userRecord;
     }

@@ -33,7 +33,7 @@ class RequireAdminAction
     ) : ResponseInterface {
         $user = $this->userApi->fetchLoggedInUser();
 
-        if ($user === null || ! $user->isAdmin()) {
+        if ($user === null || ! $user->isAdmin) {
             return ($this->responder)(
                 new MetaPayload(
                     ['metaTitle' => 'Unauthorized']

@@ -44,10 +44,11 @@ class UserCreateCommand extends Command
             true
         );
 
-        $payload = $this->userApi->saveUser(new UserModel([
-            'emailAddress' => $emailAddress,
-            'newPassword' => $password,
-        ]));
+        $userModel               = new UserModel();
+        $userModel->emailAddress = $emailAddress;
+        $userModel->newPassword  = $password;
+
+        $payload = $this->userApi->saveUser($userModel);
 
         if ($payload->getStatus() !== Payload::STATUS_CREATED) {
             return $this->error($output, $payload);

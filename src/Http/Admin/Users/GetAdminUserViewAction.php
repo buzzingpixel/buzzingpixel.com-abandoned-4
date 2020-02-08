@@ -43,7 +43,7 @@ class GetAdminUserViewAction
             'Admin/UserView.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => $user->getEmailAddress() . ' | Admin']
+                    ['metaTitle' => $user->emailAddress . ' | Admin']
                 ),
                 'activeTab' => 'users',
                 'breadcrumbs' => [

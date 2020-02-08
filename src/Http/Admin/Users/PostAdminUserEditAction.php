@@ -102,22 +102,22 @@ class PostAdminUserEditAction
                         'inputValues' => $inputValues,
                     ],
                 ),
-                $user->getId(),
+                $user->id,
             );
         }
 
-        $user->setIsAdmin($inputValues['is_admin']);
-        $user->setEmailAddress($inputValues['email_address']);
-        $user->setTimezone($userTimezone);
-        $user->setFirstName($inputValues['first_name']);
-        $user->setLastName($inputValues['last_name']);
-        $user->setDisplayName($inputValues['display_name']);
-        $user->setBillingName($inputValues['billing_name']);
-        $user->setBillingCompany($inputValues['billing_company']);
-        $user->setBillingPhone($inputValues['billing_phone']);
-        $user->setBillingAddress($inputValues['billing_address']);
-        $user->setBillingCountry($inputValues['billing_country']);
-        $user->setBillingPostalCode($inputValues['billing_postal_code']);
+        $user->isAdmin           = $inputValues['is_admin'];
+        $user->emailAddress      = $inputValues['email_address'];
+        $user->timezone          = $userTimezone;
+        $user->firstName         = $inputValues['first_name'];
+        $user->lastName          = $inputValues['last_name'];
+        $user->displayName       = $inputValues['display_name'];
+        $user->billingName       = $inputValues['billing_name'];
+        $user->billingCompany    = $inputValues['billing_company'];
+        $user->billingPhone      = $inputValues['billing_phone'];
+        $user->billingAddress    = $inputValues['billing_address'];
+        $user->billingCountry    = $inputValues['billing_country'];
+        $user->billingPostalCode = $inputValues['billing_postal_code'];
 
         $this->userApi->fillModelFromPostalCode($user);
 
@@ -129,13 +129,13 @@ class PostAdminUserEditAction
                     Payload::STATUS_NOT_UPDATED,
                     ['message' => 'An unknown error occurred'],
                 ),
-                $user->getId(),
+                $user->id,
             );
         }
 
         return ($this->responder)(
             $payload,
-            $user->getId(),
+            $user->id,
         );
     }
 }

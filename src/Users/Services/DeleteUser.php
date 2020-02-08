@@ -48,7 +48,7 @@ class DeleteUser
             'DELETE FROM users WHERE id=:id'
         );
 
-        $statement->execute([':id' => $user->getId()]);
+        $statement->execute([':id' => $user->id]);
     }
 
     private function deleteUserSessions(UserModel $user) : void
@@ -57,7 +57,7 @@ class DeleteUser
             'DELETE FROM user_sessions WHERE user_id=:user_id'
         );
 
-        $statement->execute([':user_id' => $user->getId()]);
+        $statement->execute([':user_id' => $user->id]);
     }
 
     private function deletePasswordResetTokens(UserModel $user) : void
@@ -66,6 +66,6 @@ class DeleteUser
             'DELETE FROM user_password_reset_tokens WHERE user_id=:user_id'
         );
 
-        $statement->execute([':user_id' => $user->getId()]);
+        $statement->execute([':user_id' => $user->id]);
     }
 }

@@ -47,7 +47,7 @@ class UserDemoteCommand extends Command
             return 1;
         }
 
-        $user->setIsAdmin(false);
+        $user->isAdmin = false;
 
         $payload = $this->userApi->saveUser($user);
 

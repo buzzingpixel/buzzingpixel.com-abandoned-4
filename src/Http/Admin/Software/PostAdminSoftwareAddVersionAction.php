@@ -55,7 +55,7 @@ class PostAdminSoftwareAddVersionAction
 
         $now = new DateTimeImmutable(
             'now',
-            $user->getTimezone()
+            $user->timezone
         );
 
         $postData = $request->getParsedBody();
@@ -108,7 +108,7 @@ class PostAdminSoftwareAddVersionAction
         $releasedOn = DateTimeImmutable::createFromFormat(
             'Y-m-d h:i A',
             (string) $inputValues['released_on'],
-            $user->getTimezone()
+            $user->timezone
         );
         assert($releasedOn instanceof DateTimeImmutable);
 

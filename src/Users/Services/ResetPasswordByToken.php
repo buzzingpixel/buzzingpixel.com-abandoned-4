@@ -35,7 +35,7 @@ class ResetPasswordByToken
                 );
             }
 
-            $user->setNewPassword($newPassword);
+            $user->newPassword = $newPassword;
 
             $payload = ($this->saveUser)($user);
 

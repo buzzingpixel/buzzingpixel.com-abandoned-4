@@ -194,7 +194,7 @@ class CartModel extends Model
         }
 
         // We only charge sales tax in TN
-        if ($user->getBillingStateAbbr() !== 'TN') {
+        if ($user->billingStateAbbr !== 'TN') {
             return 0.0;
         }
 
@@ -215,13 +215,13 @@ class CartModel extends Model
             return false;
         }
 
-        return $user->getFirstName() !== '' &&
-            $user->getLastName() !== '' &&
-            $user->getBillingName() !== '' &&
-            $user->getBillingCountry() !== '' &&
-            $user->getBillingAddress() !== '' &&
-            $user->getBillingCity() !== '' &&
-            $user->getBillingPostalCode() !== '' &&
-            $user->getBillingStateAbbr() !== '';
+        return $user->firstName !== '' &&
+            $user->lastName !== '' &&
+            $user->billingName !== '' &&
+            $user->billingCountry !== '' &&
+            $user->billingAddress !== '' &&
+            $user->billingCity !== '' &&
+            $user->billingPostalCode !== '' &&
+            $user->billingStateAbbr !== '';
     }
 }

@@ -72,14 +72,14 @@
                 {% for model in userModels %}
                     <tr class="Table__Row">
                         <td class="Table__Col">
-                            {% if model.isAdmin() %}Yes{% else %}No{% endif %}
+                            {% if model.isAdmin %}Yes{% else %}No{% endif %}
                         </td>
-                        <td class="Table__Col">{{ model.getEmailAddress() }}</td>
-                        <td class="Table__Col">{{ model.getFirstName() }}</td>
-                        <td class="Table__Col">{{ model.getLastName() }}</td>
-                        <td class="Table__Col">{{ model.getDisplayName }}</td>
+                        <td class="Table__Col">{{ model.emailAddress }}</td>
+                        <td class="Table__Col">{{ model.firstName }}</td>
+                        <td class="Table__Col">{{ model.lastName }}</td>
+                        <td class="Table__Col">{{ model.displayName }}</td>
                         <td class="Table__Col">
-                            <a href="/admin/users/view/{{ model.getId() }}">
+                            <a href="/admin/users/view/{{ model.id }}">
                                 More&nbsp;&raquo;
                             </a>
                         </td>

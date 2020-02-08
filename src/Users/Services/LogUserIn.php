@@ -33,7 +33,7 @@ class LogUserIn
 
     public function __invoke(UserModel $user, string $password) : Payload
     {
-        $hash = $user->getPasswordHash();
+        $hash = $user->passwordHash;
 
         if (! password_verify($password, $hash)) {
             return new Payload(
@@ -47,11 +47,9 @@ class LogUserIn
              * @noinspection PhpUnhandledExceptionInspection, PhpStrictTypeCheckingInspection
              * @psalm-suppress NullArgument
              */
-            $user->setPasswordHash(
-                password_hash(
-                    $password,
-                    PASSWORD_DEFAULT
-                )
+            $user->passwordHash = password_hash(
+                $password,
+                PASSWORD_DEFAULT
             );
 
             ($this->saveUser)($user);

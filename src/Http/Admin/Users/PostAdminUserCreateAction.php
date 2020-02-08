@@ -101,25 +101,24 @@ class PostAdminUserCreateAction
             );
         }
 
-        $userModel = new UserModel([
-            'isAdmin' => $inputValues['is_admin'],
-            'emailAddress' => $inputValues['email_address'],
-            'newPassword' => $inputValues['password'],
-            'timezone' => $userTimezone,
-            'firstName' => $inputValues['first_name'],
-            'lastName' => $inputValues['last_name'],
-            'displayName' => $inputValues['display_name'],
-            'billingName' => $inputValues['billing_name'],
-            'billingCompany' => $inputValues['billing_company'],
-            'billingPhone' => $inputValues['billing_phone'],
-            'billingAddress' => $inputValues['billing_address'],
-            'billingCountry' => $inputValues['billing_country'],
-            'billingPostalCode' => $inputValues['billing_postal_code'],
-        ]);
+        $user                    = new UserModel();
+        $user->isAdmin           = $inputValues['is_admin'];
+        $user->emailAddress      = $inputValues['email_address'];
+        $user->newPassword       = $inputValues['password'];
+        $user->timezone          = $userTimezone;
+        $user->firstName         = $inputValues['first_name'];
+        $user->lastName          = $inputValues['last_name'];
+        $user->displayName       = $inputValues['display_name'];
+        $user->billingName       = $inputValues['billing_name'];
+        $user->billingCompany    = $inputValues['billing_company'];
+        $user->billingPhone      = $inputValues['billing_phone'];
+        $user->billingAddress    = $inputValues['billing_address'];
+        $user->billingCountry    = $inputValues['billing_country'];
+        $user->billingPostalCode = $inputValues['billing_postal_code'];
 
-        $this->userApi->fillModelFromPostalCode($userModel);
+        $this->userApi->fillModelFromPostalCode($user);
 
-        $payload = $this->userApi->saveUser($userModel);
+        $payload = $this->userApi->saveUser($user);
 
         if ($payload->getStatus() !== Payload::STATUS_CREATED) {
             return ($this->responder)(

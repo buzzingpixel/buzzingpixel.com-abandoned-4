@@ -108,7 +108,7 @@ class PostAdminSoftwareVersionEditAction
         $releasedOn = DateTimeImmutable::createFromFormat(
             'Y-m-d h:i A',
             $inputValues['released_on'],
-            $user->getTimezone()
+            $user->timezone
         );
         assert($releasedOn instanceof DateTimeImmutable);
 

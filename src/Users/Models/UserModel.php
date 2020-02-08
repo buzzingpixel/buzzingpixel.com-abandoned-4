@@ -4,33 +4,18 @@ declare(strict_types=1);
 
 namespace App\Users\Models;
 
-use App\Payload\Model;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 
-class UserModel extends Model
+class UserModel
 {
     /**
      * @inheritDoc
      */
-    public function __construct(array $vars = [])
+    public function __construct()
     {
-        parent::__construct($vars);
-
-        /** @psalm-suppress UninitializedProperty */
-        $timeZoneInstance = $this->timezone instanceof DateTimeZone;
-
-        if (! $timeZoneInstance) {
-            $this->timezone = new DateTimeZone('US/Central');
-        }
-
-        /** @psalm-suppress UninitializedProperty */
-        $createdAtInstance = $this->createdAt instanceof DateTimeImmutable;
-
-        if ($createdAtInstance) {
-            return;
-        }
+        $this->timezone = new DateTimeZone('US/Central');
 
         /** @noinspection PhpUnhandledExceptionInspection */
         $this->createdAt = new DateTimeImmutable(
@@ -39,271 +24,43 @@ class UserModel extends Model
         );
     }
 
-    private string $id = '';
+    public string $id = '';
 
-    public function setId(string $id) : UserModel
-    {
-        $this->id = $id;
+    public bool $isAdmin = false;
 
-        return $this;
-    }
+    public string $emailAddress = '';
 
-    public function getId() : string
-    {
-        return $this->id;
-    }
+    public string $passwordHash = '';
 
-    private bool $isAdmin = false;
+    public string $newPassword = '';
 
-    public function setIsAdmin(bool $isAdmin) : UserModel
-    {
-        $this->isAdmin = $isAdmin;
+    public bool $isActive = true;
 
-        return $this;
-    }
+    public DateTimeZone $timezone;
 
-    public function isAdmin() : bool
-    {
-        return $this->isAdmin;
-    }
+    public string $firstName = '';
 
-    private string $emailAddress = '';
+    public string $lastName = '';
 
-    public function setEmailAddress(string $emailAddress) : UserModel
-    {
-        $this->emailAddress = $emailAddress;
+    public string $displayName = '';
 
-        return $this;
-    }
+    public string $billingName = '';
 
-    public function getEmailAddress() : string
-    {
-        return $this->emailAddress;
-    }
+    public string $billingCompany = '';
 
-    private string $passwordHash = '';
+    public string $billingPhone = '';
 
-    public function setPasswordHash(string $passwordHash) : UserModel
-    {
-        $this->passwordHash = $passwordHash;
+    public string $billingCountry = '';
 
-        return $this;
-    }
+    public string $billingAddress = '';
 
-    public function getPasswordHash() : string
-    {
-        return $this->passwordHash;
-    }
+    public string $billingCity = '';
 
-    private string $newPassword = '';
+    public string $billingStateAbbr = '';
 
-    public function setNewPassword(string $newPassword) : UserModel
-    {
-        $this->newPassword = $newPassword;
+    public string $billingPostalCode = '';
 
-        return $this;
-    }
-
-    public function getNewPassword() : string
-    {
-        return $this->newPassword;
-    }
-
-    private bool $isActive = true;
-
-    public function setIsActive(bool $isActive) : UserModel
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    public function isActive() : bool
-    {
-        return $this->isActive;
-    }
-
-    /** @psalm-suppress PropertyNotSetInConstructor */
-    private DateTimeZone $timezone;
-
-    public function setTimezone(DateTimeZone $timezone) : UserModel
-    {
-        $this->timezone = $timezone;
-
-        return $this;
-    }
-
-    public function getTimezone() : DateTimeZone
-    {
-        return $this->timezone;
-    }
-
-    private string $firstName = '';
-
-    public function setFirstName(string $firstName) : UserModel
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getFirstName() : string
-    {
-        return $this->firstName;
-    }
-
-    private string $lastName = '';
-
-    public function setLastName(string $lastName) : UserModel
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getLastName() : string
-    {
-        return $this->lastName;
-    }
-
-    private string $displayName = '';
-
-    public function setDisplayName(string $displayName) : UserModel
-    {
-        $this->displayName = $displayName;
-
-        return $this;
-    }
-
-    public function getDisplayName() : string
-    {
-        return $this->displayName;
-    }
-
-    private string $billingName = '';
-
-    public function setBillingName(string $billingName) : UserModel
-    {
-        $this->billingName = $billingName;
-
-        return $this;
-    }
-
-    public function getBillingName() : string
-    {
-        return $this->billingName;
-    }
-
-    private string $billingCompany = '';
-
-    public function setBillingCompany(string $billingCompany) : UserModel
-    {
-        $this->billingCompany = $billingCompany;
-
-        return $this;
-    }
-
-    public function getBillingCompany() : string
-    {
-        return $this->billingCompany;
-    }
-
-    private string $billingPhone = '';
-
-    public function setBillingPhone(string $billingPhone) : UserModel
-    {
-        $this->billingPhone = $billingPhone;
-
-        return $this;
-    }
-
-    public function getBillingPhone() : string
-    {
-        return $this->billingPhone;
-    }
-
-    private string $billingCountry = '';
-
-    public function setBillingCountry(string $billingCountry) : UserModel
-    {
-        $this->billingCountry = $billingCountry;
-
-        return $this;
-    }
-
-    public function getBillingCountry() : string
-    {
-        return $this->billingCountry;
-    }
-
-    private string $billingAddress = '';
-
-    public function setBillingAddress(string $billingAddress) : UserModel
-    {
-        $this->billingAddress = $billingAddress;
-
-        return $this;
-    }
-
-    public function getBillingAddress() : string
-    {
-        return $this->billingAddress;
-    }
-
-    private string $billingCity = '';
-
-    public function setBillingCity(string $billingCity) : UserModel
-    {
-        $this->billingCity = $billingCity;
-
-        return $this;
-    }
-
-    public function getBillingCity() : string
-    {
-        return $this->billingCity;
-    }
-
-    private string $billingStateAbbr = '';
-
-    public function setBillingStateAbbr(string $billingStateAbbr) : UserModel
-    {
-        $this->billingStateAbbr = $billingStateAbbr;
-
-        return $this;
-    }
-
-    public function getBillingStateAbbr() : string
-    {
-        return $this->billingStateAbbr;
-    }
-
-    private string $billingPostalCode = '';
-
-    public function setBillingPostalCode(string $billingPostalCode) : UserModel
-    {
-        $this->billingPostalCode = $billingPostalCode;
-
-        return $this;
-    }
-
-    public function getBillingPostalCode() : string
-    {
-        return $this->billingPostalCode;
-    }
-
-    /** @psalm-suppress PropertyNotSetInConstructor */
-    private DateTimeImmutable $createdAt;
-
-    protected function setCreatedAt(DateTimeImmutable $createdAt) : void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getCreatedAt() : DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
+    public DateTimeImmutable $createdAt;
 
     /**
      * @return mixed[]
@@ -313,41 +70,41 @@ class UserModel extends Model
         $array = [];
 
         if (! $excludeId) {
-            $array['id'] = $this->getId();
+            $array['id'] = $this->id;
         }
 
-        $array['isAdmin'] = $this->isAdmin();
+        $array['isAdmin'] = $this->isAdmin;
 
-        $array['emailAddress'] = $this->getEmailAddress();
+        $array['emailAddress'] = $this->emailAddress;
 
         // Lets not put this in the array for now
-        // $array['passwordHash'] = $this->getPasswordHash();
+        // $array['passwordHash'] = $this->passwordHash;
 
-        $array['isActive'] = $this->isActive();
+        $array['isActive'] = $this->isActive;
 
-        $array['timezone'] = $this->getTimezone()->getName();
+        $array['timezone'] = $this->timezone->getName();
 
-        $array['firstName'] = $this->getFirstName();
+        $array['firstName'] = $this->firstName;
 
-        $array['lastName'] = $this->getLastName();
+        $array['lastName'] = $this->lastName;
 
-        $array['displayName'] = $this->getDisplayName();
+        $array['displayName'] = $this->displayName;
 
-        $array['billingName'] = $this->getBillingName();
+        $array['billingName'] = $this->billingName;
 
-        $array['billingCompany'] = $this->getBillingCompany();
+        $array['billingCompany'] = $this->billingCompany;
 
-        $array['billingPhone'] = $this->getBillingPhone();
+        $array['billingPhone'] = $this->billingPhone;
 
-        $array['billingCountry'] = $this->getBillingCountry();
+        $array['billingCountry'] = $this->billingCountry;
 
-        $array['billingAddress'] = $this->getBillingAddress();
+        $array['billingAddress'] = $this->billingAddress;
 
-        $array['billingCity'] = $this->getBillingCity();
+        $array['billingCity'] = $this->billingCity;
 
-        $array['billingPostalCode'] = $this->getBillingPostalCode();
+        $array['billingPostalCode'] = $this->billingPostalCode;
 
-        $array['createdAt'] = $this->getCreatedAt()->format(
+        $array['createdAt'] = $this->createdAt->format(
             DateTimeInterface::ATOM
         );
 

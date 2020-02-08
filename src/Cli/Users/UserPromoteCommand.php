@@ -47,7 +47,7 @@ class UserPromoteCommand extends Command
             return 1;
         }
 
-        $user->setIsAdmin(true);
+        $user->isAdmin = true;
 
         $payload = $this->userApi->saveUser($user);
 

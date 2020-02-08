@@ -24,7 +24,7 @@
             <tr class="Table__HeadControlRow">
                 <td class="Table__HeadControlCol" colspan="2">
                     <form
-                        action="/admin/users/delete/{{ user.getId() }}"
+                        action="/admin/users/delete/{{ user.id }}"
                         method="post"
                         style="display: inline-block"
                         ref="FormSubmitConfirm"
@@ -35,7 +35,7 @@
                         <input class="button" type="submit" value="Delete">
                     </form>
                     <a
-                        href="/admin/users/edit/{{ user.getId() }}"
+                        href="/admin/users/edit/{{ user.id }}"
                         class="button"
                     >
                         Edit
@@ -53,7 +53,7 @@
                     Admin?
                 </td>
                 <td class="Table__Col">
-                    {{ user.isAdmin() ? 'Yes' : 'No' }}
+                    {{ user.isAdmin ? 'Yes' : 'No' }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -61,7 +61,7 @@
                     Email
                 </td>
                 <td class="Table__Col">
-                    {{ user.getEmailAddress() }}
+                    {{ user.emailAddress }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -69,7 +69,7 @@
                     First name
                 </td>
                 <td class="Table__Col">
-                    {{ user.getFirstName() }}
+                    {{ user.firstName }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -77,7 +77,7 @@
                     Last name
                 </td>
                 <td class="Table__Col">
-                    {{ user.getLastName() }}
+                    {{ user.lastName }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -85,7 +85,7 @@
                     Display Name
                 </td>
                 <td class="Table__Col">
-                    {{ user.getDisplayName() }}
+                    {{ user.displayName }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -93,7 +93,7 @@
                     Billing Name
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingName() }}
+                    {{ user.billingName }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -101,7 +101,7 @@
                     Billing Company
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingCompany() }}
+                    {{ user.billingCompany }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -109,7 +109,7 @@
                     Billing Phone
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingPhone() }}
+                    {{ user.billingPhone }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -117,7 +117,7 @@
                     Billing Address
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingAddress() }}
+                    {{ user.billingAddress }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -125,7 +125,7 @@
                     Billing City
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingCity() }}
+                    {{ user.billingCity }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -133,7 +133,7 @@
                     Billing State
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingStateAbbr() }}
+                    {{ user.billingStateAbbr }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -141,7 +141,7 @@
                     Billing Postal Code
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingPostalCode() }}
+                    {{ user.billingPostalCode }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -149,7 +149,7 @@
                     Billing Country
                 </td>
                 <td class="Table__Col">
-                    {{ user.getBillingCountry() }}
+                    {{ user.billingCountry }}
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -158,10 +158,10 @@
                 </td>
                 <td class="Table__Col">
                     {{
-                        user.getCreatedAt()
-                            .setTimezone(loggedInUser.getTimezone())
+                        user.createdAt
+                            .setTimezone(loggedInUser.timezone)
                             .format('Y-m-d h:i a')
-                    }} ({{ loggedInUser.getTimezone().getName() }})
+                    }} ({{ loggedInUser.timezone.getName() }})
                 </td>
             </tr>
             <tr class="Table__Row">
@@ -169,7 +169,7 @@
                     User Timezone
                 </td>
                 <td class="Table__Col">
-                    {{ user.getTimezone().getName() }}
+                    {{ user.timezone.getName() }}
                 </td>
             </tr>
         {% endblock %}

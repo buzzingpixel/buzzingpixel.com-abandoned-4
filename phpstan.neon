@@ -15,18 +15,6 @@ parameters:
             path: %currentWorkingDirectory%/src/Users/Services/SaveUser.php
         -
             message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
-            path: %currentWorkingDirectory%/src/Users/Models/UserModel.php
-        -
-            message: '#Instanceof between DateTimeZone and DateTimeZone will always evaluate to true\.#'
-            path: %currentWorkingDirectory%/src/Users/Models/UserModel.php
-        -
-            message: '#Negated boolean expression is always false\.#'
-            path: %currentWorkingDirectory%/src/Users/Models/UserModel.php
-        -
-            message: '#If condition is always true\.#'
-            path: %currentWorkingDirectory%/src/Users/Models/UserModel.php
-        -
-            message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
             path: %currentWorkingDirectory%/src/Software/Models/SoftwareVersionModel.php
         -
             message: '#If condition is always true\.#'
@@ -56,42 +44,8 @@ parameters:
             message: '#Only booleans are allowed in a negated boolean, string given\.#'
             path: %currentWorkingDirectory%/src/Schedule/Services/SaveSchedule.php
         -
-            message: '#Offset 0 does not exist on array\(\)\.#'
-            path: %currentWorkingDirectory%/tests/Software/Services/SaveSoftwareTest.php
-        -
-            message: '#Offset 1 does not exist on array\(\)\.#'
-            path: %currentWorkingDirectory%/tests/Software/Services/SaveSoftwareTest.php
-        -
-            message: "#Call to static method PHPUnit\\\\Framework\\\\Assert::assertInstanceOf\\(\\) with 'DateTimeImmutable' and DateTimeImmutable will always evaluate to true\\.#"
-            path: %currentWorkingDirectory%/tests/Software/Services/FetchSoftwareBySlugTest.php
-        -
             message: "#Casting to array<string> something that's already array<string>\\.#"
             path: %currentWorkingDirectory%/src/Persistence/RecordQuery.php
-        -
-            message: "#Offset 0 does not exist on array\\(\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/PostAdminSoftwareCreateResponderTest.php
-        -
-            message: "#Offset 1 does not exist on array\\('PostMessage'\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/PostAdminSoftwareCreateResponderTest.php
-        -
-            message: "#Offset 0 does not exist on array\\(\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
-        -
-            message: "#Offset 1 does not exist on array\\('Admin\\/SoftwareView…'\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
-        -
-            message: "#Offset 0 does not exist on array\\(\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareCreateActionTest.php
-        -
-            message: "#Offset 1 does not exist on array\\('Admin…'\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareCreateActionTest.php
-        -
-            message: "#Offset 0 does not exist on array\\(\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareActionTest.php
-        -
-            message: "#Offset 1 does not exist on array\\('Admin\\/Software.twig'\\)\\.#"
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareActionTest.php
-        - '#Parameter \#2 \$algo of function Safe\\password_hash expects int, string given\.#'
         - '#Parameter \#2 \$algo of function Safe\\password_hash expects int, null given\.#'
         -
             message: '#If condition is always true\.#'

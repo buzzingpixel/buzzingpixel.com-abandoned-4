@@ -79,9 +79,9 @@ class PostalCodeService
 
     public function fillModelFromPostalCode(UserModel $model) : void
     {
-        $postalCode = $model->getBillingPostalCode();
+        $postalCode = $model->billingPostalCode;
 
-        $countryCode = $model->getBillingCountry();
+        $countryCode = $model->billingCountry;
 
         if (! $this->validatePostalCode($postalCode, $countryCode)) {
             return;
@@ -91,8 +91,8 @@ class PostalCodeService
 
         $place =  (array) ($json['places'][0] ?? []);
 
-        $model->setBillingCity((string) ($place['place name'] ?? ''));
+        $model->billingCity = (string) ($place['place name'] ?? '');
 
-        $model->setBillingStateAbbr((string) ($place['state abbreviation'] ?? ''));
+        $model->billingStateAbbr = (string) ($place['state abbreviation'] ?? '');
     }
 }

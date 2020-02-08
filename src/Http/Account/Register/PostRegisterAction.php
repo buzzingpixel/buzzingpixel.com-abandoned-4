@@ -56,10 +56,9 @@ class PostRegisterAction
             );
         }
 
-        $user = new UserModel([
-            'emailAddress' => $emailAddress,
-            'newPassword' => $password,
-        ]);
+        $user               = new UserModel();
+        $user->emailAddress = $emailAddress;
+        $user->newPassword  = $password;
 
         $saveUserPayload = ($this->saveUser)($user);
 
