@@ -16,24 +16,24 @@ class TransformModelToRecord
     {
         $record = new ScheduleTrackingRecord();
 
-        $record->id = $model->getId();
+        $record->id = $model->id;
 
-        $record->class = $model->getClass();
+        $record->class = $model->class;
 
-        $record->is_running = $model->isRunning() ? '1' : '0';
+        $record->is_running = $model->isRunning ? '1' : '0';
 
         $record->last_run_start_at = '';
 
         $record->last_run_end_at = '';
 
-        $lastRunStartAt = $model->getLastRunStartAt();
+        $lastRunStartAt = $model->lastRunStartAt;
 
         if ($lastRunStartAt !== null) {
             $record->last_run_start_at = $lastRunStartAt
                 ->format(DateTimeInterface::ATOM);
         }
 
-        $lastRunEndAt = $model->getLastRunEndAt();
+        $lastRunEndAt = $model->lastRunEndAt;
 
         if ($lastRunEndAt !== null) {
             $record->last_run_end_at = $lastRunEndAt

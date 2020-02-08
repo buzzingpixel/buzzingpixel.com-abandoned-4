@@ -4,100 +4,41 @@ declare(strict_types=1);
 
 namespace App\Schedule\Models;
 
-use App\Payload\Model;
 use DateTimeImmutable;
-use InvalidArgumentException;
+use RuntimeException;
 use function gettype;
 use function in_array;
 
-class ScheduleItemModel extends Model
+class ScheduleItemModel
 {
-    private string $id = '';
+    public string $id = '';
 
-    public function setId(string $id) : void
-    {
-        $this->id = $id;
-    }
-
-    public function getId() : string
-    {
-        return $this->id;
-    }
-
-    private string $class = '';
-
-    protected function setClass(string $class) : void
-    {
-        $this->class = $class;
-    }
-
-    public function getClass() : string
-    {
-        return $this->class;
-    }
+    public string $class = '';
 
     /** @var float|int|string  */
-    private $runEvery = '';
+    public $runEvery = '';
 
     /**
      * @param float|int|string $runEvery
      */
-    protected function setRunEvery($runEvery) : void
+    public function checkRunEveryValue($runEvery) : void
     {
         $type = gettype($runEvery);
 
         $allowed = ['float', 'integer', 'string'];
 
-        if (! in_array($type, $allowed, true)) {
-            throw new InvalidArgumentException(
-                'RunEvery must be a float, integer, or string'
-            );
+        if (in_array($type, $allowed, true)) {
+            return;
         }
 
-        $this->runEvery = $runEvery;
+        throw new RuntimeException(
+            'RunEvery must be a float, integer, or string'
+        );
     }
 
-    /**
-     * @return float|int|string
-     */
-    public function getRunEvery()
-    {
-        return $this->runEvery;
-    }
+    public bool $isRunning = false;
 
-    private bool $isRunning = false;
+    public ?DateTimeImmutable $lastRunStartAt = null;
 
-    public function setIsRunning(bool $isRunning) : void
-    {
-        $this->isRunning = $isRunning;
-    }
-
-    public function isRunning() : bool
-    {
-        return $this->isRunning;
-    }
-
-    private ?DateTimeImmutable $lastRunStartAt = null;
-
-    public function setLastRunStartAt(?DateTimeImmutable $lastRunStartAt) : void
-    {
-        $this->lastRunStartAt = $lastRunStartAt;
-    }
-
-    public function getLastRunStartAt() : ?DateTimeImmutable
-    {
-        return $this->lastRunStartAt;
-    }
-
-    private ?DateTimeImmutable $lastRunEndAt = null;
-
-    public function setLastRunEndAt(?DateTimeImmutable $lastRunEndAt) : void
-    {
-        $this->lastRunEndAt = $lastRunEndAt;
-    }
-
-    public function getLastRunEndAt() : ?DateTimeImmutable
-    {
-        return $this->lastRunEndAt;
-    }
+    public ?DateTimeImmutable $lastRunEndAt = null;
 }

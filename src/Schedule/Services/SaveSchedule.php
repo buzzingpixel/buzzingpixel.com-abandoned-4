@@ -35,7 +35,7 @@ class SaveSchedule
 
     public function __invoke(ScheduleItemModel $model) : Payload
     {
-        if ($model->getClass() === '') {
+        if ($model->class === '') {
             return new Payload(
                 Payload::STATUS_NOT_VALID,
                 ['message' => 'Class is required']
@@ -45,7 +45,7 @@ class SaveSchedule
         try {
             $record = ($this->transformModelToRecord)($model);
 
-            if (! $model->getId()) {
+            if (! $model->id) {
                 return $this->saveNewRecord($record, $model);
             }
 
@@ -75,7 +75,7 @@ class SaveSchedule
             throw new Exception();
         }
 
-        $model->setId($uid);
+        $model->id;
 
         return $payload;
     }

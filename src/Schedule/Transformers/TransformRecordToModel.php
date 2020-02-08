@@ -43,22 +43,31 @@ class TransformRecordToModel
             $runEvery = Frequency::ALWAYS;
         }
 
-        return new ScheduleItemModel([
-            'id' => $record->id,
-            'class' => $record->class,
-            'runEvery' => $runEvery,
-            'isRunning' => in_array(
-                $record->is_running,
-                [
-                    '1',
-                    1,
-                    'true',
-                    true,
-                ],
-                true
-            ),
-            'lastRunStartAt' => $lastRunStartAt,
-            'lastRunEndAt' => $lastRunEndAt,
-        ]);
+        $model = new ScheduleItemModel();
+
+        $model->id = $record->id;
+
+        $model->class = $record->class;
+
+        $model->checkRunEveryValue($runEvery);
+
+        $model->runEvery = $runEvery;
+
+        $model->isRunning = in_array(
+            $record->is_running,
+            [
+                '1',
+                1,
+                'true',
+                true,
+            ],
+            true
+        );
+
+        $model->lastRunStartAt = $lastRunStartAt;
+
+        $model->lastRunEndAt = $lastRunEndAt;
+
+        return $model;
     }
 }

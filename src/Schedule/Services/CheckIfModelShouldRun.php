@@ -37,7 +37,7 @@ class CheckIfModelShouldRun
 
         $currentTimeStamp = $currentTime->getTimestamp();
 
-        $lastRunStartAt = $model->getLastRunStartAt();
+        $lastRunStartAt = $model->lastRunStartAt;
 
         $lastRunTimeStamp = 0;
 
@@ -50,11 +50,11 @@ class CheckIfModelShouldRun
         $secondsSinceLastRun = $currentTimeStamp - $lastRunTimeStamp;
 
         $runEvery = $this->translateRunEvery->getTranslatedValue(
-            $model->getRunEvery()
+            $model->runEvery
         );
 
         // If the task is running, wait one hour before trying again
-        if ($secondsSinceLastRun < $oneHourInSeconds && $model->isRunning()) {
+        if ($secondsSinceLastRun < $oneHourInSeconds && $model->isRunning) {
             return false;
         }
 

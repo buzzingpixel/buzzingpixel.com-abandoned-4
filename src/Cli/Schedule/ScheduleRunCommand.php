@@ -86,7 +86,8 @@ class ScheduleRunCommand extends Command
         try {
             $this->processScheduleItemInner($model);
         } catch (Throwable $e) {
-            $model->setIsRunning(false);
+            $model->isRunning = false;
+
             ($this->saveSchedule)($model);
 
             $this->output->writeln(
@@ -94,8 +95,9 @@ class ScheduleRunCommand extends Command
             );
 
             $this->output->writeln(
-                '<fg=red>' . $model->getClass() . '</>'
+                '<fg=red>' . $model->class . '</>'
             );
+
             $this->output->writeln(
                 '<fg=red>Message: ' . $e->getMessage() . '</>'
             );
@@ -109,9 +111,9 @@ class ScheduleRunCommand extends Command
     {
         $shouldRun = $this->checkIfModelShouldRun->check($model);
 
-        if ($model->isRunning() && $shouldRun) {
+        if ($model->isRunning && $shouldRun) {
             $this->output->writeln(
-                '<fg=yellow>' . $model->getClass() . ' is currently running</>'
+                '<fg=yellow>' . $model->class . ' is currently running</>'
             );
 
             return;
@@ -119,7 +121,7 @@ class ScheduleRunCommand extends Command
 
         if (! $shouldRun) {
             $this->output->writeln(
-                '<fg=green>' . $model->getClass() .
+                '<fg=green>' . $model->class .
                 ' does not need to run at this time</>'
             );
 
@@ -131,12 +133,14 @@ class ScheduleRunCommand extends Command
             new DateTimeZone('UTC')
         );
 
-        $model->setIsRunning(true);
-        $model->setLastRunStartAt($dateTime);
+        $model->isRunning = true;
+
+        $model->lastRunStartAt = $dateTime;
+
         ($this->saveSchedule)($model);
 
         /** @psalm-suppress MixedAssignment */
-        $class = $this->di->get($model->getClass());
+        $class = $this->di->get($model->class);
 
         /** @psalm-suppress MixedFunctionCall */
         $class();
@@ -146,12 +150,12 @@ class ScheduleRunCommand extends Command
             new DateTimeZone('UTC')
         );
 
-        $model->setIsRunning(false);
-        $model->setLastRunEndAt($dateTime);
+        $model->isRunning    = false;
+        $model->lastRunEndAt = $dateTime;
         ($this->saveSchedule)($model);
 
         $this->output->writeln(
-            '<fg=green>' . $model->getClass() . ' ran successfully</>'
+            '<fg=green>' . $model->class . ' ran successfully</>'
         );
     }
 }
