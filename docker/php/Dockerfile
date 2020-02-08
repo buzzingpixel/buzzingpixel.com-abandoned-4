@@ -36,3 +36,5 @@ RUN docker-php-ext-install xmlrpc
 RUN docker-php-ext-install zip
 RUN pecl install imagick
 RUN docker-php-ext-enable imagick
+RUN pecl install xdebug-2.9.2;
+RUN docker-php-ext-enable xdebug;

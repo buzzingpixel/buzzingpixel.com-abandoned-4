@@ -5,6 +5,10 @@ services:
     ports:
       - 26087:443
 
+  php:
+    volumes:
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+
   db:
     environment:
       MYSQL_ROOT_PASSWORD: root
