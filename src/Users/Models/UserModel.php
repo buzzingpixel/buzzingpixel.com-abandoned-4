@@ -39,8 +39,7 @@ class UserModel extends Model
         );
     }
 
-    /** @var string */
-    private $id = '';
+    private string $id = '';
 
     public function setId(string $id) : UserModel
     {
@@ -54,8 +53,7 @@ class UserModel extends Model
         return $this->id;
     }
 
-    /** @var bool */
-    private $isAdmin = false;
+    private bool $isAdmin = false;
 
     public function setIsAdmin(bool $isAdmin) : UserModel
     {
@@ -69,8 +67,7 @@ class UserModel extends Model
         return $this->isAdmin;
     }
 
-    /** @var string */
-    private $emailAddress = '';
+    private string $emailAddress = '';
 
     public function setEmailAddress(string $emailAddress) : UserModel
     {
@@ -84,8 +81,7 @@ class UserModel extends Model
         return $this->emailAddress;
     }
 
-    /** @var string */
-    private $passwordHash = '';
+    private string $passwordHash = '';
 
     public function setPasswordHash(string $passwordHash) : UserModel
     {
@@ -99,8 +95,7 @@ class UserModel extends Model
         return $this->passwordHash;
     }
 
-    /** @var string */
-    private $newPassword = '';
+    private string $newPassword = '';
 
     public function setNewPassword(string $newPassword) : UserModel
     {
@@ -114,8 +109,7 @@ class UserModel extends Model
         return $this->newPassword;
     }
 
-    /** @var bool */
-    private $isActive = true;
+    private bool $isActive = true;
 
     public function setIsActive(bool $isActive) : UserModel
     {
@@ -129,11 +123,8 @@ class UserModel extends Model
         return $this->isActive;
     }
 
-    /**
-     * @var DateTimeZone
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private $timezone;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private DateTimeZone $timezone;
 
     public function setTimezone(DateTimeZone $timezone) : UserModel
     {
@@ -147,8 +138,7 @@ class UserModel extends Model
         return $this->timezone;
     }
 
-    /** @var string */
-    private $firstName = '';
+    private string $firstName = '';
 
     public function setFirstName(string $firstName) : UserModel
     {
@@ -162,8 +152,7 @@ class UserModel extends Model
         return $this->firstName;
     }
 
-    /** @var string $lastName */
-    private $lastName = '';
+    private string $lastName = '';
 
     public function setLastName(string $lastName) : UserModel
     {
@@ -177,8 +166,7 @@ class UserModel extends Model
         return $this->lastName;
     }
 
-    /** @var string */
-    private $displayName = '';
+    private string $displayName = '';
 
     public function setDisplayName(string $displayName) : UserModel
     {
@@ -192,8 +180,7 @@ class UserModel extends Model
         return $this->displayName;
     }
 
-    /** @var string */
-    private $billingName = '';
+    private string $billingName = '';
 
     public function setBillingName(string $billingName) : UserModel
     {
@@ -207,8 +194,7 @@ class UserModel extends Model
         return $this->billingName;
     }
 
-    /** @var string */
-    private $billingCompany = '';
+    private string $billingCompany = '';
 
     public function setBillingCompany(string $billingCompany) : UserModel
     {
@@ -222,8 +208,7 @@ class UserModel extends Model
         return $this->billingCompany;
     }
 
-    /** @var string */
-    private $billingPhone = '';
+    private string $billingPhone = '';
 
     public function setBillingPhone(string $billingPhone) : UserModel
     {
@@ -237,8 +222,7 @@ class UserModel extends Model
         return $this->billingPhone;
     }
 
-    /** @var string */
-    private $billingCountry = '';
+    private string $billingCountry = '';
 
     public function setBillingCountry(string $billingCountry) : UserModel
     {
@@ -252,8 +236,7 @@ class UserModel extends Model
         return $this->billingCountry;
     }
 
-    /** @var string */
-    private $billingAddress = '';
+    private string $billingAddress = '';
 
     public function setBillingAddress(string $billingAddress) : UserModel
     {
@@ -267,8 +250,7 @@ class UserModel extends Model
         return $this->billingAddress;
     }
 
-    /** @var string */
-    private $billingCity = '';
+    private string $billingCity = '';
 
     public function setBillingCity(string $billingCity) : UserModel
     {
@@ -282,8 +264,7 @@ class UserModel extends Model
         return $this->billingCity;
     }
 
-    /** @var string */
-    private $billingStateAbbr = '';
+    private string $billingStateAbbr = '';
 
     public function setBillingStateAbbr(string $billingStateAbbr) : UserModel
     {
@@ -297,8 +278,7 @@ class UserModel extends Model
         return $this->billingStateAbbr;
     }
 
-    /** @var string */
-    private $billingPostalCode = '';
+    private string $billingPostalCode = '';
 
     public function setBillingPostalCode(string $billingPostalCode) : UserModel
     {
@@ -312,11 +292,8 @@ class UserModel extends Model
         return $this->billingPostalCode;
     }
 
-    /**
-     * @var DateTimeImmutable
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private $createdAt;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private DateTimeImmutable $createdAt;
 
     protected function setCreatedAt(DateTimeImmutable $createdAt) : void
     {

@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait NoShadow
 {
-    /** @var bool */
-    private $noShadow = false;
+    private bool $noShadow = false;
 
     protected function setNoShadow(bool $noShadow) : void
     {

@@ -10,10 +10,8 @@ use Throwable;
 
 class GetCartAction
 {
-    /** @var CartApi */
-    private $cartApi;
-    /** @var GetCartResponder */
-    private $responder;
+    private CartApi $cartApi;
+    private GetCartResponder $responder;
 
     public function __construct(CartApi $cartApi, GetCartResponder $responder)
     {

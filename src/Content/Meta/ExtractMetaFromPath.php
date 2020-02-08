@@ -6,11 +6,12 @@ namespace App\Content\Meta;
 
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+use function assert;
+use function is_array;
 
 class ExtractMetaFromPath
 {
-    /** @var string */
-    private $pathToContentDirectory;
+    private string $pathToContentDirectory;
 
     public function __construct(string $pathToContentDirectory)
     {
@@ -24,8 +25,8 @@ class ExtractMetaFromPath
     {
         $fullPath = $this->pathToContentDirectory . '/' . $contentPath . '/meta.yml';
 
-        /** @var array|null $parsedYaml */
         $parsedYaml = Yaml::parseFile($fullPath);
+        assert(is_array($parsedYaml) || $parsedYaml === null);
 
         return new MetaPayload([
             'noIndex' => isset($parsedYaml['noIndex']) ? ((bool) $parsedYaml['noIndex']) : false,

@@ -10,10 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 
 class GetClearCartAction
 {
-    /** @var CartApi */
-    private $cartApi;
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private CartApi $cartApi;
+    private ResponseFactoryInterface $responseFactory;
 
     public function __construct(
         CartApi $cartApi,

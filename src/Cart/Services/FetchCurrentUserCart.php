@@ -11,22 +11,17 @@ use App\Users\UserApi;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use DateTimeImmutable;
 use DateTimeZone;
+use function assert;
 use function Safe\strtotime;
 
 class FetchCurrentUserCart
 {
-    /** @var CookieApiInterface */
-    private $cookieApi;
-    /** @var FetchCartById */
-    private $fetchCartById;
-    /** @var FetchCartByUserId */
-    private $fetchCartByUserId;
-    /** @var UserApi */
-    private $userApi;
-    /** @var SaveCart */
-    private $saveCart;
-    /** @var DeleteCart */
-    private $deleteCart;
+    private CookieApiInterface $cookieApi;
+    private FetchCartById $fetchCartById;
+    private FetchCartByUserId $fetchCartByUserId;
+    private UserApi $userApi;
+    private SaveCart $saveCart;
+    private DeleteCart $deleteCart;
 
     public function __construct(
         CookieApiInterface $cookieApi,
@@ -76,16 +71,16 @@ class FetchCurrentUserCart
 
         if ($cookieCart !== null && $userCart !== null) {
             foreach ($cookieCart->getItems() as $cookieItem) {
-                /** @var SoftwareModel $cookieItemSoftware */
                 $cookieItemSoftware = $cookieItem->getSoftware();
+                assert($cookieItemSoftware instanceof SoftwareModel);
 
                 $softwareSlug = $cookieItemSoftware->getSlug();
 
                 $set = false;
 
                 foreach ($userCart->getItems() as $userItem) {
-                    /** @var SoftwareModel $userItemSoftware */
                     $userItemSoftware = $userItem->getSoftware();
+                    assert($userItemSoftware instanceof SoftwareModel);
 
                     if ($userItemSoftware->getSlug() !== $softwareSlug) {
                         continue;
@@ -155,8 +150,8 @@ class FetchCurrentUserCart
             );
         }
 
-        /** @var CartModel $cart */
         $cart = $userCart ?? $cookieCart;
+        assert($cart instanceof CartModel);
 
         return $cart;
     }

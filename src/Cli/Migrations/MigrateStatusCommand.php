@@ -12,11 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateStatusCommand extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'migrate:status';
+    protected static string $defaultName = 'migrate:status';
 
-    /** @var PhinxApplication */
-    private $phinxApplication;
+    private PhinxApplication $phinxApplication;
 
     public function __construct(PhinxApplication $phinxApplication)
     {

@@ -13,11 +13,11 @@ use App\Cart\Services\UpdateCartItemQuantity;
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
 use Psr\Container\ContainerInterface;
+use function assert;
 
 class CartApi
 {
-    /** @var ContainerInterface */
-    private $di;
+    private ContainerInterface $di;
 
     public function __construct(ContainerInterface $di)
     {
@@ -26,24 +26,24 @@ class CartApi
 
     public function fetchCurrentUserCart() : CartModel
     {
-        /** @var FetchCurrentUserCart $service */
         $service = $this->di->get(FetchCurrentUserCart::class);
+        assert($service instanceof FetchCurrentUserCart);
 
         return $service();
     }
 
     public function saveCart(CartModel $cart) : Payload
     {
-        /** @var SaveCart $service */
         $service = $this->di->get(SaveCart::class);
+        assert($service instanceof SaveCart);
 
         return $service($cart);
     }
 
     public function addItemToCurrentUsersCart(SoftwareModel $software) : void
     {
-        /** @var AddItemToCurrentUsersCart $service */
         $service = $this->di->get(AddItemToCurrentUsersCart::class);
+        assert($service instanceof AddItemToCurrentUsersCart);
 
         $service($software);
     }
@@ -52,16 +52,16 @@ class CartApi
         int $quantity,
         SoftwareModel $software
     ) : void {
-        /** @var UpdateCartItemQuantity $service */
         $service = $this->di->get(UpdateCartItemQuantity::class);
+        assert($service instanceof UpdateCartItemQuantity);
 
         $service($quantity, $software);
     }
 
     public function clearCart() : void
     {
-        /** @var ClearCart $service */
         $service = $this->di->get(ClearCart::class);
+        assert($service instanceof ClearCart);
 
         $service();
     }

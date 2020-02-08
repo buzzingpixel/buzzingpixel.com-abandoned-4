@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Content\Modules\Payloads;
 
 use App\Payload\SpecificPayload;
+use function assert;
 
 class CtaCardsPayload extends SpecificPayload
 {
-    /** @var CtaCardItemPayload|null */
-    private $primary;
+    private ?CtaCardItemPayload $primary = null;
 
     protected function setPrimary(CtaCardItemPayload $primary) : void
     {
@@ -24,17 +24,13 @@ class CtaCardsPayload extends SpecificPayload
             $this->primary = new CtaCardItemPayload();
         }
 
-        // We have to do this to make PHPStan happy because it doesn't
-        // understand that the condition above makes sure we always send
-        // an instance of CtaCardItemPayload
-        /** @var CtaCardItemPayload $primary */
         $primary = $this->primary;
+        assert($primary instanceof CtaCardItemPayload);
 
         return $primary;
     }
 
-    /** @var CtaCardItemPayload|null */
-    private $left;
+    private ?CtaCardItemPayload $left = null;
 
     protected function setLeft(CtaCardItemPayload $left) : void
     {
@@ -49,17 +45,13 @@ class CtaCardsPayload extends SpecificPayload
             $this->left = new CtaCardItemPayload();
         }
 
-        // We have to do this to make PHPStan happy because it doesn't
-        // understand that the condition above makes sure we always send
-        // an instance of CtaCardItemPayload
-        /** @var CtaCardItemPayload $left */
         $left = $this->left;
+        assert($left instanceof CtaCardItemPayload);
 
         return $left;
     }
 
-    /** @var CtaCardItemPayload|null */
-    private $right;
+    private ?CtaCardItemPayload $right = null;
 
     protected function setRight(CtaCardItemPayload $right) : void
     {
@@ -74,11 +66,8 @@ class CtaCardsPayload extends SpecificPayload
             $this->right = new CtaCardItemPayload();
         }
 
-        // We have to do this to make PHPStan happy because it doesn't
-        // understand that the condition above makes sure we always send
-        // an instance of CtaCardItemPayload
-        /** @var CtaCardItemPayload $right */
         $right = $this->right;
+        assert($right instanceof CtaCardItemPayload);
 
         return $right;
     }

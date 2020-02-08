@@ -12,8 +12,7 @@ use function in_array;
 
 class ScheduleItemModel extends Model
 {
-    /** @var string */
-    private $id = '';
+    private string $id = '';
 
     public function setId(string $id) : void
     {
@@ -25,8 +24,7 @@ class ScheduleItemModel extends Model
         return $this->id;
     }
 
-    /** @var string */
-    private $class = '';
+    private string $class = '';
 
     protected function setClass(string $class) : void
     {
@@ -67,8 +65,7 @@ class ScheduleItemModel extends Model
         return $this->runEvery;
     }
 
-    /** @var bool */
-    private $isRunning = false;
+    private bool $isRunning = false;
 
     public function setIsRunning(bool $isRunning) : void
     {
@@ -80,8 +77,7 @@ class ScheduleItemModel extends Model
         return $this->isRunning;
     }
 
-    /** @var DateTimeImmutable|null */
-    private $lastRunStartAt;
+    private ?DateTimeImmutable $lastRunStartAt = null;
 
     public function setLastRunStartAt(?DateTimeImmutable $lastRunStartAt) : void
     {
@@ -93,8 +89,7 @@ class ScheduleItemModel extends Model
         return $this->lastRunStartAt;
     }
 
-    /** @var DateTimeImmutable|null */
-    private $lastRunEndAt;
+    private ?DateTimeImmutable $lastRunEndAt = null;
 
     public function setLastRunEndAt(?DateTimeImmutable $lastRunEndAt) : void
     {

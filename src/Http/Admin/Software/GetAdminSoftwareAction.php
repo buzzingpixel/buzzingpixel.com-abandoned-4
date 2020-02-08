@@ -12,10 +12,8 @@ use Throwable;
 
 class GetAdminSoftwareAction
 {
-    /** @var GetAdminResponder */
-    private $responder;
-    /** @var SoftwareApi */
-    private $softwareApi;
+    private GetAdminResponder $responder;
+    private SoftwareApi $softwareApi;
 
     public function __construct(
         GetAdminResponder $responder,

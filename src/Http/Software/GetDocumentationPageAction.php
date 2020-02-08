@@ -14,14 +14,10 @@ use Throwable;
 
 class GetDocumentationPageAction
 {
-    /** @var GetDocumentationPageResponder */
-    private $responder;
-    /** @var ExtractUriSegments */
-    private $extractUriSegments;
-    /** @var CollectDocumentationVersionsFromPath */
-    private $collectDocumentationVersionsFromPath;
-    /** @var ExtractMetaFromPath */
-    private $extractMetaFromPath;
+    private GetDocumentationPageResponder $responder;
+    private ExtractUriSegments $extractUriSegments;
+    private CollectDocumentationVersionsFromPath $collectDocumentationVersionsFromPath;
+    private ExtractMetaFromPath $extractMetaFromPath;
 
     public function __construct(
         GetDocumentationPageResponder $responder,

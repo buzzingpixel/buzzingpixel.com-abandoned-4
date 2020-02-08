@@ -13,15 +13,13 @@ use App\Persistence\Cart\CartRecord;
 use App\Persistence\RecordQueryFactory;
 use Throwable;
 use function array_map;
+use function assert;
 
 class FetchCartByUserId
 {
-    /** @var RecordQueryFactory */
-    private $recordQueryFactory;
-    /** @var TransformCartItemRecordToModel */
-    private $transformCartItemRecordToModel;
-    /** @var TransformCartRecordToModel */
-    private $transformCartRecordToModel;
+    private RecordQueryFactory $recordQueryFactory;
+    private TransformCartItemRecordToModel $transformCartItemRecordToModel;
+    private TransformCartRecordToModel $transformCartRecordToModel;
 
     public function __construct(
         RecordQueryFactory $recordQueryFactory,
@@ -44,10 +42,10 @@ class FetchCartByUserId
 
     private function innerRun(string $userId) : ?CartModel
     {
-        /** @var CartRecord|null $cartRecord */
         $cartRecord = ($this->recordQueryFactory)(new CartRecord())
             ->withWhere('user_id', $userId)
             ->one();
+        assert($cartRecord instanceof CartRecord || $cartRecord === null);
 
         if ($cartRecord === null) {
             return null;

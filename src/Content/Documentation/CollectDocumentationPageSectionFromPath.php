@@ -11,6 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 use Throwable;
 use function array_map;
 use function array_values;
+use function assert;
 use function implode;
 use function is_array;
 
@@ -18,10 +19,8 @@ class CollectDocumentationPageSectionFromPath
 {
     use MapYamlImageToPayload;
 
-    /** @var General */
-    private $generalConfig;
-    /** @var GithubMarkdown */
-    protected $markdownParser;
+    private General $generalConfig;
+    protected GithubMarkdown $markdownParser;
 
     public function __construct(
         General $generalConfig,
@@ -43,8 +42,8 @@ class CollectDocumentationPageSectionFromPath
 
         $path = implode('/', $pathArray);
 
-        /** @var array $parsedYaml */
         $parsedYaml = Yaml::parseFile($path);
+        assert(is_array($parsedYaml));
 
         return new DocumentationPageSectionPayload([
             'title' => $this->markdownParser->parseParagraph(

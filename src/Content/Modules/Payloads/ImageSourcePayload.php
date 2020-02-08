@@ -8,8 +8,7 @@ use App\Payload\SpecificPayload;
 
 class ImageSourcePayload extends SpecificPayload
 {
-    /** @var string */
-    private $oneX = '';
+    private string $oneX = '';
 
     protected function setOneX(string $oneX) : void
     {
@@ -21,8 +20,7 @@ class ImageSourcePayload extends SpecificPayload
         return $this->oneX;
     }
 
-    /** @var string */
-    private $twoX = '';
+    private string $twoX = '';
 
     protected function setTwoX(string $twoX) : void
     {
@@ -34,8 +32,7 @@ class ImageSourcePayload extends SpecificPayload
         return $this->twoX;
     }
 
-    /** @var string */
-    private $mediaQuery = '';
+    private string $mediaQuery = '';
 
     protected function setMediaQuery(string $mediaQuery) : void
     {

@@ -15,14 +15,10 @@ use Throwable;
 
 class GetSoftwareAction
 {
-    /** @var GetSoftwareResponder */
-    private $responder;
-    /** @var ExtractMetaFromPath */
-    private $extractMetaFromPath;
-    /** @var ExtractModulesFromPath */
-    private $extractModulesFromPath;
-    /** @var ExtractSoftwareInfoFromPath */
-    private $extractSoftwareInfoFromPath;
+    private GetSoftwareResponder $responder;
+    private ExtractMetaFromPath $extractMetaFromPath;
+    private ExtractModulesFromPath $extractModulesFromPath;
+    private ExtractSoftwareInfoFromPath $extractSoftwareInfoFromPath;
 
     public function __construct(
         GetSoftwareResponder $responder,

@@ -25,11 +25,8 @@ class DocumentationVersionsPayload extends SpecificPayload
         throw new InvalidArgumentException('SoftwareInfo is required');
     }
 
-    /**
-     * @var SoftwareInfoPayload
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private $softwareInfo;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private SoftwareInfoPayload $softwareInfo;
 
     protected function setSoftwareInfo(SoftwareInfoPayload $softwareInfoPayload) : void
     {
@@ -42,7 +39,7 @@ class DocumentationVersionsPayload extends SpecificPayload
     }
 
     /** @var DocumentationVersionPayload[] */
-    private $versions = [];
+    private array $versions = [];
 
     /**
      * @param DocumentationVersionPayload[] $versions

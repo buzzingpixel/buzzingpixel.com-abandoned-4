@@ -10,8 +10,7 @@ use Twig\TwigFilter;
 
 class Slugify extends AbstractExtension
 {
-    /** @var CocurSlugify */
-    private $slugify;
+    private CocurSlugify $slugify;
 
     public function __construct(CocurSlugify $slugify)
     {

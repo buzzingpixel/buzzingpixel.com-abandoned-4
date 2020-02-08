@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait Heading
 {
-    /** @var string */
-    private $heading = '';
+    private string $heading = '';
 
     protected function setHeading(string $heading) : void
     {

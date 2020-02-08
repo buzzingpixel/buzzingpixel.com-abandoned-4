@@ -8,21 +8,19 @@ use App\Content\Software\ExtractSoftwareInfoFromPath;
 use Config\General;
 use DirectoryIterator;
 use Throwable;
-use const SORT_NATURAL;
 use function array_map;
 use function array_merge;
 use function array_reverse;
+use function assert;
 use function implode;
 use function Safe\ksort;
+use const SORT_NATURAL;
 
 class CollectDocumentationVersionsFromPath
 {
-    /** @var General */
-    private $generalConfig;
-    /** @var ExtractSoftwareInfoFromPath */
-    private $extractSoftwareInfoFromPath;
-    /** @var CollectDocumentationVersionPayloadFromPath */
-    private $collectDocumentationVersionPayloadFromPath;
+    private General $generalConfig;
+    private ExtractSoftwareInfoFromPath $extractSoftwareInfoFromPath;
+    private CollectDocumentationVersionPayloadFromPath $collectDocumentationVersionPayloadFromPath;
 
     public function __construct(
         General $generalConfig,
@@ -54,7 +52,7 @@ class CollectDocumentationVersionsFromPath
         $directory = new DirectoryIterator($fullDirectoryPath);
 
         foreach ($directory as $fileInfo) {
-            /** @var DirectoryIterator $fileInfo */
+            assert($fileInfo instanceof DirectoryIterator);
 
             if ($fileInfo->isDot() || ! $fileInfo->isDir()) {
                 continue;

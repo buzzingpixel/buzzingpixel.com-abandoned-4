@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait BackgroundColor
 {
-    /** @var string */
-    private $backgroundColor = '';
+    private string $backgroundColor = '';
 
     protected function setBackgroundColor(string $backgroundColor) : void
     {

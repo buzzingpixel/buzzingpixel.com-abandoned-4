@@ -13,10 +13,8 @@ use Throwable;
 
 class RequireLogInAction
 {
-    /** @var UserApi */
-    private $userApi;
-    /** @var RequireLoginResponder */
-    private $responder;
+    private UserApi $userApi;
+    private RequireLoginResponder $responder;
 
     public function __construct(
         UserApi $userApi,

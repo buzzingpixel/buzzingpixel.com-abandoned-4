@@ -13,12 +13,9 @@ use Slim\Exception\HttpNotFoundException;
 
 class GetAddToCartAction
 {
-    /** @var SoftwareApi */
-    private $softwareApi;
-    /** @var CartApi */
-    private $cartApi;
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private SoftwareApi $softwareApi;
+    private CartApi $cartApi;
+    private ResponseFactoryInterface $responseFactory;
 
     public function __construct(
         SoftwareApi $softwareApi,

@@ -9,8 +9,7 @@ use function array_walk;
 
 class DocumentationPageSectionPayload extends SpecificPayload
 {
-    /** @var string */
-    private $title = '';
+    private string $title = '';
 
     protected function setTitle(string $title) : void
     {
@@ -23,7 +22,7 @@ class DocumentationPageSectionPayload extends SpecificPayload
     }
 
     /** @var SpecificPayload[] */
-    private $content = [];
+    private array $content = [];
 
     /**
      * @param SpecificPayload[] $content

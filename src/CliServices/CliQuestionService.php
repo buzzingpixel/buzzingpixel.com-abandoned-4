@@ -8,16 +8,14 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use function assert;
 use function is_string;
 
 class CliQuestionService
 {
-    /** @var QuestionHelper */
-    private $questionHelper;
-    /** @var InputInterface */
-    private $consoleInput;
-    /** @var OutputInterface */
-    private $consoleOutput;
+    private QuestionHelper $questionHelper;
+    private InputInterface $consoleInput;
+    private OutputInterface $consoleOutput;
 
     public function __construct(
         QuestionHelper $questionHelper,
@@ -43,12 +41,12 @@ class CliQuestionService
         $val = '';
 
         while ($val === '') {
-            /** @var string|null $val */
             $val = $this->questionHelper->ask(
                 $this->consoleInput,
                 $this->consoleOutput,
                 $questionEntity
             );
+            assert(is_string($val) || $val === null);
 
             if (! $required) {
                 return is_string($val) ? $val : '';

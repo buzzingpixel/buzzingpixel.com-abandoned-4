@@ -9,8 +9,7 @@ use function array_walk;
 
 trait ImageProperties
 {
-    /** @var string */
-    private $oneX = '';
+    private string $oneX = '';
 
     protected function setOneX(string $oneX) : void
     {
@@ -22,8 +21,7 @@ trait ImageProperties
         return $this->oneX;
     }
 
-    /** @var string */
-    private $twoX = '';
+    private string $twoX = '';
 
     protected function setTwoX(string $twoX) : void
     {
@@ -35,8 +33,7 @@ trait ImageProperties
         return $this->twoX;
     }
 
-    /** @var string */
-    private $alt = '';
+    private string $alt = '';
 
     protected function setAlt(string $alt) : void
     {
@@ -49,7 +46,7 @@ trait ImageProperties
     }
 
     /** @var ImageSourcePayload[] */
-    private $sources = [];
+    private array $sources = [];
 
     /**
      * @param ImageSourcePayload[] $sources

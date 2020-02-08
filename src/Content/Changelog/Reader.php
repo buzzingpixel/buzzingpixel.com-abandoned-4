@@ -16,10 +16,10 @@ use function preg_grep;
 class Reader extends ErwinReader
 {
     /** @var array<int, string> */
-    protected $content;
+    protected array $content;
 
     /** @var array<string, Release> */
-    protected $releases = [];
+    protected array $releases = [];
 
     /**
      * @return array<string, Release>

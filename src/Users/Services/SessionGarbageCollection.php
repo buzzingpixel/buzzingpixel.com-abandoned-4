@@ -13,10 +13,8 @@ use function Safe\strtotime;
 
 class SessionGarbageCollection
 {
-    /** @var PDO */
-    private $pdo;
-    /** @var SystemClock */
-    private $systemClock;
+    private PDO $pdo;
+    private SystemClock $systemClock;
 
     public function __construct(PDO $pdo, SystemClock $systemClock)
     {

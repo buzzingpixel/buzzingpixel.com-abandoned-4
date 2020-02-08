@@ -15,16 +15,11 @@ use Throwable;
 
 class GetChangelogItemAction
 {
-    /** @var GetChangelogItemResponder */
-    private $responder;
-    /** @var ExtractUriSegments */
-    private $extractUriSegments;
-    /** @var ExtractSoftwareInfoFromPath */
-    private $extractSoftwareInfoFromPath;
-    /** @var ParseChangelogFromMarkdownFile */
-    private $parseChangelog;
-    /** @var ExtractMetaFromPath */
-    private $extractMetaFromPath;
+    private GetChangelogItemResponder $responder;
+    private ExtractUriSegments $extractUriSegments;
+    private ExtractSoftwareInfoFromPath $extractSoftwareInfoFromPath;
+    private ParseChangelogFromMarkdownFile $parseChangelog;
+    private ExtractMetaFromPath $extractMetaFromPath;
 
     public function __construct(
         GetChangelogItemResponder $responder,

@@ -18,7 +18,7 @@ use function implode;
 class Schedule
 {
     /** @var string[] */
-    private static $scheduleClasses = [];
+    private static array $scheduleClasses = [];
 
     /**
      * @return string[]

@@ -14,15 +14,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateSeedCreateCommand extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'migrate:create-seed';
+    protected static string $defaultName = 'migrate:create-seed';
 
-    /** @var CliQuestionService */
-    private $cliQuestionService;
-    /** @var CaseConversionUtility */
-    private $caseConversionUtility;
-    /** @var PhinxApplication */
-    private $phinxApplication;
+    private CliQuestionService $cliQuestionService;
+    private CaseConversionUtility $caseConversionUtility;
+    private PhinxApplication $phinxApplication;
 
     public function __construct(
         CliQuestionService $cliQuestionService,

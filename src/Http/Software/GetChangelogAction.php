@@ -17,16 +17,11 @@ use function count;
 
 class GetChangelogAction
 {
-    /** @var GetChangelogResponder */
-    private $responder;
-    /** @var ExtractUriSegments */
-    private $extractUriSegments;
-    /** @var ExtractSoftwareInfoFromPath */
-    private $extractSoftwareInfoFromPath;
-    /** @var ParseChangelogFromMarkdownFile */
-    private $parseChangelog;
-    /** @var ExtractMetaFromPath */
-    private $extractMetaFromPath;
+    private GetChangelogResponder $responder;
+    private ExtractUriSegments $extractUriSegments;
+    private ExtractSoftwareInfoFromPath $extractSoftwareInfoFromPath;
+    private ParseChangelogFromMarkdownFile $parseChangelog;
+    private ExtractMetaFromPath $extractMetaFromPath;
 
     public function __construct(
         GetChangelogResponder $responder,

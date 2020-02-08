@@ -9,10 +9,8 @@ use Twig\Environment as TwigEnvironment;
 
 abstract class StandardResponderConstructor
 {
-    /** @var ResponseFactoryInterface */
-    protected $responseFactory;
-    /** @var TwigEnvironment */
-    protected $twigEnvironment;
+    protected ResponseFactoryInterface $responseFactory;
+    protected TwigEnvironment $twigEnvironment;
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,

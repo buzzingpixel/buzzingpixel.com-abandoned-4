@@ -14,14 +14,10 @@ use function Safe\file_get_contents;
 
 class GetChangelogRawAction
 {
-    /** @var GetChangelogRawResponder */
-    private $responder;
-    /** @var General */
-    private $generalConfig;
-    /** @var ExtractUriSegments */
-    private $extractUriSegments;
-    /** @var ExtractSoftwareInfoFromPath */
-    private $extractSoftwareInfoFromPath;
+    private GetChangelogRawResponder $responder;
+    private General $generalConfig;
+    private ExtractUriSegments $extractUriSegments;
+    private ExtractSoftwareInfoFromPath $extractSoftwareInfoFromPath;
 
     public function __construct(
         GetChangelogRawResponder $responder,

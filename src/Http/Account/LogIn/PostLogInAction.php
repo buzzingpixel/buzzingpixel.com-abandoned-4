@@ -11,10 +11,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class PostLogInAction
 {
-    /** @var PostLogInResponder */
-    private $responder;
-    /** @var UserApi */
-    private $userApi;
+    private PostLogInResponder $responder;
+    private UserApi $userApi;
 
     public function __construct(
         PostLogInResponder $responder,

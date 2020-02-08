@@ -11,29 +11,23 @@ use App\Persistence\UuidFactoryWithOrderedTimeCodec;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserModelToUserRecord;
 use Ramsey\Uuid\UuidFactoryInterface;
-use const FILTER_VALIDATE_EMAIL;
-use const PASSWORD_DEFAULT;
 use function count;
 use function filter_var;
 use function mb_strlen;
 use function password_hash;
+use const FILTER_VALIDATE_EMAIL;
+use const PASSWORD_DEFAULT;
 
 class SaveUser
 {
     public const MIN_PASSWORD_LENGTH = 8;
 
-    /** @var FetchUserByEmailAddress */
-    private $fetchUserByEmailAddress;
-    /** @var SaveNewRecord */
-    private $saveNewRecord;
-    /** @var FetchUserById */
-    private $fetchUserById;
-    /** @var SaveExistingRecord */
-    private $saveExistingRecord;
-    /** @var TransformUserModelToUserRecord */
-    private $transformUserModelToUserRecord;
-    /** @var UuidFactoryInterface */
-    private $uuidFactory;
+    private FetchUserByEmailAddress $fetchUserByEmailAddress;
+    private SaveNewRecord $saveNewRecord;
+    private FetchUserById $fetchUserById;
+    private SaveExistingRecord $saveExistingRecord;
+    private TransformUserModelToUserRecord $transformUserModelToUserRecord;
+    private UuidFactoryInterface $uuidFactory;
 
     public function __construct(
         FetchUserByEmailAddress $fetchUserByEmailAddress,

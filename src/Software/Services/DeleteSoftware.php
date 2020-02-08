@@ -16,8 +16,7 @@ use function implode;
 
 class DeleteSoftware
 {
-    /** @var PDO */
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(PDO $pdo)
     {

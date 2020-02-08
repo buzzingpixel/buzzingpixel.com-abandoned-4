@@ -13,15 +13,13 @@ use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
 use Throwable;
 use function array_map;
+use function assert;
 
 class FetchSoftwareById
 {
-    /** @var RecordQueryFactory */
-    private $recordQueryFactory;
-    /** @var TransformSoftwareRecordToModel */
-    private $softwareRecordToModel;
-    /** @var TransformSoftwareVersionRecordToModel */
-    private $softwareVersionRecordToModel;
+    private RecordQueryFactory $recordQueryFactory;
+    private TransformSoftwareRecordToModel $softwareRecordToModel;
+    private TransformSoftwareVersionRecordToModel $softwareVersionRecordToModel;
 
     public function __construct(
         RecordQueryFactory $recordQueryFactory,
@@ -47,12 +45,12 @@ class FetchSoftwareById
      */
     private function innerRun(string $id) : ?SoftwareModel
     {
-        /** @var SoftwareRecord|null $softwareRecord */
         $softwareRecord = ($this->recordQueryFactory)(
             new SoftwareRecord()
         )
             ->withWhere('id', $id)
             ->one();
+        assert($softwareRecord instanceof SoftwareRecord || $softwareRecord === null);
 
         if ($softwareRecord === null) {
             return null;

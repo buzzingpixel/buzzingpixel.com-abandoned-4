@@ -13,26 +13,19 @@ use function rtrim;
 
 class Pagination
 {
-    /** @var bool */
-    private $isInstantiated = false;
+    private bool $isInstantiated = false;
 
-    /** @var int */
-    private $pad = 2;
+    private int $pad = 2;
 
-    /** @var int */
-    private $currentPage = 1;
+    private int $currentPage = 1;
 
-    /** @var int */
-    private $perPage = 12;
+    private int $perPage = 12;
 
-    /** @var int */
-    private $totalResults = 1;
+    private int $totalResults = 1;
 
-    /** @var string */
-    private $base = '';
+    private string $base = '';
 
-    /** @var string */
-    private $queryString = '';
+    private string $queryString = '';
 
     public function __construct()
     {
@@ -157,8 +150,7 @@ class Pagination
         return $this->currentPage() - 1;
     }
 
-    /** @var string|null */
-    private $calcPrevPageLink;
+    private ?string $calcPrevPageLink = null;
 
     public function prevPageLink() : ?string
     {
@@ -218,7 +210,7 @@ class Pagination
     }
 
     /** @var mixed[]|null */
-    private $calcPagesArray;
+    private ?array $calcPagesArray = null;
 
     /**
      * @return mixed[]
@@ -237,7 +229,7 @@ class Pagination
         $upperRange = $this->currentPage() + $this->pad();
 
         // Figure out if we're starting from one or ending at total
-        if ($this->currentPage() < ($this->pad() + 1)) {
+        if ($this->currentPage() < $this->pad() + 1) {
             $lowerRange = 1;
             $upperRange = ($this->pad() * 2) + 1;
         } elseif ($this->currentPage() + $this->pad() >= $this->totalPages()) {

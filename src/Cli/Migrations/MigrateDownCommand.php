@@ -13,13 +13,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateDownCommand extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'migrate:down';
+    protected static string $defaultName = 'migrate:down';
 
-    /** @var CliQuestionService */
-    private $cliQuestionService;
-    /** @var PhinxApplication */
-    private $phinxApplication;
+    private CliQuestionService $cliQuestionService;
+    private PhinxApplication $phinxApplication;
 
     public function __construct(
         CliQuestionService $cliQuestionService,

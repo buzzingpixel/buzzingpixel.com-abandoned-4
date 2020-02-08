@@ -6,7 +6,9 @@ namespace App\Content\Modules\ExtractorMethods;
 
 use App\Content\Modules\Payloads\ImageModulePayload;
 use Throwable;
+use function assert;
 use function is_array;
+use function is_bool;
 
 /**
  * Requires parent to have:
@@ -21,8 +23,8 @@ trait ExtractImage
      */
     protected function extractImage(array $parsedYaml) : ImageModulePayload
     {
-        /** @var bool $noShadow */
         $noShadow = ($parsedYaml['noShadow'] ?? false);
+        assert(is_bool($noShadow));
 
         /** @var array<string, mixed> $image */
         $image = isset($parsedYaml['image']) && is_array($parsedYaml['image']) ?

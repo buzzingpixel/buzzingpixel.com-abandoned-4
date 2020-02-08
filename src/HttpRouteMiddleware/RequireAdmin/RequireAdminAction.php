@@ -13,10 +13,8 @@ use Throwable;
 
 class RequireAdminAction
 {
-    /** @var RequireAdminResponder */
-    private $responder;
-    /** @var UserApi */
-    private $userApi;
+    private RequireAdminResponder $responder;
+    private UserApi $userApi;
 
     public function __construct(
         RequireAdminResponder $responder,

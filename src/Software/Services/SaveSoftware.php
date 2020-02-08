@@ -17,23 +17,17 @@ use Exception;
 use PDO;
 use Throwable;
 use function array_walk;
+use function assert;
 
 class SaveSoftware
 {
-    /** @var PDO */
-    private $pdo;
-    /** @var UuidFactoryWithOrderedTimeCodec */
-    private $uuidFactory;
-    /** @var SaveNewRecord */
-    private $saveNewRecord;
-    /** @var SaveExistingRecord */
-    private $saveExistingRecord;
-    /** @var TransformSoftwareModelToRecord */
-    private $transformSoftwareModelToRecord;
-    /** @var TransformSoftwareVersionModelToRecord */
-    private $transformSoftwareVersionModelToRecord;
-    /** @var SaveFileToSecureStorage */
-    private $saveFileToSecureStorage;
+    private PDO $pdo;
+    private UuidFactoryWithOrderedTimeCodec $uuidFactory;
+    private SaveNewRecord $saveNewRecord;
+    private SaveExistingRecord $saveExistingRecord;
+    private TransformSoftwareModelToRecord $transformSoftwareModelToRecord;
+    private TransformSoftwareVersionModelToRecord $transformSoftwareVersionModelToRecord;
+    private SaveFileToSecureStorage $saveFileToSecureStorage;
 
     public function __construct(
         PDO $pdo,
@@ -107,8 +101,8 @@ class SaveSoftware
     {
         $newDownloadFile = $model->getNewDownloadFile();
 
-        /** @var SoftwareModel $software */
         $software = $model->getSoftware();
+        assert($software instanceof SoftwareModel);
 
         if ($newDownloadFile !== null) {
             /** @psalm-suppress PossiblyNullReference */

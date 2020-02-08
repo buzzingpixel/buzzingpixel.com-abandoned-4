@@ -11,12 +11,9 @@ use Throwable;
 
 class GetHomeAction
 {
-    /** @var GetHomeResponder */
-    private $responder;
-    /** @var ExtractMetaFromPath */
-    private $extractMetaFromPath;
-    /** @var ExtractModulesFromPath */
-    private $extractModulesFromPath;
+    private GetHomeResponder $responder;
+    private ExtractMetaFromPath $extractMetaFromPath;
+    private ExtractModulesFromPath $extractModulesFromPath;
 
     public function __construct(
         GetHomeResponder $responder,

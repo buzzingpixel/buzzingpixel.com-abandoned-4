@@ -11,8 +11,7 @@ class HeadingPayload extends SpecificPayload
 {
     use Content;
 
-    /** @var int */
-    private $level = 3;
+    private int $level = 3;
 
     protected function setLevel(int $level) : void
     {

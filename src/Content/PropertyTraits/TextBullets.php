@@ -9,7 +9,7 @@ use function array_walk;
 trait TextBullets
 {
     /** @var string[] */
-    private $textBullets = [];
+    private array $textBullets = [];
 
     /**
      * @param string[] $textBullets

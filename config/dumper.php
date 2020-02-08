@@ -53,6 +53,7 @@ VarDumper::setHandler(static function ($var) use ($cloner, $dumper, $twigDumper,
         } else {
             echo gettype($var);
         }
+
         echo '</pre>';
         $twigDumper->dump($cloner->cloneVar($var));
         echo '</div><br>';

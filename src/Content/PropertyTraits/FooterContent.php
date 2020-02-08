@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait FooterContent
 {
-    /** @var string */
-    private $footerContent = '';
+    private string $footerContent = '';
 
     protected function setFooterContent(string $footerContent) : void
     {

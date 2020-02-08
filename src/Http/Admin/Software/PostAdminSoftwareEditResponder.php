@@ -11,10 +11,8 @@ use Slim\Flash\Messages as FlashMessages;
 
 class PostAdminSoftwareEditResponder
 {
-    /** @var FlashMessages */
-    private $flashMessages;
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private FlashMessages $flashMessages;
+    private ResponseFactoryInterface $responseFactory;
 
     public function __construct(
         FlashMessages $flashMessages,

@@ -11,15 +11,14 @@ use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use function assert;
 use function count;
 use function is_numeric;
 
 class PostAdminSoftwareCreateAction
 {
-    /** @var PostAdminSoftwareCreateResponder */
-    private $responder;
-    /** @var SoftwareApi */
-    private $softwareApi;
+    private PostAdminSoftwareCreateResponder $responder;
+    private SoftwareApi $softwareApi;
 
     public function __construct(
         PostAdminSoftwareCreateResponder $responder,
@@ -44,8 +43,8 @@ class PostAdminSoftwareCreateAction
             'version' => $postData['version'] ?? '',
         ];
 
-        /** @var UploadedFileInterface|null $downloadFile */
         $downloadFile = $request->getUploadedFiles()['download_file'] ?? null;
+        assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
 
         $inputMessages = [];
 

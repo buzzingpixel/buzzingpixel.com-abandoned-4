@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Content\PropertyTraits;
 
 use App\Content\Modules\Payloads\ImagePayload;
+use function assert;
 
 trait ShowCaseImage
 {
-    /** @var ImagePayload|null */
-    private $showCaseImage;
+    private ?ImagePayload $showCaseImage = null;
 
     protected function setShowCaseImage(ImagePayload $showCaseImage) : void
     {
@@ -24,11 +24,8 @@ trait ShowCaseImage
             $this->showCaseImage = new ImagePayload();
         }
 
-        // We have to do this to make PHPStan happy because it doesn't
-        // understand that the condition above makes sure we always send
-        // an instance of ImagePayload
-        /** @var ImagePayload $showCaseImage */
         $showCaseImage = $this->showCaseImage;
+        assert($showCaseImage instanceof ImagePayload);
 
         return $showCaseImage;
     }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Payload;
 
 use InvalidArgumentException;
+use function assert;
+use function is_string;
 use function method_exists;
 use function ucfirst;
 
@@ -19,7 +21,7 @@ abstract class Model
     {
         /** @psalm-suppress MixedAssignment */
         foreach ($vars as $var => $val) {
-            /** @var string $var */
+            assert(is_string($var));
 
             $method = 'set' . ucfirst($var);
 

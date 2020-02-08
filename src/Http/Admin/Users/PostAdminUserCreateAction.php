@@ -17,10 +17,8 @@ use function count;
 
 class PostAdminUserCreateAction
 {
-    /** @var PostAdminUserCreateResponder */
-    private $responder;
-    /** @var UserApi */
-    private $userApi;
+    private PostAdminUserCreateResponder $responder;
+    private UserApi $userApi;
 
     public function __construct(
         PostAdminUserCreateResponder $responder,

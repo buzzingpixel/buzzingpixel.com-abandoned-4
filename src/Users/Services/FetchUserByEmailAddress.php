@@ -9,14 +9,13 @@ use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserRecordToUserModel;
 use PDO;
 use Throwable;
+use function assert;
 use function is_bool;
 
 class FetchUserByEmailAddress
 {
-    /** @var PDO */
-    private $pdo;
-    /** @var TransformUserRecordToUserModel */
-    private $transformUserRecordToUserModel;
+    private PDO $pdo;
+    private TransformUserRecordToUserModel $transformUserRecordToUserModel;
 
     public function __construct(
         PDO $pdo,
@@ -35,8 +34,8 @@ class FetchUserByEmailAddress
 
             $statement->execute([':email' => $emailAddress]);
 
-            /** @var UserRecord|bool|null $userRecord */
             $userRecord = $statement->fetchObject(UserRecord::class);
+            assert($userRecord instanceof UserRecord || is_bool($userRecord) || $userRecord === null);
 
             $isInstance = $userRecord instanceof UserRecord;
 

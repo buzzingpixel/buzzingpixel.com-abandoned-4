@@ -16,14 +16,10 @@ use Throwable;
 
 class SaveSchedule
 {
-    /** @var TransformModelToRecord */
-    private $transformModelToRecord;
-    /** @var SaveNewRecord */
-    private $saveNewRecord;
-    /** @var SaveExistingRecord */
-    private $saveExistingRecord;
-    /** @var UuidFactoryWithOrderedTimeCodec */
-    private $uuidFactory;
+    private TransformModelToRecord $transformModelToRecord;
+    private SaveNewRecord $saveNewRecord;
+    private SaveExistingRecord $saveExistingRecord;
+    private UuidFactoryWithOrderedTimeCodec $uuidFactory;
 
     public function __construct(
         TransformModelToRecord $transformModelToRecord,

@@ -11,8 +11,7 @@ use Twig\TwigFunction;
 
 class FetchLoggedInUser extends AbstractExtension
 {
-    /** @var UserApi */
-    private $userApi;
+    private UserApi $userApi;
 
     public function __construct(UserApi $userApi)
     {

@@ -10,8 +10,7 @@ use Twig\TwigFunction;
 
 class Countries extends AbstractExtension
 {
-    /** @var ISO3166 */
-    private $ISO3166;
+    private ISO3166 $ISO3166;
 
     public function __construct(ISO3166 $ISO3166)
     {

@@ -30,8 +30,7 @@ class SoftwareVersionModel extends Model
         );
     }
 
-    /** @var string */
-    private $id = '';
+    private string $id = '';
 
     public function setId(string $id) : SoftwareVersionModel
     {
@@ -45,8 +44,7 @@ class SoftwareVersionModel extends Model
         return $this->id;
     }
 
-    /** @var SoftwareModel|null */
-    private $software;
+    private ?SoftwareModel $software = null;
 
     public function setSoftware(SoftwareModel $software) : SoftwareVersionModel
     {
@@ -60,8 +58,7 @@ class SoftwareVersionModel extends Model
         return $this->software;
     }
 
-    /** @var string */
-    private $majorVersion = '';
+    private string $majorVersion = '';
 
     public function setMajorVersion(string $majorVersion) : SoftwareVersionModel
     {
@@ -75,8 +72,7 @@ class SoftwareVersionModel extends Model
         return $this->majorVersion;
     }
 
-    /** @var string */
-    private $version = '';
+    private string $version = '';
 
     public function setVersion(string $version) : SoftwareVersionModel
     {
@@ -90,8 +86,7 @@ class SoftwareVersionModel extends Model
         return $this->version;
     }
 
-    /** @var string */
-    private $downloadFile = '';
+    private string $downloadFile = '';
 
     public function setDownloadFile(string $downloadFile) : SoftwareVersionModel
     {
@@ -105,8 +100,7 @@ class SoftwareVersionModel extends Model
         return $this->downloadFile;
     }
 
-    /** @var UploadedFileInterface|null */
-    private $newDownloadFile;
+    private ?UploadedFileInterface $newDownloadFile = null;
 
     public function setNewDownloadFile(?UploadedFileInterface $newDownloadFile) : void
     {
@@ -118,8 +112,7 @@ class SoftwareVersionModel extends Model
         return $this->newDownloadFile;
     }
 
-    /** @var float */
-    private $upgradePrice = 0.0;
+    private float $upgradePrice = 0.0;
 
     public function setUpgradePrice(float $upgradePrice) : SoftwareVersionModel
     {
@@ -133,8 +126,7 @@ class SoftwareVersionModel extends Model
         return $this->upgradePrice;
     }
 
-    /** @var DateTimeImmutable */
-    private $releasedOn;
+    private DateTimeImmutable $releasedOn;
 
     public function setReleasedOn(DateTimeImmutable $releasedOn) : void
     {

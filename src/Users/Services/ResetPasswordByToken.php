@@ -10,12 +10,9 @@ use Throwable;
 
 class ResetPasswordByToken
 {
-    /** @var FetchUserByResetToken */
-    private $fetchUserByResetToken;
-    /** @var SaveUser */
-    private $saveUser;
-    /** @var PDO */
-    private $pdo;
+    private FetchUserByResetToken $fetchUserByResetToken;
+    private SaveUser $saveUser;
+    private PDO $pdo;
 
     public function __construct(
         FetchUserByResetToken $fetchUserByResetToken,

@@ -21,12 +21,14 @@ use IteratorIterator;
 use RegexIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
-use const SORT_NATURAL;
 use function array_map;
 use function array_values;
+use function assert;
+use function is_array;
 use function iterator_to_array;
 use function Safe\ksort;
 use function ucfirst;
+use const SORT_NATURAL;
 
 class ExtractModulesFromPath
 {
@@ -42,10 +44,8 @@ class ExtractModulesFromPath
     use ExtractShowCase;
     use ExtractTextColumns;
 
-    /** @var string */
-    private $pathToContentDirectory;
-    /** @var GithubMarkdown */
-    protected $markdownParser;
+    private string $pathToContentDirectory;
+    protected GithubMarkdown $markdownParser;
 
     public function __construct(
         string $pathToContentDirectory,
@@ -91,8 +91,8 @@ class ExtractModulesFromPath
                 function (string $item) use ($modulesPath) {
                     $fullPath = $modulesPath . '/' . $item;
 
-                    /** @var array $parsedYaml */
                     $parsedYaml = Yaml::parseFile($fullPath);
+                    assert(is_array($parsedYaml));
 
                     $type = (string) $parsedYaml['type'];
 

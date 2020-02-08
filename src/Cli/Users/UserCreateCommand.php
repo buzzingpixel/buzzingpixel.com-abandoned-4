@@ -15,13 +15,10 @@ use function array_walk;
 
 class UserCreateCommand extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'user:create';
+    protected static string $defaultName = 'user:create';
 
-    /** @var CliQuestionService */
-    private $cliQuestionService;
-    /** @var UserApi */
-    private $userApi;
+    private CliQuestionService $cliQuestionService;
+    private UserApi $userApi;
 
     public function __construct(
         CliQuestionService $cliQuestionService,

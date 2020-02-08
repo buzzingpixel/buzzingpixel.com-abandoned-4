@@ -45,6 +45,5 @@ return static function () : ContainerInterface {
         $containerBuilder->writeProxiesToFile(true, dirname(__DIR__) . '/storage/di-cache');
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     return $containerBuilder->build();
 };

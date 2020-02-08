@@ -15,10 +15,8 @@ use DateTimeZone;
 
 class CreateUserSession
 {
-    /** @var UuidFactoryWithOrderedTimeCodec */
-    private $uuidFactory;
-    /** @var SaveNewRecord */
-    private $saveNewRecord;
+    private UuidFactoryWithOrderedTimeCodec $uuidFactory;
+    private SaveNewRecord $saveNewRecord;
 
     public function __construct(
         UuidFactoryWithOrderedTimeCodec $uuidFactory,

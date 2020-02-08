@@ -21,11 +21,11 @@ use App\Users\Services\PostalCodeService;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use Psr\Container\ContainerInterface;
+use function assert;
 
 class UserApi
 {
-    /** @var ContainerInterface */
-    private $di;
+    private ContainerInterface $di;
 
     public function __construct(ContainerInterface $di)
     {
@@ -34,88 +34,88 @@ class UserApi
 
     public function saveUser(UserModel $userModel) : Payload
     {
-        /** @var SaveUser $service */
         $service = $this->di->get(SaveUser::class);
+        assert($service instanceof SaveUser);
 
         return $service($userModel);
     }
 
     public function fetchUserByEmailAddress(string $emailAddress) : ?UserModel
     {
-        /** @var FetchUserByEmailAddress $service */
         $service = $this->di->get(FetchUserByEmailAddress::class);
+        assert($service instanceof FetchUserByEmailAddress);
 
         return $service($emailAddress);
     }
 
     public function fetchUserById(string $id) : ?UserModel
     {
-        /** @var FetchUserById $service */
         $service = $this->di->get(FetchUserById::class);
+        assert($service instanceof FetchUserById);
 
         return $service($id);
     }
 
     public function logUserIn(UserModel $user, string $password) : Payload
     {
-        /** @var LogUserIn $service */
         $service = $this->di->get(LogUserIn::class);
+        assert($service instanceof LogUserIn);
 
         return $service($user, $password);
     }
 
     public function deleteUser(UserModel $user) : Payload
     {
-        /** @var DeleteUser $service */
         $service = $this->di->get(DeleteUser::class);
+        assert($service instanceof DeleteUser);
 
         return $service($user);
     }
 
     public function fetchLoggedInUser() : ?UserModel
     {
-        /** @var FetchLoggedInUser $service */
         $service = $this->di->get(FetchLoggedInUser::class);
+        assert($service instanceof FetchLoggedInUser);
 
         return $service();
     }
 
     public function generatePasswordResetToken(UserModel $user) : Payload
     {
-        /** @var GeneratePasswordResetToken $service */
         $service = $this->di->get(GeneratePasswordResetToken::class);
+        assert($service instanceof GeneratePasswordResetToken);
 
         return $service($user);
     }
 
     public function fetchUserByResetToken(string $token) : ?UserModel
     {
-        /** @var FetchUserByResetToken $service */
         $service = $this->di->get(FetchUserByResetToken::class);
+        assert($service instanceof FetchUserByResetToken);
 
         return $service($token);
     }
 
     public function logCurrentUserOut() : Payload
     {
-        /** @var LogCurrentUserOut $service */
         $service = $this->di->get(LogCurrentUserOut::class);
+        assert($service instanceof LogCurrentUserOut);
 
         return $service();
     }
 
     public function resetPasswordByToken(string $token, string $newPassword) : Payload
     {
-        /** @var ResetPasswordByToken $service */
         $service = $this->di->get(ResetPasswordByToken::class);
+        assert($service instanceof ResetPasswordByToken);
 
         return $service($token, $newPassword);
     }
 
     public function fetchTotalUsers() : int
     {
-        /** @var FetchTotalUsers $service */
         $service = $this->di->get(FetchTotalUsers::class);
+        assert($service instanceof FetchTotalUsers);
 
         return $service();
     }
@@ -125,8 +125,8 @@ class UserApi
      */
     public function fetchUsersByLimitOffset(?int $limit = null, int $offset = 0) : array
     {
-        /** @var FetchUsersByLimitOffset $service */
         $service = $this->di->get(FetchUsersByLimitOffset::class);
+        assert($service instanceof FetchUsersByLimitOffset);
 
         return $service($limit, $offset);
     }
@@ -136,16 +136,16 @@ class UserApi
      */
     public function fetchUsersBySearch(string $query, ?int $limit = null, int $offset = 0) : array
     {
-        /** @var FetchUsersBySearch $service */
         $service = $this->di->get(FetchUsersBySearch::class);
+        assert($service instanceof FetchUsersBySearch);
 
         return $service($query, $limit, $offset);
     }
 
     public function validatePostalCode(string $postalCode, string $alpha2Country) : bool
     {
-        /** @var PostalCodeService $service */
         $service = $this->di->get(PostalCodeService::class);
+        assert($service instanceof PostalCodeService);
 
         return $service->validatePostalCode(
             $postalCode,
@@ -155,8 +155,8 @@ class UserApi
 
     public function fillModelFromPostalCode(UserModel $model) : void
     {
-        /** @var PostalCodeService $service */
         $service = $this->di->get(PostalCodeService::class);
+        assert($service instanceof PostalCodeService);
 
         $service->fillModelFromPostalCode($model);
     }

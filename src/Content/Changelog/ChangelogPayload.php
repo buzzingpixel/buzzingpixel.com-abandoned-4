@@ -12,7 +12,7 @@ use function array_walk;
 class ChangelogPayload extends SpecificPayload
 {
     /** @var Release[] */
-    private $releases = [];
+    private array $releases = [];
 
     /**
      * @param Release[] $releases

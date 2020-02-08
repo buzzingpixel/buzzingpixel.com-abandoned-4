@@ -7,11 +7,11 @@ namespace App\Cart\Services;
 use App\Cart\CartApi;
 use App\Cart\Models\CartItemModel;
 use App\Software\Models\SoftwareModel;
+use function assert;
 
 class AddItemToCurrentUsersCart
 {
-    /** @var CartApi */
-    private $cartApi;
+    private CartApi $cartApi;
 
     public function __construct(CartApi $cartApi)
     {
@@ -25,8 +25,8 @@ class AddItemToCurrentUsersCart
         $added = false;
 
         foreach ($cart->getItems() as $item) {
-            /** @var SoftwareModel $itemSoftware */
             $itemSoftware = $item->getSoftware();
+            assert($itemSoftware instanceof SoftwareModel);
 
             if ($itemSoftware->getSlug() !== $software->getSlug()) {
                 continue;

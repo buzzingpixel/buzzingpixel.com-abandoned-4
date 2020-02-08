@@ -12,8 +12,7 @@ use function Safe\json_decode;
 
 class PostalCodeService
 {
-    /** @var Client */
-    private $client;
+    private Client $client;
 
     public function __construct(Client $client)
     {
@@ -21,7 +20,7 @@ class PostalCodeService
     }
 
     /** @var array<string, mixed> */
-    private $apiCalls = [];
+    private array $apiCalls = [];
 
     /**
      * @return array<string, mixed>

@@ -33,33 +33,27 @@ class General extends SimpleModel
         static::$pathToSecureStorageDirectory = $rootPath . '/secure-storage';
     }
 
-    /** @var bool */
-    public static $devMode = false;
+    public static bool $devMode = false;
 
-    /** @var string */
-    public static $rootPath = '';
+    public static string $rootPath = '';
 
-    /** @var string */
-    public static $pathToContentDirectory = '';
+    public static string $pathToContentDirectory = '';
 
-    /** @var string */
-    public static $pathToSecureStorageDirectory = '';
+    public static string $pathToSecureStorageDirectory = '';
 
-    /** @var string */
-    public static $siteName = 'BuzzingPixel';
+    public static string $siteName = 'BuzzingPixel';
 
-    /** @var string */
-    public static $twitterHandle = 'buzzingpixel';
+    public static string $twitterHandle = 'buzzingpixel';
 
     /** @var string[] */
-    public static $stylesheets = [
+    public static array $stylesheets = [
         'https://fonts.googleapis.com/css?family=Arvo:400,400i,700,700i|Noto+Sans+SC:100,300,400,500,700,900',
         // Deployment process will change the filename to something like style.min.1553365271.css
         '/assets/css/style.min.css',
     ];
 
     /** @var array<string, array<string, string>|string> */
-    public static $jsFiles = [
+    public static array $jsFiles = [
         'vue' => 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js',
         'main' => [
             'src' => '/assets/js/main.js?v=',

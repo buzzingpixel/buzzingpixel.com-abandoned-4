@@ -8,8 +8,7 @@ use App\Payload\SpecificPayload;
 
 class DocumentationPagePayload extends SpecificPayload
 {
-    /** @var string */
-    private $title = '';
+    private string $title = '';
 
     protected function setTitle(string $title) : void
     {
@@ -21,8 +20,7 @@ class DocumentationPagePayload extends SpecificPayload
         return $this->title;
     }
 
-    /** @var string */
-    private $slug = '';
+    private string $slug = '';
 
     protected function setSlug(string $slug) : void
     {
@@ -35,7 +33,7 @@ class DocumentationPagePayload extends SpecificPayload
     }
 
     /** @var DocumentationPageSectionPayload[] */
-    private $sections = [];
+    private array $sections = [];
 
     /**
      * @param DocumentationPageSectionPayload[] $sections

@@ -20,17 +20,12 @@ use function count;
 
 class ScheduleRunCommand extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'schedule:run';
+    protected static string $defaultName = 'schedule:run';
 
-    /** @var ContainerInterface */
-    private $di;
-    /** @var FetchSchedules */
-    private $fetchSchedules;
-    /** @var CheckIfModelShouldRun */
-    private $checkIfModelShouldRun;
-    /** @var SaveSchedule */
-    private $saveSchedule;
+    private ContainerInterface $di;
+    private FetchSchedules $fetchSchedules;
+    private CheckIfModelShouldRun $checkIfModelShouldRun;
+    private SaveSchedule $saveSchedule;
 
     public function __construct(
         ContainerInterface $di,
@@ -46,11 +41,8 @@ class ScheduleRunCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * @var OutputInterface
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private $output;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private OutputInterface $output;
 
     public function execute(InputInterface $input, OutputInterface $output) : int
     {

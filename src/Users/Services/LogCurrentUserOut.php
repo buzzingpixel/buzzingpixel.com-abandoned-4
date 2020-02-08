@@ -10,10 +10,8 @@ use PDO;
 
 class LogCurrentUserOut
 {
-    /** @var CookieApiInterface */
-    private $cookieApi;
-    /** @var PDO */
-    private $pdo;
+    private CookieApiInterface $cookieApi;
+    private PDO $pdo;
 
     public function __construct(
         CookieApiInterface $cookieApi,

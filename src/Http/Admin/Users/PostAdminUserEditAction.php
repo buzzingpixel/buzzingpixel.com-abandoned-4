@@ -16,10 +16,8 @@ use function count;
 
 class PostAdminUserEditAction
 {
-    /** @var PostAdminUserEditResponder */
-    private $responder;
-    /** @var UserApi */
-    private $userApi;
+    private PostAdminUserEditResponder $responder;
+    private UserApi $userApi;
 
     public function __construct(
         PostAdminUserEditResponder $responder,

@@ -23,14 +23,12 @@ class Payload
     public const STATUS_UPDATED     = 'UPDATED';
     public const STATUS_VALID       = 'VALID';
 
-    /** @var string */
-    private $status = '';
+    private string $status = '';
 
     /** @var mixed[] */
-    private $result = [];
+    private array $result = [];
 
-    /** @var bool */
-    private $isInitialized = false;
+    private bool $isInitialized = false;
 
     /**
      * @param mixed[] $result

@@ -6,11 +6,11 @@ namespace App\Cart\Services;
 
 use App\Cart\CartApi;
 use App\Software\Models\SoftwareModel;
+use function assert;
 
 class UpdateCartItemQuantity
 {
-    /** @var CartApi */
-    private $cartApi;
+    private CartApi $cartApi;
 
     public function __construct(CartApi $cartApi)
     {
@@ -22,8 +22,8 @@ class UpdateCartItemQuantity
         $cart = $this->cartApi->fetchCurrentUserCart();
 
         foreach ($cart->getItems() as $item) {
-            /** @var SoftwareModel $itemSoftware */
             $itemSoftware = $item->getSoftware();
+            assert($itemSoftware instanceof SoftwareModel);
 
             if ($itemSoftware->getSlug() !== $software->getSlug()) {
                 continue;

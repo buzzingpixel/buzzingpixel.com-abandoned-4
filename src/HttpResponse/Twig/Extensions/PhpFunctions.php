@@ -15,7 +15,7 @@ class PhpFunctions extends AbstractExtension
      *
      * @var string[]
      */
-    private $functions = [
+    private array $functions = [
         'get_class',
         'gettype',
         'uniqid',

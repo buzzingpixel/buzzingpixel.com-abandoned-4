@@ -12,15 +12,13 @@ use App\Software\Models\SoftwareVersionModel;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
 use function array_map;
+use function assert;
 
 class FetchSoftwareBySlug
 {
-    /** @var RecordQueryFactory */
-    private $recordQueryFactory;
-    /** @var TransformSoftwareRecordToModel */
-    private $softwareRecordToModel;
-    /** @var TransformSoftwareVersionRecordToModel */
-    private $softwareVersionRecordToModel;
+    private RecordQueryFactory $recordQueryFactory;
+    private TransformSoftwareRecordToModel $softwareRecordToModel;
+    private TransformSoftwareVersionRecordToModel $softwareVersionRecordToModel;
 
     public function __construct(
         RecordQueryFactory $recordQueryFactory,
@@ -34,12 +32,12 @@ class FetchSoftwareBySlug
 
     public function __invoke(string $slug) : ?SoftwareModel
     {
-        /** @var SoftwareRecord|null $softwareRecord */
         $softwareRecord = ($this->recordQueryFactory)(
             new SoftwareRecord()
         )
             ->withWhere('slug', $slug)
             ->one();
+        assert($softwareRecord instanceof SoftwareRecord || $softwareRecord === null);
 
         if ($softwareRecord === null) {
             return null;

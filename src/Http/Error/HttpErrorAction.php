@@ -11,10 +11,8 @@ use Throwable;
 
 class HttpErrorAction
 {
-    /** @var Error404Responder */
-    private $error404Responder;
-    /** @var Error500Responder */
-    private $error500Responder;
+    private Error404Responder $error404Responder;
+    private Error500Responder $error500Responder;
 
     public function __construct(Error404Responder $error404Responder, Error500Responder $error500Responder)
     {

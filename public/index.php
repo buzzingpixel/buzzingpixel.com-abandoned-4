@@ -12,10 +12,11 @@ use Whoops\Run as WhoopsRun;
 // Start session
 session_start();
 
+
 // Run bootstrap and get di container
 $bootstrap = require dirname(__DIR__) . '/config/bootstrap.php';
-/** @var ContainerInterface $container */
 $container = $bootstrap();
+assert($container instanceof ContainerInterface);
 
 // Create application
 AppFactory::setContainer($container);

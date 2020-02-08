@@ -14,15 +14,13 @@ use function max;
 
 class UriSegments
 {
-    /** @var bool */
-    private $isInitialized = false;
+    private bool $isInitialized = false;
 
     /** @var array<int, string> */
-    private $segments;
+    private array $segments;
     /** @var array<int, string> */
-    private $segmentsSansPagination;
-    /** @var int */
-    private $pageNum;
+    private array $segmentsSansPagination;
+    private int $pageNum;
 
     /**
      * @param array<int, string> $segments

@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait Headline
 {
-    /** @var string */
-    private $headline = '';
+    private string $headline = '';
 
     protected function setHeadline(string $headline) : void
     {

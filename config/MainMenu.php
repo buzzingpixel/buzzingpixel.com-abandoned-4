@@ -9,7 +9,7 @@ use Config\Abstractions\SimpleModel;
 class MainMenu extends SimpleModel
 {
     /** @var mixed[] */
-    public static $menu = [
+    public static array $menu = [
         [
             'href' => '#0',
             'content' => 'software',

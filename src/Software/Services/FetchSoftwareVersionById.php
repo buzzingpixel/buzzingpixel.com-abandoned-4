@@ -8,13 +8,12 @@ use App\Persistence\RecordQueryFactory;
 use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareVersionModel;
 use Throwable;
+use function assert;
 
 class FetchSoftwareVersionById
 {
-    /** @var RecordQueryFactory */
-    private $recordQueryFactory;
-    /** @var FetchSoftwareById */
-    private $fetchSoftwareById;
+    private RecordQueryFactory $recordQueryFactory;
+    private FetchSoftwareById $fetchSoftwareById;
 
     public function __construct(
         RecordQueryFactory $recordQueryFactory,
@@ -38,12 +37,12 @@ class FetchSoftwareVersionById
      */
     private function innerRun(string $id) : ?SoftwareVersionModel
     {
-        /** @var SoftwareVersionRecord|null $softwareVersionRecord */
         $softwareVersionRecord = ($this->recordQueryFactory)(
             new SoftwareVersionRecord()
         )
             ->withWhere('id', $id)
             ->one();
+        assert($softwareVersionRecord instanceof SoftwareVersionRecord || $softwareVersionRecord === null);
 
         if ($softwareVersionRecord === null) {
             return null;

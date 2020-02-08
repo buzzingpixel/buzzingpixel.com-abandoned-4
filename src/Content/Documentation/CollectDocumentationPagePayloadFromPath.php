@@ -11,21 +11,18 @@ use IteratorIterator;
 use RegexIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
-use const SORT_NATURAL;
 use function array_map;
 use function array_values;
 use function implode;
 use function iterator_to_array;
 use function Safe\ksort;
+use const SORT_NATURAL;
 
 class CollectDocumentationPagePayloadFromPath
 {
-    /** @var General */
-    private $generalConfig;
-    /** @var CollectDocumentationPageSectionFromPath */
-    private $collectDocumentationPageSectionFromPath;
-    /** @var GithubMarkdown */
-    protected $markdownParser;
+    private General $generalConfig;
+    private CollectDocumentationPageSectionFromPath $collectDocumentationPageSectionFromPath;
+    protected GithubMarkdown $markdownParser;
 
     public function __construct(
         General $generalConfig,

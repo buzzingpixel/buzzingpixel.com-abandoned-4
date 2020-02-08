@@ -10,8 +10,7 @@ use App\Software\Services\FetchSoftwareBySlug;
 
 class TransformCartItemRecordToModel
 {
-    /** @var FetchSoftwareBySlug */
-    private $fetchSoftwareBySlug;
+    private FetchSoftwareBySlug $fetchSoftwareBySlug;
 
     public function __construct(FetchSoftwareBySlug $fetchSoftwareBySlug)
     {

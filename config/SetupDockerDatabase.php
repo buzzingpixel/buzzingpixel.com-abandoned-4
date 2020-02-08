@@ -13,8 +13,7 @@ use function getenv;
 
 class SetupDockerDatabase extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'app-setup:setup-docker-database';
+    protected static string $defaultName = 'app-setup:setup-docker-database';
 
     /**
      * @throws Exception

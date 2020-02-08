@@ -8,8 +8,7 @@ use App\Cart\CartApi;
 
 class ClearCart
 {
-    /** @var CartApi */
-    private $cartApi;
+    private CartApi $cartApi;
 
     public function __construct(CartApi $cartApi)
     {

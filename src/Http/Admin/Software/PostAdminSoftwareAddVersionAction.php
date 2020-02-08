@@ -16,17 +16,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+use function assert;
 use function count;
 use function is_numeric;
 
 class PostAdminSoftwareAddVersionAction
 {
-    /** @var SoftwareApi */
-    private $softwareApi;
-    /** @var PostAdminSoftwareAddVersionResponder */
-    private $responder;
-    /** @var UserApi */
-    private $userApi;
+    private SoftwareApi $softwareApi;
+    private PostAdminSoftwareAddVersionResponder $responder;
+    private UserApi $userApi;
 
     public function __construct(
         SoftwareApi $softwareApi,
@@ -51,8 +49,8 @@ class PostAdminSoftwareAddVersionAction
             throw new HttpNotFoundException($request);
         }
 
-        /** @var UserModel $user */
         $user = $this->userApi->fetchLoggedInUser();
+        assert($user instanceof UserModel);
 
         $now = new DateTimeImmutable(
             'now',
@@ -100,15 +98,15 @@ class PostAdminSoftwareAddVersionAction
             );
         }
 
-        /** @var UploadedFileInterface|null $downloadFile */
         $downloadFile = $request->getUploadedFiles()['download_file'] ?? null;
+        assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
 
-        /** @var DateTimeImmutable $releasedOn */
         $releasedOn = DateTimeImmutable::createFromFormat(
             'Y-m-d h:i A',
             (string) $inputValues['released_on'],
             $user->getTimezone()
         );
+        assert($releasedOn instanceof DateTimeImmutable);
 
         $releasedOn = $releasedOn->setTimezone(
             new DateTimeZone('UTC')

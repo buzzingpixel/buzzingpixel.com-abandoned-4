@@ -12,10 +12,8 @@ use Throwable;
 
 class SaveFileToSecureStorage
 {
-    /** @var General */
-    private $generalConfig;
-    /** @var Filesystem */
-    private $filesystem;
+    private General $generalConfig;
+    private Filesystem $filesystem;
 
     public function __construct(
         General $generalConfig,

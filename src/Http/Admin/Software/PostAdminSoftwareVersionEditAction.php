@@ -16,17 +16,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+use function assert;
 use function count;
 use function is_numeric;
 
 class PostAdminSoftwareVersionEditAction
 {
-    /** @var PostAdminSoftwareVersionEditResponder */
-    private $responder;
-    /** @var SoftwareApi */
-    private $softwareApi;
-    /** @var UserApi */
-    private $userApi;
+    private PostAdminSoftwareVersionEditResponder $responder;
+    private SoftwareApi $softwareApi;
+    private UserApi $userApi;
 
     public function __construct(
         PostAdminSoftwareVersionEditResponder $responder,
@@ -51,8 +49,8 @@ class PostAdminSoftwareVersionEditAction
             throw new HttpNotFoundException($request);
         }
 
-        /** @var SoftwareModel $software */
         $software = $softwareVersion->getSoftware();
+        assert($software instanceof SoftwareModel);
 
         $postData = $request->getParsedBody();
 
@@ -63,8 +61,8 @@ class PostAdminSoftwareVersionEditAction
             'upgrade_price' => $postData['upgrade_price'] ?? '',
         ];
 
-        /** @var UploadedFileInterface|null $downloadFile */
         $downloadFile = $request->getUploadedFiles()['new_download_file'] ?? null;
+        assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
 
         $inputMessages = [];
 
@@ -99,15 +97,15 @@ class PostAdminSoftwareVersionEditAction
             );
         }
 
-        /** @var UserModel $user */
         $user = $this->userApi->fetchLoggedInUser();
+        assert($user instanceof UserModel);
 
-        /** @var DateTimeImmutable $releasedOn */
         $releasedOn = DateTimeImmutable::createFromFormat(
             'Y-m-d h:i A',
             (string) $inputValues['released_on'],
             $user->getTimezone()
         );
+        assert($releasedOn instanceof DateTimeImmutable);
 
         $releasedOn = $releasedOn->setTimezone(
             new DateTimeZone('UTC')

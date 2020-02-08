@@ -10,7 +10,7 @@ use function array_walk;
 trait Ctas
 {
     /** @var CtaPayload[] */
-    private $ctas = [];
+    private array $ctas = [];
 
     /**
      * @param CtaPayload[] $ctas

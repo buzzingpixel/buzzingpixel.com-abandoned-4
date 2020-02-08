@@ -10,8 +10,7 @@ use function array_walk;
 
 class SoftwareInfoPayload extends SpecificPayload
 {
-    /** @var string */
-    private $slug = '';
+    private string $slug = '';
 
     protected function setSlug(string $slug) : void
     {
@@ -23,8 +22,7 @@ class SoftwareInfoPayload extends SpecificPayload
         return $this->slug;
     }
 
-    /** @var string */
-    private $title = '';
+    private string $title = '';
 
     protected function setTitle(string $title) : void
     {
@@ -36,8 +34,7 @@ class SoftwareInfoPayload extends SpecificPayload
         return $this->title;
     }
 
-    /** @var string */
-    private $subTitle = '';
+    private string $subTitle = '';
 
     protected function setSubTitle(string $subTitle) : void
     {
@@ -49,8 +46,7 @@ class SoftwareInfoPayload extends SpecificPayload
         return $this->subTitle;
     }
 
-    /** @var bool */
-    private $forSale = false;
+    private bool $forSale = false;
 
     protected function setForSale(bool $forSale) : void
     {
@@ -62,8 +58,7 @@ class SoftwareInfoPayload extends SpecificPayload
         return $this->forSale;
     }
 
-    /** @var bool */
-    private $hasChangelog = false;
+    private bool $hasChangelog = false;
 
     protected function setHasChangelog(bool $hasChangelog) : void
     {
@@ -75,8 +70,7 @@ class SoftwareInfoPayload extends SpecificPayload
         return $this->hasChangelog;
     }
 
-    /** @var string */
-    private $changelogExternalUrl = '';
+    private string $changelogExternalUrl = '';
 
     protected function setChangelogExternalUrl(string $changelogExternalUrl) : void
     {
@@ -88,8 +82,7 @@ class SoftwareInfoPayload extends SpecificPayload
         return $this->changelogExternalUrl;
     }
 
-    /** @var bool */
-    private $hasDocumentation = false;
+    private bool $hasDocumentation = false;
 
     protected function setHasDocumentation(bool $hasDocumentation) : void
     {
@@ -102,7 +95,7 @@ class SoftwareInfoPayload extends SpecificPayload
     }
 
     /** @var CtaPayload[] */
-    private $actionButtons = [];
+    private array $actionButtons = [];
 
     /**
      * @param CtaPayload[] $actionButtons

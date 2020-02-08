@@ -10,8 +10,7 @@ use Twig\TwigFunction;
 
 class TemplateExists extends AbstractExtension
 {
-    /** @var LoaderInterface */
-    private $loader;
+    private LoaderInterface $loader;
 
     public function __construct(LoaderInterface $loader)
     {

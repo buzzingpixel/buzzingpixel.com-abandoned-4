@@ -8,6 +8,8 @@ use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
 use ReflectionException;
+use function assert;
+use function is_string;
 use function mb_strpos;
 use function mb_substr;
 use function method_exists;
@@ -16,8 +18,7 @@ use function ucfirst;
 
 abstract class SpecificPayload
 {
-    /** @var bool */
-    protected $isInitialized = false;
+    protected bool $isInitialized = false;
 
     /**
      * @param mixed[] $vars
@@ -38,7 +39,7 @@ abstract class SpecificPayload
 
         /** @psalm-suppress MixedAssignment */
         foreach ($vars as $var => $val) {
-            /** @var string $var */
+            assert(is_string($var));
 
             $method = 'set' . ucfirst($var);
 
@@ -66,16 +67,14 @@ abstract class SpecificPayload
         $this->name = mb_substr($this->shortName, 0, -7);
     }
 
-    /** @var string */
-    protected $shortName = '';
+    protected string $shortName = '';
 
     public function getShortName() : string
     {
         return $this->shortName;
     }
 
-    /** @var string */
-    protected $name = '';
+    protected string $name = '';
 
     public function getName() : string
     {

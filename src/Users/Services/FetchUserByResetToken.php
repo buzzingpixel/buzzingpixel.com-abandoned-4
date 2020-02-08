@@ -8,14 +8,13 @@ use App\Persistence\Users\UserPasswordResetTokenRecord;
 use App\Users\Models\UserModel;
 use PDO;
 use Throwable;
+use function assert;
 use function is_bool;
 
 class FetchUserByResetToken
 {
-    /** @var PDO */
-    private $pdo;
-    /** @var FetchUserById */
-    private $fetchUserById;
+    private PDO $pdo;
+    private FetchUserById $fetchUserById;
 
     public function __construct(PDO $pdo, FetchUserById $fetchUserById)
     {
@@ -32,10 +31,10 @@ class FetchUserByResetToken
 
             $statement->execute([':id' => $token]);
 
-            /** @var UserPasswordResetTokenRecord|bool $record */
             $record = $statement->fetchObject(
                 UserPasswordResetTokenRecord::class
             );
+            assert($record instanceof UserPasswordResetTokenRecord || is_bool($record));
 
             if (is_bool($record)) {
                 return null;

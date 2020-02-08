@@ -8,14 +8,14 @@ use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
 use function array_map;
+use function assert;
 use function is_array;
 
 class ExtractSoftwareInfoFromPath
 {
     use MapYamlCtaToPayload;
 
-    /** @var string */
-    private $pathToContentDirectory;
+    private string $pathToContentDirectory;
 
     public function __construct(string $pathToContentDirectory)
     {
@@ -29,8 +29,8 @@ class ExtractSoftwareInfoFromPath
     {
         $fullPath = $this->pathToContentDirectory . '/' . $contentPath . '/software.yml';
 
-        /** @var array|null $vars */
         $vars = Yaml::parseFile($fullPath);
+        assert(is_array($vars) || $vars === null);
 
         $ctas = isset($vars['actionButtons']) && is_array($vars['actionButtons']) ?
             $vars['actionButtons'] :

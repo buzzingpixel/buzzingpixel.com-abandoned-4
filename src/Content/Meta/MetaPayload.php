@@ -8,8 +8,7 @@ use App\Payload\SpecificPayload;
 
 class MetaPayload extends SpecificPayload
 {
-    /** @var bool */
-    private $noIndex = false;
+    private bool $noIndex = false;
 
     protected function setNoIndex(bool $noIndex) : void
     {
@@ -21,8 +20,7 @@ class MetaPayload extends SpecificPayload
         return $this->noIndex;
     }
 
-    /** @var string */
-    private $metaTitle = '';
+    private string $metaTitle = '';
 
     protected function setMetaTitle(string $metaTitle) : void
     {
@@ -43,8 +41,7 @@ class MetaPayload extends SpecificPayload
         return $newMetaPayload;
     }
 
-    /** @var string */
-    private $metaDescription = '';
+    private string $metaDescription = '';
 
     protected function setMetaDescription(string $metaDescription) : void
     {
@@ -65,8 +62,7 @@ class MetaPayload extends SpecificPayload
         return $newMetaPayload;
     }
 
-    /** @var string */
-    private $ogType = 'website';
+    private string $ogType = 'website';
 
     protected function setOgType(string $ogType) : void
     {
@@ -78,8 +74,7 @@ class MetaPayload extends SpecificPayload
         return $this->ogType;
     }
 
-    /** @var string */
-    private $twitterCardType = 'summary';
+    private string $twitterCardType = 'summary';
 
     protected function setTwitterCardType(string $twitterCardType) : void
     {
@@ -91,8 +86,7 @@ class MetaPayload extends SpecificPayload
         return $this->twitterCardType;
     }
 
-    /** @var HeadingBackgroundPayload|null */
-    private $headingBackground;
+    private ?HeadingBackgroundPayload $headingBackground = null;
 
     protected function setHeadingBackground(?HeadingBackgroundPayload $headingBackground) : void
     {

@@ -9,8 +9,7 @@ use App\Software\Models\SoftwareModel;
 
 class CartItemModel extends Model
 {
-    /** @var string */
-    private $id = '';
+    private string $id = '';
 
     public function setId(string $id) : CartItemModel
     {
@@ -24,8 +23,7 @@ class CartItemModel extends Model
         return $this->id;
     }
 
-    /** @var CartModel|null */
-    private $cart;
+    private ?CartModel $cart = null;
 
     public function setCart(?CartModel $cart) : CartItemModel
     {
@@ -39,8 +37,7 @@ class CartItemModel extends Model
         return $this->cart;
     }
 
-    /** @var SoftwareModel|null */
-    private $software;
+    private ?SoftwareModel $software = null;
 
     public function setSoftware(?SoftwareModel $software) : CartItemModel
     {
@@ -54,8 +51,7 @@ class CartItemModel extends Model
         return $this->software;
     }
 
-    /** @var int */
-    private $quantity = 0;
+    private int $quantity = 0;
 
     public function setQuantity(int $quantity) : CartItemModel
     {

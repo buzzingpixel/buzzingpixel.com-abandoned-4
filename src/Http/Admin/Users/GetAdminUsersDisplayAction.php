@@ -17,12 +17,9 @@ use function count;
 
 class GetAdminUsersDisplayAction
 {
-    /** @var ExtractUriSegments */
-    private $extractUriSegments;
-    /** @var UserApi */
-    private $userApi;
-    /** @var GetAdminResponder */
-    private $responder;
+    private ExtractUriSegments $extractUriSegments;
+    private UserApi $userApi;
+    private GetAdminResponder $responder;
 
     public function __construct(
         ExtractUriSegments $extractUriSegments,

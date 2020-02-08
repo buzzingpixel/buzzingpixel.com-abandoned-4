@@ -12,13 +12,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+use function assert;
 
 class GetAdminSoftwareVersionEditAction
 {
-    /** @var GetAdminResponder */
-    private $responder;
-    /** @var SoftwareApi */
-    private $softwareApi;
+    private GetAdminResponder $responder;
+    private SoftwareApi $softwareApi;
 
     public function __construct(
         GetAdminResponder $responder,
@@ -41,8 +40,8 @@ class GetAdminSoftwareVersionEditAction
             throw new HttpNotFoundException($request);
         }
 
-        /** @var SoftwareModel $software */
         $software = $softwareVersion->getSoftware();
+        assert($software instanceof SoftwareModel);
 
         return ($this->responder)(
             'Admin/SoftwareVersionEdit.twig',

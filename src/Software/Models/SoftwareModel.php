@@ -9,8 +9,7 @@ use function array_walk;
 
 class SoftwareModel extends Model
 {
-    /** @var string */
-    private $id = '';
+    private string $id = '';
 
     public function setId(string $id) : SoftwareModel
     {
@@ -24,8 +23,7 @@ class SoftwareModel extends Model
         return $this->id;
     }
 
-    /** @var string */
-    private $slug = '';
+    private string $slug = '';
 
     public function setSlug(string $slug) : SoftwareModel
     {
@@ -39,8 +37,7 @@ class SoftwareModel extends Model
         return $this->slug;
     }
 
-    /** @var string */
-    private $name = '';
+    private string $name = '';
 
     public function setName(string $name) : SoftwareModel
     {
@@ -54,8 +51,7 @@ class SoftwareModel extends Model
         return $this->name;
     }
 
-    /** @var bool */
-    private $isForSale = true;
+    private bool $isForSale = true;
 
     public function setIsForSale(bool $isForSale) : SoftwareModel
     {
@@ -69,8 +65,7 @@ class SoftwareModel extends Model
         return $this->isForSale;
     }
 
-    /** @var float */
-    private $price = 0.0;
+    private float $price = 0.0;
 
     public function setPrice(float $price) : SoftwareModel
     {
@@ -84,8 +79,7 @@ class SoftwareModel extends Model
         return $this->price;
     }
 
-    /** @var float */
-    private $renewalPrice = 0.0;
+    private float $renewalPrice = 0.0;
 
     public function setRenewalPrice(float $renewalPrice) : SoftwareModel
     {
@@ -99,8 +93,7 @@ class SoftwareModel extends Model
         return $this->renewalPrice;
     }
 
-    /** @var bool */
-    private $isSubscription = false;
+    private bool $isSubscription = false;
 
     public function setIsSubscription(bool $isSubscription) : SoftwareModel
     {
@@ -115,7 +108,7 @@ class SoftwareModel extends Model
     }
 
     /** @var SoftwareVersionModel[] */
-    private $versions = [];
+    private array $versions = [];
 
     /**
      * @param SoftwareVersionModel[] $versions

@@ -10,7 +10,7 @@ use App\Schedule\Models\ScheduleItemModel;
 class SchedulesPayload extends SpecificPayload
 {
     /** @var ScheduleItemModel[] */
-    private $schedules = [];
+    private array $schedules = [];
 
     /**
      * @param ScheduleItemModel[] $schedules

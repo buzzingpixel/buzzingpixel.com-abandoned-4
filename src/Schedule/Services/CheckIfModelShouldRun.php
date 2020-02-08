@@ -11,10 +11,8 @@ use function is_numeric;
 
 class CheckIfModelShouldRun
 {
-    /** @var TranslateRunEvery */
-    private $translateRunEvery;
-    /** @var SystemClock */
-    private $systemClock;
+    private TranslateRunEvery $translateRunEvery;
+    private SystemClock $systemClock;
 
     public function __construct(
         TranslateRunEvery $translateRunEvery,

@@ -14,10 +14,8 @@ use function is_numeric;
 
 class PostAdminSoftwareEditAction
 {
-    /** @var PostAdminSoftwareEditResponder */
-    private $responder;
-    /** @var SoftwareApi */
-    private $softwareApi;
+    private PostAdminSoftwareEditResponder $responder;
+    private SoftwareApi $softwareApi;
 
     public function __construct(
         PostAdminSoftwareEditResponder $responder,

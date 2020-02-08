@@ -13,19 +13,16 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PDO;
+use function assert;
 use function is_bool;
 use function time;
 
 class FetchLoggedInUser
 {
-    /** @var CookieApiInterface */
-    private $cookieApi;
-    /** @var PDO */
-    private $pdo;
-    /** @var SaveExistingRecord */
-    private $saveExistingRecord;
-    /** @var FetchUserById */
-    private $fetchUserById;
+    private CookieApiInterface $cookieApi;
+    private PDO $pdo;
+    private SaveExistingRecord $saveExistingRecord;
+    private FetchUserById $fetchUserById;
 
     public function __construct(
         CookieApiInterface $cookieApi,
@@ -53,10 +50,10 @@ class FetchLoggedInUser
 
         $statement->execute([':id' => $cookie->value()]);
 
-        /** @var UserSessionRecord|bool $sessionRecord */
         $sessionRecord = $statement->fetchObject(
             UserSessionRecord::class
         );
+        assert($sessionRecord instanceof UserSessionRecord || is_bool($sessionRecord));
 
         if (is_bool($sessionRecord)) {
             $this->cookieApi->deleteCookie($cookie);
@@ -64,11 +61,11 @@ class FetchLoggedInUser
             return null;
         }
 
-        /** @var DateTimeImmutable $lastTouchedAt */
         $lastTouchedAt = DateTimeImmutable::createFromFormat(
             Constants::POSTGRES_OUTPUT_FORMAT,
             $sessionRecord->last_touched_at
         );
+        assert($lastTouchedAt instanceof DateTimeImmutable);
 
         /**
          * We don't want to touch the session (write to the database) every time

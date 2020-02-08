@@ -9,22 +9,20 @@ use Config\General;
 use DirectoryIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
-use const SORT_NATURAL;
 use function array_map;
 use function array_values;
+use function assert;
 use function end;
 use function explode;
 use function implode;
 use function Safe\ksort;
+use const SORT_NATURAL;
 
 class CollectDocumentationVersionPayloadFromPath
 {
-    /** @var General */
-    private $generalConfig;
-    /** @var CollectDocumentationPagePayloadFromPath */
-    private $collectDocumentationPagePayloadFromPath;
-    /** @var GithubMarkdown */
-    protected $markdownParser;
+    private General $generalConfig;
+    private CollectDocumentationPagePayloadFromPath $collectDocumentationPagePayloadFromPath;
+    protected GithubMarkdown $markdownParser;
 
     public function __construct(
         General $generalConfig,
@@ -64,7 +62,7 @@ class CollectDocumentationVersionPayloadFromPath
         $directories = [];
 
         foreach ($directory as $fileInfo) {
-            /** @var DirectoryIterator $fileInfo */
+            assert($fileInfo instanceof DirectoryIterator);
 
             if ($fileInfo->isDot() || ! $fileInfo->isDir()) {
                 continue;

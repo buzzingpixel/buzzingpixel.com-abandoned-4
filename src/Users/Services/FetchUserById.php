@@ -9,13 +9,12 @@ use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserRecordToUserModel;
 use PDO;
 use Throwable;
+use function assert;
 
 class FetchUserById
 {
-    /** @var PDO */
-    private $pdo;
-    /** @var TransformUserRecordToUserModel */
-    private $transformUserRecordToUserModel;
+    private PDO $pdo;
+    private TransformUserRecordToUserModel $transformUserRecordToUserModel;
 
     public function __construct(
         PDO $pdo,
@@ -34,8 +33,8 @@ class FetchUserById
 
             $query->execute([':id' => $id]);
 
-            /** @var UserRecord|null $userRecord */
             $userRecord = $query->fetchObject(UserRecord::class);
+            assert($userRecord instanceof UserRecord || $userRecord === null);
 
             $isInstance = $userRecord instanceof UserRecord;
 

@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait Content
 {
-    /** @var string */
-    private $content = '';
+    private string $content = '';
 
     protected function setContent(string $content) : void
     {

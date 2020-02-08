@@ -13,8 +13,7 @@ class CodeblockPayload extends SpecificPayload
     use Heading;
     use Content;
 
-    /** @var string */
-    private $lang = '';
+    private string $lang = '';
 
     protected function setLang(string $lang) : void
     {

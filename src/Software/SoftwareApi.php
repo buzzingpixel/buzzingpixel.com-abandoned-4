@@ -15,11 +15,11 @@ use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Services\FetchSoftwareVersionById;
 use App\Software\Services\SaveSoftware;
 use Psr\Container\ContainerInterface;
+use function assert;
 
 class SoftwareApi
 {
-    /** @var ContainerInterface */
-    private $di;
+    private ContainerInterface $di;
 
     public function __construct(ContainerInterface $di)
     {
@@ -28,24 +28,24 @@ class SoftwareApi
 
     public function saveSoftware(SoftwareModel $model) : Payload
     {
-        /** @var SaveSoftware $service */
         $service = $this->di->get(SaveSoftware::class);
+        assert($service instanceof SaveSoftware);
 
         return $service($model);
     }
 
     public function fetchSoftwareById(string $id) : ?SoftwareModel
     {
-        /** @var FetchSoftwareById $service */
         $service = $this->di->get(FetchSoftwareById::class);
+        assert($service instanceof FetchSoftwareById);
 
         return $service($id);
     }
 
     public function fetchSoftwareBySlug(string $slug) : ?SoftwareModel
     {
-        /** @var FetchSoftwareBySlug $service */
         $service = $this->di->get(FetchSoftwareBySlug::class);
+        assert($service instanceof FetchSoftwareBySlug);
 
         return $service($slug);
     }
@@ -55,32 +55,32 @@ class SoftwareApi
      */
     public function fetchAllSoftware() : array
     {
-        /** @var FetchAllSoftware $service */
         $service = $this->di->get(FetchAllSoftware::class);
+        assert($service instanceof FetchAllSoftware);
 
         return $service();
     }
 
     public function fetchSoftwareVersionById(string $id) : ?SoftwareVersionModel
     {
-        /** @var FetchSoftwareVersionById $service */
         $service = $this->di->get(FetchSoftwareVersionById::class);
+        assert($service instanceof FetchSoftwareVersionById);
 
         return $service($id);
     }
 
     public function deleteSoftware(SoftwareModel $model) : void
     {
-        /** @var DeleteSoftware $service */
         $service = $this->di->get(DeleteSoftware::class);
+        assert($service instanceof DeleteSoftware);
 
         $service($model);
     }
 
     public function deleteSoftwareVersion(SoftwareVersionModel $model) : void
     {
-        /** @var DeleteSoftwareVersion $service */
         $service = $this->di->get(DeleteSoftwareVersion::class);
+        assert($service instanceof DeleteSoftwareVersion);
 
         $service($model);
     }

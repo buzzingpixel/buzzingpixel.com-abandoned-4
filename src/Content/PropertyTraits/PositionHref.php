@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait PositionHref
 {
-    /** @var string */
-    private $positionHref = '';
+    private string $positionHref = '';
 
     protected function setPositionHref(string $positionHref) : void
     {

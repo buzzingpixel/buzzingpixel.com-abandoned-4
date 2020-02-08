@@ -9,7 +9,7 @@ use App\Payload\SpecificPayload;
 class ModulePayload extends SpecificPayload
 {
     /** @var SpecificPayload[] */
-    private $items = [];
+    private array $items = [];
 
     /**
      * @param SpecificPayload[] $items

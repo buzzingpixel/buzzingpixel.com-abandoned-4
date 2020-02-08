@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait Position
 {
-    /** @var string */
-    private $position = '';
+    private string $position = '';
 
     protected function setPosition(string $position) : void
     {

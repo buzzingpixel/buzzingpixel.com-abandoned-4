@@ -9,7 +9,7 @@ use App\Payload\SpecificPayload;
 class ListPayload extends SpecificPayload
 {
     /** @var mixed[] */
-    private $listItems = [];
+    private array $listItems = [];
 
     /**
      * @param mixed[] $listItems

@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait Href
 {
-    /** @var string */
-    private $href = '';
+    private string $href = '';
 
     protected function setHref(string $href) : void
     {

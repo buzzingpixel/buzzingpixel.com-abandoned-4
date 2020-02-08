@@ -10,7 +10,7 @@ use function array_walk;
 trait QuoteBlocks
 {
     /** @var QuoteBlockPayload[] */
-    private $quoteBlocks = [];
+    private array $quoteBlocks = [];
 
     /**
      * @param QuoteBlockPayload[] $quoteBlocks

@@ -14,10 +14,8 @@ use function trim;
 
 class MinifyMiddleware
 {
-    /** @var Minifier */
-    private $minifier;
-    /** @var StreamFactory */
-    private $streamFactory;
+    private Minifier $minifier;
+    private StreamFactory $streamFactory;
 
     public function __construct(
         Minifier $minifier,

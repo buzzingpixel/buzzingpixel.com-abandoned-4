@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait PersonName
 {
-    /** @var string */
-    private $personName = '';
+    private string $personName = '';
 
     protected function setPersonName(string $personName) : void
     {

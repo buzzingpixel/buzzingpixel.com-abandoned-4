@@ -9,8 +9,7 @@ use function array_walk;
 
 class DocumentationVersionPayload extends SpecificPayload
 {
-    /** @var string */
-    private $title = '';
+    private string $title = '';
 
     protected function setTitle(string $title) : void
     {
@@ -22,8 +21,7 @@ class DocumentationVersionPayload extends SpecificPayload
         return $this->title;
     }
 
-    /** @var string */
-    private $slug = '';
+    private string $slug = '';
 
     protected function setSlug(string $slug) : void
     {
@@ -35,8 +33,7 @@ class DocumentationVersionPayload extends SpecificPayload
         return $this->slug;
     }
 
-    /** @var string */
-    private $version = '';
+    private string $version = '';
 
     protected function setVersion(string $version) : void
     {
@@ -49,7 +46,7 @@ class DocumentationVersionPayload extends SpecificPayload
     }
 
     /** @var DocumentationPagePayload[] */
-    private $pages = [];
+    private array $pages = [];
 
     /**
      * @param DocumentationPagePayload[] $pages

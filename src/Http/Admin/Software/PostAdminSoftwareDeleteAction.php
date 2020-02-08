@@ -13,12 +13,9 @@ use Slim\Flash\Messages as FlashMessages;
 
 class PostAdminSoftwareDeleteAction
 {
-    /** @var FlashMessages */
-    private $flashMessages;
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
-    /** @var SoftwareApi */
-    private $softwareApi;
+    private FlashMessages $flashMessages;
+    private ResponseFactoryInterface $responseFactory;
+    private SoftwareApi $softwareApi;
 
     public function __construct(
         FlashMessages $flashMessages,

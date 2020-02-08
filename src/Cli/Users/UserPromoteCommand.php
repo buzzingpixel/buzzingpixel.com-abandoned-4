@@ -14,13 +14,10 @@ use function array_walk;
 
 class UserPromoteCommand extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'user:promote';
+    protected static string $defaultName = 'user:promote';
 
-    /** @var CliQuestionService */
-    private $cliQuestionService;
-    /** @var UserApi */
-    private $userApi;
+    private CliQuestionService $cliQuestionService;
+    private UserApi $userApi;
 
     public function __construct(
         CliQuestionService $cliQuestionService,

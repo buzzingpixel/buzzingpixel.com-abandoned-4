@@ -9,8 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class GetChangelogRawResponder
 {
-    /** @var ResponseFactoryInterface */
-    protected $responseFactory;
+    protected ResponseFactoryInterface $responseFactory;
 
     public function __construct(ResponseFactoryInterface $responseFactory)
     {

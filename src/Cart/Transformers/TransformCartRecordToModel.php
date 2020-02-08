@@ -13,8 +13,7 @@ use DateTimeImmutable;
 
 class TransformCartRecordToModel
 {
-    /** @var FetchUserById */
-    private $fetchUserById;
+    private FetchUserById $fetchUserById;
 
     public function __construct(FetchUserById $fetchUserById)
     {

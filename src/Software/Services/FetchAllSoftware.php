@@ -15,12 +15,9 @@ use function count;
 
 class FetchAllSoftware
 {
-    /** @var RecordQueryFactory */
-    private $recordQueryFactory;
-    /** @var TransformSoftwareRecordToModel */
-    private $softwareRecordToModel;
-    /** @var TransformSoftwareVersionRecordToModel */
-    private $softwareVersionRecordToModel;
+    private RecordQueryFactory $recordQueryFactory;
+    private TransformSoftwareRecordToModel $softwareRecordToModel;
+    private TransformSoftwareVersionRecordToModel $softwareVersionRecordToModel;
 
     public function __construct(
         RecordQueryFactory $recordQueryFactory,

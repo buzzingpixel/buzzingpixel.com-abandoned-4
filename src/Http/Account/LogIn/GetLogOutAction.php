@@ -11,10 +11,8 @@ use Slim\Psr7\Factory\ResponseFactory;
 
 class GetLogOutAction
 {
-    /** @var UserApi */
-    private $userApi;
-    /** @var ResponseFactory */
-    private $responseFactory;
+    private UserApi $userApi;
+    private ResponseFactory $responseFactory;
 
     public function __construct(
         UserApi $userApi,

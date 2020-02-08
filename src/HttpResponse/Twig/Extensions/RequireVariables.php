@@ -83,6 +83,7 @@ class RequireVariables extends AbstractExtension
 
             $this->throwRequirementException($var, $type ?: null);
         }
+
         // @codeCoverageIgnoreStart
     }
 

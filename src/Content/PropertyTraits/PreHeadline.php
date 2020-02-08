@@ -6,8 +6,7 @@ namespace App\Content\PropertyTraits;
 
 trait PreHeadline
 {
-    /** @var string */
-    private $preHeadline = '';
+    private string $preHeadline = '';
 
     protected function setPreHeadline(string $preHeadline) : void
     {

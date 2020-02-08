@@ -12,10 +12,8 @@ use function array_map;
 
 class FetchUsersByLimitOffset
 {
-    /** @var RecordQueryFactory */
-    private $recordQueryFactory;
-    /** @var TransformUserRecordToUserModel */
-    private $transformUserRecordToUserModel;
+    private RecordQueryFactory $recordQueryFactory;
+    private TransformUserRecordToUserModel $transformUserRecordToUserModel;
 
     public function __construct(
         RecordQueryFactory $recordQueryFactory,

@@ -14,10 +14,8 @@ use Throwable;
 
 class GetAdminUserEditAction
 {
-    /** @var GetAdminResponder */
-    private $responder;
-    /** @var UserApi */
-    private $userApi;
+    private GetAdminResponder $responder;
+    private UserApi $userApi;
 
     public function __construct(
         GetAdminResponder $responder,

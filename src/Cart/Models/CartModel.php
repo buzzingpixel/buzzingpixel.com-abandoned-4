@@ -11,6 +11,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use function array_walk;
+use function assert;
 
 class CartModel extends Model
 {
@@ -35,8 +36,7 @@ class CartModel extends Model
         );
     }
 
-    /** @var string */
-    private $id = '';
+    private string $id = '';
 
     public function setId(string $id) : CartModel
     {
@@ -50,8 +50,7 @@ class CartModel extends Model
         return $this->id;
     }
 
-    /** @var UserModel|null */
-    private $user;
+    private ?UserModel $user = null;
 
     public function setUser(?UserModel $user) : CartModel
     {
@@ -65,8 +64,7 @@ class CartModel extends Model
         return $this->user;
     }
 
-    /** @var int */
-    private $totalItems = 0;
+    private int $totalItems = 0;
 
     public function setTotalItems(int $totalItems) : CartModel
     {
@@ -80,8 +78,7 @@ class CartModel extends Model
         return $this->totalItems;
     }
 
-    /** @var int */
-    private $totalQuantity = 0;
+    private int $totalQuantity = 0;
 
     public function setTotalQuantity(int $totalQuantity) : CartModel
     {
@@ -96,7 +93,7 @@ class CartModel extends Model
     }
 
     /** @var CartItemModel[] */
-    private $items = [];
+    private array $items = [];
 
     /**
      * @param CartItemModel[] $items
@@ -127,11 +124,8 @@ class CartModel extends Model
         return $this->items;
     }
 
-    /**
-     * @var DateTimeImmutable
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private $createdAt;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private DateTimeImmutable $createdAt;
 
     protected function setCreatedAt(DateTimeImmutable $createdAt) : CartModel
     {
@@ -182,8 +176,8 @@ class CartModel extends Model
         $subTotal = 0;
 
         foreach ($this->getItems() as $item) {
-            /** @var SoftwareModel $itemSoftware */
             $itemSoftware = $item->getSoftware();
+            assert($itemSoftware instanceof SoftwareModel);
 
             $subTotal = $itemSoftware->getPrice() * $item->getQuantity();
         }

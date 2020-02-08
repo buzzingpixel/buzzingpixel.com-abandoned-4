@@ -12,10 +12,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class PostRegisterAction
 {
-    /** @var PostRegisterResponder */
-    private $responder;
-    /** @var SaveUser */
-    private $saveUser;
+    private PostRegisterResponder $responder;
+    private SaveUser $saveUser;
 
     public function __construct(
         PostRegisterResponder $responder,

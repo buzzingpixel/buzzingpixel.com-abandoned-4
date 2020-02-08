@@ -11,15 +11,13 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Flash\Messages as FlashMessages;
+use function assert;
 
 class PostAdminSoftwareVersionDeleteAction
 {
-    /** @var FlashMessages */
-    private $flashMessages;
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
-    /** @var SoftwareApi */
-    private $softwareApi;
+    private FlashMessages $flashMessages;
+    private ResponseFactoryInterface $responseFactory;
+    private SoftwareApi $softwareApi;
 
     public function __construct(
         FlashMessages $flashMessages,
@@ -60,8 +58,8 @@ class PostAdminSoftwareVersionDeleteAction
             ]
         );
 
-        /** @var SoftwareModel $software */
         $software = $softwareVersion->getSoftware();
+        assert($software instanceof SoftwareModel);
 
         return $this->responseFactory->createResponse(303)
             ->withHeader(

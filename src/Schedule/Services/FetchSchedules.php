@@ -18,12 +18,9 @@ use function implode;
 
 class FetchSchedules
 {
-    /** @var Schedule */
-    private $schedule;
-    /** @var PDO */
-    private $pdo;
-    /** @var TransformRecordToModel */
-    private $transformRecordToModel;
+    private Schedule $schedule;
+    private PDO $pdo;
+    private TransformRecordToModel $transformRecordToModel;
 
     public function __construct(
         Schedule $schedule,

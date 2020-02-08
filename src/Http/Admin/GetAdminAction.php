@@ -9,8 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class GetAdminAction
 {
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     public function __construct(ResponseFactoryInterface $responseFactory)
     {

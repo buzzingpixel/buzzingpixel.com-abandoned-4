@@ -10,7 +10,7 @@ use function array_walk;
 trait ContentWithHeadlineItems
 {
     /** @var ContentWithHeadingPayload[] */
-    private $items = [];
+    private array $items = [];
 
     /**
      * @param ContentWithHeadingPayload[] $items

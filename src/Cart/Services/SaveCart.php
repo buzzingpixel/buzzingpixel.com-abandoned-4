@@ -24,18 +24,12 @@ use function count;
 
 class SaveCart
 {
-    /** @var PDO */
-    private $pdo;
-    /** @var UuidFactoryWithOrderedTimeCodec */
-    private $uuidFactory;
-    /** @var TransformCartModelToRecord */
-    private $transformCartModelToRecord;
-    /** @var TransformCartItemModelToRecord */
-    private $transformCartItemModelToRecord;
-    /** @var SaveNewRecord */
-    private $saveNewRecord;
-    /** @var SaveExistingRecord */
-    private $saveExistingRecord;
+    private PDO $pdo;
+    private UuidFactoryWithOrderedTimeCodec $uuidFactory;
+    private TransformCartModelToRecord $transformCartModelToRecord;
+    private TransformCartItemModelToRecord $transformCartItemModelToRecord;
+    private SaveNewRecord $saveNewRecord;
+    private SaveExistingRecord $saveExistingRecord;
 
     public function __construct(
         PDO $pdo,
@@ -66,8 +60,7 @@ class SaveCart
         }
     }
 
-    /** @var int */
-    private $totalQuantity = 0;
+    private int $totalQuantity = 0;
 
     /**
      * @throws Throwable
