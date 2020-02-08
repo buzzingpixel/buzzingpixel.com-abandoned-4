@@ -43,7 +43,10 @@ class LogUserIn
         }
 
         if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
-            /** @noinspection PhpUnhandledExceptionInspection */
+            /**
+             * @noinspection PhpUnhandledExceptionInspection, PhpStrictTypeCheckingInspection
+             * @psalm-suppress NullArgument
+             */
             $user->setPasswordHash(
                 password_hash(
                     $password,

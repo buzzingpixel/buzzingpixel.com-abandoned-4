@@ -7,6 +7,8 @@ namespace App\Users\Services;
 use App\Users\Models\UserModel;
 use GuzzleHttp\Client;
 use Throwable;
+use function assert;
+use function is_array;
 use function mb_strtoupper;
 use function Safe\json_decode;
 
@@ -24,6 +26,8 @@ class PostalCodeService
 
     /**
      * @return array<string, mixed>
+     *
+     * @psalm-suppress MixedInferredReturnType
      */
     private function makeApiCall(string $postalCode, string $alpha2Country) : array
     {
@@ -32,6 +36,7 @@ class PostalCodeService
         $key = $postalCode . '-' . $codeUpper;
 
         if (isset($this->apiCalls[$key])) {
+            /** @psalm-suppress MixedReturnStatement */
             return $this->apiCalls[$key];
         }
 
@@ -40,6 +45,7 @@ class PostalCodeService
                 'http://api.zippopotam.us/' . $codeUpper . '/' . $postalCode
             );
 
+            /** @psalm-suppress MixedAssignment */
             $json = json_decode(
                 $response->getBody()->getContents(),
                 true
@@ -48,8 +54,11 @@ class PostalCodeService
             $json = [];
         }
 
+        assert(is_array($json));
+
         $this->apiCalls[$key] = $json;
 
+        /** @psalm-suppress MixedReturnTypeCoercion */
         return $json;
     }
 
@@ -62,6 +71,7 @@ class PostalCodeService
             $codeUpper
         );
 
+        /** @psalm-suppress MixedAssignment */
         $jsonCountry = $json['country abbreviation'] ?? null;
 
         return $jsonCountry === $codeUpper;
@@ -79,10 +89,10 @@ class PostalCodeService
 
         $json = $this->makeApiCall($postalCode, $countryCode);
 
-        $place = $json['places'][0] ?? [];
+        $place =  (array) ($json['places'][0] ?? []);
 
-        $model->setBillingCity($place['place name'] ?? '');
+        $model->setBillingCity((string) ($place['place name'] ?? ''));
 
-        $model->setBillingStateAbbr($place['state abbreviation'] ?? '');
+        $model->setBillingStateAbbr((string) ($place['state abbreviation'] ?? ''));
     }
 }

@@ -34,6 +34,7 @@ class UserApi
 
     public function saveUser(UserModel $userModel) : Payload
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveUser::class);
         assert($service instanceof SaveUser);
 
@@ -42,6 +43,7 @@ class UserApi
 
     public function fetchUserByEmailAddress(string $emailAddress) : ?UserModel
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserByEmailAddress::class);
         assert($service instanceof FetchUserByEmailAddress);
 
@@ -50,6 +52,7 @@ class UserApi
 
     public function fetchUserById(string $id) : ?UserModel
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserById::class);
         assert($service instanceof FetchUserById);
 
@@ -58,6 +61,7 @@ class UserApi
 
     public function logUserIn(UserModel $user, string $password) : Payload
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(LogUserIn::class);
         assert($service instanceof LogUserIn);
 
@@ -66,6 +70,7 @@ class UserApi
 
     public function deleteUser(UserModel $user) : Payload
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteUser::class);
         assert($service instanceof DeleteUser);
 
@@ -74,6 +79,7 @@ class UserApi
 
     public function fetchLoggedInUser() : ?UserModel
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchLoggedInUser::class);
         assert($service instanceof FetchLoggedInUser);
 
@@ -82,6 +88,7 @@ class UserApi
 
     public function generatePasswordResetToken(UserModel $user) : Payload
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(GeneratePasswordResetToken::class);
         assert($service instanceof GeneratePasswordResetToken);
 
@@ -90,6 +97,7 @@ class UserApi
 
     public function fetchUserByResetToken(string $token) : ?UserModel
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserByResetToken::class);
         assert($service instanceof FetchUserByResetToken);
 
@@ -98,6 +106,7 @@ class UserApi
 
     public function logCurrentUserOut() : Payload
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(LogCurrentUserOut::class);
         assert($service instanceof LogCurrentUserOut);
 
@@ -106,6 +115,7 @@ class UserApi
 
     public function resetPasswordByToken(string $token, string $newPassword) : Payload
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(ResetPasswordByToken::class);
         assert($service instanceof ResetPasswordByToken);
 
@@ -114,6 +124,7 @@ class UserApi
 
     public function fetchTotalUsers() : int
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchTotalUsers::class);
         assert($service instanceof FetchTotalUsers);
 
@@ -125,6 +136,7 @@ class UserApi
      */
     public function fetchUsersByLimitOffset(?int $limit = null, int $offset = 0) : array
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUsersByLimitOffset::class);
         assert($service instanceof FetchUsersByLimitOffset);
 
@@ -136,6 +148,7 @@ class UserApi
      */
     public function fetchUsersBySearch(string $query, ?int $limit = null, int $offset = 0) : array
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUsersBySearch::class);
         assert($service instanceof FetchUsersBySearch);
 
@@ -144,6 +157,7 @@ class UserApi
 
     public function validatePostalCode(string $postalCode, string $alpha2Country) : bool
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(PostalCodeService::class);
         assert($service instanceof PostalCodeService);
 
@@ -155,6 +169,7 @@ class UserApi
 
     public function fillModelFromPostalCode(UserModel $model) : void
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(PostalCodeService::class);
         assert($service instanceof PostalCodeService);
 

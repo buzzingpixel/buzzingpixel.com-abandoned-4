@@ -29,6 +29,7 @@ class ExtractSoftwareInfoFromPath
     {
         $fullPath = $this->pathToContentDirectory . '/' . $contentPath . '/software.yml';
 
+        /** @psalm-suppress MixedAssignment */
         $vars = Yaml::parseFile($fullPath);
         assert(is_array($vars) || $vars === null);
 

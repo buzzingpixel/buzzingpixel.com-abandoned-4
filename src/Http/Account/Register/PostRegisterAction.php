@@ -9,6 +9,8 @@ use App\Users\Models\UserModel;
 use App\Users\Services\SaveUser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use function assert;
+use function is_array;
 
 class PostRegisterAction
 {
@@ -26,6 +28,8 @@ class PostRegisterAction
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
         $postData = $request->getParsedBody();
+
+        assert(is_array($postData));
 
         $emailAddress = (string) ($postData['email_address'] ?? '');
 

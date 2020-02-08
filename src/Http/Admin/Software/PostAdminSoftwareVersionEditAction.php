@@ -18,6 +18,7 @@ use Slim\Exception\HttpNotFoundException;
 use Throwable;
 use function assert;
 use function count;
+use function is_array;
 use function is_numeric;
 
 class PostAdminSoftwareVersionEditAction
@@ -50,17 +51,21 @@ class PostAdminSoftwareVersionEditAction
         }
 
         $software = $softwareVersion->getSoftware();
+
         assert($software instanceof SoftwareModel);
 
         $postData = $request->getParsedBody();
 
+        assert(is_array($postData));
+
         $inputValues = [
-            'major_version' => $postData['major_version'] ?? '',
-            'version' => $postData['version'] ?? '',
-            'released_on' => $postData['released_on'] ?? '',
-            'upgrade_price' => $postData['upgrade_price'] ?? '',
+            'major_version' => (string) ($postData['major_version'] ?? ''),
+            'version' => (string) ($postData['version'] ?? ''),
+            'released_on' => (string) ($postData['released_on'] ?? ''),
+            'upgrade_price' => (string) ($postData['upgrade_price'] ?? ''),
         ];
 
+        /** @psalm-suppress MixedAssignment */
         $downloadFile = $request->getUploadedFiles()['new_download_file'] ?? null;
         assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
 

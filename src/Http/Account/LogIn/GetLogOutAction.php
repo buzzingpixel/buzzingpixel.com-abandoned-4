@@ -8,6 +8,8 @@ use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;
+use function assert;
+use function is_array;
 
 class GetLogOutAction
 {
@@ -27,6 +29,8 @@ class GetLogOutAction
         $this->userApi->logCurrentUserOut();
 
         $postData = $request->getParsedBody();
+
+        assert(is_array($postData));
 
         $redirectTo = (string) ($postData['redirect_to'] ?? '/');
 

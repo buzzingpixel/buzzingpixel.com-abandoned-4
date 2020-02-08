@@ -45,7 +45,7 @@ class GetAdminSearchUsersDisplayAction
 
         $query = (string) ($request->getQueryParams()['q'] ?? '');
 
-        if ($query === null || $query === '') {
+        if ($query === '') {
             throw new HttpNotFoundException($request);
         }
 

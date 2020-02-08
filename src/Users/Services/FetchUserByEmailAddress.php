@@ -34,6 +34,7 @@ class FetchUserByEmailAddress
 
             $statement->execute([':email' => $emailAddress]);
 
+            /** @psalm-suppress MixedAssignment */
             $userRecord = $statement->fetchObject(UserRecord::class);
             assert($userRecord instanceof UserRecord || is_bool($userRecord) || $userRecord === null);
 

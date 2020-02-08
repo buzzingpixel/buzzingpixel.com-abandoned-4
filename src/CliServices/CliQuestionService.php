@@ -41,6 +41,7 @@ class CliQuestionService
         $val = '';
 
         while ($val === '') {
+            /** @psalm-suppress MixedAssignment */
             $val = $this->questionHelper->ask(
                 $this->consoleInput,
                 $this->consoleOutput,

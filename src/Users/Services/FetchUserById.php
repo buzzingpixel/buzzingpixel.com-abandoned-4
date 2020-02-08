@@ -33,6 +33,7 @@ class FetchUserById
 
             $query->execute([':id' => $id]);
 
+            /** @psalm-suppress MixedAssignment */
             $userRecord = $query->fetchObject(UserRecord::class);
             assert($userRecord instanceof UserRecord || $userRecord === null);
 

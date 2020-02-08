@@ -28,6 +28,7 @@ class SoftwareApi
 
     public function saveSoftware(SoftwareModel $model) : Payload
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveSoftware::class);
         assert($service instanceof SaveSoftware);
 
@@ -36,6 +37,7 @@ class SoftwareApi
 
     public function fetchSoftwareById(string $id) : ?SoftwareModel
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareById::class);
         assert($service instanceof FetchSoftwareById);
 
@@ -44,6 +46,7 @@ class SoftwareApi
 
     public function fetchSoftwareBySlug(string $slug) : ?SoftwareModel
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareBySlug::class);
         assert($service instanceof FetchSoftwareBySlug);
 
@@ -55,6 +58,7 @@ class SoftwareApi
      */
     public function fetchAllSoftware() : array
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchAllSoftware::class);
         assert($service instanceof FetchAllSoftware);
 
@@ -63,6 +67,7 @@ class SoftwareApi
 
     public function fetchSoftwareVersionById(string $id) : ?SoftwareVersionModel
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareVersionById::class);
         assert($service instanceof FetchSoftwareVersionById);
 
@@ -71,6 +76,7 @@ class SoftwareApi
 
     public function deleteSoftware(SoftwareModel $model) : void
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteSoftware::class);
         assert($service instanceof DeleteSoftware);
 
@@ -79,6 +85,7 @@ class SoftwareApi
 
     public function deleteSoftwareVersion(SoftwareVersionModel $model) : void
     {
+        /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteSoftwareVersion::class);
         assert($service instanceof DeleteSoftwareVersion);
 

@@ -17,6 +17,8 @@ use function assert;
 use function is_bool;
 use function time;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class FetchLoggedInUser
 {
     private CookieApiInterface $cookieApi;
@@ -50,6 +52,7 @@ class FetchLoggedInUser
 
         $statement->execute([':id' => $cookie->value()]);
 
+        /** @psalm-suppress MixedAssignment */
         $sessionRecord = $statement->fetchObject(
             UserSessionRecord::class
         );

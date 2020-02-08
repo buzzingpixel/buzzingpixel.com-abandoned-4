@@ -9,7 +9,9 @@ use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
+use function assert;
 use function count;
+use function is_array;
 use function is_numeric;
 
 class PostAdminSoftwareEditAction
@@ -31,6 +33,8 @@ class PostAdminSoftwareEditAction
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
         $postData = $request->getParsedBody();
+
+        assert(is_array($postData));
 
         $inputValues = [
             'name' => $postData['name'] ?? '',

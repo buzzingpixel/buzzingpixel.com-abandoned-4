@@ -13,6 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use function assert;
 use function count;
+use function is_array;
 use function is_numeric;
 
 class PostAdminSoftwareCreateAction
@@ -32,6 +33,8 @@ class PostAdminSoftwareCreateAction
     {
         $postData = $request->getParsedBody();
 
+        assert(is_array($postData));
+
         $inputValues = [
             'name' => $postData['name'] ?? '',
             'slug' => $postData['slug'] ?? '',
@@ -43,6 +46,7 @@ class PostAdminSoftwareCreateAction
             'version' => $postData['version'] ?? '',
         ];
 
+        /** @psalm-suppress MixedAssignment */
         $downloadFile = $request->getUploadedFiles()['download_file'] ?? null;
         assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
 

@@ -139,6 +139,7 @@ class RecordQuery
     {
         $statement = $this->executeStatement();
 
+        /** @psalm-suppress MixedAssignment */
         $record = $statement->fetchObject(
             get_class($this->recordClass)
         );
@@ -289,6 +290,7 @@ class RecordQuery
     {
         $sqlAndBind = $this->getSqlAndBind();
 
+        /** @psalm-suppress MixedAssignment */
         $sql = $sqlAndBind['sql'];
         assert(is_string($sql));
 

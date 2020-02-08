@@ -25,6 +25,8 @@ class FetchUsersByLimitOffset
 
     /**
      * @return UserModel[]
+     *
+     * @psalm-suppress MixedReturnTypeCoercion
      */
     public function __invoke(?int $limit = null, int $offset = 0) : array
     {
@@ -38,6 +40,7 @@ class FetchUsersByLimitOffset
             ->withOffset($offset)
             ->all();
 
+        /** @psalm-suppress MixedReturnTypeCoercion */
         return array_map(
             $this->transformUserRecordToUserModel,
             $records

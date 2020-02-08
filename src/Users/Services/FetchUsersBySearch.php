@@ -25,6 +25,8 @@ class FetchUsersBySearch
 
     /**
      * @return UserModel[]
+     *
+     * @psalm-suppress MixedReturnTypeCoercion
      */
     public function __invoke(string $queryString, ?int $limit = null, int $offset = 0) : array
     {
@@ -49,6 +51,7 @@ class FetchUsersBySearch
             ->withOffset($offset)
             ->all();
 
+        /** @psalm-suppress MixedReturnTypeCoercion */
         return array_map(
             $this->transformUserRecordToUserModel,
             $records

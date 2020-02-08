@@ -11,6 +11,8 @@ use Throwable;
 use function assert;
 use function is_bool;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class FetchUserByResetToken
 {
     private PDO $pdo;
@@ -31,6 +33,7 @@ class FetchUserByResetToken
 
             $statement->execute([':id' => $token]);
 
+            /** @psalm-suppress MixedAssignment */
             $record = $statement->fetchObject(
                 UserPasswordResetTokenRecord::class
             );

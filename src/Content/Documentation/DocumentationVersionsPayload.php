@@ -18,6 +18,7 @@ class DocumentationVersionsPayload extends SpecificPayload
     {
         parent::__construct($vars);
 
+        /** @psalm-suppress RedundantCondition */
         if ($this->softwareInfo !== null) {
             return;
         }

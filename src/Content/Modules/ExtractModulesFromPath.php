@@ -91,6 +91,7 @@ class ExtractModulesFromPath
                 function (string $item) use ($modulesPath) {
                     $fullPath = $modulesPath . '/' . $item;
 
+                    /** @psalm-suppress MixedAssignment */
                     $parsedYaml = Yaml::parseFile($fullPath);
                     assert(is_array($parsedYaml));
 

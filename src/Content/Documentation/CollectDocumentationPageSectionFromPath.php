@@ -42,6 +42,7 @@ class CollectDocumentationPageSectionFromPath
 
         $path = implode('/', $pathArray);
 
+        /** @psalm-suppress MixedAssignment */
         $parsedYaml = Yaml::parseFile($path);
         assert(is_array($parsedYaml));
 

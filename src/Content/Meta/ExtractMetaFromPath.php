@@ -25,6 +25,7 @@ class ExtractMetaFromPath
     {
         $fullPath = $this->pathToContentDirectory . '/' . $contentPath . '/meta.yml';
 
+        /** @psalm-suppress MixedAssignment */
         $parsedYaml = Yaml::parseFile($fullPath);
         assert(is_array($parsedYaml) || $parsedYaml === null);
 

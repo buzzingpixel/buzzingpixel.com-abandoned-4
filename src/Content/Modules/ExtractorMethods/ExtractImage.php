@@ -23,6 +23,7 @@ trait ExtractImage
      */
     protected function extractImage(array $parsedYaml) : ImageModulePayload
     {
+        /** @psalm-suppress MixedAssignment */
         $noShadow = ($parsedYaml['noShadow'] ?? false);
         assert(is_bool($noShadow));
 

@@ -12,7 +12,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+use function assert;
 use function count;
+use function is_array;
 
 class PostAdminUserEditAction
 {
@@ -42,20 +44,21 @@ class PostAdminUserEditAction
         }
 
         $postData = $request->getParsedBody();
+        assert(is_array($postData));
 
         $inputValues = [
             'is_admin' => ($postData['is_admin'] ?? '') === 'true',
-            'email_address' => $postData['email_address'] ?? '',
-            'timezone' => $postData['timezone'] ?? '',
-            'first_name' => $postData['first_name'] ?? '',
-            'last_name' => $postData['last_name'] ?? '',
-            'display_name' => $postData['display_name'] ?? '',
-            'billing_name' => $postData['billing_name'] ?? '',
-            'billing_company' => $postData['billing_company'] ?? '',
-            'billing_phone' => $postData['billing_phone'] ?? '',
-            'billing_address' => $postData['billing_address'] ?? '',
-            'billing_country' => $postData['billing_country'] ?? '',
-            'billing_postal_code' => $postData['billing_postal_code'] ?? '',
+            'email_address' => (string) ($postData['email_address'] ?? ''),
+            'timezone' => (string) ($postData['timezone'] ?? ''),
+            'first_name' => (string) ($postData['first_name'] ?? ''),
+            'last_name' => (string) ($postData['last_name'] ?? ''),
+            'display_name' => (string) ($postData['display_name'] ?? ''),
+            'billing_name' => (string) ($postData['billing_name'] ?? ''),
+            'billing_company' => (string) ($postData['billing_company'] ?? ''),
+            'billing_phone' => (string) ($postData['billing_phone'] ?? ''),
+            'billing_address' => (string) ($postData['billing_address'] ?? ''),
+            'billing_country' => (string) ($postData['billing_country'] ?? ''),
+            'billing_postal_code' => (string) ($postData['billing_postal_code'] ?? ''),
         ];
 
         $inputMessages = [];
@@ -76,12 +79,12 @@ class PostAdminUserEditAction
             }
         }
 
-        if ($postData['billing_postal_code'] !== '' && $postData['billing_country'] === '') {
+        if ($inputValues['billing_postal_code'] !== '' && $inputValues['billing_country'] === '') {
             $inputMessages['billing_country'] = 'If a postal code is supplied, a country must also be supplied';
-        } elseif ($postData['billing_postal_code']) {
+        } elseif ($inputValues['billing_postal_code']) {
             $validPostalCode = $this->userApi->validatePostalCode(
-                $postData['billing_postal_code'],
-                $postData['billing_country']
+                $inputValues['billing_postal_code'],
+                $inputValues['billing_country']
             );
 
             if (! $validPostalCode) {
