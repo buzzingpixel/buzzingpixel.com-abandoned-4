@@ -1,6 +1,6 @@
 @echo off
 
-set composerDockerImage=composer:1.9.0
+set composerDockerImage=composer:1.9.3
 set cypressDockerImage=cypress/included:3.5.0
 set nodeDockerImage=node:12.12.0
 set composeFiles=-f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.dev.sync.yml
