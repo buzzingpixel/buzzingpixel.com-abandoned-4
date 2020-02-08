@@ -15,11 +15,12 @@ use DateTimeImmutable;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Throwable;
-use const PASSWORD_ARGON2I;
-use const PASSWORD_DEFAULT;
+use function assert;
 use function date;
 use function func_get_args;
 use function Safe\password_hash;
+use const PASSWORD_ARGON2I;
+use const PASSWORD_DEFAULT;
 
 class LogUserInTest extends TestCase
 {
@@ -84,8 +85,8 @@ class LogUserInTest extends TestCase
 
         self::assertCount(1, $this->saveUserCallArgs);
 
-        /** @var UserModel|null $saveUserModel */
         $saveUserModel = $this->saveUserCallArgs[0];
+        assert($saveUserModel instanceof UserModel || $saveUserModel === null);
 
         self::assertSame($user, $saveUserModel);
 
@@ -144,8 +145,8 @@ class LogUserInTest extends TestCase
             $this->makeCookieCallArgs[1]
         );
 
-        /** @var DateTimeImmutable|null $cookieDateTime */
         $cookieDateTime = $this->makeCookieCallArgs[2];
+        assert($cookieDateTime instanceof DateTimeImmutable || $cookieDateTime === null);
 
         self::assertInstanceOf(DateTimeImmutable::class, $cookieDateTime);
 
@@ -174,8 +175,8 @@ class LogUserInTest extends TestCase
 
         self::assertCount(1, $this->saveCookieCallArgs);
 
-        /** @var CookieInterface|null $saveCookieCookie */
         $saveCookieCookie = $this->saveCookieCallArgs[0];
+        assert($saveCookieCookie instanceof CookieInterface || $saveCookieCookie === null);
 
         self::assertInstanceOf(CookieInterface::class, $saveCookieCookie);
 
@@ -206,7 +207,7 @@ class LogUserInTest extends TestCase
     }
 
     /** @var mixed[] */
-    private $saveUserCallArgs = [];
+    private array $saveUserCallArgs = [];
 
     public function saveUserCallback() : Payload
     {
@@ -262,7 +263,7 @@ class LogUserInTest extends TestCase
     }
 
     /** @var mixed[] */
-    private $makeCookieCallArgs = [];
+    private array $makeCookieCallArgs = [];
 
     public function makeCookieCallback() : CookieInterface
     {
@@ -276,7 +277,7 @@ class LogUserInTest extends TestCase
     }
 
     /** @var mixed[] */
-    private $saveCookieCallArgs = [];
+    private array $saveCookieCallArgs = [];
 
     public function saveCookieCallback() : void
     {

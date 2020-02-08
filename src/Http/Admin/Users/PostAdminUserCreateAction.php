@@ -77,7 +77,7 @@ class PostAdminUserCreateAction
 
         if ($inputValues['billing_postal_code'] !== '' && $inputValues['billing_country'] === '') {
             $inputMessages['billing_country'] = 'If a postal code is supplied, a country must also be supplied';
-        } elseif ($inputValues['billing_postal_code']) {
+        } elseif ($inputValues['billing_postal_code'] !== '') {
             $validPostalCode = $this->userApi->validatePostalCode(
                 $inputValues['billing_postal_code'],
                 $inputValues['billing_country']

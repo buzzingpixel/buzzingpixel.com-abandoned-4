@@ -107,7 +107,7 @@ class PostAdminSoftwareVersionEditAction
 
         $releasedOn = DateTimeImmutable::createFromFormat(
             'Y-m-d h:i A',
-            (string) $inputValues['released_on'],
+            $inputValues['released_on'],
             $user->getTimezone()
         );
         assert($releasedOn instanceof DateTimeImmutable);
@@ -117,10 +117,10 @@ class PostAdminSoftwareVersionEditAction
         );
 
         $softwareVersion->setMajorVersion(
-            (string) $inputValues['major_version']
+            $inputValues['major_version']
         );
 
-        $softwareVersion->setVersion((string) $inputValues['version']);
+        $softwareVersion->setVersion($inputValues['version']);
 
         $softwareVersion->setNewDownloadFile($downloadFile);
 

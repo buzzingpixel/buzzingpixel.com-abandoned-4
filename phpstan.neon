@@ -91,6 +91,71 @@ parameters:
         -
             message: "#Offset 1 does not exist on array\\('Admin\\/Software.twig'\\)\\.#"
             path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareActionTest.php
+        - '#Parameter \#2 \$algo of function Safe\\password_hash expects int, string given\.#'
+        - '#Parameter \#2 \$algo of function Safe\\password_hash expects int, null given\.#'
+        -
+            message: '#If condition is always true\.#'
+            path: %currentWorkingDirectory%/src/Orders/Models/OrderModel.php
+        -
+            message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/src/Orders/Models/OrderModel.php
+        -
+            message: '#Strict comparison using !== between App\\Content\\Software\\SoftwareInfoPayload and null will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/src/Content/Documentation/DocumentationVersionsPayload.php
+        -
+            message: '#Instanceof between DirectoryIterator and DirectoryIterator will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/src/Content/Documentation/CollectDocumentationVersionsFromPath.php
+        -
+            message: '#Call to function assert\(\) with true will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/src/Content/Documentation/CollectDocumentationVersionsFromPath.php
+        -
+            message: '#Instanceof between DirectoryIterator and DirectoryIterator will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/src/Content/Documentation/CollectDocumentationVersionPayloadFromPath.php
+        -
+            message: '#Call to function assert\(\) with true will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/src/Content/Documentation/CollectDocumentationVersionPayloadFromPath.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Software/index.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Cart/index.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Software/index.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Cart/index.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Ajax/index.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/index.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/Users.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Ajax/index.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/index.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/Users.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/Software.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/Software.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Account/index.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Account/index.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php
