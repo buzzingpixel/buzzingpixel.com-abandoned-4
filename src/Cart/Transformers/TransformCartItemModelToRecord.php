@@ -7,6 +7,8 @@ namespace App\Cart\Transformers;
 use App\Cart\Models\CartItemModel;
 use App\Persistence\Cart\CartItemRecord;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformCartItemModelToRecord
 {
     public function __invoke(CartItemModel $cartItem) : CartItemRecord

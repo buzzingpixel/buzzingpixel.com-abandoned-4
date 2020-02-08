@@ -7,6 +7,8 @@ namespace App\Software\Transformers;
 use App\Persistence\Software\SoftwareRecord;
 use App\Software\Models\SoftwareModel;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformSoftwareModelToRecord
 {
     public function __invoke(SoftwareModel $model) : SoftwareRecord

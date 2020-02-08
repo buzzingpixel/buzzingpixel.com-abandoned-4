@@ -9,6 +9,8 @@ use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareVersionModel;
 use DateTimeImmutable;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformSoftwareVersionRecordToModel
 {
     public function __invoke(

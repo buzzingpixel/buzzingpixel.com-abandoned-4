@@ -8,6 +8,8 @@ use App\Cart\Models\CartModel;
 use App\Persistence\Cart\CartRecord;
 use DateTimeInterface;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformCartModelToRecord
 {
     public function __invoke(CartModel $model) : CartRecord

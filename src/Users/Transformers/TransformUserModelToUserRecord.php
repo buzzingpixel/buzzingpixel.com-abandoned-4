@@ -8,6 +8,8 @@ use App\Persistence\Users\UserRecord;
 use App\Users\Models\UserModel;
 use DateTimeInterface;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformUserModelToUserRecord
 {
     public function __invoke(UserModel $userModel) : UserRecord

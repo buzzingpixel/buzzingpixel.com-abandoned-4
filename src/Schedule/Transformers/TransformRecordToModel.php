@@ -13,6 +13,8 @@ use Throwable;
 use function constant;
 use function in_array;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformRecordToModel
 {
     public function __invoke(ScheduleTrackingRecord $record) : ScheduleItemModel

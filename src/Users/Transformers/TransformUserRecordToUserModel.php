@@ -11,6 +11,8 @@ use DateTimeImmutable;
 use DateTimeZone;
 use function in_array;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformUserRecordToUserModel
 {
     public function __invoke(UserRecord $userRecord) : UserModel

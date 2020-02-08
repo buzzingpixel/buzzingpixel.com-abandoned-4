@@ -13,6 +13,8 @@ use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
 use function array_map;
 use function count;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class FetchAllSoftware
 {
     private RecordQueryFactory $recordQueryFactory;

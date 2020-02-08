@@ -8,6 +8,8 @@ use App\Cart\Models\CartItemModel;
 use App\Persistence\Cart\CartItemRecord;
 use App\Software\Services\FetchSoftwareBySlug;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformCartItemRecordToModel
 {
     private FetchSoftwareBySlug $fetchSoftwareBySlug;

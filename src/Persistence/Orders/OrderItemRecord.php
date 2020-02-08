@@ -6,6 +6,8 @@ namespace App\Persistence\Orders;
 
 use App\Persistence\Record;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+
 class OrderItemRecord extends Record
 {
     protected static string $tableName = 'order_items';

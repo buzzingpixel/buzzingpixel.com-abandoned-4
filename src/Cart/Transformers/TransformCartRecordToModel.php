@@ -11,6 +11,8 @@ use App\Persistence\Constants;
 use App\Users\Services\FetchUserById;
 use DateTimeImmutable;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformCartRecordToModel
 {
     private FetchUserById $fetchUserById;

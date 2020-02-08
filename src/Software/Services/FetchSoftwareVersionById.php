@@ -10,6 +10,8 @@ use App\Software\Models\SoftwareVersionModel;
 use Throwable;
 use function assert;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class FetchSoftwareVersionById
 {
     private RecordQueryFactory $recordQueryFactory;

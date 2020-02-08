@@ -22,6 +22,8 @@ use Throwable;
 use function array_walk;
 use function count;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class SaveCart
 {
     private PDO $pdo;

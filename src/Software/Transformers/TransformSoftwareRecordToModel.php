@@ -9,6 +9,8 @@ use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use function in_array;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformSoftwareRecordToModel
 {
     /**

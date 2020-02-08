@@ -8,6 +8,8 @@ use App\Persistence\Schedule\ScheduleTrackingRecord;
 use App\Schedule\Models\ScheduleItemModel;
 use DateTimeInterface;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformModelToRecord
 {
     public function __invoke(ScheduleItemModel $model) : ScheduleTrackingRecord

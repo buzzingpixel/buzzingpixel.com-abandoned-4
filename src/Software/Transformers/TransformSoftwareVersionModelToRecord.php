@@ -8,6 +8,8 @@ use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareVersionModel;
 use DateTimeInterface;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformSoftwareVersionModelToRecord
 {
     public function __invoke(SoftwareVersionModel $model) : SoftwareVersionRecord

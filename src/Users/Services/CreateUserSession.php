@@ -13,6 +13,8 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class CreateUserSession
 {
     private UuidFactoryWithOrderedTimeCodec $uuidFactory;
