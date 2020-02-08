@@ -14,7 +14,9 @@ use function array_walk;
 
 class UserDemoteCommand extends Command
 {
-    protected static string $defaultName = 'user:demote';
+    // phpcs:disable
+    protected static $defaultName = 'user:demote';
+    // phpcs:enable
 
     private CliQuestionService $cliQuestionService;
     private UserApi $userApi;

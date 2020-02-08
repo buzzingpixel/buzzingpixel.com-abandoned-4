@@ -12,7 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateUpCommand extends Command
 {
-    protected static string $defaultName = 'migrate:up';
+    // phpcs:disable
+    protected static $defaultName = 'migrate:up';
+    // phpcs:enable
 
     private PhinxApplication $phinxApplication;
 

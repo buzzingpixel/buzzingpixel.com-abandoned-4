@@ -15,11 +15,13 @@ use function preg_grep;
 
 class Reader extends ErwinReader
 {
+    // phpcs:disable
     /** @var array<int, string> */
-    protected array $content;
+    protected $content;
 
     /** @var array<string, Release> */
-    protected array $releases = [];
+    protected $releases = [];
+    // phpcs:enable
 
     /**
      * @return array<string, Release>

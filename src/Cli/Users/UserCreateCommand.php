@@ -15,7 +15,9 @@ use function array_walk;
 
 class UserCreateCommand extends Command
 {
-    protected static string $defaultName = 'user:create';
+    // phpcs:disable
+    protected static $defaultName = 'user:create';
+    // phpcs:enable
 
     private CliQuestionService $cliQuestionService;
     private UserApi $userApi;

@@ -8,6 +8,5 @@ use App\Persistence\Record;
 
 class HasStaticTableNameRecord extends Record
 {
-    /** @var string */
-    protected static $tableName = 'TestStaticTableName';
+    protected static string $tableName = 'TestStaticTableName';
 }

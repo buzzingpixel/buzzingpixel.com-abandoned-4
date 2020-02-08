@@ -13,7 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateDownCommand extends Command
 {
-    protected static string $defaultName = 'migrate:down';
+    // phpcs:disable
+    protected static $defaultName = 'migrate:down';
+    // phpcs:enable
 
     private CliQuestionService $cliQuestionService;
     private PhinxApplication $phinxApplication;

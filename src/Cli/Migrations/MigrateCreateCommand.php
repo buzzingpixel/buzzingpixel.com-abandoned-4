@@ -14,7 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateCreateCommand extends Command
 {
-    protected static string $defaultName = 'migrate:create';
+    // phpcs:disable
+    protected static $defaultName = 'migrate:create';
+    // phpcs:enable
 
     private CliQuestionService $cliQuestionService;
     private CaseConversionUtility $caseConversionUtility;

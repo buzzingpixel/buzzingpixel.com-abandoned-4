@@ -20,7 +20,9 @@ use function count;
 
 class ScheduleRunCommand extends Command
 {
-    protected static string $defaultName = 'schedule:run';
+    // phpcs:disable
+    protected static $defaultName = 'schedule:run';
+    // phpcs:enable
 
     private ContainerInterface $di;
     private FetchSchedules $fetchSchedules;

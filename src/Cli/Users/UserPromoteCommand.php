@@ -14,7 +14,9 @@ use function array_walk;
 
 class UserPromoteCommand extends Command
 {
-    protected static string $defaultName = 'user:promote';
+    // phpcs:disable
+    protected static $defaultName = 'user:promote';
+    // phpcs:enable
 
     private CliQuestionService $cliQuestionService;
     private UserApi $userApi;

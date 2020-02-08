@@ -14,7 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateSeedCreateCommand extends Command
 {
-    protected static string $defaultName = 'migrate:create-seed';
+    // phpcs:disable
+    protected static $defaultName = 'migrate:create-seed';
+    // phpcs:enable
 
     private CliQuestionService $cliQuestionService;
     private CaseConversionUtility $caseConversionUtility;

@@ -13,7 +13,9 @@ use function getenv;
 
 class SetupDockerDatabase extends Command
 {
-    protected static string $defaultName = 'app-setup:setup-docker-database';
+    // phpcs:disable
+    protected static $defaultName = 'app-setup:setup-docker-database';
+    // phpcs:enable
 
     /**
      * @throws Exception
