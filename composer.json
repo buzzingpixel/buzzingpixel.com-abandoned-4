@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.4",
         "ext-PDO": "^7.3",
         "buzzingpixel/cookie-api": "^2.0",
         "buzzingpixel/twig-getenv": "^1.0",
@@ -46,7 +46,7 @@
     "require-dev": {
         "buzzingpixel/twig-dumper": "^1.0",
         "codedungeon/phpunit-result-printer": "^0.26.2",
-        "doctrine/coding-standard": "^6.0",
+        "doctrine/coding-standard": "^7.0",
         "filp/whoops": "^2.5",
         "friendsofphp/php-cs-fixer": "^2.14",
         "phpstan/phpstan": "^0.11.5",
