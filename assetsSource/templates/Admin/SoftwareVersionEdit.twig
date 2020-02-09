@@ -16,7 +16,7 @@
 
 {% block adminContent %}
     {% embed 'StandardForm/StandardFormEmbed.twig' with {
-        heading: 'Edit Version "' ~ softwareVersion.getVersion() ~ '" of ' ~ softwareVersion.getSoftware().name ~ '"',
+        heading: 'Edit Version "' ~ softwareVersion.version ~ '" of ' ~ softwareVersion.software.name ~ '"',
         message: message,
         submitButtonContent: 'Submit',
         softwareVersion: softwareVersion,
@@ -24,11 +24,11 @@
     } only %}
         {% block standardFormContent %}
             {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
-            {{ inputs.textInput('Major Version', 'major_version', softwareVersion.getMajorVersion(), message) }}
-            {{ inputs.textInput('Version', 'version', softwareVersion.getVersion(), message) }}
-            {% set afterLabelHtml = softwareVersion.getDownloadFile() ? 'Currently: ' ~ softwareVersion.getDownloadFile() : '' %}
+            {{ inputs.textInput('Major Version', 'major_version', softwareVersion.majorVersion, message) }}
+            {{ inputs.textInput('Version', 'version', softwareVersion.version, message) }}
+            {% set afterLabelHtml = softwareVersion.downloadFile ? 'Currently: ' ~ softwareVersion.downloadFile : '' %}
             {{ inputs.fileChoser('New File Download', 'new_download_file', '', message, afterLabelHtml) }}
-            {{ inputs.textInput('Upgrade Price', 'upgrade_price', softwareVersion.getUpgradePrice(), message) }}
+            {{ inputs.textInput('Upgrade Price', 'upgrade_price', softwareVersion.upgradePrice, message) }}
             {{ inputs.dateChooser('Released On', 'released_on', softwareVersion.releasedOn.setTimezone(user.timezone).format('Y-m-d h:i A'), message) }}
         {% endblock %}
     {% endembed %}

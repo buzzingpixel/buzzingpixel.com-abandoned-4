@@ -16,23 +16,21 @@ class TransformSoftwareVersionModelToRecord
     {
         $record = new SoftwareVersionRecord();
 
-        $record->id = $model->getId();
+        $record->id = $model->id;
 
-        $software = $model->getSoftware();
-
-        if ($software !== null) {
-            $record->software_id = $software->id;
+        if ($model->software) {
+            $record->software_id = $model->software->id;
         }
 
-        $record->major_version = $model->getMajorVersion();
+        $record->major_version = $model->majorVersion;
 
-        $record->version = $model->getVersion();
+        $record->version = $model->version;
 
-        $record->download_file = $model->getDownloadFile();
+        $record->download_file = $model->downloadFile;
 
-        $record->upgrade_price = (string) $model->getUpgradePrice();
+        $record->upgrade_price = (string) $model->upgradePrice;
 
-        $record->released_on = $model->getReleasedOn()->format(
+        $record->released_on = $model->releasedOn->format(
             DateTimeInterface::ATOM
         );
 

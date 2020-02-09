@@ -34,7 +34,7 @@ class DeleteSoftware
 
         $ids = array_map(
             static function (SoftwareVersionModel $model) : string {
-                return $model->getId();
+                return $model->id;
             },
             $model->versions
         );

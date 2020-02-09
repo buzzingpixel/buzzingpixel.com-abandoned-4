@@ -99,9 +99,9 @@ class SaveSoftware
      */
     protected function saveVersion(SoftwareVersionModel $model) : void
     {
-        $newDownloadFile = $model->getNewDownloadFile();
+        $newDownloadFile = $model->newDownloadFile;
 
-        $software = $model->getSoftware();
+        $software = $model->software;
         assert($software instanceof SoftwareModel);
 
         if ($newDownloadFile !== null) {
@@ -118,14 +118,12 @@ class SaveSoftware
                 $fileName = $newDownloadFile->getClientFilename();
 
                 /** @psalm-suppress PossiblyNullOperand */
-                $model->setDownloadFile($slug . '/' . $fileName);
+                $model->downloadFile = $slug . '/' . $fileName;
             }
         }
 
-        if ($model->getId() === '') {
-            $model->setId(
-                $this->uuidFactory->uuid1()->toString()
-            );
+        if ($model->id === '') {
+            $model->id = $this->uuidFactory->uuid1()->toString();
 
             $record = ($this->transformSoftwareVersionModelToRecord)($model);
 

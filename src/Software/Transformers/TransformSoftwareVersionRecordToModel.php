@@ -8,6 +8,7 @@ use App\Persistence\Constants;
 use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareVersionModel;
 use DateTimeImmutable;
+use function assert;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -16,16 +17,27 @@ class TransformSoftwareVersionRecordToModel
     public function __invoke(
         SoftwareVersionRecord $record
     ) : SoftwareVersionModel {
-        return new SoftwareVersionModel([
-            'id' => $record->id,
-            'majorVersion' => $record->major_version,
-            'version' => $record->version,
-            'downloadFile' => $record->download_file,
-            'upgradePrice' => (float) $record->upgrade_price,
-            'releasedOn' => DateTimeImmutable::createFromFormat(
-                Constants::POSTGRES_OUTPUT_FORMAT,
-                $record->released_on
-            ),
-        ]);
+        $model = new SoftwareVersionModel();
+
+        $model->id = $record->id;
+
+        $model->majorVersion = $record->major_version;
+
+        $model->version = $record->version;
+
+        $model->downloadFile = $record->download_file;
+
+        $model->upgradePrice = (float) $record->upgrade_price;
+
+        $releasedOn = DateTimeImmutable::createFromFormat(
+            Constants::POSTGRES_OUTPUT_FORMAT,
+            $record->released_on
+        );
+
+        assert($releasedOn instanceof DateTimeImmutable);
+
+        $model->releasedOn = $releasedOn;
+
+        return $model;
     }
 }

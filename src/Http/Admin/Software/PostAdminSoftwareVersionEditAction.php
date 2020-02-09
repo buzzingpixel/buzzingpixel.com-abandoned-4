@@ -50,7 +50,7 @@ class PostAdminSoftwareVersionEditAction
             throw new HttpNotFoundException($request);
         }
 
-        $software = $softwareVersion->getSoftware();
+        $software = $softwareVersion->software;
 
         assert($software instanceof SoftwareModel);
 
@@ -97,7 +97,7 @@ class PostAdminSoftwareVersionEditAction
                         'inputValues' => $inputValues,
                     ],
                 ),
-                $softwareVersion->getId(),
+                $softwareVersion->id,
                 $software->slug,
             );
         }
@@ -116,19 +116,15 @@ class PostAdminSoftwareVersionEditAction
             new DateTimeZone('UTC')
         );
 
-        $softwareVersion->setMajorVersion(
-            $inputValues['major_version']
-        );
+        $softwareVersion->majorVersion = $inputValues['major_version'];
 
-        $softwareVersion->setVersion($inputValues['version']);
+        $softwareVersion->version = $inputValues['version'];
 
-        $softwareVersion->setNewDownloadFile($downloadFile);
+        $softwareVersion->newDownloadFile = $downloadFile;
 
-        $softwareVersion->setUpgradePrice(
-            (float) $inputValues['upgrade_price']
-        );
+        $softwareVersion->upgradePrice = (float) $inputValues['upgrade_price'];
 
-        $softwareVersion->setReleasedOn($releasedOn);
+        $softwareVersion->releasedOn = $releasedOn;
 
         $payload = $this->softwareApi->saveSoftware($software);
 
@@ -138,14 +134,14 @@ class PostAdminSoftwareVersionEditAction
                     Payload::STATUS_NOT_UPDATED,
                     ['message' => 'An unknown error occurred'],
                 ),
-                $softwareVersion->getId(),
+                $softwareVersion->id,
                 $software->slug,
             );
         }
 
         return ($this->responder)(
             $payload,
-            $softwareVersion->getId(),
+            $softwareVersion->id,
             $software->slug,
         );
     }

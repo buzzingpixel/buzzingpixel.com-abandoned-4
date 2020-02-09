@@ -4,24 +4,14 @@ declare(strict_types=1);
 
 namespace App\Software\Models;
 
-use App\Payload\Model;
 use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\UploadedFileInterface;
 
-class SoftwareVersionModel extends Model
+class SoftwareVersionModel
 {
-    /**
-     * @inheritDoc
-     */
-    public function __construct(array $vars = [])
+    public function __construct()
     {
-        parent::__construct($vars);
-
-        if (isset($this->releasedOn)) {
-            return;
-        }
-
         /** @noinspection PhpUnhandledExceptionInspection */
         $this->releasedOn = new DateTimeImmutable(
             'now',
@@ -29,111 +19,19 @@ class SoftwareVersionModel extends Model
         );
     }
 
-    private string $id = '';
+    public string $id = '';
 
-    public function setId(string $id) : SoftwareVersionModel
-    {
-        $this->id = $id;
+    public ?SoftwareModel $software = null;
 
-        return $this;
-    }
+    public string $majorVersion = '';
 
-    public function getId() : string
-    {
-        return $this->id;
-    }
+    public string $version = '';
 
-    private ?SoftwareModel $software = null;
+    public string $downloadFile = '';
 
-    public function setSoftware(SoftwareModel $software) : SoftwareVersionModel
-    {
-        $this->software = $software;
+    public ?UploadedFileInterface $newDownloadFile = null;
 
-        return $this;
-    }
+    public float $upgradePrice = 0.0;
 
-    public function getSoftware() : ?SoftwareModel
-    {
-        return $this->software;
-    }
-
-    private string $majorVersion = '';
-
-    public function setMajorVersion(string $majorVersion) : SoftwareVersionModel
-    {
-        $this->majorVersion = $majorVersion;
-
-        return $this;
-    }
-
-    public function getMajorVersion() : string
-    {
-        return $this->majorVersion;
-    }
-
-    private string $version = '';
-
-    public function setVersion(string $version) : SoftwareVersionModel
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
-    public function getVersion() : string
-    {
-        return $this->version;
-    }
-
-    private string $downloadFile = '';
-
-    public function setDownloadFile(string $downloadFile) : SoftwareVersionModel
-    {
-        $this->downloadFile = $downloadFile;
-
-        return $this;
-    }
-
-    public function getDownloadFile() : string
-    {
-        return $this->downloadFile;
-    }
-
-    private ?UploadedFileInterface $newDownloadFile = null;
-
-    public function setNewDownloadFile(?UploadedFileInterface $newDownloadFile) : void
-    {
-        $this->newDownloadFile = $newDownloadFile;
-    }
-
-    public function getNewDownloadFile() : ?UploadedFileInterface
-    {
-        return $this->newDownloadFile;
-    }
-
-    private float $upgradePrice = 0.0;
-
-    public function setUpgradePrice(float $upgradePrice) : SoftwareVersionModel
-    {
-        $this->upgradePrice = $upgradePrice;
-
-        return $this;
-    }
-
-    public function getUpgradePrice() : float
-    {
-        return $this->upgradePrice;
-    }
-
-    private DateTimeImmutable $releasedOn;
-
-    public function setReleasedOn(DateTimeImmutable $releasedOn) : void
-    {
-        $this->releasedOn = $releasedOn;
-    }
-
-    public function getReleasedOn() : DateTimeImmutable
-    {
-        return $this->releasedOn;
-    }
+    public DateTimeImmutable $releasedOn;
 }

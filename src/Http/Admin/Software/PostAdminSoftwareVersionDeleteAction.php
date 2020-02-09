@@ -40,7 +40,7 @@ class PostAdminSoftwareVersionDeleteAction
                 'PostMessage',
                 [
                     'status' => Payload::STATUS_ERROR,
-                    'result' => ['message' => 'Something went wrong trying to delete the software'],
+                    'result' => ['message' => 'Something went wrong trying to delete the software version'],
                 ]
             );
 
@@ -58,7 +58,7 @@ class PostAdminSoftwareVersionDeleteAction
             ]
         );
 
-        $software = $softwareVersion->getSoftware();
+        $software = $softwareVersion->software;
         assert($software instanceof SoftwareModel);
 
         return $this->responseFactory->createResponse(303)

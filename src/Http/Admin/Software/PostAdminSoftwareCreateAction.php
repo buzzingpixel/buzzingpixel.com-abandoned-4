@@ -89,6 +89,11 @@ class PostAdminSoftwareCreateAction
             );
         }
 
+        $version                  = new SoftwareVersionModel();
+        $version->majorVersion    = $inputValues['major_version'];
+        $version->version         = $inputValues['version'];
+        $version->newDownloadFile = $downloadFile;
+
         $softwareModel                 = new SoftwareModel();
         $softwareModel->name           = $inputValues['name'];
         $softwareModel->slug           = $inputValues['slug'];
@@ -96,13 +101,7 @@ class PostAdminSoftwareCreateAction
         $softwareModel->price          = (float) $inputValues['price'];
         $softwareModel->renewalPrice   = (float) $inputValues['renewal_price'];
         $softwareModel->isSubscription = $inputValues['subscription'];
-        $softwareModel->versions       = [
-            new SoftwareVersionModel([
-                'majorVersion' => $inputValues['major_version'],
-                'version' => $inputValues['version'],
-                'newDownloadFile' => $downloadFile,
-            ]),
-        ];
+        $softwareModel->addVersion($version);
 
         $payload = $this->softwareApi->saveSoftware($softwareModel);
 

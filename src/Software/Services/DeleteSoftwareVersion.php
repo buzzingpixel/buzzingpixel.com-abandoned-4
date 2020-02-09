@@ -25,6 +25,6 @@ class DeleteSoftwareVersion
             'DELETE FROM ' . $table . ' WHERE id = :id'
         );
 
-        $statement->execute([':id' => $model->getId()]);
+        $statement->execute([':id' => $model->id]);
     }
 }

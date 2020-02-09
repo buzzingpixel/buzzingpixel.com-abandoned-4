@@ -63,10 +63,10 @@ class PostAdminSoftwareAddVersionAction
         assert(is_array($postData));
 
         $inputValues = [
-            'major_version' => $postData['major_version'] ?? '',
-            'version' => $postData['version'] ?? '',
-            'released_on' => $postData['released_on'] ?? '',
-            'upgrade_price' => $postData['upgrade_price'] ?? '',
+            'major_version' => (string) ($postData['major_version'] ?? ''),
+            'version' => (string) ($postData['version'] ?? ''),
+            'released_on' => (string) ($postData['released_on'] ?? ''),
+            'upgrade_price' => (string) ($postData['upgrade_price'] ?? ''),
         ];
 
         if ($inputValues['released_on'] === '') {
@@ -116,15 +116,14 @@ class PostAdminSoftwareAddVersionAction
             new DateTimeZone('UTC')
         );
 
-        $software->addVersion(
-            new SoftwareVersionModel([
-                'majorVersion' => $inputValues['major_version'],
-                'version' => $inputValues['version'],
-                'newDownloadFile' => $downloadFile,
-                'upgradePrice' => (float) $inputValues['upgrade_price'],
-                'releasedOn' => $releasedOn,
-            ]),
-        );
+        $version                  = new SoftwareVersionModel();
+        $version->majorVersion    = $inputValues['major_version'];
+        $version->version         = $inputValues['version'];
+        $version->newDownloadFile = $downloadFile;
+        $version->upgradePrice    = (float) $inputValues['upgrade_price'];
+        $version->releasedOn      = $releasedOn;
+
+        $software->addVersion($version);
 
         $payload = $this->softwareApi->saveSoftware($software);
 

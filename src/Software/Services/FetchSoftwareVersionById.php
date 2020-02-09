@@ -61,7 +61,7 @@ class FetchSoftwareVersionById
         $softwareVersionModel = null;
 
         foreach ($software->versions as $version) {
-            if ($version->getId() !== $softwareVersionRecord->id) {
+            if ($version->id !== $softwareVersionRecord->id) {
                 continue;
             }
 

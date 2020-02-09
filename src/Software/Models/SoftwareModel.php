@@ -65,7 +65,7 @@ class SoftwareModel
 
     public function addVersion(SoftwareVersionModel $softwareVersionModel) : SoftwareModel
     {
-        $softwareVersionModel->setSoftware($this);
+        $softwareVersionModel->software = $this;
 
         $this->versions[] = $softwareVersionModel;
 

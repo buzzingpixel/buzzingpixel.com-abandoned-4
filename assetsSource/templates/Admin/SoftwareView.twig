@@ -136,23 +136,23 @@
                 {% for version in softwareModel.versions %}
                     <tr class="Table__Row">
                         <td class="Table__Col">
-                            {{ version.getMajorVersion() }}
+                            {{ version.majorVersion }}
                         </td>
                         <td class="Table__Col">
-                            {{ version.getVersion() }}
+                            {{ version.version }}
                         </td>
                         <td class="Table__Col">
-                            {{ version.getDownloadFile() }}
+                            {{ version.downloadFile }}
                         </td>
                         <td class="Table__Col">
-                            ${{ version.getUpgradePrice()|number_format(2) }}
+                            ${{ version.upgradePrice|number_format(2) }}
                         </td>
                         <td class="Table__Col">
-                            {{ version.getReleasedOn().setTimezone(user.timezone).format('Y-m-d h:i a') }}
+                            {{ version.releasedOn.setTimezone(user.timezone).format('Y-m-d h:i a') }}
                         </td>
                         <td class="Table__Col">
                             <form
-                                action="/admin/software/version/delete/{{ version.getId() }}"
+                                action="/admin/software/version/delete/{{ version.id }}"
                                 method="post"
                                 style="display: inline-block"
                                 ref="FormSubmitConfirm"
@@ -164,7 +164,7 @@
                             </form>
                             &nbsp;
                             <a
-                                href="/admin/software/version/edit/{{ version.getId() }}"
+                                href="/admin/software/version/edit/{{ version.id }}"
                                 class="button"
                             >
                                 Edit

@@ -40,7 +40,7 @@ class GetAdminSoftwareVersionEditAction
             throw new HttpNotFoundException($request);
         }
 
-        $software = $softwareVersion->getSoftware();
+        $software = $softwareVersion->software;
         assert($software instanceof SoftwareModel);
 
         return ($this->responder)(
@@ -49,7 +49,7 @@ class GetAdminSoftwareVersionEditAction
                 'metaPayload' => new MetaPayload(
                     [
                         'metaTitle' => 'Edit Version ' .
-                        $softwareVersion->getVersion() . ' of ' .
+                        $softwareVersion->version . ' of ' .
                             $software->name . ' | Admin',
                     ]
                 ),
