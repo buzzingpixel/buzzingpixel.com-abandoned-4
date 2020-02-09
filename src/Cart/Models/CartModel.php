@@ -38,7 +38,10 @@ class CartModel
 
         assert(is_array($value));
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($value as $item) {
+            assert($item instanceof CartItemModel);
+
             $this->addItem($item);
         }
     }

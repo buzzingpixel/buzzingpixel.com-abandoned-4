@@ -24,7 +24,10 @@ class SoftwareModel
 
         assert(is_array($value));
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($value as $version) {
+            assert($version instanceof SoftwareVersionModel);
+
             $this->addVersion($version);
         }
     }

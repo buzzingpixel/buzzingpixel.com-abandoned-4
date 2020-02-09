@@ -18,7 +18,7 @@ class TransformSoftwareVersionModelToRecord
 
         $record->id = $model->id;
 
-        if ($model->software) {
+        if ($model->software !== null) {
             $record->software_id = $model->software->id;
         }
 

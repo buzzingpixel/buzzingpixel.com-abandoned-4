@@ -14,9 +14,6 @@ parameters:
             '''
             path: %currentWorkingDirectory%/src/Users/Services/SaveUser.php
         -
-            message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
-            path: %currentWorkingDirectory%/src/Software/Models/SoftwareVersionModel.php
-        -
             message: '#Only booleans are allowed in a negated boolean, string given\.#'
             path: %currentWorkingDirectory%/src/Persistence/SaveNewRecord.php
         -
@@ -25,9 +22,6 @@ parameters:
         -
             message: '#Variable property access on \$this\(App\\Persistence\\Record\)\.#'
             path: %currentWorkingDirectory%/src/Persistence/Record.php
-        -
-            message: '#Variable method call on \$this\(App\\Payload\\Model\)\.#'
-            path: %currentWorkingDirectory%/src/Payload/Model.php
         -
             message: '#Cannot cast.*#'
             path: %currentWorkingDirectory%/src/Schedule/Services/TranslateRunEvery.php
