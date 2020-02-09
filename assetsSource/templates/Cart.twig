@@ -71,10 +71,10 @@
                     <div class="Cart__Item">
                         <div class="Cart__ItemInner">
                             <div class="Cart__ItemLeft">
-                                <div class="Cart__ItemTitle">{{ item.getSoftware().getName()|smartypants }}</div>
+                                <div class="Cart__ItemTitle">{{ item.getSoftware().name|smartypants }}</div>
                             </div>
                             <div class="Cart__ItemRight">
-                                <div class="Cart__ItemPrice">${{ item.getSoftware().getPrice()|number_format(2) }}</div>
+                                <div class="Cart__ItemPrice">${{ item.getSoftware().price|number_format(2) }}</div>
                                 <div class="Cart__ItemQuantity">
                                     <label>
                                         <input

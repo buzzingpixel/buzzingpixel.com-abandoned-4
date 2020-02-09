@@ -16,7 +16,7 @@
 
 {% block adminContent %}
     {% embed 'StandardForm/StandardFormEmbed.twig' with {
-        heading: 'Edit Version "' ~ softwareVersion.getVersion() ~ '" of ' ~ softwareVersion.getSoftware().getName() ~ '"',
+        heading: 'Edit Version "' ~ softwareVersion.getVersion() ~ '" of ' ~ softwareVersion.getSoftware().name ~ '"',
         message: message,
         submitButtonContent: 'Submit',
         softwareVersion: softwareVersion,

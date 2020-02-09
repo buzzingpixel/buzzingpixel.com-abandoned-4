@@ -50,7 +50,7 @@ class GetAdminSoftwareVersionEditAction
                     [
                         'metaTitle' => 'Edit Version ' .
                         $softwareVersion->getVersion() . ' of ' .
-                            $software->getName() . ' | Admin',
+                            $software->name . ' | Admin',
                     ]
                 ),
                 'activeTab' => 'software',
@@ -61,8 +61,8 @@ class GetAdminSoftwareVersionEditAction
                     ],
                     [
                         'href' => '/admin/software/view/' .
-                            $software->getSlug(),
-                        'content' => $software->getName(),
+                            $software->slug,
+                        'content' => $software->name,
                     ],
                     ['content' => 'Edit Version'],
                 ],

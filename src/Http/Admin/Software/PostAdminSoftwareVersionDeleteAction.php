@@ -65,7 +65,7 @@ class PostAdminSoftwareVersionDeleteAction
             ->withHeader(
                 'Location',
                 '/admin/software/view/' .
-                    $software->getSlug()
+                    $software->slug
             );
     }
 }

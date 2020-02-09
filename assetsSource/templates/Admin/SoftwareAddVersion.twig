@@ -13,7 +13,7 @@
 
 {% block adminContent %}
     {% embed 'StandardForm/StandardFormEmbed.twig' with {
-        heading: 'Add New Version for "' ~ software.getName() ~ '"',
+        heading: 'Add New Version for "' ~ software.name ~ '"',
         message: message,
         submitButtonContent: 'Submit',
     } only %}

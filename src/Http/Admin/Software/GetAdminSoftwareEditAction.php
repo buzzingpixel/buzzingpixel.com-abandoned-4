@@ -42,7 +42,7 @@ class GetAdminSoftwareEditAction
             'Admin/SoftwareEdit.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => 'Edit ' . $softwareModel->getName() . ' | Admin']
+                    ['metaTitle' => 'Edit ' . $softwareModel->name . ' | Admin']
                 ),
                 'activeTab' => 'software',
                 'breadcrumbs' => [

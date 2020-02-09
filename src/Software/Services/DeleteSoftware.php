@@ -30,13 +30,13 @@ class DeleteSoftware
             ' WHERE id = :id'
         );
 
-        $softwareStatement->execute([':id' => $model->getId()]);
+        $softwareStatement->execute([':id' => $model->id]);
 
         $ids = array_map(
             static function (SoftwareVersionModel $model) : string {
                 return $model->getId();
             },
-            $model->getVersions()
+            $model->versions
         );
 
         if (count($ids) < 1) {

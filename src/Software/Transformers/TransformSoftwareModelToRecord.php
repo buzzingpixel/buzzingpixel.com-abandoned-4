@@ -15,19 +15,19 @@ class TransformSoftwareModelToRecord
     {
         $record = new SoftwareRecord();
 
-        $record->id = $model->getId();
+        $record->id = $model->id;
 
-        $record->slug = $model->getSlug();
+        $record->slug = $model->slug;
 
-        $record->name = $model->getName();
+        $record->name = $model->name;
 
-        $record->is_for_sale = $model->isForSale() ? '1' : '0';
+        $record->is_for_sale = $model->isForSale ? '1' : '0';
 
-        $record->price = (string) $model->getPrice();
+        $record->price = (string) $model->price;
 
-        $record->renewal_price = (string) $model->getRenewalPrice();
+        $record->renewal_price = (string) $model->renewalPrice;
 
-        $record->is_subscription = $model->isSubscription() ? '1' : '0';
+        $record->is_subscription = $model->isSubscription ? '1' : '0';
 
         return $record;
     }

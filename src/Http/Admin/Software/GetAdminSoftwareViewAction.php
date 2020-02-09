@@ -42,7 +42,7 @@ class GetAdminSoftwareViewAction
             'Admin/SoftwareView.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => $softwareModel->getName() . ' | Admin']
+                    ['metaTitle' => $softwareModel->name . ' | Admin']
                 ),
                 'activeTab' => 'software',
                 'breadcrumbs' => [

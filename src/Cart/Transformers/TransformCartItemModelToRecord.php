@@ -26,7 +26,7 @@ class TransformCartItemModelToRecord
         $software = $cartItem->getSoftware();
 
         if ($software !== null) {
-            $record->item_slug = $software->getSlug();
+            $record->item_slug = $software->slug;
         }
 
         $record->quantity = (string) $cartItem->getQuantity();

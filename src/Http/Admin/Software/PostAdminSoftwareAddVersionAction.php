@@ -97,7 +97,7 @@ class PostAdminSoftwareAddVersionAction
                         'inputValues' => $inputValues,
                     ],
                 ),
-                $software->getSlug(),
+                $software->slug,
             );
         }
 
@@ -134,13 +134,13 @@ class PostAdminSoftwareAddVersionAction
                     Payload::STATUS_NOT_UPDATED,
                     ['message' => 'An unknown error occurred'],
                 ),
-                $software->getSlug(),
+                $software->slug,
             );
         }
 
         return ($this->responder)(
             $payload,
-            $software->getSlug()
+            $software->slug
         );
     }
 }

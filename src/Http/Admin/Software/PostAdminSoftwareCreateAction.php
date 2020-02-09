@@ -36,14 +36,14 @@ class PostAdminSoftwareCreateAction
         assert(is_array($postData));
 
         $inputValues = [
-            'name' => $postData['name'] ?? '',
-            'slug' => $postData['slug'] ?? '',
+            'name' => (string) ($postData['name'] ?? ''),
+            'slug' => (string) ($postData['slug'] ?? ''),
             'for_sale' => ($postData['for_sale'] ?? '') === 'true',
             'price' => $postData['price'] ?? '',
             'renewal_price' => $postData['renewal_price'] ?? '',
             'subscription' => ($postData['subscription'] ?? '') === 'true',
-            'major_version' => $postData['major_version'] ?? '',
-            'version' => $postData['version'] ?? '',
+            'major_version' => (string) ($postData['major_version'] ?? ''),
+            'version' => (string) ($postData['version'] ?? ''),
         ];
 
         /** @psalm-suppress MixedAssignment */
@@ -89,21 +89,20 @@ class PostAdminSoftwareCreateAction
             );
         }
 
-        $softwareModel = new SoftwareModel([
-            'name' => $inputValues['name'],
-            'slug' => $inputValues['slug'],
-            'isForSale' => $inputValues['for_sale'],
-            'price' => (float) $inputValues['price'],
-            'renewalPrice' => (float) $inputValues['renewal_price'],
-            'isSubscription' => $inputValues['subscription'],
-            'versions' => [
-                new SoftwareVersionModel([
-                    'majorVersion' => $inputValues['major_version'],
-                    'version' => $inputValues['version'],
-                    'newDownloadFile' => $downloadFile,
-                ]),
-            ],
-        ]);
+        $softwareModel                 = new SoftwareModel();
+        $softwareModel->name           = $inputValues['name'];
+        $softwareModel->slug           = $inputValues['slug'];
+        $softwareModel->isForSale      = $inputValues['for_sale'];
+        $softwareModel->price          = (float) $inputValues['price'];
+        $softwareModel->renewalPrice   = (float) $inputValues['renewal_price'];
+        $softwareModel->isSubscription = $inputValues['subscription'];
+        $softwareModel->versions       = [
+            new SoftwareVersionModel([
+                'majorVersion' => $inputValues['major_version'],
+                'version' => $inputValues['version'],
+                'newDownloadFile' => $downloadFile,
+            ]),
+        ];
 
         $payload = $this->softwareApi->saveSoftware($softwareModel);
 

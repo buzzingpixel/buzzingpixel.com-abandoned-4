@@ -54,13 +54,13 @@ class SaveSoftware
 
             $isNew = false;
 
-            if ($model->getId() === '') {
+            if ($model->id === '') {
                 $isNew = true;
 
-                $model->setId($this->uuidFactory->uuid1()->toString());
+                $model->id = $this->uuidFactory->uuid1()->toString();
             }
 
-            $versions = $model->getVersions();
+            $versions = $model->versions;
 
             array_walk($versions, [$this, 'saveVersion']);
 
@@ -106,7 +106,7 @@ class SaveSoftware
 
         if ($newDownloadFile !== null) {
             /** @psalm-suppress PossiblyNullReference */
-            $slug = $software->getSlug();
+            $slug = $software->slug;
 
             $saveFilePayload = ($this->saveFileToSecureStorage)(
                 $newDownloadFile,

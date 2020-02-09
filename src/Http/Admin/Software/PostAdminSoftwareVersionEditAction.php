@@ -98,7 +98,7 @@ class PostAdminSoftwareVersionEditAction
                     ],
                 ),
                 $softwareVersion->getId(),
-                $software->getSlug(),
+                $software->slug,
             );
         }
 
@@ -139,14 +139,14 @@ class PostAdminSoftwareVersionEditAction
                     ['message' => 'An unknown error occurred'],
                 ),
                 $softwareVersion->getId(),
-                $software->getSlug(),
+                $software->slug,
             );
         }
 
         return ($this->responder)(
             $payload,
             $softwareVersion->getId(),
-            $software->getSlug(),
+            $software->slug,
         );
     }
 }

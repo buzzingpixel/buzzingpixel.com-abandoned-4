@@ -4,124 +4,64 @@ declare(strict_types=1);
 
 namespace App\Software\Models;
 
-use App\Payload\Model;
-use function array_walk;
+use RuntimeException;
+use function assert;
+use function is_array;
 
-class SoftwareModel extends Model
+/**
+ * @property SoftwareVersionModel[] $versions
+ */
+class SoftwareModel
 {
-    private string $id = '';
-
-    public function setId(string $id) : SoftwareModel
+    /**
+     * @param mixed $value
+     */
+    public function __set(string $name, $value) : void
     {
-        $this->id = $id;
+        if ($name !== 'versions') {
+            throw new RuntimeException('Invalid property');
+        }
 
-        return $this;
+        assert(is_array($value));
+
+        foreach ($value as $version) {
+            $this->addVersion($version);
+        }
     }
 
-    public function getId() : string
+    /**
+     * @return mixed
+     */
+    public function __get(string $name)
     {
-        return $this->id;
+        if ($name !== 'versions') {
+            throw new RuntimeException('Invalid property');
+        }
+
+        return $this->versions;
     }
 
-    private string $slug = '';
-
-    public function setSlug(string $slug) : SoftwareModel
+    public function __isset(string $name) : bool
     {
-        $this->slug = $slug;
-
-        return $this;
+        return $name === 'versions';
     }
 
-    public function getSlug() : string
-    {
-        return $this->slug;
-    }
+    public string $id = '';
 
-    private string $name = '';
+    public string $slug = '';
 
-    public function setName(string $name) : SoftwareModel
-    {
-        $this->name = $name;
+    public string $name = '';
 
-        return $this;
-    }
+    public bool $isForSale = true;
 
-    public function getName() : string
-    {
-        return $this->name;
-    }
+    public float $price = 0.0;
 
-    private bool $isForSale = true;
+    public float $renewalPrice = 0.0;
 
-    public function setIsForSale(bool $isForSale) : SoftwareModel
-    {
-        $this->isForSale = $isForSale;
-
-        return $this;
-    }
-
-    public function isForSale() : bool
-    {
-        return $this->isForSale;
-    }
-
-    private float $price = 0.0;
-
-    public function setPrice(float $price) : SoftwareModel
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    public function getPrice() : float
-    {
-        return $this->price;
-    }
-
-    private float $renewalPrice = 0.0;
-
-    public function setRenewalPrice(float $renewalPrice) : SoftwareModel
-    {
-        $this->renewalPrice = $renewalPrice;
-
-        return $this;
-    }
-
-    public function getRenewalPrice() : float
-    {
-        return $this->renewalPrice;
-    }
-
-    private bool $isSubscription = false;
-
-    public function setIsSubscription(bool $isSubscription) : SoftwareModel
-    {
-        $this->isSubscription = $isSubscription;
-
-        return $this;
-    }
-
-    public function isSubscription() : bool
-    {
-        return $this->isSubscription;
-    }
+    public bool $isSubscription = false;
 
     /** @var SoftwareVersionModel[] */
     private array $versions = [];
-
-    /**
-     * @param SoftwareVersionModel[] $versions
-     */
-    public function setVersions(array $versions) : SoftwareModel
-    {
-        array_walk(
-            $versions,
-            [$this, 'addVersion']
-        );
-
-        return $this;
-    }
 
     public function addVersion(SoftwareVersionModel $softwareVersionModel) : SoftwareModel
     {
@@ -130,13 +70,5 @@ class SoftwareModel extends Model
         $this->versions[] = $softwareVersionModel;
 
         return $this;
-    }
-
-    /**
-     * @return SoftwareVersionModel[]
-     */
-    public function getVersions() : array
-    {
-        return $this->versions;
     }
 }

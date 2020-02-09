@@ -21,7 +21,7 @@ class TransformSoftwareVersionModelToRecord
         $software = $model->getSoftware();
 
         if ($software !== null) {
-            $record->software_id = $software->getId();
+            $record->software_id = $software->id;
         }
 
         $record->major_version = $model->getMajorVersion();

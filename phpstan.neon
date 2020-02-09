@@ -17,12 +17,6 @@ parameters:
             message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
             path: %currentWorkingDirectory%/src/Software/Models/SoftwareVersionModel.php
         -
-            message: '#If condition is always true\.#'
-            path: %currentWorkingDirectory%/src/Cart/Models/CartModel.php
-        -
-            message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
-            path: %currentWorkingDirectory%/src/Cart/Models/CartModel.php
-        -
             message: '#Only booleans are allowed in a negated boolean, string given\.#'
             path: %currentWorkingDirectory%/src/Persistence/SaveNewRecord.php
         -
@@ -46,13 +40,6 @@ parameters:
         -
             message: "#Casting to array<string> something that's already array<string>\\.#"
             path: %currentWorkingDirectory%/src/Persistence/RecordQuery.php
-        - '#Parameter \#2 \$algo of function Safe\\password_hash expects int, null given\.#'
-        -
-            message: '#If condition is always true\.#'
-            path: %currentWorkingDirectory%/src/Orders/Models/OrderModel.php
-        -
-            message: '#Instanceof between DateTimeImmutable and DateTimeImmutable will always evaluate to true\.#'
-            path: %currentWorkingDirectory%/src/Orders/Models/OrderModel.php
         -
             message: '#Strict comparison using !== between App\\Content\\Software\\SoftwareInfoPayload and null will always evaluate to true\.#'
             path: %currentWorkingDirectory%/src/Content/Documentation/DocumentationVersionsPayload.php
@@ -110,6 +97,7 @@ parameters:
         -
             message: '#Using \$this outside a class\.#'
             path: %currentWorkingDirectory%/config/Routes/Account/index.php
+        - '#Function password_hash is unsafe to use\..*#'
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php

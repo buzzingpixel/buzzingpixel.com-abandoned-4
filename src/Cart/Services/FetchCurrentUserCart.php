@@ -74,7 +74,7 @@ class FetchCurrentUserCart
                 $cookieItemSoftware = $cookieItem->getSoftware();
                 assert($cookieItemSoftware instanceof SoftwareModel);
 
-                $softwareSlug = $cookieItemSoftware->getSlug();
+                $softwareSlug = $cookieItemSoftware->slug;
 
                 $set = false;
 
@@ -82,7 +82,7 @@ class FetchCurrentUserCart
                     $userItemSoftware = $userItem->getSoftware();
                     assert($userItemSoftware instanceof SoftwareModel);
 
-                    if ($userItemSoftware->getSlug() !== $softwareSlug) {
+                    if ($userItemSoftware->slug !== $softwareSlug) {
                         continue;
                     }
 

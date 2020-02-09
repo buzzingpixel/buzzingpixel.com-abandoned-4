@@ -18,11 +18,7 @@ class SoftwareVersionModel extends Model
     {
         parent::__construct($vars);
 
-        /**
-         * @psalm-suppress UninitializedProperty
-         * @psalm-suppress RedundantCondition
-         */
-        if ($this->releasedOn instanceof DateTimeImmutable) {
+        if (isset($this->releasedOn)) {
             return;
         }
 

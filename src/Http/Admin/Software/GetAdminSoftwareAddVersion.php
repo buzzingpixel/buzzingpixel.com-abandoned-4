@@ -42,7 +42,7 @@ class GetAdminSoftwareAddVersion
             'Admin/SoftwareAddVersion.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => 'Create new version for ' . $software->getName() . ' | Admin']
+                    ['metaTitle' => 'Create new version for ' . $software->name . ' | Admin']
                 ),
                 'activeTab' => 'software',
                 'breadcrumbs' => [
@@ -52,8 +52,8 @@ class GetAdminSoftwareAddVersion
                     ],
                     [
                         'href' => '/admin/software/view/' .
-                            $software->getSlug(),
-                        'content' => $software->getName(),
+                            $software->slug,
+                        'content' => $software->name,
                     ],
                     ['content' => 'Add Version'],
                 ],

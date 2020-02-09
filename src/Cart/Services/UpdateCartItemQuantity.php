@@ -25,7 +25,7 @@ class UpdateCartItemQuantity
             $itemSoftware = $item->getSoftware();
             assert($itemSoftware instanceof SoftwareModel);
 
-            if ($itemSoftware->getSlug() !== $software->getSlug()) {
+            if ($itemSoftware->slug !== $software->slug) {
                 continue;
             }
 

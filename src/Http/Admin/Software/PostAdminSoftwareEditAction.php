@@ -58,7 +58,7 @@ class PostAdminSoftwareEditAction
             );
         }
 
-        $originalSlug = $softwareModel->getSlug();
+        $originalSlug = $softwareModel->slug;
 
         $inputMessages = [];
 
@@ -92,16 +92,12 @@ class PostAdminSoftwareEditAction
             );
         }
 
-        $softwareModel->setName((string) $inputValues['name']);
-        $softwareModel->setSlug((string) $inputValues['slug']);
-        $softwareModel->setIsForSale($inputValues['for_sale']);
-        $softwareModel->setPrice((float) $inputValues['price']);
-        $softwareModel->setRenewalPrice(
-            (float) $inputValues['renewal_price']
-        );
-        $softwareModel->setIsSubscription(
-            $inputValues['subscription']
-        );
+        $softwareModel->name           = (string) $inputValues['name'];
+        $softwareModel->slug           = (string) $inputValues['slug'];
+        $softwareModel->isForSale      = $inputValues['for_sale'];
+        $softwareModel->price          = (float) $inputValues['price'];
+        $softwareModel->renewalPrice   = (float) $inputValues['renewal_price'];
+        $softwareModel->isSubscription = $inputValues['subscription'];
 
         $payload = $this->softwareApi->saveSoftware($softwareModel);
 
@@ -117,7 +113,7 @@ class PostAdminSoftwareEditAction
 
         return ($this->responder)(
             $payload,
-            $softwareModel->getSlug()
+            $softwareModel->slug
         );
     }
 }

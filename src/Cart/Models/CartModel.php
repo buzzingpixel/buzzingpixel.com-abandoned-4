@@ -22,10 +22,7 @@ class CartModel extends Model
     {
         parent::__construct($vars);
 
-        /** @psalm-suppress UninitializedProperty */
-        $createdAtInstance = $this->createdAt instanceof DateTimeImmutable;
-
-        if ($createdAtInstance) {
+        if (isset($this->createdAt)) {
             return;
         }
 
@@ -179,7 +176,7 @@ class CartModel extends Model
             $itemSoftware = $item->getSoftware();
             assert($itemSoftware instanceof SoftwareModel);
 
-            $subTotal = $itemSoftware->getPrice() * $item->getQuantity();
+            $subTotal = $itemSoftware->price * $item->getQuantity();
         }
 
         return (float) $subTotal;

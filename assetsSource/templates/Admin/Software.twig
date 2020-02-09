@@ -48,25 +48,25 @@
             {% for model in softwareModels %}
                 <tr class="Table__Row">
                     <td class="Table__Col">
-                        {{ model.getName()|smartypants }}
+                        {{ model.name|smartypants }}
                     </td>
                     <td class="Table__Col">
-                        {{ model.getSlug() }}
+                        {{ model.slug }}
                     </td>
                     <td class="Table__Col">
-                        {{ model.isForSale() ? 'Yes' : 'No' }}
+                        {{ model.isForSale ? 'Yes' : 'No' }}
                     </td>
                     <td class="Table__Col">
-                        ${{ model.getPrice()|number_format(2) }}
+                        ${{ model.price|number_format(2) }}
                     </td>
                     <td class="Table__Col">
-                        ${{ model.getRenewalPrice()|number_format(2) }}
+                        ${{ model.renewalPrice|number_format(2) }}
                     </td>
                     <td class="Table__Col">
-                        {{ model.isSubscription() ? 'Yes' : 'No' }}
+                        {{ model.isSubscription ? 'Yes' : 'No' }}
                     </td>
                     <td class="Table__Col">
-                        <a href="/admin/software/view/{{ model.getSlug() }}">
+                        <a href="/admin/software/view/{{ model.slug }}">
                             More&nbsp;&raquo;
                         </a>
                     </td>

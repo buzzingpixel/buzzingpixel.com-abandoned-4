@@ -20,23 +20,32 @@ class TransformSoftwareRecordToModel
         SoftwareRecord $record,
         array $versions = []
     ) : SoftwareModel {
-        return new SoftwareModel([
-            'id' => $record->id,
-            'slug' => $record->slug,
-            'name' => $record->name,
-            'isForSale' => in_array(
-                $record->is_for_sale,
-                ['1', 1, true],
-                true
-            ),
-            'price' => (float) $record->price,
-            'renewalPrice' => (float) $record->renewal_price,
-            'isSubscription' => in_array(
-                $record->is_subscription,
-                ['1', 1, true],
-                true
-            ),
-            'versions' => $versions,
-        ]);
+        $model = new SoftwareModel();
+
+        $model->id = $record->id;
+
+        $model->slug = $record->slug;
+
+        $model->name = $record->name;
+
+        $model->isForSale = in_array(
+            $record->is_for_sale,
+            ['1', 1, true],
+            true
+        );
+
+        $model->price = (float) $record->price;
+
+        $model->renewalPrice = (float) $record->renewal_price;
+
+        $model->isSubscription = in_array(
+            $record->is_subscription,
+            ['1', 1, true],
+            true
+        );
+
+        $model->versions = $versions;
+
+        return $model;
     }
 }

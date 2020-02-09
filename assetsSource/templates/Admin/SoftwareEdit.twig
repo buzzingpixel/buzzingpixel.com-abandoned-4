@@ -13,19 +13,19 @@
 
 {% block adminContent %}
     {% embed 'StandardForm/StandardFormEmbed.twig' with {
-        heading: 'Edit "' ~ softwareModel.getName() ~ '"',
+        heading: 'Edit "' ~ softwareModel.name ~ '"',
         message: message,
         submitButtonContent: 'Submit',
         softwareModel: softwareModel,
     } only %}
         {% block standardFormContent %}
             {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
-            {{ inputs.textInput('Name', 'name', softwareModel.getName(), message) }}
-            {{ inputs.textInput('Slug', 'slug', softwareModel.getSlug(), message) }}
-            {{ inputs.checkbox('For Sale?', 'for_sale', softwareModel.isForSale(), message) }}
-            {{ inputs.textInput('Price', 'price', softwareModel.getPrice(), message) }}
-            {{ inputs.textInput('Renewal Price', 'renewal_price', softwareModel.getRenewalPrice(), message) }}
-            {{ inputs.checkbox('Subscription?', 'subscription', softwareModel.isSubscription(), message) }}
+            {{ inputs.textInput('Name', 'name', softwareModel.name, message) }}
+            {{ inputs.textInput('Slug', 'slug', softwareModel.slug, message) }}
+            {{ inputs.checkbox('For Sale?', 'for_sale', softwareModel.isForSale, message) }}
+            {{ inputs.textInput('Price', 'price', softwareModel.price, message) }}
+            {{ inputs.textInput('Renewal Price', 'renewal_price', softwareModel.renewalPrice, message) }}
+            {{ inputs.checkbox('Subscription?', 'subscription', softwareModel.isSubscription, message) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

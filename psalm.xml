@@ -16,5 +16,6 @@
     <issueHandlers>
         <LessSpecificReturnType errorLevel="info"/>
         <RedundantConditionGivenDocblockType errorLevel="suppress"/>
+        <MissingConstructor errorLevel="suppress"/>
     </issueHandlers>
 </psalm>
