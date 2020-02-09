@@ -30,6 +30,8 @@ class TransformUserRecordToUserModel
 
         $userModel->emailAddress = $userRecord->email_address;
 
+        $userModel->passwordHash = $userRecord->password_hash;
+
         $userModel->isActive = in_array(
             $userRecord->is_active,
             ['1', 1, true],
