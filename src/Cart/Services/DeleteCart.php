@@ -30,13 +30,13 @@ class DeleteCart
             ' WHERE id = :id'
         );
 
-        $statement->execute([':id' => $model->getId()]);
+        $statement->execute([':id' => $model->id]);
 
         $ids = array_map(
             static function (CartItemModel $model) : string {
                 return $model->getId();
             },
-            $model->getItems()
+            $model->items
         );
 
         if (count($ids) < 1) {

@@ -70,7 +70,7 @@ class FetchCurrentUserCart
             null;
 
         if ($cookieCart !== null && $userCart !== null) {
-            foreach ($cookieCart->getItems() as $cookieItem) {
+            foreach ($cookieCart->items as $cookieItem) {
                 $cookieItemSoftware = $cookieItem->getSoftware();
                 assert($cookieItemSoftware instanceof SoftwareModel);
 
@@ -78,7 +78,7 @@ class FetchCurrentUserCart
 
                 $set = false;
 
-                foreach ($userCart->getItems() as $userItem) {
+                foreach ($userCart->items as $userItem) {
                     $userItemSoftware = $userItem->getSoftware();
                     assert($userItemSoftware instanceof SoftwareModel);
 
@@ -116,9 +116,11 @@ class FetchCurrentUserCart
             if ($cookieCart !== null) {
                 $userCart = $cookieCart;
 
-                $userCart->setUser($user);
+                $userCart->user = $user;
             } else {
-                $userCart = new CartModel(['user' => $user]);
+                $userCart = new CartModel();
+
+                $userCart->user = $user;
             }
 
             ($this->saveCart)($userCart);
@@ -132,7 +134,7 @@ class FetchCurrentUserCart
             $this->cookieApi->saveCookie(
                 $this->cookieApi->makeCookie(
                     'cart_id',
-                    $cookieCart->getId(),
+                    $cookieCart->id,
                     $currentDatePlus20Years
                 )
             );

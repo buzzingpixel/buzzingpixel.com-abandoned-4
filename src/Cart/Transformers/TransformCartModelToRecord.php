@@ -16,19 +16,19 @@ class TransformCartModelToRecord
     {
         $record = new CartRecord();
 
-        $record->id = $model->getId();
+        $record->id = $model->id;
 
-        $user = $model->getUser();
+        $user = $model->user;
 
         if ($user !== null) {
             $record->user_id = $user->id;
         }
 
-        $record->total_items = (string) $model->getTotalItems();
+        $record->total_items = (string) $model->totalItems;
 
-        $record->total_quantity = (string) $model->getTotalQuantity();
+        $record->total_quantity = (string) $model->totalQuantity;
 
-        $record->created_at = $model->getCreatedAt()->format(
+        $record->created_at = $model->createdAt->format(
             DateTimeInterface::ATOM
         );
 

@@ -21,7 +21,7 @@ class UpdateCartItemQuantity
     {
         $cart = $this->cartApi->fetchCurrentUserCart();
 
-        foreach ($cart->getItems() as $item) {
+        foreach ($cart->items as $item) {
             $itemSoftware = $item->getSoftware();
             assert($itemSoftware instanceof SoftwareModel);
 

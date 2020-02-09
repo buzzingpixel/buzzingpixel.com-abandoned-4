@@ -14,7 +14,6 @@ use App\Persistence\RecordQueryFactory;
 use Throwable;
 use function array_map;
 use function assert;
-use function dd;
 
 class FetchCartById
 {
@@ -37,8 +36,6 @@ class FetchCartById
         try {
             return $this->innerRun($id);
         } catch (Throwable $e) {
-            dd($e);
-
             return null;
         }
     }

@@ -10,6 +10,7 @@ use App\Persistence\Cart\CartRecord;
 use App\Persistence\Constants;
 use App\Users\Services\FetchUserById;
 use DateTimeImmutable;
+use function assert;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -33,16 +34,27 @@ class TransformCartRecordToModel
             $user = ($this->fetchUserById)($record->user_id);
         }
 
-        return new CartModel([
-            'id' => $record->id,
-            'user' => $user,
-            'totalItems' => (int) $record->total_items,
-            'totalQuantity' => (int) $record->total_quantity,
-            'items' => $items,
-            'createdAt' => DateTimeImmutable::createFromFormat(
-                Constants::POSTGRES_OUTPUT_FORMAT,
-                $record->created_at
-            ),
-        ]);
+        $cartModel = new CartModel();
+
+        $cartModel->id = $record->id;
+
+        $cartModel->user = $user;
+
+        $cartModel->totalItems = (int) $record->total_items;
+
+        $cartModel->totalQuantity = (int) $record->total_quantity;
+
+        $cartModel->items = $items;
+
+        $createdAt = DateTimeImmutable::createFromFormat(
+            Constants::POSTGRES_OUTPUT_FORMAT,
+            $record->created_at
+        );
+
+        assert($createdAt instanceof DateTimeImmutable);
+
+        $cartModel->createdAt = $createdAt;
+
+        return $cartModel;
     }
 }

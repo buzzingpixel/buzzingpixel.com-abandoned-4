@@ -45,6 +45,7 @@ class FetchCartByUserId
         $cartRecord = ($this->recordQueryFactory)(new CartRecord())
             ->withWhere('user_id', $userId)
             ->one();
+
         assert($cartRecord instanceof CartRecord || $cartRecord === null);
 
         if ($cartRecord === null) {

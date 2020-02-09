@@ -80,15 +80,15 @@ class SaveCart
 
         $isNew = false;
 
-        if ($cart->getId() === '') {
+        if ($cart->id === '') {
             $isNew = true;
 
-            $cart->setId($this->uuidFactory->uuid1()->toString());
+            $cart->id = $this->uuidFactory->uuid1()->toString();
         }
 
         $items = [];
 
-        foreach ($cart->getItems() as $item) {
+        foreach ($cart->items as $item) {
             if ($item->getQuantity() < 1) {
                 $this->deleteItem($item);
 
@@ -98,13 +98,13 @@ class SaveCart
             $items[] = $item;
         }
 
-        $cart->setItems($items);
+        $cart->items = $items;
 
         array_walk($items, [$this, 'saveItem']);
 
-        $cart->setTotalItems(count($items));
+        $cart->totalItems = count($items);
 
-        $cart->setTotalQuantity($this->totalQuantity);
+        $cart->totalQuantity = $this->totalQuantity;
 
         $record = ($this->transformCartModelToRecord)($cart);
 

@@ -19,7 +19,7 @@ class ClearCart
     {
         $cart = $this->cartApi->fetchCurrentUserCart();
 
-        foreach ($cart->getItems() as $item) {
+        foreach ($cart->items as $item) {
             $item->setQuantity(0);
         }
 

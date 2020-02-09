@@ -53,5 +53,4 @@ foreach ($finalIterator as $files) {
 }
 
 // Run the application
-/** @noinspection PhpUnhandledExceptionInspection */
 $app->run();

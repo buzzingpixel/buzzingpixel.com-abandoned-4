@@ -4,28 +4,22 @@ declare(strict_types=1);
 
 namespace App\Cart\Models;
 
-use App\Payload\Model;
 use App\Software\Models\SoftwareModel;
 use App\Users\Models\UserModel;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use function array_walk;
+use RuntimeException;
 use function assert;
+use function is_array;
 
-class CartModel extends Model
+/**
+ * @property CartItemModel[] $items
+ */
+class CartModel
 {
-    /**
-     * @inheritDoc
-     */
-    public function __construct(array $vars = [])
+    public function __construct()
     {
-        parent::__construct($vars);
-
-        if (isset($this->createdAt)) {
-            return;
-        }
-
         /** @noinspection PhpUnhandledExceptionInspection */
         $this->createdAt = new DateTimeImmutable(
             'now',
@@ -33,76 +27,49 @@ class CartModel extends Model
         );
     }
 
-    private string $id = '';
-
-    public function setId(string $id) : CartModel
+    /**
+     * @param mixed $value
+     */
+    public function __set(string $name, $value) : void
     {
-        $this->id = $id;
+        if ($name !== 'items') {
+            throw new RuntimeException('Invalid property');
+        }
 
-        return $this;
+        assert(is_array($value));
+
+        foreach ($value as $item) {
+            $this->addItem($item);
+        }
     }
 
-    public function getId() : string
+    public function __isset(string $name) : bool
     {
-        return $this->id;
+        return $name === 'items';
     }
 
-    private ?UserModel $user = null;
-
-    public function setUser(?UserModel $user) : CartModel
+    /**
+     * @return mixed
+     */
+    public function __get(string $name)
     {
-        $this->user = $user;
+        if ($name !== 'items') {
+            throw new RuntimeException('Invalid property');
+        }
 
-        return $this;
+        return $this->items;
     }
 
-    public function getUser() : ?UserModel
-    {
-        return $this->user;
-    }
+    public string $id = '';
 
-    private int $totalItems = 0;
+    public ?UserModel $user = null;
 
-    public function setTotalItems(int $totalItems) : CartModel
-    {
-        $this->totalItems = $totalItems;
+    public int $totalItems = 0;
 
-        return $this;
-    }
-
-    public function getTotalItems() : int
-    {
-        return $this->totalItems;
-    }
-
-    private int $totalQuantity = 0;
-
-    public function setTotalQuantity(int $totalQuantity) : CartModel
-    {
-        $this->totalQuantity = $totalQuantity;
-
-        return $this;
-    }
-
-    public function getTotalQuantity() : int
-    {
-        return $this->totalQuantity;
-    }
+    public int $totalQuantity = 0;
 
     /** @var CartItemModel[] */
     private array $items = [];
-
-    /**
-     * @param CartItemModel[] $items
-     */
-    public function setItems(array $items) : CartModel
-    {
-        $this->items = [];
-
-        array_walk($items, [$this, 'addItem']);
-
-        return $this;
-    }
 
     public function addItem(CartItemModel $item) : CartModel
     {
@@ -113,28 +80,7 @@ class CartModel extends Model
         return $this;
     }
 
-    /**
-     * @return CartItemModel[]
-     */
-    public function getItems() : array
-    {
-        return $this->items;
-    }
-
-    /** @psalm-suppress PropertyNotSetInConstructor */
-    private DateTimeImmutable $createdAt;
-
-    protected function setCreatedAt(DateTimeImmutable $createdAt) : CartModel
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getCreatedAt() : DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
+    public DateTimeImmutable $createdAt;
 
     /**
      * @return mixed[]
@@ -144,24 +90,22 @@ class CartModel extends Model
         $array = [];
 
         if (! $excludeId) {
-            $array['id'] = $this->getId();
+            $array['id'] = $this->id;
         }
 
         $array['user'] = null;
 
-        $user = $this->getUser();
-
-        if ($user !== null) {
-            $array['user'] = $user->asArray($excludeId);
+        if ($this->user !== null) {
+            $array['user'] = $this->user->asArray($excludeId);
         }
 
-        $array['totalItems'] = $this->getTotalItems();
+        $array['totalItems'] = $this->totalItems;
 
-        $array['totalQuantity'] = $this->getTotalQuantity();
+        $array['totalQuantity'] = $this->totalQuantity;
 
         // TODO: generate items
 
-        $array['createdAt'] = $this->getCreatedAt()->format(
+        $array['createdAt'] = $this->createdAt->format(
             DateTimeInterface::ATOM
         );
 
@@ -172,8 +116,9 @@ class CartModel extends Model
     {
         $subTotal = 0;
 
-        foreach ($this->getItems() as $item) {
+        foreach ($this->items as $item) {
             $itemSoftware = $item->getSoftware();
+
             assert($itemSoftware instanceof SoftwareModel);
 
             $subTotal = $itemSoftware->price * $item->getQuantity();
@@ -184,7 +129,7 @@ class CartModel extends Model
 
     public function calculateTax() : float
     {
-        $user = $this->getUser();
+        $user = $this->user;
 
         if ($user === null) {
             return 0.0;
@@ -206,7 +151,7 @@ class CartModel extends Model
 
     public function canPurchase() : bool
     {
-        $user = $this->getUser();
+        $user = $this->user;
 
         if ($user === null) {
             return false;

@@ -12,12 +12,12 @@
             <div class="CartInfo__Item">
                 <div class="CartInfo__ItemKey">Items:</div>
                 <div class="CartInfo__ItemValue">
-                    {{ cart.getTotalItems() }}
+                    {{ cart.totalItems }}
                 </div>
             </div>
             <div class="CartInfo__Item">
                 <div class="CartInfo__ItemKey">Quantity:</div>
-                <div class="CartInfo__ItemValue">{{ cart.getTotalQuantity() }}</div>
+                <div class="CartInfo__ItemValue">{{ cart.totalQuantity }}</div>
             </div>
             <div class="CartInfo__Item">
                 <div class="CartInfo__ItemKey">Subtotal:</div>
@@ -33,11 +33,11 @@
                 <div class="CartInfo__ItemKey">Total:</div>
                 <div class="CartInfo__ItemValue">${{ cart.calculateTotal()|number_format(2) }}</div>
             </div>
-            {% if cart.getItems()|length > 0 %}
+            {% if cart.items|length > 0 %}
                 <div class="CartInfo__Item">
                     {% set link = '/cart/log-in' %}
                     {% set linkContent = 'Log In To Pay' %}
-                    {% if cart.getUser() %}
+                    {% if cart.user %}
                         {% if cart.canPurchase() %}
                             {% set link = '#0' %}
                             {% set linkContent = 'Pay Now' %}
@@ -58,7 +58,7 @@
         </div>
         <div class="Cart__Items">
             <div class="Cart__ItemsInner">
-                {% if cart.getItems()|length < 1 %}
+                {% if cart.items|length < 1 %}
                     <div class="Cart__Item">
                         <div class="Cart__ItemInner">
                             <div class="Cart__ItemEmptyNotice">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 {% endif %}
-                {% for item in cart.getItems() %}
+                {% for item in cart.items %}
                     <div class="Cart__Item">
                         <div class="Cart__ItemInner">
                             <div class="Cart__ItemLeft">
