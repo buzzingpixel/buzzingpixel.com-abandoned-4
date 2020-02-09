@@ -15,21 +15,17 @@ class TransformCartItemModelToRecord
     {
         $record = new CartItemRecord();
 
-        $record->id = $cartItem->getId();
+        $record->id = $cartItem->id;
 
-        $cart = $cartItem->getCart();
-
-        if ($cart !== null) {
-            $record->cart_id = $cart->getId();
+        if ($cartItem->cart !== null) {
+            $record->cart_id = $cartItem->cart->id;
         }
 
-        $software = $cartItem->getSoftware();
-
-        if ($software !== null) {
-            $record->item_slug = $software->slug;
+        if ($cartItem->software !== null) {
+            $record->item_slug = $cartItem->software->slug;
         }
 
-        $record->quantity = (string) $cartItem->getQuantity();
+        $record->quantity = (string) $cartItem->quantity;
 
         return $record;
     }

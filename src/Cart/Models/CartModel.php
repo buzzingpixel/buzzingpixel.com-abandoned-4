@@ -73,7 +73,7 @@ class CartModel
 
     public function addItem(CartItemModel $item) : CartModel
     {
-        $item->setCart($this);
+        $item->cart = $this;
 
         $this->items[] = $item;
 
@@ -117,11 +117,11 @@ class CartModel
         $subTotal = 0;
 
         foreach ($this->items as $item) {
-            $itemSoftware = $item->getSoftware();
+            $itemSoftware = $item->software;
 
             assert($itemSoftware instanceof SoftwareModel);
 
-            $subTotal = $itemSoftware->price * $item->getQuantity();
+            $subTotal = $itemSoftware->price * $item->quantity;
         }
 
         return (float) $subTotal;

@@ -34,7 +34,7 @@ class DeleteCart
 
         $ids = array_map(
             static function (CartItemModel $model) : string {
-                return $model->getId();
+                return $model->id;
             },
             $model->items
         );

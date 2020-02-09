@@ -25,14 +25,14 @@ class AddItemToCurrentUsersCart
         $added = false;
 
         foreach ($cart->items as $item) {
-            $itemSoftware = $item->getSoftware();
+            $itemSoftware = $item->software;
             assert($itemSoftware instanceof SoftwareModel);
 
             if ($itemSoftware->slug !== $software->slug) {
                 continue;
             }
 
-            $item->setQuantity($item->getQuantity() + 1);
+            $item->quantity += 1;
 
             $added = true;
 
@@ -40,10 +40,11 @@ class AddItemToCurrentUsersCart
         }
 
         if (! $added) {
-            $cart->addItem(new CartItemModel([
-                'software' => $software,
-                'quantity' => 1,
-            ]));
+            $item           = new CartItemModel();
+            $item->software = $software;
+            $item->quantity = 1;
+
+            $cart->addItem($item);
         }
 
         $this->cartApi->saveCart($cart);

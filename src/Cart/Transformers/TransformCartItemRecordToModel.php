@@ -21,10 +21,16 @@ class TransformCartItemRecordToModel
 
     public function __invoke(CartItemRecord $record) : CartItemModel
     {
-        return new CartItemModel([
-            'id' => $record->id,
-            'software' => ($this->fetchSoftwareBySlug)($record->item_slug),
-            'quantity' => (int) $record->quantity,
-        ]);
+        $cartModel = new CartItemModel();
+
+        $cartModel->id = $record->id;
+
+        $cartModel->software = ($this->fetchSoftwareBySlug)(
+            $record->item_slug
+        );
+
+        $cartModel->quantity = (int) $record->quantity;
+
+        return $cartModel;
     }
 }

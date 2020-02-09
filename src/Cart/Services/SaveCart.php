@@ -89,7 +89,7 @@ class SaveCart
         $items = [];
 
         foreach ($cart->items as $item) {
-            if ($item->getQuantity() < 1) {
+            if ($item->quantity < 1) {
                 $this->deleteItem($item);
 
                 continue;
@@ -142,7 +142,7 @@ class SaveCart
             ' WHERE id = :id'
         );
 
-        $statement->execute([':id' => $item->getId()]);
+        $statement->execute([':id' => $item->id]);
     }
 
     /**
@@ -150,12 +150,10 @@ class SaveCart
      */
     protected function saveItem(CartItemModel $item) : void
     {
-        $this->totalQuantity += $item->getQuantity();
+        $this->totalQuantity += $item->quantity;
 
-        if ($item->getId() === '') {
-            $item->setId(
-                $this->uuidFactory->uuid1()->toString()
-            );
+        if ($item->id === '') {
+            $item->id = $this->uuidFactory->uuid1()->toString();
 
             $record = ($this->transformCartItemModelToRecord)($item);
 

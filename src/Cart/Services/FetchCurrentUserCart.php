@@ -71,7 +71,7 @@ class FetchCurrentUserCart
 
         if ($cookieCart !== null && $userCart !== null) {
             foreach ($cookieCart->items as $cookieItem) {
-                $cookieItemSoftware = $cookieItem->getSoftware();
+                $cookieItemSoftware = $cookieItem->software;
                 assert($cookieItemSoftware instanceof SoftwareModel);
 
                 $softwareSlug = $cookieItemSoftware->slug;
@@ -79,16 +79,14 @@ class FetchCurrentUserCart
                 $set = false;
 
                 foreach ($userCart->items as $userItem) {
-                    $userItemSoftware = $userItem->getSoftware();
+                    $userItemSoftware = $userItem->software;
                     assert($userItemSoftware instanceof SoftwareModel);
 
                     if ($userItemSoftware->slug !== $softwareSlug) {
                         continue;
                     }
 
-                    $userItem->setQuantity(
-                        $userItem->getQuantity() + $cookieItem->getQuantity()
-                    );
+                    $userItem->quantity += $cookieItem->quantity;
 
                     $set = true;
                 }
@@ -97,10 +95,9 @@ class FetchCurrentUserCart
                     continue;
                 }
 
-                $item = new CartItemModel([
-                    'software' => $cookieItem->getSoftware(),
-                    'quantity' => $cookieItem->getQuantity(),
-                ]);
+                $item           = new CartItemModel();
+                $item->software = $cookieItem->software;
+                $item->quantity = $cookieItem->quantity;
 
                 $userCart->addItem($item);
             }

@@ -22,14 +22,14 @@ class UpdateCartItemQuantity
         $cart = $this->cartApi->fetchCurrentUserCart();
 
         foreach ($cart->items as $item) {
-            $itemSoftware = $item->getSoftware();
+            $itemSoftware = $item->software;
             assert($itemSoftware instanceof SoftwareModel);
 
             if ($itemSoftware->slug !== $software->slug) {
                 continue;
             }
 
-            $item->setQuantity($quantity);
+            $item->quantity = $quantity;
 
             break;
         }
