@@ -7,7 +7,13 @@ namespace App\Orders\Models;
 use App\Users\Models\UserModel;
 use DateTimeImmutable;
 use DateTimeZone;
+use RuntimeException;
+use function assert;
+use function is_array;
 
+/**
+ * @property OrderItemModel[] $items
+ */
 class OrderModel
 {
     public function __construct()
@@ -62,4 +68,42 @@ class OrderModel
     public string $postalCode = '';
 
     public DateTimeImmutable $date;
+
+    /** @var OrderItemModel[] */
+    private array $items = [];
+
+    public function addItem(OrderItemModel $item) : void
+    {
+        $this->items[] = $item;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function __set(string $name, $value) : void
+    {
+        if ($name !== 'items') {
+            throw new RuntimeException('Property does not exist');
+        }
+
+        assert(is_array($value));
+
+        foreach ($value as $item) {
+            assert($item instanceof OrderItemModel);
+
+            $this->addItem($item);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        if ($name !== 'items') {
+            throw new RuntimeException('Property does not exist');
+        }
+
+        return $this->items;
+    }
 }
