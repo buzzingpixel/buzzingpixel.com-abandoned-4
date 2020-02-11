@@ -12,10 +12,10 @@ use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserModelToUserRecord;
 use App\Utilities\SimpleValidator;
 use Ramsey\Uuid\UuidFactoryInterface;
+use const PASSWORD_DEFAULT;
 use function count;
 use function mb_strlen;
 use function password_hash;
-use const PASSWORD_DEFAULT;
 
 class SaveUser
 {

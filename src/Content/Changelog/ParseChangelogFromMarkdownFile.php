@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Content\Changelog;
 
 use Throwable;
-use function filter_var;
 use const FILTER_VALIDATE_URL;
+use function filter_var;
 
 class ParseChangelogFromMarkdownFile
 {
