@@ -35,9 +35,6 @@ parameters:
             message: "#Casting to array<string> something that's already array<string>\\.#"
             path: %currentWorkingDirectory%/src/Persistence/RecordQuery.php
         -
-            message: '#Strict comparison using !== between App\\Content\\Software\\SoftwareInfoPayload and null will always evaluate to true\.#'
-            path: %currentWorkingDirectory%/src/Content/Documentation/DocumentationVersionsPayload.php
-        -
             message: '#Instanceof between DirectoryIterator and DirectoryIterator will always evaluate to true\.#'
             path: %currentWorkingDirectory%/src/Content/Documentation/CollectDocumentationVersionsFromPath.php
         -

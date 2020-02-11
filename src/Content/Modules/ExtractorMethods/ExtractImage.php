@@ -6,7 +6,6 @@ namespace App\Content\Modules\ExtractorMethods;
 
 use App\Content\Modules\Payloads\ImageModulePayload;
 use Throwable;
-use function assert;
 use function is_array;
 use function is_bool;
 
@@ -25,7 +24,7 @@ trait ExtractImage
     {
         /** @psalm-suppress MixedAssignment */
         $noShadow = ($parsedYaml['noShadow'] ?? false);
-        assert(is_bool($noShadow));
+        $noShadow = is_bool($noShadow) ? $noShadow : false;
 
         /** @var array<string, mixed> $image */
         $image = isset($parsedYaml['image']) && is_array($parsedYaml['image']) ?

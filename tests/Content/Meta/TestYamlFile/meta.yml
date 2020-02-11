@@ -1,0 +1,9 @@
+noIndex: true
+metaTitle: Test Meta Title
+metaDescription: Test Meta Description
+ogType: Test Og Type
+twitterCardType: Test Twitter Card Type
+headingBackground:
+  1x: testsrc
+  2x: testsrcset
+  alt: testalt
