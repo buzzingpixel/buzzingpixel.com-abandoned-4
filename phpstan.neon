@@ -92,6 +92,18 @@ parameters:
             message: '#Using \$this outside a class\.#'
             path: %currentWorkingDirectory%/config/Routes/Account/index.php
         - '#Function password_hash is unsafe to use\..*#'
+        -
+            message: '#Instanceof between null and*#'
+            path: %currentWorkingDirectory%/tests/Orders/Services/SaveOrder/SaveNewOrderTest.php
+        -
+            message: '#Instanceof between null and*#'
+            path: %currentWorkingDirectory%/tests/Orders/Services/SaveOrder/SaveNewOrderItemTest.php
+        -
+            message: '#Instanceof between null and*#'
+            path: %currentWorkingDirectory%/tests/Orders/Services/SaveOrder/SaveExistingOrderTest.php
+        -
+            message: '#Instanceof between null and*#'
+            path: %currentWorkingDirectory%/tests/Orders/Services/SaveOrder/SaveExistingOrderItemTest.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php
