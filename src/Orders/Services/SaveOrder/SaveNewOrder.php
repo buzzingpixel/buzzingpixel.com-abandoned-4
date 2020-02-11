@@ -11,6 +11,10 @@ use App\Persistence\SaveNewRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
 use Exception;
 
+/**
+ * This should only be invoked from SaveOrderMaster where the PDO transaction
+ * is begun and exception handling is in place
+ */
 class SaveNewOrder
 {
     private SaveNewRecord $saveNewRecord;

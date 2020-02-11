@@ -10,6 +10,10 @@ use App\Payload\Payload;
 use App\Persistence\SaveExistingRecord;
 use Exception;
 
+/**
+ * This should only be invoked from SaveOrderMaster where the PDO transaction
+ * is begun and exception handling is in place
+ */
 class SaveExistingOrder
 {
     private SaveExistingRecord $saveExistingRecord;
