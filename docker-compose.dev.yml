@@ -7,7 +7,7 @@ services:
 
   php:
     volumes:
-      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./docker/php/xdebug-linux.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
   db:
     environment:
