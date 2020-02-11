@@ -76,6 +76,8 @@ class OrderModel
 
     public function addItem(OrderItemModel $item) : void
     {
+        $item->order = $this;
+
         $this->items[] = $item;
     }
 
