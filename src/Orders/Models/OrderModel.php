@@ -59,6 +59,8 @@ class OrderModel
 
     public string $country = '';
 
+    public string $address = '';
+
     public string $addressContinued = '';
 
     public string $city = '';
@@ -88,6 +90,7 @@ class OrderModel
 
         assert(is_array($value));
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($value as $item) {
             assert($item instanceof OrderItemModel);
 
