@@ -31,5 +31,5 @@ class OrderItemModel
 
     public bool $hasBeenUpgraded = false;
 
-    public ?DateTimeImmutable $expires;
+    public ?DateTimeImmutable $expires = null;
 }
