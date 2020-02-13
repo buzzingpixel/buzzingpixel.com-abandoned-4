@@ -101,6 +101,12 @@ parameters:
         -
             message: '#Instanceof between null and*#'
             path: %currentWorkingDirectory%/tests/Orders/Services/SaveOrder/SaveExistingOrderItemTest.php
+        -
+            message: '#Instanceof between null and*#'
+            path: %currentWorkingDirectory%/tests/Licenses/Services/SaveNewLicenseTest.php
+        -
+            message: '#Instanceof between null and*#'
+            path: %currentWorkingDirectory%/tests/Licenses/Services/SaveExistingLicenseTest.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php

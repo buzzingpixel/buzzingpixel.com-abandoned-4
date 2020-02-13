@@ -8,7 +8,9 @@ use PDO;
 use PDOException;
 use Throwable;
 use const DEBUG_BACKTRACE_PROVIDE_OBJECT;
+use function assert;
 use function debug_backtrace;
+use function is_string;
 
 class DatabaseTransactionManager
 {
@@ -43,7 +45,12 @@ class DatabaseTransactionManager
                 2
             );
 
-            $this->caller = $trace['1']['class'];
+            /** @psalm-suppress MixedAssignment */
+            $caller = $trace['1']['class'];
+
+            assert(is_string($caller));
+
+            $this->caller = $caller;
 
             return $this->pdo->beginTransaction();
         } catch (Throwable $e) {
@@ -72,7 +79,10 @@ class DatabaseTransactionManager
             2
         );
 
+        /** @psalm-suppress MixedAssignment */
         $caller = $trace['1']['class'];
+
+        assert(is_string($caller));
 
         if ($caller !== $this->caller) {
             return false;
@@ -98,7 +108,10 @@ class DatabaseTransactionManager
             2
         );
 
+        /** @psalm-suppress MixedAssignment */
         $caller = $trace['1']['class'];
+
+        assert(is_string($caller));
 
         if ($caller !== $this->caller) {
             $this->rollbackCalled = true;
