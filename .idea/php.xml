@@ -240,7 +240,7 @@
   </component>
   <component name="PhpProjectServersManager">
     <servers>
-      <server host="buzzingpixel.localtest.me" id="2ea523d0-b20b-4a03-ac31-7ad77af53425" name="buzzingpixel.localtest.me" port="26087" use_path_mappings="true">
+      <server host="buzzingpixel.localtest.me" id="2ea523d0-b20b-4a03-ac31-7ad77af53425" name="buzzingpixel.localtest.me" port="443" use_path_mappings="true">
         <path_mappings>
           <mapping local-root="$PROJECT_DIR$" remote-root="/opt/project" />
         </path_mappings>
