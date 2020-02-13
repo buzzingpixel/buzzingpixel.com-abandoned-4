@@ -23,5 +23,5 @@ class LicenseModel
     /** @var string[] */
     public array $authorizedDomains = [];
 
-    public bool $isDisabled;
+    public bool $isDisabled = false;
 }
