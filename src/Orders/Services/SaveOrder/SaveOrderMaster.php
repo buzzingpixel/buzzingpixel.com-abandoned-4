@@ -6,24 +6,24 @@ namespace App\Orders\Services\SaveOrder;
 
 use App\Orders\Models\OrderModel;
 use App\Payload\Payload;
-use PDO;
+use App\Persistence\DatabaseTransactionManager;
 use Throwable;
 use function array_walk;
 
 class SaveOrderMaster
 {
-    private PDO $pdo;
+    private DatabaseTransactionManager $transactionManager;
     private SaveNewOrder $saveNewOrder;
     private SaveExistingOrder $saveExistingOrder;
     private SaveOrderItemMaster $saveOrderItemMaster;
 
     public function __construct(
-        PDO $pdo,
+        DatabaseTransactionManager $transactionManager,
         SaveNewOrder $saveNewOrder,
         SaveExistingOrder $saveExistingOrder,
         SaveOrderItemMaster $saveOrderItemMaster
     ) {
-        $this->pdo                 = $pdo;
+        $this->transactionManager  = $transactionManager;
         $this->saveNewOrder        = $saveNewOrder;
         $this->saveExistingOrder   = $saveExistingOrder;
         $this->saveOrderItemMaster = $saveOrderItemMaster;
@@ -32,7 +32,7 @@ class SaveOrderMaster
     public function __invoke(OrderModel $order) : Payload
     {
         try {
-            $this->pdo->beginTransaction();
+            $this->transactionManager->beginTransaction();
 
             if ($order->id === '') {
                 ($this->saveNewOrder)($order);
@@ -44,7 +44,7 @@ class SaveOrderMaster
                     $this->saveOrderItemMaster
                 );
 
-                $this->pdo->commit();
+                $this->transactionManager->commit();
 
                 return new Payload(Payload::STATUS_CREATED);
             }
@@ -58,11 +58,11 @@ class SaveOrderMaster
                 $this->saveOrderItemMaster
             );
 
-            $this->pdo->commit();
+            $this->transactionManager->commit();
 
             return new Payload(Payload::STATUS_UPDATED);
         } catch (Throwable $e) {
-            $this->pdo->rollBack();
+            $this->transactionManager->rollBack();
 
             return new Payload(
                 Payload::STATUS_ERROR,

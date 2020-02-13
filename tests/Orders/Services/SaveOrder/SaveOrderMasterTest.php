@@ -11,8 +11,8 @@ use App\Orders\Services\SaveOrder\SaveNewOrder;
 use App\Orders\Services\SaveOrder\SaveOrderItemMaster;
 use App\Orders\Services\SaveOrder\SaveOrderMaster;
 use App\Payload\Payload;
+use App\Persistence\DatabaseTransactionManager;
 use Exception;
-use PDO;
 use PHPUnit\Framework\TestCase;
 
 class SaveOrderMasterTest extends TestCase
@@ -25,13 +25,15 @@ class SaveOrderMasterTest extends TestCase
         $orderModel->addItem($orderItemModel1);
         $orderModel->addItem($orderItemModel2);
 
-        $pdo = $this->createMock(PDO::class);
+        $transactionManager = $this->createMock(
+            DatabaseTransactionManager::class
+        );
 
-        $pdo->expects(self::at(0))
+        $transactionManager->expects(self::at(0))
             ->method('beginTransaction')
             ->willReturn(true);
 
-        $pdo->expects(self::at(1))
+        $transactionManager->expects(self::at(1))
             ->method('commit')
             ->willReturn(true);
 
@@ -62,7 +64,7 @@ class SaveOrderMasterTest extends TestCase
             ->with(self::equalTo($orderItemModel2));
 
         $saveOrder = new SaveOrderMaster(
-            $pdo,
+            $transactionManager,
             $saveNewOrder,
             $saveExistingOrder,
             $saveOrderItemMaster
@@ -85,13 +87,15 @@ class SaveOrderMasterTest extends TestCase
         $orderModel->id  = 'foo';
         $orderModel->addItem($orderItemModel1);
 
-        $pdo = $this->createMock(PDO::class);
+        $transactionManager = $this->createMock(
+            DatabaseTransactionManager::class
+        );
 
-        $pdo->expects(self::at(0))
+        $transactionManager->expects(self::at(0))
             ->method('beginTransaction')
             ->willReturn(true);
 
-        $pdo->expects(self::at(1))
+        $transactionManager->expects(self::at(1))
             ->method('commit')
             ->willReturn(true);
 
@@ -118,7 +122,7 @@ class SaveOrderMasterTest extends TestCase
             ->with(self::equalTo($orderItemModel1));
 
         $saveOrder = new SaveOrderMaster(
-            $pdo,
+            $transactionManager,
             $saveNewOrder,
             $saveExistingOrder,
             $saveOrderItemMaster
@@ -141,13 +145,15 @@ class SaveOrderMasterTest extends TestCase
         $orderModel->id  = 'foo';
         $orderModel->addItem($orderItemModel1);
 
-        $pdo = $this->createMock(PDO::class);
+        $transactionManager = $this->createMock(
+            DatabaseTransactionManager::class
+        );
 
-        $pdo->expects(self::at(0))
+        $transactionManager->expects(self::at(0))
             ->method('beginTransaction')
             ->willThrowException(new Exception());
 
-        $pdo->expects(self::at(1))
+        $transactionManager->expects(self::at(1))
             ->method('rollBack')
             ->willReturn(true);
 
@@ -170,7 +176,7 @@ class SaveOrderMasterTest extends TestCase
         $saveOrderItemMaster->expects(self::never())->method(self::anything());
 
         $saveOrder = new SaveOrderMaster(
-            $pdo,
+            $transactionManager,
             $saveNewOrder,
             $saveExistingOrder,
             $saveOrderItemMaster
