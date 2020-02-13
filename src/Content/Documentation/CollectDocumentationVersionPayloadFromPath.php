@@ -9,7 +9,6 @@ use Config\General;
 use DirectoryIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
-use const SORT_NATURAL;
 use function array_map;
 use function array_values;
 use function assert;
@@ -17,6 +16,7 @@ use function end;
 use function explode;
 use function implode;
 use function Safe\ksort;
+use const SORT_NATURAL;
 
 class CollectDocumentationVersionPayloadFromPath
 {

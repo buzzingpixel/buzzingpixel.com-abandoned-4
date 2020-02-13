@@ -9,11 +9,11 @@ use App\Users\Models\UserModel;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use DateTimeImmutable;
 use DateTimeZone;
-use const PASSWORD_DEFAULT;
 use function password_hash;
 use function password_needs_rehash;
 use function password_verify;
 use function Safe\strtotime;
+use const PASSWORD_DEFAULT;
 
 class LogUserIn
 {

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Utilities;
 
 use App\Users\Services\SaveUser;
-use const FILTER_VALIDATE_EMAIL;
 use function filter_var;
 use function mb_strlen;
+use const FILTER_VALIDATE_EMAIL;
 
 class SimpleValidator
 {

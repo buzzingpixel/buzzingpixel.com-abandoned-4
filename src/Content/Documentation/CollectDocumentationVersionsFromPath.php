@@ -8,13 +8,13 @@ use App\Content\Software\ExtractSoftwareInfoFromPath;
 use Config\General;
 use DirectoryIterator;
 use Throwable;
-use const SORT_NATURAL;
 use function array_map;
 use function array_merge;
 use function array_reverse;
 use function assert;
 use function implode;
 use function Safe\ksort;
+use const SORT_NATURAL;
 
 class CollectDocumentationVersionsFromPath
 {

@@ -12,8 +12,7 @@ use function getenv;
 
 class GetTinkerAction
 {
-    /** @var ContainerInterface */
-    private $di;
+    private ContainerInterface $di;
 
     public function __construct(ContainerInterface $di)
     {

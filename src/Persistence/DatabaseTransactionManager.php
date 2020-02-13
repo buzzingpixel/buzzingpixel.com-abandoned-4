@@ -7,10 +7,10 @@ namespace App\Persistence;
 use PDO;
 use PDOException;
 use Throwable;
-use const DEBUG_BACKTRACE_PROVIDE_OBJECT;
 use function assert;
 use function debug_backtrace;
 use function is_string;
+use const DEBUG_BACKTRACE_PROVIDE_OBJECT;
 
 class DatabaseTransactionManager
 {

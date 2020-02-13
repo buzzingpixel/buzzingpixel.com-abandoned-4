@@ -11,12 +11,12 @@ use IteratorIterator;
 use RegexIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
-use const SORT_NATURAL;
 use function array_map;
 use function array_values;
 use function implode;
 use function iterator_to_array;
 use function Safe\ksort;
+use const SORT_NATURAL;
 
 class CollectDocumentationPagePayloadFromPath
 {
