@@ -8,6 +8,8 @@ use App\Licenses\Models\LicenseModel;
 use App\Persistence\Licenses\LicenseRecord;
 use function Safe\json_encode;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class TransformLicenseModelToRecord
 {
     public function __invoke(LicenseModel $model) : LicenseRecord
