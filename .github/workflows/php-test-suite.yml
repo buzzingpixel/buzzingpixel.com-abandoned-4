@@ -14,7 +14,7 @@ jobs:
         run: composer validate
 
       - name: Install Dependencies
-        run: composer install --no-interaction --no-ansi --no-suggest --no-progress --no-dev --optimize-autoloader
+        run: composer install --no-interaction --no-ansi --no-suggest --no-progress --optimize-autoloader
 
       - name: Run PHPUnit Tests
         run: vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
