@@ -77,27 +77,48 @@ if "%cmd%" == "composer" (
 )
 
 if "%cmd%" == "phpcs" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;"
+    rem Run in Docker (disabled for no because of performance)
+    rem docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;"
+
+    rem Run locally
+    vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;
     exit /b 0
 )
 
 if "%cmd%" == "phpcbf" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcbf --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcbf src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --using-cache=no;"
+    rem Run in Docker (disabled for no because of performance)
+    rem docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "vendor/bin/phpcbf --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcbf src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --using-cache=no;"
+
+    rem Run locally
+    vendor/bin/phpcbf --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcbf src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --using-cache=no;
     exit /b 0
 )
 
 if "%cmd%" == "psalm" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/vimeo/psalm/psalm"
+    rem Run in Docker (disabled for no because of performance)
+    rem docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/vimeo/psalm/psalm"
     exit /b 0
+
+    rem Run locally
+    php -d memory_limit=4G vendor/vimeo/psalm/psalm
 )
 
 if "%cmd%" == "phpstan" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/phpstan/phpstan/bin/phpstan analyse config public/index.php src tests cli"
+    rem Run in Docker (disabled for no because of performance)
+    rem docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/phpstan/phpstan/bin/phpstan analyse config public/index.php src tests cli"
+
+    rem Run locally
+    php -d memory_limit=4G vendor/phpstan/phpstan/bin/phpstan analyse config public/index.php src tests cli;
     exit /b 0
 )
 
 if "%cmd%" == "phpunit" (
-    docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/phpunit/phpunit/phpunit --configuration /app/phpunit.xml %allArgsExceptFirst%"
+    rem Run in Docker (disabled for no because of performance)
+    rem docker run -it -v %cd%:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/phpunit/phpunit/phpunit --configuration /app/phpunit.xml %allArgsExceptFirst%"
+
+    rem Run locally
+    php -d memory_limit=4G vendor/phpunit/phpunit/phpunit --configuration /app/phpunit.xml %allArgsExceptFirst%
+
     exit /b 0
 )
 
