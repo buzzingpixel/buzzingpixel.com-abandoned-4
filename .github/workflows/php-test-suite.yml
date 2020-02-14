@@ -22,5 +22,11 @@ jobs:
       - name: Run PHP CS Fixer Dry Run
         run: vendor/bin/phpcbf --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcbf src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --using-cache=no;
 
+      - name: Run Psalm Static Analysis
+        run: php -d memory_limit=4G vendor/vimeo/psalm/psalm
+
+      - name: Run PHPStan Static Analysis
+        run: php -d memory_limit=4G vendor/phpstan/phpstan/bin/phpstan analyse config public/index.php src tests cli
+
       - name: Run PHPUnit Tests
         run: vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
