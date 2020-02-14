@@ -16,5 +16,11 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --no-ansi --no-suggest --no-progress --optimize-autoloader
 
+      - name: Run PHPCS
+        run: vendor/bin/phpcs --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcs src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no;
+
+      - name: Run PHP CS Fixer Dry Run
+        run: vendor/bin/phpcbf --config-set installed_paths ../../doctrine/coding-standard/lib,../../slevomat/coding-standard; vendor/bin/phpcbf src public/index.php config; vendor/bin/php-cs-fixer fix --verbose --using-cache=no;
+
       - name: Run PHPUnit Tests
         run: vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
