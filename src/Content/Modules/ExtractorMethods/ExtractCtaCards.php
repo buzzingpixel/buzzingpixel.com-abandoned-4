@@ -10,6 +10,7 @@ use cebe\markdown\GithubMarkdown;
 use Throwable;
 use function array_map;
 use function is_array;
+use function is_string;
 
 /**
  * Requires parent to have:
@@ -65,12 +66,23 @@ trait ExtractCtaCards
             $parsedYaml['ctas'] :
             [];
 
+        /** @psalm-suppress MixedAssignment */
+        $heading = $parsedYaml['heading'] ?? '';
+        /** @psalm-suppress MixedAssignment */
+        $content = $parsedYaml['content'] ?? '';
+        /** @psalm-suppress MixedAssignment */
+        $footerContent = $parsedYaml['footerContent'] ?? '';
+
         return new CtaCardItemPayload([
-            'heading' => (string) ($parsedYaml['heading'] ?? ''),
-            'content' => $this->markdownParser->parse((string) ($parsedYaml['content'] ?? '')),
+            'heading' => is_string($heading) ? $heading : '',
+            'content' => $this->markdownParser->parse(
+                is_string($content) ? $content : ''
+            ),
             'textBullets' => $textBullets,
             'ctas' => array_map([$this, 'mapYamlCtaToPayload'], $yamlCtas),
-            'footerContent' => $this->markdownParser->parseParagraph((string) ($parsedYaml['footerContent'] ?? '')),
+            'footerContent' => $this->markdownParser->parseParagraph(
+                is_string($footerContent) ? $footerContent : ''
+            ),
         ]);
     }
 }

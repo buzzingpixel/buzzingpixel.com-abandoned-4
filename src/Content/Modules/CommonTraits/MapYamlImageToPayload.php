@@ -9,6 +9,7 @@ use App\Content\Modules\Payloads\ImageSourcePayload;
 use Throwable;
 use function array_map;
 use function is_array;
+use function is_string;
 
 trait MapYamlImageToPayload
 {
@@ -23,10 +24,17 @@ trait MapYamlImageToPayload
             $yamlImage['sources'] :
             [];
 
+        /** @psalm-suppress MixedAssignment */
+        $oneX = $yamlImage['1x'] ?? '';
+        /** @psalm-suppress MixedAssignment */
+        $twoX = $yamlImage['2x'] ?? '';
+        /** @psalm-suppress MixedAssignment */
+        $alt = $yamlImage['alt'] ?? '';
+
         return new ImagePayload([
-            'oneX' => (string) ($yamlImage['1x'] ?? ''),
-            'twoX' => (string) ($yamlImage['2x'] ?? ''),
-            'alt' => (string) ($yamlImage['alt'] ?? ''),
+            'oneX' => is_string($oneX) ? $oneX : '',
+            'twoX' => is_string($twoX) ? $twoX : '',
+            'alt' => is_string($alt) ? $alt : '',
             'sources' => array_map(
                 [$this, 'mapYamlImageSourceToPayload'],
                 $imageSources

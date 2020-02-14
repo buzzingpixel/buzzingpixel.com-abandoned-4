@@ -64,9 +64,9 @@ class ExtractInformationalImageTest extends TestCase
             'content' => ['stuff'],
         ]);
 
-        self::assertSame('436', $payload->getHeadline());
-        self::assertSame('476.34', $payload->getSubHeadline());
-        self::assertSame("<p>Array</p>\n", $payload->getContent());
+        self::assertSame('', $payload->getHeadline());
+        self::assertSame('', $payload->getSubHeadline());
+        self::assertSame('', $payload->getContent());
 
         $image = $payload->getImage();
         self::assertSame('', $image->getOneX());
@@ -96,9 +96,9 @@ class ExtractInformationalImageTest extends TestCase
         self::assertSame("<p>ContentValue</p>\n", $payload->getContent());
 
         $image = $payload->getImage();
-        self::assertSame('123', $image->getOneX());
-        self::assertSame('576.3', $image->getTwoX());
-        self::assertSame('Array', $image->getAlt());
+        self::assertSame('', $image->getOneX());
+        self::assertSame('', $image->getTwoX());
+        self::assertSame('', $image->getAlt());
         self::assertSame([], $image->getSources());
     }
 

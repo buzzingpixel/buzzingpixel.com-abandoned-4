@@ -8,6 +8,7 @@ use App\Content\Modules\Payloads\InformationalImagePayload;
 use cebe\markdown\GithubMarkdown;
 use Throwable;
 use function is_array;
+use function is_string;
 
 /**
  * Requires parent to have:
@@ -31,10 +32,19 @@ trait ExtractInformationalImage
             $parsedYaml['image'] :
             [];
 
+        /** @psalm-suppress MixedAssignment */
+        $headline = $parsedYaml['headline'] ?? '';
+        /** @psalm-suppress MixedAssignment */
+        $subHeadline = $parsedYaml['subHeadline'] ?? '';
+        /** @psalm-suppress MixedAssignment */
+        $content = $parsedYaml['content'] ?? '';
+
         return new InformationalImagePayload([
-            'headline' => (string) ($parsedYaml['headline'] ?? ''),
-            'subHeadline' => (string) ($parsedYaml['subHeadline'] ?? ''),
-            'content' => $this->markdownParser->parse((string) ($parsedYaml['content'] ?? '')),
+            'headline' => is_string($headline) ? $headline : '',
+            'subHeadline' => is_string($subHeadline) ? $subHeadline : '',
+            'content' => $this->markdownParser->parse(
+                is_string($content) ? $content : ''
+            ),
             'image' => $this->mapYamlImageToPayload($image),
         ]);
     }

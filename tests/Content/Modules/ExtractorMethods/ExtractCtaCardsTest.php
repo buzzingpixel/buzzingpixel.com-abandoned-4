@@ -124,8 +124,8 @@ class ExtractCtaCardsTest extends TestCase
         ]);
 
         $primary = $payload->getPrimary();
-        self::assertSame('123', $primary->getHeading());
-        self::assertSame("<p>456.78</p>\n", $primary->getContent());
+        self::assertSame('', $primary->getHeading());
+        self::assertSame('', $primary->getContent());
         self::assertSame(
             [
                 'foo',
@@ -134,7 +134,7 @@ class ExtractCtaCardsTest extends TestCase
             ],
             $primary->getTextBullets()
         );
-        self::assertSame('Array', $primary->getFooterContent());
+        self::assertSame('', $primary->getFooterContent());
         $primaryCtas = $primary->getCtas();
         self::assertCount(4, $primaryCtas);
         $primaryCta0 = $primaryCtas[0];
