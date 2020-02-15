@@ -19,6 +19,8 @@ use Tests\TestConfig;
 use Throwable;
 use function assert;
 
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
+
 class GeneratePasswordResetTokenTest extends TestCase
 {
     /**

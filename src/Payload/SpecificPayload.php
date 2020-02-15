@@ -64,7 +64,7 @@ abstract class SpecificPayload
             return;
         }
 
-        $this->name = mb_substr($this->shortName, 0, -7);
+        $this->name = (string) mb_substr($this->shortName, 0, -7);
     }
 
     protected string $shortName = '';

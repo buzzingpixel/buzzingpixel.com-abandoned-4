@@ -61,7 +61,7 @@ class LogUserInTest extends TestCase
     {
         $password = 'FooBarPassword';
 
-        $passwordHash = password_hash(
+        $passwordHash = (string) password_hash(
             $password,
             PASSWORD_ARGON2I
         );
@@ -104,7 +104,7 @@ class LogUserInTest extends TestCase
     {
         $password = 'FooBarPassword';
 
-        $passwordHash = password_hash(
+        $passwordHash = (string) password_hash(
             $password,
             PASSWORD_DEFAULT
         );

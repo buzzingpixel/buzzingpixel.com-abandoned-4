@@ -31,7 +31,7 @@ class PostalCodeService
      */
     private function makeApiCall(string $postalCode, string $alpha2Country) : array
     {
-        $codeUpper = mb_strtoupper($alpha2Country);
+        $codeUpper = (string) mb_strtoupper($alpha2Country);
 
         $key = $postalCode . '-' . $codeUpper;
 
@@ -64,7 +64,7 @@ class PostalCodeService
 
     public function validatePostalCode(string $postalCode, string $alpha2Country) : bool
     {
-        $codeUpper = mb_strtoupper($alpha2Country);
+        $codeUpper = (string) mb_strtoupper($alpha2Country);
 
         $json = $this->makeApiCall(
             $postalCode,

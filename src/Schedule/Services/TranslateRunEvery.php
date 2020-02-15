@@ -48,7 +48,7 @@ class TranslateRunEvery
             return ((int) $val) * 60;
         }
 
-        $val = mb_strtolower($val);
+        $val = (string) mb_strtolower($val);
 
         if (! isset(self::RUN_EVERY_MAP[$val])) {
             return 0;

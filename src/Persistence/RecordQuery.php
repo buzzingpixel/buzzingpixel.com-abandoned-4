@@ -94,7 +94,7 @@ class RecordQuery
         string $column,
         string $direction = 'desc'
     ) : RecordQuery {
-        $direction = mb_strtoupper($direction);
+        $direction = (string) mb_strtoupper($direction);
 
         if (! in_array(
             $direction,

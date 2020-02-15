@@ -3,9 +3,6 @@ parameters:
     bootstrap: phpstan-bootstrap.php
     ignoreErrors:
         -
-            message: '#Variable method call on \$this\(App\\Payload\\SpecificPayload\)\.#'
-            path: %currentWorkingDirectory%/src/Payload/SpecificPayload.php
-        -
             message: '#Variable method call on \$this\(App\\Content\\Modules\\ExtractModulesFromPath\)\.#'
             path: %currentWorkingDirectory%/src/Content/Modules/ExtractModulesFromPath.php
         -
@@ -20,20 +17,8 @@ parameters:
             message: '#Only booleans are allowed in a negated boolean, string given\.#'
             path: %currentWorkingDirectory%/src/Persistence/SaveExistingRecord.php
         -
-            message: '#Variable property access on \$this\(App\\Persistence\\Record\)\.#'
-            path: %currentWorkingDirectory%/src/Persistence/Record.php
-        -
-            message: '#Cannot cast.*#'
-            path: %currentWorkingDirectory%/src/Schedule/Services/TranslateRunEvery.php
-        -
-            message: '#Call to function is_numeric\(\) with.*#'
-            path: %currentWorkingDirectory%/src/Schedule/Services/TranslateRunEvery.php
-        -
             message: '#Only booleans are allowed in a negated boolean, string given\.#'
             path: %currentWorkingDirectory%/src/Schedule/Services/SaveSchedule.php
-        -
-            message: "#Casting to array<string> something that's already array<string>\\.#"
-            path: %currentWorkingDirectory%/src/Persistence/RecordQuery.php
         -
             message: '#Instanceof between DirectoryIterator and DirectoryIterator will always evaluate to true\.#'
             path: %currentWorkingDirectory%/src/Content/Documentation/CollectDocumentationVersionsFromPath.php
@@ -131,11 +116,27 @@ parameters:
         -
             message: '#Offset 0 does not exist on array*#'
             path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareCreateActionTest.php
+        -
+            message: '#Call to static method PHPUnit\\Framework\\Assert::assertInstanceOf\(\)*#'
+            path: %currentWorkingDirectory%/tests/Users/Services/GeneratePasswordResetTokenTest.php
+        -
+            message: '#Strict comparison using === between null and null will always evaluate to true\.#'
+            path: %currentWorkingDirectory%/tests/Users/Services/GeneratePasswordResetTokenTest.php
+        -
+            message: '#Result of || is always true\.#'
+            path: %currentWorkingDirectory%/tests/Users/Services/GeneratePasswordResetTokenTest.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php
         - %currentWorkingDirectory%/tests/TestConfig.php
         - %currentWorkingDirectory%/src/Http/Tinker/GetTinkerAction.php
+        - %currentWorkingDirectory%/tests/Software/Services/FetchSoftwareBySlugTest.php
+        - %currentWorkingDirectory%/tests/Schedule/Services/SaveScheduleTest.php
+        - %currentWorkingDirectory%/src/Users/Services/PostalCodeService.php
+        - %currentWorkingDirectory%/src/Schedule/Services/TranslateRunEvery.php
+        - %currentWorkingDirectory%/src/Persistence/RecordQuery.php
+        - %currentWorkingDirectory%/src/Persistence/Record.php
+        - %currentWorkingDirectory%/src/Payload/SpecificPayload.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

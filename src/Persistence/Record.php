@@ -27,10 +27,9 @@ abstract class Record
                 return static::$tableName;
             }
 
-            /** @noinspection PhpUnhandledExceptionInspection */
             $reflectionClass = new ReflectionClass($this);
 
-            $shortName = $reflectionClass->getShortName();
+            $shortName = (string) $reflectionClass->getShortName();
 
             $rev = strrev($shortName);
 
@@ -38,7 +37,9 @@ abstract class Record
                 return $shortName;
             }
 
-            return lcfirst(mb_substr($shortName, 0, mb_strlen($shortName) - 6)) . 's';
+            $shortNameLength = (int) mb_strlen($shortName);
+
+            return lcfirst((string) (mb_substr($shortName, 0, $shortNameLength - 6))) . 's';
 
             // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
