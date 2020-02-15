@@ -7,7 +7,6 @@ function psalm() {
     # docker run -it -v ${PWD}:/app -w /app buzzingpixel:php-dev bash -c "php -d memory_limit=4G /app/vendor/vimeo/psalm/psalm";
 
     # Run locally
-    xdebug-disable;
     php -d memory_limit=4G vendor/vimeo/psalm/psalm;
 
     return 0;
