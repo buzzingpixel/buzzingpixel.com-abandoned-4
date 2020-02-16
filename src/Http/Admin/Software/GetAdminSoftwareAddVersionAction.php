@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
 
-class GetAdminSoftwareAddVersion
+class GetAdminSoftwareAddVersionAction
 {
     private GetAdminResponder $responder;
     private SoftwareApi $softwareApi;

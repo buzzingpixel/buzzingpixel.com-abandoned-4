@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Admin\Software\GetAdminSoftwareAction;
-use App\Http\Admin\Software\GetAdminSoftwareAddVersion;
+use App\Http\Admin\Software\GetAdminSoftwareAddVersionAction;
 use App\Http\Admin\Software\GetAdminSoftwareCreateAction;
 use App\Http\Admin\Software\GetAdminSoftwareEditAction;
 use App\Http\Admin\Software\GetAdminSoftwareVersionEditAction;
@@ -43,7 +43,7 @@ return static function (RouteCollectorProxy $r) : void {
 
         $r->post('/version/delete/{id}', PostAdminSoftwareVersionDeleteAction::class);
 
-        $r->get('/{slug}/add-version', GetAdminSoftwareAddVersion::class);
+        $r->get('/{slug}/add-version', GetAdminSoftwareAddVersionAction::class);
 
         $r->post('/{slug}/add-version', PostAdminSoftwareAddVersionAction::class);
     });
