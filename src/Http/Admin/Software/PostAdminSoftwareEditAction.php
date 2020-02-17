@@ -45,20 +45,22 @@ class PostAdminSoftwareEditAction
             'subscription' => ($postData['subscription'] ?? '') === 'true',
         ];
 
-        $softwareModel = $this->softwareApi->fetchSoftwareBySlug(
-            (string) $request->getAttribute('slug')
+        $slugAttribute = (string) $request->getAttribute('slug');
+
+        $software = $this->softwareApi->fetchSoftwareBySlug(
+            $slugAttribute
         );
 
-        if ($softwareModel === null) {
+        if ($software === null) {
             throw new HttpBadRequestException(
                 $request,
                 'Software for specified Slug ' .
-                    (string) $request->getAttribute('slug') .
+                    $slugAttribute .
                     ' could not be found',
             );
         }
 
-        $originalSlug = $softwareModel->slug;
+        $originalSlug = $software->slug;
 
         $inputMessages = [];
 
@@ -92,14 +94,14 @@ class PostAdminSoftwareEditAction
             );
         }
 
-        $softwareModel->name           = (string) $inputValues['name'];
-        $softwareModel->slug           = (string) $inputValues['slug'];
-        $softwareModel->isForSale      = $inputValues['for_sale'];
-        $softwareModel->price          = (float) $inputValues['price'];
-        $softwareModel->renewalPrice   = (float) $inputValues['renewal_price'];
-        $softwareModel->isSubscription = $inputValues['subscription'];
+        $software->name           = (string) $inputValues['name'];
+        $software->slug           = (string) $inputValues['slug'];
+        $software->isForSale      = $inputValues['for_sale'];
+        $software->price          = (float) $inputValues['price'];
+        $software->renewalPrice   = (float) $inputValues['renewal_price'];
+        $software->isSubscription = $inputValues['subscription'];
 
-        $payload = $this->softwareApi->saveSoftware($softwareModel);
+        $payload = $this->softwareApi->saveSoftware($software);
 
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             return ($this->responder)(
@@ -113,7 +115,7 @@ class PostAdminSoftwareEditAction
 
         return ($this->responder)(
             $payload,
-            $softwareModel->slug
+            $software->slug
         );
     }
 }
