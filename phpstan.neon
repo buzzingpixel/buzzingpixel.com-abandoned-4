@@ -137,6 +137,7 @@ parameters:
         - %currentWorkingDirectory%/src/Persistence/RecordQuery.php
         - %currentWorkingDirectory%/src/Persistence/Record.php
         - %currentWorkingDirectory%/src/Payload/SpecificPayload.php
+        - %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareAddVersionActionTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
