@@ -30,11 +30,11 @@ class GetAdminSoftwareEditAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $softwareModel = $this->softwareApi->fetchSoftwareBySlug(
+        $software = $this->softwareApi->fetchSoftwareBySlug(
             (string) $request->getAttribute('slug')
         );
 
-        if ($softwareModel === null) {
+        if ($software === null) {
             throw new HttpNotFoundException($request);
         }
 
@@ -42,7 +42,7 @@ class GetAdminSoftwareEditAction
             'Admin/SoftwareEdit.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => 'Edit ' . $softwareModel->name . ' | Admin']
+                    ['metaTitle' => 'Edit ' . $software->name . ' | Admin']
                 ),
                 'activeTab' => 'software',
                 'breadcrumbs' => [
@@ -52,7 +52,7 @@ class GetAdminSoftwareEditAction
                     ],
                     ['content' => 'Edit Software'],
                 ],
-                'softwareModel' => $softwareModel,
+                'softwareModel' => $software,
             ],
         );
     }
