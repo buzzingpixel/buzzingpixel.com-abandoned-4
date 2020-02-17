@@ -40,15 +40,15 @@ class PostAdminSoftwareAddVersionResponder
                     'Location',
                     '/admin/software/' . $softwareSlug . '/add-version'
                 );
-        } else {
-            $this->flashMessages->addMessage(
-                'PostMessage',
-                [
-                    'status' => Payload::STATUS_SUCCESSFUL,
-                    'result' => ['message' => 'Successfully edited software'],
-                ]
-            );
         }
+
+        $this->flashMessages->addMessage(
+            'PostMessage',
+            [
+                'status' => Payload::STATUS_SUCCESSFUL,
+                'result' => ['message' => 'Successfully edited software'],
+            ]
+        );
 
         return $this->responseFactory->createResponse(303)
             ->withHeader(
