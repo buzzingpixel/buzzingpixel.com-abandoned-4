@@ -59,13 +59,13 @@ class PostAdminSoftwareVersionDeleteAction
         );
 
         $software = $softwareVersion->software;
+
         assert($software instanceof SoftwareModel);
 
         return $this->responseFactory->createResponse(303)
             ->withHeader(
                 'Location',
-                '/admin/software/view/' .
-                    $software->slug
+                '/admin/software/view/' . $software->slug
             );
     }
 }
