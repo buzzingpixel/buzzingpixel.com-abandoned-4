@@ -51,6 +51,7 @@ class PostAdminSoftwareAddVersionAction
         }
 
         $user = $this->userApi->fetchLoggedInUser();
+
         assert($user instanceof UserModel);
 
         $now = new DateTimeImmutable(
@@ -103,13 +104,18 @@ class PostAdminSoftwareAddVersionAction
 
         /** @psalm-suppress MixedAssignment */
         $downloadFile = $request->getUploadedFiles()['download_file'] ?? null;
-        assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
+
+        assert(
+            $downloadFile instanceof UploadedFileInterface ||
+            $downloadFile === null
+        );
 
         $releasedOn = DateTimeImmutable::createFromFormat(
             'Y-m-d h:i A',
             $inputValues['released_on'],
             $user->timezone
         );
+
         assert($releasedOn instanceof DateTimeImmutable);
 
         $releasedOn = $releasedOn->setTimezone(
