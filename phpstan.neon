@@ -140,6 +140,7 @@ parameters:
         - %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareAddVersionActionTest.php
         - %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareEditActionTest.php
         - %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareVersionEditActionTest.php
+        - %currentWorkingDirectory%/tests/Http/Admin/Software/PostAdminSoftwareAddVersionActionTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
