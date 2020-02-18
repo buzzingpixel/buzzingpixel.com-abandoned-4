@@ -39,6 +39,7 @@ class PostAdminSoftwareVersionEditAction
 
     /**
      * @throws Throwable
+     * @throws HttpNotFoundException
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
@@ -64,10 +65,6 @@ class PostAdminSoftwareVersionEditAction
             'released_on' => (string) ($postData['released_on'] ?? ''),
             'upgrade_price' => (string) ($postData['upgrade_price'] ?? ''),
         ];
-
-        /** @psalm-suppress MixedAssignment */
-        $downloadFile = $request->getUploadedFiles()['new_download_file'] ?? null;
-        assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
 
         $inputMessages = [];
 
@@ -102,7 +99,16 @@ class PostAdminSoftwareVersionEditAction
             );
         }
 
+        /** @psalm-suppress MixedAssignment */
+        $downloadFile = $request->getUploadedFiles()['new_download_file'] ?? null;
+
+        assert(
+            $downloadFile instanceof UploadedFileInterface ||
+            $downloadFile === null
+        );
+
         $user = $this->userApi->fetchLoggedInUser();
+
         assert($user instanceof UserModel);
 
         $releasedOn = DateTimeImmutable::createFromFormat(
@@ -110,6 +116,7 @@ class PostAdminSoftwareVersionEditAction
             $inputValues['released_on'],
             $user->timezone
         );
+
         assert($releasedOn instanceof DateTimeImmutable);
 
         $releasedOn = $releasedOn->setTimezone(
