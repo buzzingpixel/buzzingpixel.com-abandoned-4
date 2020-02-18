@@ -6,7 +6,7 @@ namespace Tests\Http\Admin\Users;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
-use App\Http\Admin\Users\GetAdminSearchUsersDisplayAction;
+use App\Http\Admin\Users\GetAdminUsersDisplayAction;
 use App\HttpHelpers\Pagination\Pagination;
 use App\HttpHelpers\Segments\ExtractUriSegments;
 use App\Users\Models\UserModel;
@@ -20,14 +20,22 @@ use Tests\TestConfig;
 use Throwable;
 use function assert;
 
-class GetAdminSearchUsersDisplayActionTest extends TestCase
+class GetAdminUsersDisplayActionTest extends TestCase
 {
     /**
      * @throws Throwable
      */
-    public function testWhenNoQuery() : void
+    public function testWhenNoUsers() : void
     {
         $userApi = $this->createMock(UserApi::class);
+
+        $userApi->expects(self::once())
+            ->method('fetchUsersByLimitOffset')
+            ->with(
+                self::equalTo(50),
+                self::equalTo(100),
+            )
+            ->willReturn([]);
 
         $responder = $this->createMock(
             GetAdminResponder::class
@@ -36,7 +44,7 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
         $responder->expects(self::never())
             ->method(self::anything());
 
-        $action = new GetAdminSearchUsersDisplayAction(
+        $action = new GetAdminUsersDisplayAction(
             TestConfig::$di->get(ExtractUriSegments::class),
             $userApi,
             $responder,
@@ -45,6 +53,16 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
         $request = $this->createMock(
             ServerRequestInterface::class
         );
+
+        $uri = $this->createMock(UriInterface::class);
+
+        $uri->expects(self::once())
+            ->method('getPath')
+            ->willReturn('/foo/bar/page/3');
+
+        $request->expects(self::once())
+            ->method('getUri')
+            ->willReturn($uri);
 
         $exception = null;
 
@@ -76,9 +94,8 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
         $userApi = $this->createMock(UserApi::class);
 
         $userApi->expects(self::once())
-            ->method('fetchUsersBySearch')
+            ->method('fetchUsersByLimitOffset')
             ->with(
-                self::equalTo('%foo-query%'),
                 self::equalTo(50),
                 self::equalTo(100),
             )
@@ -107,14 +124,14 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
                         $template,
                     );
 
-                    self::assertCount(5, $context);
+                    self::assertCount(4, $context);
 
                     $metaPayload = $context['metaPayload'];
 
                     assert($metaPayload instanceof MetaPayload);
 
                     self::assertSame(
-                        'User Search | Admin',
+                        'Users | Admin',
                         $metaPayload->getMetaTitle(),
                     );
 
@@ -126,11 +143,6 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
                     self::assertSame(
                         $users,
                         $context['userModels'],
-                    );
-
-                    self::assertSame(
-                        'foo-query',
-                        $context['searchTerm'],
                     );
 
                     $pagination = $context['pagination'];
@@ -161,7 +173,7 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
                 }
             );
 
-        $action = new GetAdminSearchUsersDisplayAction(
+        $action = new GetAdminUsersDisplayAction(
             TestConfig::$di->get(ExtractUriSegments::class),
             $userApi,
             $responder,
@@ -180,10 +192,6 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
         $request->expects(self::once())
             ->method('getUri')
             ->willReturn($uri);
-
-        $request->expects(self::once())
-            ->method('getQueryParams')
-            ->willReturn(['q' => 'foo-query']);
 
         self::assertSame($response, $action($request));
     }
