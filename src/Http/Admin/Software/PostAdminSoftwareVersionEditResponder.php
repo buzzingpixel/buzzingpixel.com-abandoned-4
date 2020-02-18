@@ -41,15 +41,15 @@ class PostAdminSoftwareVersionEditResponder
                     'Location',
                     '/admin/software/version/edit/' . $id
                 );
-        } else {
-            $this->flashMessages->addMessage(
-                'PostMessage',
-                [
-                    'status' => Payload::STATUS_SUCCESSFUL,
-                    'result' => ['message' => 'Successfully edited software version'],
-                ]
-            );
         }
+
+        $this->flashMessages->addMessage(
+            'PostMessage',
+            [
+                'status' => Payload::STATUS_SUCCESSFUL,
+                'result' => ['message' => 'Successfully edited software version'],
+            ]
+        );
 
         return $this->responseFactory->createResponse(303)
             ->withHeader(
