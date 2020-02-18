@@ -32,9 +32,16 @@ class GetAdminSearchUsersDisplayAction
 
     /**
      * @throws Throwable
+     * @throws HttpNotFoundException
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
+        $query = (string) ($request->getQueryParams()['q'] ?? '');
+
+        if ($query === '') {
+            throw new HttpNotFoundException($request);
+        }
+
         $limit = 50;
 
         $uriSegments = ($this->extractUriSegments)($request->getUri());
@@ -43,19 +50,14 @@ class GetAdminSearchUsersDisplayAction
 
         $offset = $pageZeroIndex * $limit;
 
-        $query = (string) ($request->getQueryParams()['q'] ?? '');
-
-        if ($query === '') {
-            throw new HttpNotFoundException($request);
-        }
-
-        $userModels = $this->userApi->fetchUsersBySearch(
+        $users = $this->userApi->fetchUsersBySearch(
             '%' . $query . '%',
             $limit,
             $offset
         );
 
-        $pagination = (new Pagination())->withBase($uriSegments->getPathSansPagination())
+        $pagination = (new Pagination())
+            ->withBase($uriSegments->getPathSansPagination())
             ->withCurrentPage($uriSegments->getPageNum())
             ->withPerPage($limit)
             ->withTotalResults($this->userApi->fetchTotalUsers());
@@ -67,7 +69,7 @@ class GetAdminSearchUsersDisplayAction
                     ['metaTitle' => 'User Search | Admin']
                 ),
                 'activeTab' => 'users',
-                'userModels' => $userModels,
+                'userModels' => $users,
                 'pagination' => $pagination,
                 'searchTerm' => $query,
             ]
