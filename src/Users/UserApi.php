@@ -171,6 +171,7 @@ class UserApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(PostalCodeService::class);
+
         assert($service instanceof PostalCodeService);
 
         $service->fillModelFromPostalCode($model);
