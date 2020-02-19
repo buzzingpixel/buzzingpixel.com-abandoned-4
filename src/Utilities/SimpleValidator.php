@@ -20,6 +20,6 @@ class SimpleValidator
 
     public static function password(string $pass) : bool
     {
-        return mb_strlen($pass) === SaveUser::MIN_PASSWORD_LENGTH;
+        return mb_strlen($pass) >= SaveUser::MIN_PASSWORD_LENGTH;
     }
 }
