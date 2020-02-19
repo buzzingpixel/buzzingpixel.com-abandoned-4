@@ -35,15 +35,15 @@ class PostAdminUserCreateResponder
 
             return $this->responseFactory->createResponse(303)
                 ->withHeader('Location', '/admin/users/create');
-        } else {
-            $this->flashMessages->addMessage(
-                'PostMessage',
-                [
-                    'status' => Payload::STATUS_SUCCESSFUL,
-                    'result' => ['message' => 'Successfully created new user'],
-                ]
-            );
         }
+
+        $this->flashMessages->addMessage(
+            'PostMessage',
+            [
+                'status' => Payload::STATUS_SUCCESSFUL,
+                'result' => ['message' => 'Successfully created new user'],
+            ]
+        );
 
         return $this->responseFactory->createResponse(303)
             ->withHeader('Location', '/admin/users');
