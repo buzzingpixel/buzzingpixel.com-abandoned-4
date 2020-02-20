@@ -44,6 +44,7 @@ class PostAdminUserEditAction
         }
 
         $postData = $request->getParsedBody();
+
         assert(is_array($postData));
 
         $inputValues = [
