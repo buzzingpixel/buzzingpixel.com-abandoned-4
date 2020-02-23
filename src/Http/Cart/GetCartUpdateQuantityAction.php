@@ -32,17 +32,18 @@ class GetCartUpdateQuantityAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $slug = (string) $request->getAttribute('slug');
-
-        $software = $this->softwareApi->fetchSoftwareBySlug($slug);
-
-        $quantity = (int) $request->getAttribute('quantity');
+        $software = $this->softwareApi->fetchSoftwareBySlug(
+            (string) $request->getAttribute('slug')
+        );
 
         if ($software === null) {
             throw new HttpNotFoundException($request);
         }
 
-        $this->cartApi->updateCartItemQuantity($quantity, $software);
+        $this->cartApi->updateCartItemQuantity(
+            (int) $request->getAttribute('quantity'),
+            $software
+        );
 
         return $this->responseFactory->createResponse(303)
             ->withHeader('Location', '/cart');
