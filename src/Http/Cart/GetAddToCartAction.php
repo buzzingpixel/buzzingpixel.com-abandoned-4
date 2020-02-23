@@ -32,9 +32,9 @@ class GetAddToCartAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $slug = (string) $request->getAttribute('slug');
-
-        $software = $this->softwareApi->fetchSoftwareBySlug($slug);
+        $software = $this->softwareApi->fetchSoftwareBySlug(
+            (string) $request->getAttribute('slug')
+        );
 
         if ($software === null) {
             throw new HttpNotFoundException($request);
