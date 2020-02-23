@@ -9,31 +9,32 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Csrf\Guard as CsrfGuard;
 use Slim\Flash\Messages;
+use function assert;
 use function dirname;
 
 class TestConfig
 {
     public const TESTS_BASE_PATH = __DIR__;
 
-    /** @var ContainerInterface */
-    public static $di;
+    public static ContainerInterface $di;
 
     /** @var mixed[] */
-    public static $flashStorage = [];
+    public static array $flashStorage = [];
 
     /** @var mixed[] */
-    public static $csrfStorage = [];
+    public static array $csrfStorage = [];
 
     public function __construct()
     {
-        if (static::$di) {
+        if (isset(static::$di)) {
             return;
         }
 
         $bootstrap = include dirname(__DIR__) . '/config/bootstrap.php';
 
-        /** @var Container $di */
         $di = $bootstrap();
+
+        assert($di instanceof Container);
 
         $di->set(
             Messages::class,

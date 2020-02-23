@@ -32,12 +32,6 @@ class ExtractModulesFromPathTest extends TestCase
     {
         self::expectException(UnexpectedValueException::class);
 
-        self::expectExceptionMessage(
-            'DirectoryIterator::__construct(' .
-            __DIR__ . '/TestContent' .
-            '/NoModulesDir/modules): failed to open dir: No such file or directory'
-        );
-
         ($this->extractModulesFromPath)('NoModulesDir');
     }
 
