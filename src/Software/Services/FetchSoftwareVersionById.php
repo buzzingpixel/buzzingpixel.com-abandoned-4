@@ -44,7 +44,11 @@ class FetchSoftwareVersionById
         )
             ->withWhere('id', $id)
             ->one();
-        assert($softwareVersionRecord instanceof SoftwareVersionRecord || $softwareVersionRecord === null);
+
+        assert(
+            $softwareVersionRecord instanceof SoftwareVersionRecord ||
+            $softwareVersionRecord === null
+        );
 
         if ($softwareVersionRecord === null) {
             return null;
