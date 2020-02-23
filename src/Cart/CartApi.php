@@ -28,6 +28,7 @@ class CartApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchCurrentUserCart::class);
+
         assert($service instanceof FetchCurrentUserCart);
 
         return $service();
@@ -37,6 +38,7 @@ class CartApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveCart::class);
+
         assert($service instanceof SaveCart);
 
         return $service($cart);
@@ -46,6 +48,7 @@ class CartApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(AddItemToCurrentUsersCart::class);
+
         assert($service instanceof AddItemToCurrentUsersCart);
 
         $service($software);
@@ -57,6 +60,7 @@ class CartApi
     ) : void {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(UpdateCartItemQuantity::class);
+
         assert($service instanceof UpdateCartItemQuantity);
 
         $service($quantity, $software);
@@ -66,6 +70,7 @@ class CartApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(ClearCart::class);
+
         assert($service instanceof ClearCart);
 
         $service();
