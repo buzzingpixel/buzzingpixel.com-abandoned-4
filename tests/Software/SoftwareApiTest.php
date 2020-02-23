@@ -13,7 +13,7 @@ use App\Software\Services\FetchAllSoftware;
 use App\Software\Services\FetchSoftwareById;
 use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Services\FetchSoftwareVersionById;
-use App\Software\Services\SaveSoftware;
+use App\Software\Services\SaveSoftwareMaster;
 use App\Software\SoftwareApi;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -113,7 +113,7 @@ class SoftwareApiTest extends TestCase
      */
     public function diGetCallback(string $class)
     {
-        if ($class === SaveSoftware::class) {
+        if ($class === SaveSoftwareMaster::class) {
             return $this->mockSaveSoftware();
         }
 
@@ -145,16 +145,16 @@ class SoftwareApiTest extends TestCase
     }
 
     /**
-     * @return SaveSoftware&MockObject
+     * @return SaveSoftwareMaster&MockObject
      */
-    private function mockSaveSoftware() : SaveSoftware
+    private function mockSaveSoftware() : SaveSoftwareMaster
     {
         $payload = new Payload(
             Payload::STATUS_SUCCESSFUL,
             ['message' => 'SaveSoftwarePayload']
         );
 
-        $mock = $this->createMock(SaveSoftware::class);
+        $mock = $this->createMock(SaveSoftwareMaster::class);
 
         $mock->expects(self::once())
             ->method('__invoke')

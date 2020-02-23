@@ -13,7 +13,7 @@ use App\Software\Services\FetchAllSoftware;
 use App\Software\Services\FetchSoftwareById;
 use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Services\FetchSoftwareVersionById;
-use App\Software\Services\SaveSoftware;
+use App\Software\Services\SaveSoftwareMaster;
 use Psr\Container\ContainerInterface;
 use function assert;
 
@@ -29,9 +29,9 @@ class SoftwareApi
     public function saveSoftware(SoftwareModel $model) : Payload
     {
         /** @psalm-suppress MixedAssignment */
-        $service = $this->di->get(SaveSoftware::class);
+        $service = $this->di->get(SaveSoftwareMaster::class);
 
-        assert($service instanceof SaveSoftware);
+        assert($service instanceof SaveSoftwareMaster);
 
         return $service($model);
     }

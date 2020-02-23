@@ -19,7 +19,7 @@ use Throwable;
 use function array_walk;
 use function assert;
 
-class SaveSoftware
+class SaveSoftwareMaster
 {
     private PDO $pdo;
     private UuidFactoryWithOrderedTimeCodec $uuidFactory;
