@@ -10,7 +10,9 @@ use App\Software\Models\SoftwareVersionModel;
 use App\Software\Services\DeleteSoftware;
 use App\Software\Services\DeleteSoftwareVersion;
 use App\Software\Services\FetchAllSoftware;
+use App\Software\Services\FetchSoftwareById;
 use App\Software\Services\FetchSoftwareBySlug;
+use App\Software\Services\FetchSoftwareVersionById;
 use App\Software\Services\SaveSoftware;
 use App\Software\SoftwareApi;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -24,6 +26,7 @@ class SoftwareApiTest extends TestCase
     private SoftwareModel $softwareModel;
     private SoftwareVersionModel $softwareVersionModel;
     private string $slug;
+    private string $id;
 
     public function testSaveSoftware() : void
     {
@@ -33,6 +36,13 @@ class SoftwareApiTest extends TestCase
             'SaveSoftwarePayload',
             $payload->getResult()['message']
         );
+    }
+
+    public function testFetchSoftwareById() : void
+    {
+        $model = $this->api->fetchSoftwareById($this->id);
+
+        self::assertSame($this->softwareModel, $model);
     }
 
     public function testFetchSoftwareBySlug() : void
@@ -54,6 +64,13 @@ class SoftwareApiTest extends TestCase
         );
     }
 
+    public function testFetchSoftwareVersionById() : void
+    {
+        $model = $this->api->fetchSoftwareVersionById($this->id);
+
+        self::assertSame($this->softwareVersionModel, $model);
+    }
+
     public function testDeleteSoftware() : void
     {
         $this->api->deleteSoftware($this->softwareModel);
@@ -71,6 +88,8 @@ class SoftwareApiTest extends TestCase
         $this->softwareVersionModel = new SoftwareVersionModel();
 
         $this->slug = 'foo-slug';
+
+        $this->id = 'foo-id';
 
         $this->api = new SoftwareApi($this->mockDi());
     }
@@ -98,12 +117,20 @@ class SoftwareApiTest extends TestCase
             return $this->mockSaveSoftware();
         }
 
+        if ($class === FetchSoftwareById::class) {
+            return $this->mockFetchSoftwareById();
+        }
+
         if ($class === FetchSoftwareBySlug::class) {
             return $this->mockFetchSoftwareBySlug();
         }
 
         if ($class === FetchAllSoftware::class) {
             return $this->mockFetchAllSoftware();
+        }
+
+        if ($class === FetchSoftwareVersionById::class) {
+            return $this->mockFetchSoftwareVersionById();
         }
 
         if ($class === DeleteSoftware::class) {
@@ -138,6 +165,21 @@ class SoftwareApiTest extends TestCase
     }
 
     /**
+     * @return FetchSoftwareById&MockObject
+     */
+    private function mockFetchSoftwareById() : FetchSoftwareById
+    {
+        $mock = $this->createMock(FetchSoftwareById::class);
+
+        $mock->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($this->id))
+            ->willReturn($this->softwareModel);
+
+        return $mock;
+    }
+
+    /**
      * @return FetchSoftwareBySlug&MockObject
      */
     private function mockFetchSoftwareBySlug() : FetchSoftwareBySlug
@@ -162,6 +204,21 @@ class SoftwareApiTest extends TestCase
         $mock->expects(self::once())
             ->method('__invoke')
             ->willReturn([$this->softwareModel]);
+
+        return $mock;
+    }
+
+    /**
+     * @return FetchSoftwareVersionById&MockObject
+     */
+    private function mockFetchSoftwareVersionById() : FetchSoftwareVersionById
+    {
+        $mock = $this->createMock(FetchSoftwareVersionById::class);
+
+        $mock->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($this->id))
+            ->willReturn($this->softwareVersionModel);
 
         return $mock;
     }

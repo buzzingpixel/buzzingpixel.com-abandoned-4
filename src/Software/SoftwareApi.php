@@ -30,6 +30,7 @@ class SoftwareApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveSoftware::class);
+
         assert($service instanceof SaveSoftware);
 
         return $service($model);
@@ -39,6 +40,7 @@ class SoftwareApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareById::class);
+
         assert($service instanceof FetchSoftwareById);
 
         return $service($id);
@@ -48,6 +50,7 @@ class SoftwareApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareBySlug::class);
+
         assert($service instanceof FetchSoftwareBySlug);
 
         return $service($slug);
@@ -60,6 +63,7 @@ class SoftwareApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchAllSoftware::class);
+
         assert($service instanceof FetchAllSoftware);
 
         return $service();
@@ -69,6 +73,7 @@ class SoftwareApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareVersionById::class);
+
         assert($service instanceof FetchSoftwareVersionById);
 
         return $service($id);
@@ -78,6 +83,7 @@ class SoftwareApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteSoftware::class);
+
         assert($service instanceof DeleteSoftware);
 
         $service($model);
@@ -87,6 +93,7 @@ class SoftwareApi
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteSoftwareVersion::class);
+
         assert($service instanceof DeleteSoftwareVersion);
 
         $service($model);
