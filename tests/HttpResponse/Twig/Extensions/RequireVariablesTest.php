@@ -7,6 +7,8 @@ namespace Tests\HttpResponse\Twig\Extensions;
 use App\HttpResponse\Twig\Extensions\RequireVariables;
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use function assert;
+use function is_array;
 
 class RequireVariablesTest extends TestCase
 {
@@ -25,8 +27,9 @@ class RequireVariablesTest extends TestCase
 
         self::assertSame('requireVariables', $twigFunc->getName());
 
-        /** @var array $callable */
         $callable = $twigFunc->getCallable();
+
+        assert(is_array($callable));
 
         self::assertSame($this->requireVariables, $callable[0]);
 
