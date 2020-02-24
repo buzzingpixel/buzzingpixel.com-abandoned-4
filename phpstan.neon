@@ -144,6 +144,7 @@ parameters:
         - %currentWorkingDirectory%/tests/Orders/Models/OrderModelTest.php
         - %currentWorkingDirectory%/tests/Software/Services/FetchSoftwareByIdTest.php
         - %currentWorkingDirectory%/tests/Software/Services/SaveNewSoftwareTest.php
+        - %currentWorkingDirectory%/tests/Software/Services/SaveExistingSoftwareTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
