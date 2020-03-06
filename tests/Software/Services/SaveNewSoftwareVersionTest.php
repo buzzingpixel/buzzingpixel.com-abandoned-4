@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Persistence\SaveNewRecord;
 use App\Persistence\Software\SoftwareVersionRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
+use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use App\Software\Services\SaveNewSoftwareVersion;
 use App\Software\Transformers\TransformSoftwareVersionModelToRecord;
@@ -62,15 +63,19 @@ class SaveNewSoftwareVersionTest extends TestCase
             $uuidFactory,
         );
 
-        $softwareModel = new SoftwareVersionModel();
+        $softwareModel = new SoftwareModel();
 
-        $softwareModel->majorVersion = 'U.S.S. Enterprise';
+        $softwareVersionModel = new SoftwareVersionModel();
 
-        $saveNewSoftware($softwareModel);
+        $softwareVersionModel->software = $softwareModel;
+
+        $softwareVersionModel->majorVersion = 'U.S.S. Enterprise';
+
+        $saveNewSoftware($softwareVersionModel);
 
         self::assertSame(
             $uuid->toString(),
-            $softwareModel->id,
+            $softwareVersionModel->id,
         );
 
         assert(
@@ -83,7 +88,7 @@ class SaveNewSoftwareVersionTest extends TestCase
         );
 
         self::assertSame(
-            $softwareModel->majorVersion,
+            $softwareVersionModel->majorVersion,
             $saveCallHolder->record->major_version,
         );
     }
@@ -130,14 +135,14 @@ class SaveNewSoftwareVersionTest extends TestCase
             $uuidFactory,
         );
 
-        $softwareModel = new SoftwareVersionModel();
+        $softwareVersionModel = new SoftwareVersionModel();
 
-        $softwareModel->majorVersion = 'U.S.S. Enterprise';
+        $softwareVersionModel->majorVersion = 'U.S.S. Enterprise';
 
         $exception = null;
 
         try {
-            $saveNewSoftware($softwareModel);
+            $saveNewSoftware($softwareVersionModel);
         } catch (Throwable $e) {
             $exception = $e;
         }
@@ -151,7 +156,7 @@ class SaveNewSoftwareVersionTest extends TestCase
 
         self::assertSame(
             $uuid->toString(),
-            $softwareModel->id,
+            $softwareVersionModel->id,
         );
 
         assert(
@@ -164,7 +169,7 @@ class SaveNewSoftwareVersionTest extends TestCase
         );
 
         self::assertSame(
-            $softwareModel->majorVersion,
+            $softwareVersionModel->majorVersion,
             $saveCallHolder->record->major_version,
         );
     }
