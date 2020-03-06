@@ -49,7 +49,8 @@ class SaveOrderMasterTest extends TestCase
             SaveExistingOrder::class
         );
 
-        $saveExistingOrder->expects(self::never())->method(self::anything());
+        $saveExistingOrder->expects(self::never())
+            ->method(self::anything());
 
         $saveOrderItemMaster = $this->createMock(
             SaveOrderItemMaster::class

@@ -5,145 +5,59 @@ declare(strict_types=1);
 namespace App\Software\Services;
 
 use App\Payload\Payload;
-use App\Persistence\SaveExistingRecord;
-use App\Persistence\SaveNewRecord;
-use App\Persistence\UuidFactoryWithOrderedTimeCodec;
-use App\SecureStorage\Services\SaveFileToSecureStorage;
+use App\Persistence\DatabaseTransactionManager;
 use App\Software\Models\SoftwareModel;
-use App\Software\Models\SoftwareVersionModel;
-use App\Software\Transformers\TransformSoftwareModelToRecord;
-use App\Software\Transformers\TransformSoftwareVersionModelToRecord;
-use Exception;
-use PDO;
 use Throwable;
 use function array_walk;
-use function assert;
 
 class SaveSoftwareMaster
 {
-    private PDO $pdo;
-    private UuidFactoryWithOrderedTimeCodec $uuidFactory;
-    private SaveNewRecord $saveNewRecord;
-    private SaveExistingRecord $saveExistingRecord;
-    private TransformSoftwareModelToRecord $transformSoftwareModelToRecord;
-    private TransformSoftwareVersionModelToRecord $transformSoftwareVersionModelToRecord;
-    private SaveFileToSecureStorage $saveFileToSecureStorage;
+    private DatabaseTransactionManager $transactionManager;
+    private SaveNewSoftware $saveNewSoftware;
+    private SaveExistingSoftware $saveExistingSoftware;
+    private SaveSoftwareVersionMaster $saveSoftwareVersionMaster;
 
     public function __construct(
-        PDO $pdo,
-        UuidFactoryWithOrderedTimeCodec $uuidFactory,
-        SaveNewRecord $saveNewRecord,
-        SaveExistingRecord $saveExistingRecord,
-        TransformSoftwareModelToRecord $transformSoftwareModelToRecord,
-        TransformSoftwareVersionModelToRecord $transformSoftwareVersionModelToRecord,
-        SaveFileToSecureStorage $saveFileToSecureStorage
+        DatabaseTransactionManager $transactionManager,
+        SaveNewSoftware $saveNewSoftware,
+        SaveExistingSoftware $saveExistingSoftware,
+        SaveSoftwareVersionMaster $saveSoftwareVersionMaster
     ) {
-        $this->pdo                                   = $pdo;
-        $this->uuidFactory                           = $uuidFactory;
-        $this->saveNewRecord                         = $saveNewRecord;
-        $this->saveExistingRecord                    = $saveExistingRecord;
-        $this->transformSoftwareModelToRecord        = $transformSoftwareModelToRecord;
-        $this->transformSoftwareVersionModelToRecord = $transformSoftwareVersionModelToRecord;
-        $this->saveFileToSecureStorage               = $saveFileToSecureStorage;
+        $this->transactionManager        = $transactionManager;
+        $this->saveNewSoftware           = $saveNewSoftware;
+        $this->saveExistingSoftware      = $saveExistingSoftware;
+        $this->saveSoftwareVersionMaster = $saveSoftwareVersionMaster;
     }
 
     public function __invoke(SoftwareModel $model) : Payload
     {
         try {
-            $this->pdo->beginTransaction();
-
-            $isNew = false;
+            $this->transactionManager->beginTransaction();
 
             if ($model->id === '') {
-                $isNew = true;
+                ($this->saveNewSoftware)($model);
 
-                $model->id = $this->uuidFactory->uuid1()->toString();
+                $payloadStatus = Payload::STATUS_CREATED;
+            } else {
+                ($this->saveExistingSoftware)($model);
+
+                $payloadStatus = Payload::STATUS_UPDATED;
             }
 
             $versions = $model->versions;
 
-            array_walk($versions, [$this, 'saveVersion']);
+            array_walk(
+                $versions,
+                $this->saveSoftwareVersionMaster
+            );
 
-            $record = ($this->transformSoftwareModelToRecord)($model);
+            $this->transactionManager->commit();
 
-            if ($isNew) {
-                $payload = ($this->saveNewRecord)($record);
-
-                if ($payload->getStatus() === Payload::STATUS_CREATED) {
-                    $this->pdo->commit();
-
-                    return $payload;
-                }
-
-                throw new Exception('Unknown error saving version');
-            }
-
-            $payload = ($this->saveExistingRecord)($record);
-
-            if ($payload->getStatus() === Payload::STATUS_UPDATED) {
-                $this->pdo->commit();
-
-                return $payload;
-            }
-
-            throw new Exception('Unknown error saving version');
+            return new Payload($payloadStatus);
         } catch (Throwable $e) {
-            $this->pdo->rollBack();
+            $this->transactionManager->rollBack();
 
             return new Payload(Payload::STATUS_ERROR);
         }
-    }
-
-    /**
-     * @throws Throwable
-     */
-    protected function saveVersion(SoftwareVersionModel $model) : void
-    {
-        $newDownloadFile = $model->newDownloadFile;
-
-        $software = $model->software;
-        assert($software instanceof SoftwareModel);
-
-        if ($newDownloadFile !== null) {
-            /** @psalm-suppress PossiblyNullReference */
-            $slug = $software->slug;
-
-            $saveFilePayload = ($this->saveFileToSecureStorage)(
-                $newDownloadFile,
-                $slug
-            );
-
-            if ($saveFilePayload->getStatus() === Payload::STATUS_SUCCESSFUL) {
-                /** @psalm-suppress PossiblyNullOperand */
-                $fileName = $newDownloadFile->getClientFilename();
-
-                /** @psalm-suppress PossiblyNullOperand */
-                $model->downloadFile = $slug . '/' . $fileName;
-            }
-        }
-
-        if ($model->id === '') {
-            $model->id = $this->uuidFactory->uuid1()->toString();
-
-            $record = ($this->transformSoftwareVersionModelToRecord)($model);
-
-            $payload = ($this->saveNewRecord)($record);
-
-            if ($payload->getStatus() === Payload::STATUS_CREATED) {
-                return;
-            }
-
-            throw new Exception('Unknown error saving version');
-        }
-
-        $record = ($this->transformSoftwareVersionModelToRecord)($model);
-
-        $payload = ($this->saveExistingRecord)($record);
-
-        if ($payload->getStatus() === Payload::STATUS_UPDATED) {
-            return;
-        }
-
-        throw new Exception('Unknown error saving version');
     }
 }
