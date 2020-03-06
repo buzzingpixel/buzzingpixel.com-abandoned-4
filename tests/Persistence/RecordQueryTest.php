@@ -78,6 +78,97 @@ class RecordQueryTest extends TestCase
         );
     }
 
+    public function testWithLimit() : void
+    {
+        $recordQuery = ($this->factory)(new UserRecord());
+
+        $newQuery = $recordQuery->withLimit(23);
+
+        self::assertNotSame($recordQuery, $newQuery);
+
+        $sqlAndBind = $newQuery->getSqlAndBind();
+
+        self::assertSame(
+            'SELECT * FROM users LIMIT 23;',
+            $sqlAndBind['sql']
+        );
+
+        self::assertSame(
+            [],
+            $sqlAndBind['bind']
+        );
+    }
+
+    public function testWithOffset() : void
+    {
+        $recordQuery = ($this->factory)(new UserRecord());
+
+        $newQuery = $recordQuery->withOffset(3);
+
+        self::assertNotSame($recordQuery, $newQuery);
+
+        $sqlAndBind = $newQuery->getSqlAndBind();
+
+        self::assertSame(
+            'SELECT * FROM users OFFSET 3;',
+            $sqlAndBind['sql']
+        );
+
+        self::assertSame(
+            [],
+            $sqlAndBind['bind']
+        );
+    }
+
+    public function testNotNull() : void
+    {
+        $recordQuery = ($this->factory)(new UserRecord());
+
+        $newQuery = $recordQuery->withWhere(
+            'asdf_col',
+            'null',
+            '!=',
+        );
+
+        self::assertNotSame($recordQuery, $newQuery);
+
+        $sqlAndBind = $newQuery->getSqlAndBind();
+
+        self::assertSame(
+            'SELECT * FROM users WHERE (asdf_col IS NOT NULL);',
+            $sqlAndBind['sql']
+        );
+
+        self::assertSame(
+            [],
+            $sqlAndBind['bind']
+        );
+    }
+
+    public function testIsNull() : void
+    {
+        $recordQuery = ($this->factory)(new UserRecord());
+
+        $newQuery = $recordQuery->withWhere(
+            'asdf_col',
+            'null',
+        );
+
+        self::assertNotSame($recordQuery, $newQuery);
+
+        $sqlAndBind = $newQuery->getSqlAndBind();
+
+        self::assertSame(
+            'SELECT * FROM users WHERE (asdf_col IS NULL);',
+            $sqlAndBind['sql']
+        );
+
+        self::assertSame(
+            [],
+            $sqlAndBind['bind']
+        );
+    }
+
     public function testWithWhereGroup() : void
     {
         $query = ($this->factory)(new ScheduleTrackingRecord())

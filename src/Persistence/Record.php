@@ -22,6 +22,8 @@ abstract class Record
 
     public function getTableName() : string
     {
+        // @codeCoverageIgnoreStart
+
         try {
             if (static::$tableName !== '') {
                 return static::$tableName;
@@ -40,8 +42,6 @@ abstract class Record
             $shortNameLength = (int) mb_strlen($shortName);
 
             return lcfirst((string) (mb_substr($shortName, 0, $shortNameLength - 6))) . 's';
-
-            // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
             return '';
         }
