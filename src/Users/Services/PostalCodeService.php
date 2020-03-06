@@ -29,8 +29,10 @@ class PostalCodeService
      *
      * @psalm-suppress MixedInferredReturnType
      */
-    private function makeApiCall(string $postalCode, string $alpha2Country) : array
-    {
+    private function makeApiCall(
+        string $postalCode,
+        string $alpha2Country
+    ) : array {
         $codeUpper = (string) mb_strtoupper($alpha2Country);
 
         $key = $postalCode . '-' . $codeUpper;
@@ -62,8 +64,10 @@ class PostalCodeService
         return $json;
     }
 
-    public function validatePostalCode(string $postalCode, string $alpha2Country) : bool
-    {
+    public function validatePostalCode(
+        string $postalCode,
+        string $alpha2Country
+    ) : bool {
         $codeUpper = (string) mb_strtoupper($alpha2Country);
 
         $json = $this->makeApiCall(
@@ -83,11 +87,17 @@ class PostalCodeService
 
         $countryCode = $model->billingCountry;
 
-        if (! $this->validatePostalCode($postalCode, $countryCode)) {
+        if (! $this->validatePostalCode(
+            $postalCode,
+            $countryCode
+        )) {
             return;
         }
 
-        $json = $this->makeApiCall($postalCode, $countryCode);
+        $json = $this->makeApiCall(
+            $postalCode,
+            $countryCode
+        );
 
         $place =  (array) ($json['places'][0] ?? []);
 
