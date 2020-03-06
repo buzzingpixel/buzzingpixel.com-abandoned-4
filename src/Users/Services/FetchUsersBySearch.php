@@ -33,7 +33,7 @@ class FetchUsersBySearch
         $userRecordDummy = new UserRecord();
 
         $query = ($this->recordQueryFactory)(
-            new UserRecord()
+            $userRecordDummy
         );
 
         foreach ($userRecordDummy->getSearchableFields() as $field) {
