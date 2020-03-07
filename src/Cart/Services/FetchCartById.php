@@ -40,17 +40,17 @@ class FetchCartById
         }
     }
 
-    private function innerRun(string $id, bool $noUserId = true) : ?CartModel
+    private function innerRun(string $id) : ?CartModel
     {
         $query = ($this->recordQueryFactory)(new CartRecord())
-            ->withWhere('id', $id);
-
-        if ($noUserId) {
-            $query = $query->withWhere('user_id', null);
-        }
+            ->withWhere('id', $id)
+            ->withWhere('user_id', null);
 
         $cartRecord = $query->one();
-        assert($cartRecord instanceof CartRecord || $cartRecord === null);
+
+        assert(
+            $cartRecord instanceof CartRecord || $cartRecord === null
+        );
 
         if ($cartRecord === null) {
             return null;
