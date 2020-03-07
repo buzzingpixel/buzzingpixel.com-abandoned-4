@@ -26,6 +26,7 @@ class AddItemToCurrentUsersCart
 
         foreach ($cart->items as $item) {
             $itemSoftware = $item->software;
+
             assert($itemSoftware instanceof SoftwareModel);
 
             if ($itemSoftware->slug !== $software->slug) {
