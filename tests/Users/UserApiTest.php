@@ -8,12 +8,16 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
+use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
+use App\Users\Services\FetchUsersByLimitOffset;
+use App\Users\Services\FetchUsersBySearch;
 use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
+use App\Users\Services\PostalCodeService;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use App\Users\UserApi;
@@ -163,6 +167,53 @@ class UserApiTest extends TestCase
         self::assertSame('FooPass', $this->callArgs[1]);
     }
 
+    public function testFetchTotalUsers() : void
+    {
+        self::assertSame(23, $this->userApi->fetchTotalUsers());
+    }
+
+    public function testFetchUsersByLimitOffset() : void
+    {
+        self::assertSame(
+            [$this->userModel],
+            $this->userApi->fetchUsersByLimitOffset(42, 24)
+        );
+    }
+
+    public function testFetchUsersBySearch() : void
+    {
+        self::assertSame(
+            [$this->userModel],
+            $this->userApi->fetchUsersBySearch(
+                'test-search',
+                42,
+                24
+            )
+        );
+    }
+
+    public function testValidatePostalCode() : void
+    {
+        self::assertTrue(
+            $this->userApi->validatePostalCode(
+                'test-code',
+                'test-country'
+            )
+        );
+    }
+
+    public function testFillModelFromPostalCode() : void
+    {
+        self::assertSame('', $this->userModel->displayName);
+
+        $this->userApi->fillModelFromPostalCode($this->userModel);
+
+        self::assertSame(
+            'FooDisplayName',
+            $this->userModel->displayName
+        );
+    }
+
     protected function setUp() : void
     {
         $this->callArgs = [];
@@ -216,6 +267,14 @@ class UserApiTest extends TestCase
                 return $this->mockLogCurrentUserOut();
             case ResetPasswordByToken::class:
                 return $this->mockResetPasswordByToken();
+            case FetchTotalUsers::class:
+                return $this->mockFetchTotalUsers();
+            case FetchUsersByLimitOffset::class:
+                return $this->mockFetchUsersByLimitOffset();
+            case FetchUsersBySearch::class:
+                return $this->mockFetchUsersBySearch();
+            case PostalCodeService::class:
+                return $this->mockPostalCodeService();
         }
 
         throw new Exception('Unknown class');
@@ -389,6 +448,80 @@ class UserApiTest extends TestCase
 
                 return $this->payload;
             });
+
+        return $mock;
+    }
+
+    /**
+     * @return FetchTotalUsers&MockObject
+     */
+    private function mockFetchTotalUsers() : FetchTotalUsers
+    {
+        $mock = $this->createMock(FetchTotalUsers::class);
+
+        $mock->method('__invoke')
+            ->willReturn(23);
+
+        return $mock;
+    }
+
+    /**
+     * @return FetchUsersByLimitOffset&MockObject
+     */
+    private function mockFetchUsersByLimitOffset() : FetchUsersByLimitOffset
+    {
+        $mock = $this->createMock(
+            FetchUsersByLimitOffset::class
+        );
+
+        $mock->method('__invoke')
+            ->with(
+                self::equalTo(42),
+                self::equalTo(24)
+            )
+            ->willReturn([$this->userModel]);
+
+        return $mock;
+    }
+
+    /**
+     * @return FetchUsersBySearch&MockObject
+     */
+    private function mockFetchUsersBySearch() : FetchUsersBySearch
+    {
+        $mock = $this->createMock(FetchUsersBySearch::class);
+
+        $mock->method('__invoke')
+            ->with(
+                self::equalTo('test-search'),
+                self::equalTo(42),
+                self::equalTo(24)
+            )
+            ->willReturn([$this->userModel]);
+
+        return $mock;
+    }
+
+    /**
+     * @return PostalCodeService&PostalCodeService
+     */
+    private function mockPostalCodeService() : PostalCodeService
+    {
+        $mock = $this->createMock(PostalCodeService::class);
+
+        $mock->method('validatePostalCode')
+            ->with(
+                self::equalTo('test-code'),
+                self::equalTo('test-country')
+            )
+            ->willReturn(true);
+
+        $mock->method('fillModelFromPostalCode')
+            ->willReturnCallback(
+                static function (UserModel $model) : void {
+                    $model->displayName = 'FooDisplayName';
+                }
+            );
 
         return $mock;
     }
