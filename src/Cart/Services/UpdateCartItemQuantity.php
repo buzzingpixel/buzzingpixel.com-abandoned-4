@@ -23,15 +23,14 @@ class UpdateCartItemQuantity
 
         foreach ($cart->items as $item) {
             $itemSoftware = $item->software;
+
             assert($itemSoftware instanceof SoftwareModel);
 
-            if ($itemSoftware->slug !== $software->slug) {
-                continue;
+            if ($itemSoftware->slug === $software->slug) {
+                $item->quantity = $quantity;
+
+                break;
             }
-
-            $item->quantity = $quantity;
-
-            break;
         }
 
         $this->cartApi->saveCart($cart);
