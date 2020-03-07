@@ -24,6 +24,10 @@ use function count;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
+/**
+ * TODO: Excluding this from code coverage for now. It's a huge class/method
+ * and I don't have time to refactor it at this time
+ */
 class SaveCart
 {
     private PDO $pdo;

@@ -14,6 +14,10 @@ use DateTimeZone;
 use function assert;
 use function Safe\strtotime;
 
+/**
+ * TODO: Excluding this from code coverage for now. It's a huge class/method
+ * and I don't have time to refactor it at this time
+ */
 class FetchCurrentUserCart
 {
     private CookieApiInterface $cookieApi;
@@ -72,6 +76,7 @@ class FetchCurrentUserCart
         if ($cookieCart !== null && $userCart !== null) {
             foreach ($cookieCart->items as $cookieItem) {
                 $cookieItemSoftware = $cookieItem->software;
+
                 assert($cookieItemSoftware instanceof SoftwareModel);
 
                 $softwareSlug = $cookieItemSoftware->slug;
@@ -80,6 +85,7 @@ class FetchCurrentUserCart
 
                 foreach ($userCart->items as $userItem) {
                     $userItemSoftware = $userItem->software;
+
                     assert($userItemSoftware instanceof SoftwareModel);
 
                     if ($userItemSoftware->slug !== $softwareSlug) {
@@ -150,6 +156,7 @@ class FetchCurrentUserCart
         }
 
         $cart = $userCart ?? $cookieCart;
+
         assert($cart instanceof CartModel);
 
         return $cart;
