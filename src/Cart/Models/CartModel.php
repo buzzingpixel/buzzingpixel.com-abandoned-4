@@ -12,6 +12,7 @@ use DateTimeZone;
 use RuntimeException;
 use function assert;
 use function is_array;
+use function round;
 
 /**
  * @property CartItemModel[] $items
@@ -124,10 +125,10 @@ class CartModel
 
             assert($itemSoftware instanceof SoftwareModel);
 
-            $subTotal = $itemSoftware->price * $item->quantity;
+            $subTotal += $itemSoftware->price * $item->quantity;
         }
 
-        return (float) $subTotal;
+        return round((float) $subTotal, 2);
     }
 
     public function calculateTax() : float
@@ -144,12 +145,15 @@ class CartModel
         }
 
         // TN tax is 7%
-        return $this->calculateSubTotal() * 0.07;
+        return round($this->calculateSubTotal() * 0.07, 2);
     }
 
     public function calculateTotal() : float
     {
-        return $this->calculateSubTotal() + $this->calculateTax();
+        return round(
+            $this->calculateSubTotal() + $this->calculateTax(),
+            2
+        );
     }
 
     public function canPurchase() : bool
