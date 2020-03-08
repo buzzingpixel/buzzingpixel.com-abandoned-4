@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Licenses\Models;
 
 use App\Users\Models\UserModel;
+use DateTimeImmutable;
 
 class LicenseModel
 {
@@ -28,4 +29,6 @@ class LicenseModel
     public array $authorizedDomains = [];
 
     public bool $isDisabled = false;
+
+    public ?DateTimeImmutable $expires = null;
 }

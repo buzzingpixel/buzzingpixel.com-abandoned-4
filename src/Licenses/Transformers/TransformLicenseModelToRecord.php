@@ -6,6 +6,7 @@ namespace App\Licenses\Transformers;
 
 use App\Licenses\Models\LicenseModel;
 use App\Persistence\Licenses\LicenseRecord;
+use DateTimeInterface;
 use function Safe\json_encode;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -40,6 +41,12 @@ class TransformLicenseModelToRecord
         );
 
         $record->is_disabled = $model->isDisabled ? '1' : '0';
+
+        if ($model->expires !== null) {
+            $record->expires = $model->expires->format(
+                DateTimeInterface::ATOM
+            );
+        }
 
         return $record;
     }

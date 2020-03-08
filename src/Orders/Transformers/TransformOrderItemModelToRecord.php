@@ -6,7 +6,6 @@ namespace App\Orders\Transformers;
 
 use App\Orders\Models\OrderItemModel;
 use App\Persistence\Orders\OrderItemRecord;
-use DateTimeInterface;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -37,12 +36,6 @@ class TransformOrderItemModelToRecord
         $record->is_upgrade = $model->isUpgrade ? '1' : '0';
 
         $record->has_been_upgraded = $model->hasBeenUpgraded ? '1' : '0';
-
-        if ($model->expires !== null) {
-            $record->expires = $model->expires->format(
-                DateTimeInterface::ATOM
-            );
-        }
 
         return $record;
     }

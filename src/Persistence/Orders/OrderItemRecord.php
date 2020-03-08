@@ -35,6 +35,4 @@ class OrderItemRecord extends Record
 
     /** @var int|bool|string */
     public $has_been_upgraded = '1';
-
-    public string $expires = '';
 }

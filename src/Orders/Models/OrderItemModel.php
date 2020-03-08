@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Orders\Models;
 
 use App\Licenses\Models\LicenseModel;
-use DateTimeImmutable;
 
 class OrderItemModel
 {
@@ -30,6 +29,4 @@ class OrderItemModel
     public bool $isUpgrade = false;
 
     public bool $hasBeenUpgraded = false;
-
-    public ?DateTimeImmutable $expires = null;
 }

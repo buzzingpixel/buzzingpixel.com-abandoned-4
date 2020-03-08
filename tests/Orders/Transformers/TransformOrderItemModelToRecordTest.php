@@ -8,10 +8,9 @@ use App\Licenses\Models\LicenseModel;
 use App\Orders\Models\OrderItemModel;
 use App\Orders\Models\OrderModel;
 use App\Orders\Transformers\TransformOrderItemModelToRecord;
-use DateTimeImmutable;
-use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
-use function assert;
+
+// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class TransformOrderItemModelToRecordTest extends TestCase
 {
@@ -44,15 +43,6 @@ class TransformOrderItemModelToRecordTest extends TestCase
         $model->isUpgrade = true;
 
         $model->hasBeenUpgraded = true;
-
-        $expires = DateTimeImmutable::createFromFormat(
-            DateTimeInterface::ATOM,
-            '2010-02-11T01:26:03+00:00',
-        );
-
-        assert($expires instanceof DateTimeImmutable);
-
-        $model->expires = $expires;
 
         $transformer = new TransformOrderItemModelToRecord();
 
@@ -111,11 +101,6 @@ class TransformOrderItemModelToRecordTest extends TestCase
         self::assertSame(
             '1',
             $record->has_been_upgraded,
-        );
-
-        self::assertSame(
-            $model->expires->format(DateTimeInterface::ATOM),
-            $record->expires,
         );
     }
 }
