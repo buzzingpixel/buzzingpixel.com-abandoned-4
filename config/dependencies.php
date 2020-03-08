@@ -72,8 +72,18 @@ return [
     ),
     PDO::class => static function () {
         try {
+            $dbHost = getenv('DB_HOST') ?: 'db';
+            $dbPort = getenv('DB_PORT') ?: '5432';
+            $dbName = getenv('DB_NAME') ?: 'buzzingpixel';
+
+            $dsn = [
+                'pgsql:host=' . $dbHost,
+                'port=' . $dbPort,
+                'dbname=' . $dbName,
+            ];
+
             return new PDO(
-                'pgsql:host=db;port=5432;dbname=buzzingpixel',
+                implode(';', $dsn),
                 (string) getenv('DB_USER'),
                 (string) getenv('DB_PASSWORD'),
                 [
@@ -83,8 +93,16 @@ return [
                 ]
             );
         } catch (Throwable $e) {
+            $dbHost = getenv('DB_HOST') ?: 'db';
+            $dbPort = getenv('DB_PORT') ?: '5432';
+
+            $dsn = [
+                'pgsql:host=' . $dbHost,
+                'port=' . $dbPort,
+            ];
+
             return new PDO(
-                'pgsql:host=db;port=5432',
+                implode(';', $dsn),
                 'postgres',
                 'postgres',
                 [
