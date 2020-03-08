@@ -18,6 +18,10 @@ class TransformLicenseModelToRecord
 
         $record->id = $model->id;
 
+        if ($model->ownerUser !== null) {
+            $record->owner_user_id = $model->ownerUser->id;
+        }
+
         $record->item_key = $model->itemKey;
 
         $record->item_title = $model->itemTitle;

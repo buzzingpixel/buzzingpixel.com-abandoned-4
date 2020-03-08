@@ -6,6 +6,7 @@ namespace Tests\Licenses\Transformers;
 
 use App\Licenses\Models\LicenseModel;
 use App\Licenses\Transformers\TransformLicenseModelToRecord;
+use App\Users\Models\UserModel;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use function Safe\json_encode;
@@ -18,6 +19,8 @@ class TransformLicenseModelToRecordTest extends TestCase
     public function testTransformer() : void
     {
         $model = new LicenseModel();
+
+        $model->ownerUser = new UserModel();
 
         $model->id = 'fooId';
 

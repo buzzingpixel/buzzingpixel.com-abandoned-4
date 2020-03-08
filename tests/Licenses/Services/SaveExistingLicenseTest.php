@@ -10,6 +10,7 @@ use App\Licenses\Transformers\TransformLicenseModelToRecord;
 use App\Payload\Payload;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Persistence\SaveExistingRecord;
+use App\Users\Models\UserModel;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -49,6 +50,8 @@ class SaveExistingLicenseTest extends TestCase
         );
 
         $licenseModel = new LicenseModel();
+
+        $licenseModel->ownerUser = new UserModel();
 
         $licenseModel->id = 'fooId';
 
@@ -100,6 +103,8 @@ class SaveExistingLicenseTest extends TestCase
         );
 
         $licenseModel = new LicenseModel();
+
+        $licenseModel->ownerUser = new UserModel();
 
         $licenseModel->id = 'fooId';
 

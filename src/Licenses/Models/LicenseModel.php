@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Licenses\Models;
 
+use App\Users\Models\UserModel;
+
 class LicenseModel
 {
     public string $id = '';
+
+    public ?UserModel $ownerUser;
 
     public string $itemKey = '';
 

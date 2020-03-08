@@ -11,6 +11,7 @@ use App\Payload\Payload;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Persistence\SaveNewRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
+use App\Users\Models\UserModel;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -63,6 +64,8 @@ class SaveNewLicenseTest extends TestCase
         );
 
         $licenseModel = new LicenseModel();
+
+        $licenseModel->ownerUser = new UserModel();
 
         $licenseModel->notes = 'U.S.S. Saratoga';
 
@@ -129,6 +132,8 @@ class SaveNewLicenseTest extends TestCase
         );
 
         $licenseModel = new LicenseModel();
+
+        $licenseModel->ownerUser = new UserModel();
 
         $licenseModel->notes = 'U.S.S. Saratoga';
 

@@ -12,6 +12,8 @@ class LicenseRecord extends Record
 {
     protected static string $tableName = 'licenses';
 
+    public string $owner_user_id = '';
+
     public string $item_key = '';
 
     public string $item_title = '';
