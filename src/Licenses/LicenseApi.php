@@ -6,10 +6,12 @@ namespace App\Licenses;
 
 use App\Licenses\Models\LicenseModel;
 use App\Licenses\Services\FetchUsersLicenses;
+use App\Licenses\Services\OrganizeLicensesByItemKey;
 use App\Licenses\Services\SaveLicenseMaster;
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use Psr\Container\ContainerInterface;
+use Safe\Exceptions\ArrayException;
 use function assert;
 
 class LicenseApi
@@ -42,5 +44,24 @@ class LicenseApi
         assert($service instanceof FetchUsersLicenses);
 
         return $service($userModel);
+    }
+
+    /**
+     * @param LicenseModel[] $licenses
+     *
+     * @return array<string, LicenseModel[]>
+     *
+     * @throws ArrayException
+     *
+     * @noinspection PhpDocSignatureInspection
+     */
+    public function organizeLicensesByItemKey(array $licenses) : array
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(OrganizeLicensesByItemKey::class);
+
+        assert($service instanceof OrganizeLicensesByItemKey);
+
+        return $service($licenses);
     }
 }
