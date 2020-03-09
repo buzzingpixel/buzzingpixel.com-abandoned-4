@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Licenses\Services;
 
-use App\Licenses\Services\FetchUsersLicenses;
+use App\Licenses\Models\LicenseModel;
+use App\Licenses\Services\FetchUserLicenseById;
 use App\Licenses\Transformers\TransformLicenseRecordToModel;
 use App\Persistence\Constants;
 use App\Persistence\Licenses\LicenseRecord;
@@ -12,13 +13,85 @@ use App\Persistence\RecordQuery;
 use App\Persistence\RecordQueryFactory;
 use App\Users\Models\UserModel;
 use DateTimeImmutable;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Tests\TestConfig;
+use function assert;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
-class FetchUsersLicensesTest extends TestCase
+class FetchUserLicenseByIdTest extends TestCase
 {
+    public function testWhenExceptionThrown() : void
+    {
+        $user = new UserModel();
+
+        $recordQueryFactory = $this->createMock(
+            RecordQueryFactory::class
+        );
+
+        $recordQueryFactory->method(self::anything())
+            ->willThrowException(new Exception());
+
+        $service = new FetchUserLicenseById(
+            $recordQueryFactory,
+            TestConfig::$di->get(
+                TransformLicenseRecordToModel::class
+            ),
+        );
+
+        self::assertNull($service($user, 'foo-id'));
+    }
+
+    public function testWhenNoLicense() : void
+    {
+        $user     = new UserModel();
+        $user->id = 'foo-user-id';
+
+        $recordQuery = $this->createMock(
+            RecordQuery::class
+        );
+
+        $recordQuery->expects(self::at(0))
+            ->method('withWhere')
+            ->with(
+                self::equalTo('owner_user_id'),
+                self::equalTo('foo-user-id')
+            )
+            ->willReturn($recordQuery);
+
+        $recordQuery->expects(self::at(1))
+            ->method('withWhere')
+            ->with(
+                self::equalTo('id'),
+                self::equalTo('foo-id')
+            )
+            ->willReturn($recordQuery);
+
+        $recordQuery->expects(self::at(2))
+            ->method('one')
+            ->willReturn(null);
+
+        $recordQueryFactory = $this->createMock(
+            RecordQueryFactory::class
+        );
+
+        $recordQueryFactory->expects(self::once())
+            ->method('__invoke')
+            ->willReturnCallback(
+                static fn(LicenseRecord $record) => $recordQuery
+            );
+
+        $service = new FetchUserLicenseById(
+            $recordQueryFactory,
+            TestConfig::$di->get(
+                TransformLicenseRecordToModel::class
+            ),
+        );
+
+        self::assertNull($service($user, 'foo-id'));
+    }
+
     public function test() : void
     {
         $expires = new DateTimeImmutable();
@@ -41,7 +114,9 @@ class FetchUsersLicensesTest extends TestCase
             Constants::POSTGRES_OUTPUT_FORMAT
         );
 
-        $recordQuery = $this->createMock(RecordQuery::class);
+        $recordQuery = $this->createMock(
+            RecordQuery::class
+        );
 
         $recordQuery->expects(self::at(0))
             ->method('withWhere')
@@ -52,40 +127,16 @@ class FetchUsersLicensesTest extends TestCase
             ->willReturn($recordQuery);
 
         $recordQuery->expects(self::at(1))
-            ->method('withOrder')
+            ->method('withWhere')
             ->with(
-                self::equalTo('item_key'),
-                self::equalTo('asc')
+                self::equalTo('id'),
+                self::equalTo('foo-id')
             )
             ->willReturn($recordQuery);
 
         $recordQuery->expects(self::at(2))
-            ->method('withOrder')
-            ->with(
-                self::equalTo('major_version'),
-                self::equalTo('desc')
-            )
-            ->willReturn($recordQuery);
-
-        $recordQuery->expects(self::at(3))
-            ->method('withOrder')
-            ->with(
-                self::equalTo('version'),
-                self::equalTo('desc')
-            )
-            ->willReturn($recordQuery);
-
-        $recordQuery->expects(self::at(4))
-            ->method('withOrder')
-            ->with(
-                self::equalTo('id'),
-                self::equalTo('desc')
-            )
-            ->willReturn($recordQuery);
-
-        $recordQuery->expects(self::at(5))
-            ->method('all')
-            ->willReturn([$record]);
+            ->method('one')
+            ->willReturn($record);
 
         $recordQueryFactory = $this->createMock(
             RecordQueryFactory::class
@@ -97,18 +148,16 @@ class FetchUsersLicensesTest extends TestCase
                 static fn(LicenseRecord $record) => $recordQuery
             );
 
-        $service = new FetchUsersLicenses(
+        $service = new FetchUserLicenseById(
             $recordQueryFactory,
             TestConfig::$di->get(
                 TransformLicenseRecordToModel::class
-            )
+            ),
         );
 
-        $models = $service($user);
+        $model = $service($user, 'foo-id');
 
-        self::assertCount(1, $models);
-
-        $model = $models[0];
+        assert($model instanceof LicenseModel);
 
         self::assertSame(
             'foo-id',
@@ -160,9 +209,13 @@ class FetchUsersLicensesTest extends TestCase
 
         self::assertFalse($model->isDisabled);
 
+        $modelExpires = $model->expires;
+
+        assert($modelExpires instanceof DateTimeImmutable);
+
         self::assertSame(
             $expires->format(DateTimeImmutable::ATOM),
-            $model->expires->format(DateTimeImmutable::ATOM),
+            $modelExpires->format(DateTimeImmutable::ATOM),
         );
     }
 }

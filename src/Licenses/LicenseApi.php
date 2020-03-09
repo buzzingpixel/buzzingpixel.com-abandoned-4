@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Licenses;
 
 use App\Licenses\Models\LicenseModel;
+use App\Licenses\Services\FetchUserLicenseById;
 use App\Licenses\Services\FetchUsersLicenses;
 use App\Licenses\Services\OrganizeLicensesByItemKey;
 use App\Licenses\Services\SaveLicenseMaster;
@@ -80,5 +81,31 @@ class LicenseApi
         assert($service instanceof OrganizeLicensesByItemKey);
 
         return $service($licenses);
+    }
+
+    public function fetchUserLicenseById(
+        UserModel $user,
+        string $id
+    ) : ?LicenseModel {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchUserLicenseById::class);
+
+        assert($service instanceof FetchUserLicenseById);
+
+        return $service($user, $id);
+    }
+
+    public function fetchCurrentUserLicenseById(string $id) : ?LicenseModel
+    {
+        /** @psalm-suppress MixedAssignment */
+        $userApi = $this->di->get(UserApi::class);
+
+        assert($userApi instanceof UserApi);
+
+        /** @psalm-suppress PossiblyNullArgument */
+        return $this->fetchUserLicenseById(
+            $userApi->fetchLoggedInUser(),
+            $id,
+        );
     }
 }

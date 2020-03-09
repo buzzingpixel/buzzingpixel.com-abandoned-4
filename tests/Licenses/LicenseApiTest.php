@@ -6,6 +6,7 @@ namespace Tests\Licenses;
 
 use App\Licenses\LicenseApi;
 use App\Licenses\Models\LicenseModel;
+use App\Licenses\Services\FetchUserLicenseById;
 use App\Licenses\Services\FetchUsersLicenses;
 use App\Licenses\Services\OrganizeLicensesByItemKey;
 use App\Licenses\Services\SaveLicenseMaster;
@@ -24,7 +25,9 @@ class LicenseApiTest extends TestCase
 
         $license = new LicenseModel();
 
-        $service = $this->createMock(SaveLicenseMaster::class);
+        $service = $this->createMock(
+            SaveLicenseMaster::class
+        );
 
         $service->expects(self::once())
             ->method('__invoke')
@@ -52,7 +55,9 @@ class LicenseApiTest extends TestCase
 
         $user = new UserModel();
 
-        $service = $this->createMock(FetchUsersLicenses::class);
+        $service = $this->createMock(
+            FetchUsersLicenses::class
+        );
 
         $service->expects(self::once())
             ->method('__invoke')
@@ -86,7 +91,9 @@ class LicenseApiTest extends TestCase
             ->method('fetchLoggedInUser')
             ->willReturn($user);
 
-        $service = $this->createMock(FetchUsersLicenses::class);
+        $service = $this->createMock(
+            FetchUsersLicenses::class
+        );
 
         $service->expects(self::once())
             ->method('__invoke')
@@ -133,7 +140,9 @@ class LicenseApiTest extends TestCase
 
         $di->expects(self::once())
             ->method('get')
-            ->with(self::equalTo(OrganizeLicensesByItemKey::class))
+            ->with(
+                self::equalTo(OrganizeLicensesByItemKey::class)
+            )
             ->willReturn($service);
 
         $api = new LicenseApi($di);
@@ -141,6 +150,52 @@ class LicenseApiTest extends TestCase
         self::assertSame(
             [$license],
             $api->organizeLicensesByItemKey([$license])
+        );
+    }
+
+    public function testFetchCurrentUserLicenseById() : void
+    {
+        $license = new LicenseModel();
+
+        $user = new UserModel();
+
+        $userApi = $this->createMock(UserApi::class);
+
+        $userApi->expects(self::once())
+            ->method('fetchLoggedInUser')
+            ->willReturn($user);
+
+        $service = $this->createMock(
+            FetchUserLicenseById::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+                self::equalTo('foo-id'),
+            )
+            ->willReturn($license);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::at(0))
+            ->method('get')
+            ->with(self::equalTo(UserApi::class))
+            ->willReturn($userApi);
+
+        $di->expects(self::at(1))
+            ->method('get')
+            ->with(
+                self::equalTo(FetchUserLicenseById::class)
+            )
+            ->willReturn($service);
+
+        $api = new LicenseApi($di);
+
+        self::assertSame(
+            $license,
+            $api->fetchCurrentUserLicenseById('foo-id'),
         );
     }
 }
