@@ -10,6 +10,7 @@ use App\Licenses\Services\OrganizeLicensesByItemKey;
 use App\Licenses\Services\SaveLicenseMaster;
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
+use App\Users\UserApi;
 use Psr\Container\ContainerInterface;
 use Safe\Exceptions\ArrayException;
 use function assert;
@@ -44,6 +45,22 @@ class LicenseApi
         assert($service instanceof FetchUsersLicenses);
 
         return $service($userModel);
+    }
+
+    /**
+     * @return LicenseModel[]
+     */
+    public function fetchCurrentUserLicenses() : array
+    {
+        /** @psalm-suppress MixedAssignment */
+        $userApi = $this->di->get(UserApi::class);
+
+        assert($userApi instanceof UserApi);
+
+        /** @psalm-suppress PossiblyNullArgument */
+        return $this->fetchUserLicenses(
+            $userApi->fetchLoggedInUser()
+        );
     }
 
     /**

@@ -1,0 +1,57 @@
+{% do requireVariables({
+    licenses: 'array',
+}) %}
+
+{% extends 'Account/_AccountLayout.twig' %}
+
+{# @var array<string, \App\Licenses\Models\LicenseModel[]> licenses #}
+
+{% block accountContent %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        licenses: licenses
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">License</td>
+                <td class="Table__HeadCol">Domains</td>
+                <td class="Table__HeadCol"></td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            {% if licenses|length < 1 %}
+                <tr class="Table__Row Table__Row--IsNoResultsRow">
+                    <td class="Table__Col Table__Col--IsNoResultsRow" colspan="3">
+                        No software has been added yet.
+                    </td>
+                </tr>
+            {% endif %}
+            {% for licenseGroup in licenses %}
+                {% for license in licenseGroup %}
+                    {# @var \App\Licenses\Models\LicenseModel license #}
+                    {% if loop.first %}
+                        <tr class="Table__Row">
+                            <td class="Table__Col Table__Col--Heading" colspan="3">
+                                {{ license.itemTitle }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            {{ license.id }}
+                        </td>
+                        <td class="Table__Col">
+                            {% for domain in license.authorizedDomains %}
+                                {{ domain }}<br>
+                            {% endfor %}
+                        </td>
+                        <td class="Table__Col">
+                            <a href="/account/license/{{ license.id }}">
+                                More&nbsp;&raquo;
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

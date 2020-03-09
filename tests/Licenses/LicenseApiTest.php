@@ -11,6 +11,7 @@ use App\Licenses\Services\OrganizeLicensesByItemKey;
 use App\Licenses\Services\SaveLicenseMaster;
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
+use App\Users\UserApi;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Throwable;
@@ -34,6 +35,7 @@ class LicenseApiTest extends TestCase
 
         $di->expects(self::once())
             ->method('get')
+            ->with(self::equalTo(SaveLicenseMaster::class))
             ->willReturn($service);
 
         $api = new LicenseApi($di);
@@ -61,6 +63,7 @@ class LicenseApiTest extends TestCase
 
         $di->expects(self::once())
             ->method('get')
+            ->with(self::equalTo(FetchUsersLicenses::class))
             ->willReturn($service);
 
         $api = new LicenseApi($di);
@@ -68,6 +71,45 @@ class LicenseApiTest extends TestCase
         self::assertSame(
             [$license],
             $api->fetchUserLicenses($user)
+        );
+    }
+
+    public function testFetchCurrentUserLicenses() : void
+    {
+        $license = new LicenseModel();
+
+        $user = new UserModel();
+
+        $userApi = $this->createMock(UserApi::class);
+
+        $userApi->expects(self::once())
+            ->method('fetchLoggedInUser')
+            ->willReturn($user);
+
+        $service = $this->createMock(FetchUsersLicenses::class);
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($user))
+            ->willReturn([$license]);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::at(0))
+            ->method('get')
+            ->with(self::equalTo(UserApi::class))
+            ->willReturn($userApi);
+
+        $di->expects(self::at(1))
+            ->method('get')
+            ->with(self::equalTo(FetchUsersLicenses::class))
+            ->willReturn($service);
+
+        $api = new LicenseApi($di);
+
+        self::assertSame(
+            [$license],
+            $api->fetchCurrentUserLicenses()
         );
     }
 
@@ -91,6 +133,7 @@ class LicenseApiTest extends TestCase
 
         $di->expects(self::once())
             ->method('get')
+            ->with(self::equalTo(OrganizeLicensesByItemKey::class))
             ->willReturn($service);
 
         $api = new LicenseApi($di);

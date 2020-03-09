@@ -1,3 +1,8 @@
+.TableLayout {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+    overflow: auto;
+}
+
 .TableLayout__Message {
     background-color: #fff;
     margin-bottom: 20px;
@@ -45,6 +50,12 @@
 .Table__HeadCol,
 .Table__Col {
     padding: 8px 18px;
+}
+
+.Table__Col--Heading {
+    background-color: var(--Jade);
+    color: #fff;
+    font-weight: var(--PrimaryFontBoldWeight);
 }
 
 .Table__Row:nth-child(even) {

@@ -1,6 +1,7 @@
 {% set message = message ?? {} %}
 {% set headMarkup = (block('headMarkup') ?? headMarkup ?? false) %}
 {% set bodyMarkup = (block('bodyMarkup') ?? bodyMarkup ?? false) %}
+{% set showMessagesFromFlash = showMessagesFromFlash ?? true %}
 
 <div class="TableLayout">
     {% if message['status'] is defined %}
@@ -17,6 +18,26 @@
                 </div>
             </div>
         </div>
+    {% elseif showMessagesFromFlash %}
+        {% set message = flash('PostMessage') %}
+        {% if message[0] is defined %}
+            {% set message = message[0] %}
+        {% endif %}
+        {% if message['status'] is defined %}
+            {% set class = 'Message--IsError' %}
+            {% if message.status == 'SUCCESSFUL' %}
+                {% set class = 'Message--IsSuccess' %}
+            {% endif %}
+            <div class="TableLayout__Message">
+                <div
+                    class="Message {{ class }}"
+                >
+                    <div class="Message__Inner">
+                        {{ message.result.message|default('')|smartypants|widont }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
     <table class="Table">
         {% if headMarkup %}

@@ -152,6 +152,8 @@ parameters:
         - %currentWorkingDirectory%/tests/Cart/Models/CartModelTest.php
         - %currentWorkingDirectory%/tests/Licenses/Services/FetchUsersLicensesTest.php
         - %currentWorkingDirectory%/tests/Licenses/LicenseApiTest.php
+        - %currentWorkingDirectory%/src/Licenses/LicenseApi.php
+        - %currentWorkingDirectory%/tests/Http/Account/Licenses/GetAccountLicensesResponderTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

@@ -1,0 +1,38 @@
+{% do requireVariables({
+    activeTab: 'string',
+}) %}
+
+{# @var string activeTab #}
+
+{% extends '_Layout.twig' %}
+
+{% macro tab(tabSlug, tabName, activeTab) %}
+    <li class="TabbedLayout__Tab">
+        {% set classes = 'TabbedLayout__TabLink' %}
+        {% if activeTab == tabSlug %}
+            {% set classes = classes ~ ' TabbedLayout__TabLink--IsActive' %}
+        {% endif %}
+        <a
+            href="/account/{{ tabSlug }}"
+            class="{{ classes }}"
+        >
+            {{ tabName|smartypants }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% block content %}
+    <div class="TabbedLayout">
+        <div class="TabbedLayout__Inner">
+            <h1 class="heading heading--level-3 TabbedLayout__Heading">TODO</h1>
+            <ul class="TabbedLayout__Tabs">
+                {{ _self.tab('licenses', 'Licenses', activeTab) }}
+                {{ _self.tab('purchases', 'Purchases', activeTab) }}
+                {{ _self.tab('profile', 'Profile', activeTab) }}
+            </ul>
+            <div class="TabbedLayout__Content">
+                {{ block('accountContent') ?? '' }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
