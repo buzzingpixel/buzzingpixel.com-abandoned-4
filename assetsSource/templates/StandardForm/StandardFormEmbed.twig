@@ -1,7 +1,14 @@
 {% set method = (block('method') ?? method ?? 'post') %}
 {% set heading = (block('heading') ?? heading ?? false) %}
 {% set submitButtonContent = (block('submitButtonContent') ?? submitButtonContent ?? false) %}
-{% set message = message ?? {} %}
+{% set message = message ?? false %}
+
+{% if not message %}
+    {% set message = flash('PostMessage') %}
+    {% if message[0] is defined %}
+        {% set message = message[0] %}
+    {% endif %}
+{% endif %}
 
 {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
 

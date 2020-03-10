@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Account\GetAccountAction;
+use App\Http\Account\Licenses\AuthorizedDomains\GetEditAuthorizedDomainsAction;
 use App\Http\Account\Licenses\GetAccountLicensesAction;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
@@ -40,6 +41,11 @@ return static function (App $app) : void {
         $r->get(
             '/licenses/view/{id}',
             GetAccountLicenseViewAction::class
+        );
+
+        $r->get(
+            '/licenses/authorized-domains/{id}',
+            GetEditAuthorizedDomainsAction::class
         );
     })->add(RequireLogInAction::class);
 };

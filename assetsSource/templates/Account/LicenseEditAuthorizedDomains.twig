@@ -1,0 +1,24 @@
+{% do requireVariables({
+    license: 'App\\Licenses\\Models\\LicenseModel',
+}) %}
+
+{# @var \App\Licenses\Models\LicenseModel license #}
+
+{% extends 'Account/_AccountLayout.twig' %}
+
+{% block accountContent %}
+    {% embed 'StandardForm/StandardFormEmbed.twig' with {
+        heading: 'Edit Authorized Domains on<br>' ~ license.id,
+        submitButtonContent: 'Submit',
+        license: license,
+    } only %}
+        {% block standardFormContent %}
+            {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+            {{ inputs.textArea(
+                'Authorized Domains (one per line)',
+                'authorized_domains',
+                license.authorizedDomains|join('\n'),
+                message) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

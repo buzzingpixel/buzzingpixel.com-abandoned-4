@@ -36,6 +36,25 @@
     </div>
 {% endmacro %}
 
+{% macro textArea(label, name, value = '', message = {}, rows = 10) %}
+    <div class="StandardForm__FieldSet">
+        <label for="{{ name }}" class="label StandardForm__Label">
+            {{ label }}
+        </label>
+        <textarea
+            id="{{ name }}"
+            name="{{ name }}"
+            class="input StandardForm__Input{% if message['result']['inputMessages'][name] is defined %} input--has-error{% endif %}"
+            rows="{{ rows }}"
+        >{{ message['result']['inputValues'][name] ?? value }}</textarea>
+        {% if message['result']['inputMessages'][name] is defined %}
+            <div class="StandardForm__InputErrorMessage">
+                {{ message['result']['inputMessages'][name]|smartypants }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% macro checkbox(label, name, isChecked, message = {}) %}
     <div class="StandardForm__FieldSet StandardForm__Fieldset--ForCheckbox">
         <label
