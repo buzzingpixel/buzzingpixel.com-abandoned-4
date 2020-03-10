@@ -31,128 +31,13 @@
                 </div>
             </div>
         {% endif %}
-        <table class="Table">
-            <thead class="Table__Head">
-                <tr class="Table__HeadControlRow">
-                    <td class="Table__HeadControlCol" colspan="2">
-                        <form
-                            action="/admin/software/delete/{{ softwareModel.id }}"
-                            method="post"
-                            style="display: inline-block"
-                            ref="FormSubmitConfirm"
-                            @submit="confirmSubmit"
-                        >
-                            <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
-                            <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
-                            <input class="button" type="submit" value="Delete">
-                        </form>
-                        <a
-                            href="/admin/software/edit/{{ softwareModel.slug }}"
-                            class="button"
-                        >
-                            Edit
-                        </a>
-                    </td>
-                </tr>
-                <tr class="Table__HeadRow">
-                    <td class="Table__HeadCol">Item</td>
-                    <td class="Table__HeadCol">Value</td>
-                </tr>
-            </thead>
-            <tbody class="Table__Body">
-                <tr class="Table__Row">
-                    <td class="Table__Col">
-                        Name
-                    </td>
-                    <td class="Table__Col">
-                        {{ softwareModel.name|smartypants }}
-                    </td>
-                </tr>
-                <tr class="Table__Row">
-                    <td class="Table__Col">
-                        Slug
-                    </td>
-                    <td class="Table__Col">
-                        {{ softwareModel.slug }}
-                    </td>
-                </tr>
-                <tr class="Table__Row">
-                    <td class="Table__Col">
-                        For Sale?
-                    </td>
-                    <td class="Table__Col">
-                        {{ softwareModel.isForSale ? 'Yes' : 'No' }}
-                    </td>
-                </tr>
-                <tr class="Table__Row">
-                    <td class="Table__Col">
-                        Price
-                    </td>
-                    <td class="Table__Col">
-                        ${{ softwareModel.price|number_format(2) }}
-                    </td>
-                </tr>
-                <tr class="Table__Row">
-                    <td class="Table__Col">
-                        Renewal Price
-                    </td>
-                    <td class="Table__Col">
-                        ${{ softwareModel.renewalPrice|number_format(2) }}
-                    </td>
-                </tr>
-                <tr class="Table__Row">
-                    <td class="Table__Col">
-                        Subscription?
-                    </td>
-                    <td class="Table__Col">
-                        {{ softwareModel.isSubscription ? 'Yes' : 'No' }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <h3 class="TableLayout__Heading">Versions</h3>
-        <table class="Table">
-            <thead class="Table__Head">
-                <tr class="Table__HeadControlRow">
-                    <td class="Table__HeadControlCol" colspan="6">
-                        <a
-                            href="/admin/software/{{ softwareModel.slug }}/add-version"
-                            class="button"
-                        >
-                            Add New Version
-                        </a>
-                    </td>
-                </tr>
-                <tr class="Table__HeadRow">
-                    <td class="Table__HeadCol">Major Version</td>
-                    <td class="Table__HeadCol">Version</td>
-                    <td class="Table__HeadCol">Download File</td>
-                    <td class="Table__HeadCol">Upgrade Price</td>
-                    <td class="Table__HeadCol">Release Date</td>
-                    <td class="Table__HeadCol"></td>
-                </tr>
-            </thead>
-            <tbody class="Table__Body">
-                {% for version in softwareModel.versions %}
-                    <tr class="Table__Row">
-                        <td class="Table__Col">
-                            {{ version.majorVersion }}
-                        </td>
-                        <td class="Table__Col">
-                            {{ version.version }}
-                        </td>
-                        <td class="Table__Col">
-                            {{ version.downloadFile }}
-                        </td>
-                        <td class="Table__Col">
-                            ${{ version.upgradePrice|number_format(2) }}
-                        </td>
-                        <td class="Table__Col">
-                            {{ version.releasedOn.setTimezone(user.timezone).format('Y-m-d h:i a') }}
-                        </td>
-                        <td class="Table__Col">
+        <div class="TableLayout__Wrapper">
+            <table class="Table">
+                <thead class="Table__Head">
+                    <tr class="Table__HeadControlRow">
+                        <td class="Table__HeadControlCol" colspan="2">
                             <form
-                                action="/admin/software/version/delete/{{ version.id }}"
+                                action="/admin/software/delete/{{ softwareModel.id }}"
                                 method="post"
                                 style="display: inline-block"
                                 ref="FormSubmitConfirm"
@@ -162,17 +47,136 @@
                                 <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
                                 <input class="button" type="submit" value="Delete">
                             </form>
-                            &nbsp;
                             <a
-                                href="/admin/software/version/edit/{{ version.id }}"
+                                href="/admin/software/edit/{{ softwareModel.slug }}"
                                 class="button"
                             >
                                 Edit
                             </a>
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <tr class="Table__HeadRow">
+                        <td class="Table__HeadCol">Item</td>
+                        <td class="Table__HeadCol">Value</td>
+                    </tr>
+                </thead>
+                <tbody class="Table__Body">
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            Name
+                        </td>
+                        <td class="Table__Col">
+                            {{ softwareModel.name|smartypants }}
+                        </td>
+                    </tr>
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            Slug
+                        </td>
+                        <td class="Table__Col">
+                            {{ softwareModel.slug }}
+                        </td>
+                    </tr>
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            For Sale?
+                        </td>
+                        <td class="Table__Col">
+                            {{ softwareModel.isForSale ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            Price
+                        </td>
+                        <td class="Table__Col">
+                            ${{ softwareModel.price|number_format(2) }}
+                        </td>
+                    </tr>
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            Renewal Price
+                        </td>
+                        <td class="Table__Col">
+                            ${{ softwareModel.renewalPrice|number_format(2) }}
+                        </td>
+                    </tr>
+                    <tr class="Table__Row">
+                        <td class="Table__Col">
+                            Subscription?
+                        </td>
+                        <td class="Table__Col">
+                            {{ softwareModel.isSubscription ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3 class="TableLayout__Heading">Versions</h3>
+        <div class="TableLayout__Wrapper">
+            <table class="Table">
+                <thead class="Table__Head">
+                    <tr class="Table__HeadControlRow">
+                        <td class="Table__HeadControlCol" colspan="6">
+                            <a
+                                href="/admin/software/{{ softwareModel.slug }}/add-version"
+                                class="button"
+                            >
+                                Add New Version
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="Table__HeadRow">
+                        <td class="Table__HeadCol">Major Version</td>
+                        <td class="Table__HeadCol">Version</td>
+                        <td class="Table__HeadCol">Download File</td>
+                        <td class="Table__HeadCol">Upgrade Price</td>
+                        <td class="Table__HeadCol">Release Date</td>
+                        <td class="Table__HeadCol"></td>
+                    </tr>
+                </thead>
+                <tbody class="Table__Body">
+                    {% for version in softwareModel.versions %}
+                        <tr class="Table__Row">
+                            <td class="Table__Col">
+                                {{ version.majorVersion }}
+                            </td>
+                            <td class="Table__Col">
+                                {{ version.version }}
+                            </td>
+                            <td class="Table__Col">
+                                {{ version.downloadFile }}
+                            </td>
+                            <td class="Table__Col">
+                                ${{ version.upgradePrice|number_format(2) }}
+                            </td>
+                            <td class="Table__Col">
+                                {{ version.releasedOn.setTimezone(user.timezone).format('Y-m-d h:i a') }}
+                            </td>
+                            <td class="Table__Col">
+                                <form
+                                    action="/admin/software/version/delete/{{ version.id }}"
+                                    method="post"
+                                    style="display: inline-block"
+                                    ref="FormSubmitConfirm"
+                                    @submit="confirmSubmit"
+                                >
+                                    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                                    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                                    <input class="button" type="submit" value="Delete">
+                                </form>
+                                &nbsp;
+                                <a
+                                    href="/admin/software/version/edit/{{ version.id }}"
+                                    class="button"
+                                >
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

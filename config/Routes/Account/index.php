@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Account\GetAccountAction;
 use App\Http\Account\Licenses\GetAccountLicensesAction;
+use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\Register\PostRegisterAction;
@@ -35,5 +36,10 @@ return static function (App $app) : void {
         $r->get('', GetAccountAction::class);
 
         $r->get('/licenses', GetAccountLicensesAction::class);
+
+        $r->get(
+            '/licenses/view/{id}',
+            GetAccountLicenseViewAction::class
+        );
     })->add(RequireLogInAction::class);
 };

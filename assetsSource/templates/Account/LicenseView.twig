@@ -1,0 +1,111 @@
+{% do requireVariables({
+    license: 'App\\Licenses\\Models\\LicenseModel',
+}) %}
+
+{# @var \App\Licenses\Models\LicenseModel license #}
+
+{% extends 'Account/_AccountLayout.twig' %}
+
+{% block accountContent %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        license: license
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Item</td>
+                <td class="Table__HeadCol">Value</td>
+                <td class="Table__HeadCol"></td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    License Key
+                </td>
+                <td class="Table__Col">
+                    {{ license.id }}
+                </td>
+                <td class="Table__Col">
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Software
+                </td>
+                <td class="Table__Col">
+                    {{ license.itemTitle }}
+                </td>
+                <td class="Table__Col">
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Software Current Version
+                </td>
+                <td class="Table__Col">
+                    {{ license.version }}
+                </td>
+                <td class="Table__Col">
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Latest Available Version
+                </td>
+                <td class="Table__Col">
+                    {{ license.lastAvailableVersion }}
+                </td>
+                <td class="Table__Col">
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Authorized Domains
+                </td>
+                <td class="Table__Col">
+                    {% for domain in license.authorizedDomains %}
+                        {{ domain }}<br>
+                    {% endfor %}
+                </td>
+                <td class="Table__Col">
+                    <a href="/account/licenses/authorized-domains/{{ license.id }}">
+                        Edit Domains&nbsp;&raquo;
+                    </a>
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Is Active?
+                </td>
+                <td class="Table__Col">
+                    {{ license.isDisabled ? 'No' : 'Yes' }}
+                </td>
+                <td class="Table__Col">
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Expires
+                </td>
+                <td class="Table__Col">
+                    {{ license.expires.format('Y/m/d') }}
+                </td>
+                <td class="Table__Col">
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Notes
+                </td>
+                <td class="Table__Col">
+                    {{ license.notes|markdownParse }}
+                </td>
+                <td class="Table__Col">
+                    <a href="/account/licenses/notes/{{ license.id }}">
+                        Edit Notes&nbsp;&raquo;
+                    </a>
+                </td>
+            </tr>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

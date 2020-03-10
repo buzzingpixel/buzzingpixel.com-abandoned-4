@@ -47,46 +47,48 @@
         {% include 'Includes/Pagination.twig' with {
             pagination: pagination
         } only %}
-        <table class="Table">
-            <thead class="Table__Head">
-                <tr class="Table__HeadControlRow">
-                    <td class="Table__HeadControlCol" colspan="7">
-                        <a
-                            href="/admin/users/create"
-                            class="button"
-                        >
-                            New
-                        </a>
-                    </td>
-                </tr>
-                <tr class="Table__HeadRow">
-                    <td class="Table__HeadCol">Admin</td>
-                    <td class="Table__HeadCol">Email</td>
-                    <td class="Table__HeadCol">First Name</td>
-                    <td class="Table__HeadCol">Last Name</td>
-                    <td class="Table__HeadCol">Display Name</td>
-                    <td class="Table__HeadCol"></td>
-                </tr>
-            </thead>
-            <tbody class="Table__Body">
-                {% for model in userModels %}
-                    <tr class="Table__Row">
-                        <td class="Table__Col">
-                            {% if model.isAdmin %}Yes{% else %}No{% endif %}
-                        </td>
-                        <td class="Table__Col">{{ model.emailAddress }}</td>
-                        <td class="Table__Col">{{ model.firstName }}</td>
-                        <td class="Table__Col">{{ model.lastName }}</td>
-                        <td class="Table__Col">{{ model.displayName }}</td>
-                        <td class="Table__Col">
-                            <a href="/admin/users/view/{{ model.id }}">
-                                More&nbsp;&raquo;
+        <div class="TableLayout__Wrapper">
+            <table class="Table">
+                <thead class="Table__Head">
+                    <tr class="Table__HeadControlRow">
+                        <td class="Table__HeadControlCol" colspan="7">
+                            <a
+                                href="/admin/users/create"
+                                class="button"
+                            >
+                                New
                             </a>
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <tr class="Table__HeadRow">
+                        <td class="Table__HeadCol">Admin</td>
+                        <td class="Table__HeadCol">Email</td>
+                        <td class="Table__HeadCol">First Name</td>
+                        <td class="Table__HeadCol">Last Name</td>
+                        <td class="Table__HeadCol">Display Name</td>
+                        <td class="Table__HeadCol"></td>
+                    </tr>
+                </thead>
+                <tbody class="Table__Body">
+                    {% for model in userModels %}
+                        <tr class="Table__Row">
+                            <td class="Table__Col">
+                                {% if model.isAdmin %}Yes{% else %}No{% endif %}
+                            </td>
+                            <td class="Table__Col">{{ model.emailAddress }}</td>
+                            <td class="Table__Col">{{ model.firstName }}</td>
+                            <td class="Table__Col">{{ model.lastName }}</td>
+                            <td class="Table__Col">{{ model.displayName }}</td>
+                            <td class="Table__Col">
+                                <a href="/admin/users/view/{{ model.id }}">
+                                    More&nbsp;&raquo;
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% include 'Includes/Pagination.twig' with {
             pagination: pagination
         } only %}

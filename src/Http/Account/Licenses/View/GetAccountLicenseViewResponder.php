@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Account\Licenses;
+namespace App\Http\Account\Licenses\View;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\StandardResponderConstructor;
@@ -10,28 +10,31 @@ use App\Licenses\Models\LicenseModel;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-class GetAccountLicensesResponder extends StandardResponderConstructor
+class GetAccountLicenseViewResponder extends StandardResponderConstructor
 {
     /**
-     * @param array<string, LicenseModel[]> $licenses
-     *
      * @throws Throwable
-     *
-     * @noinspection PhpDocSignatureInspection
      */
     public function __invoke(
-        array $licenses
+        LicenseModel $license
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/Licenses.twig',
+            'Account/LicenseView.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => 'Your Licenses']
+                    ['metaTitle' => 'License']
                 ),
                 'activeTab' => 'licenses',
-                'licenses' => $licenses,
+                'breadcrumbs' => [
+                    [
+                        'href' => '/account/licenses',
+                        'content' => 'All Licenses',
+                    ],
+                    ['content' => 'License'],
+                ],
+                'license' => $license,
             ]
         ));
 

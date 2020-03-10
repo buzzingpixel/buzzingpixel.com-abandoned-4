@@ -2,51 +2,59 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Account\Licenses;
+namespace Tests\Http\Account\Licenses\View;
 
 use App\Content\Meta\MetaPayload;
-use App\Http\Account\Licenses\GetAccountLicensesResponder;
+use App\Http\Account\Licenses\View\GetAccountLicenseViewResponder;
+use App\Licenses\Models\LicenseModel;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Tests\TestConfig;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
 
-class GetAccountLicensesResponderTest extends TestCase
+class GetAccountLicenseViewResponderTest extends TestCase
 {
     /**
      * @throws Throwable
      */
     public function test() : void
     {
-        $licenses = ['test'];
+        $license = new LicenseModel();
 
         $twigEnv = $this->createMock(TwigEnvironment::class);
 
         $twigEnv->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/Licenses.twig'),
+                self::equalTo('Account/LicenseView.twig'),
                 self::equalTo(
                     [
                         'metaPayload' => new MetaPayload(
-                            ['metaTitle' => 'Your Licenses']
+                            ['metaTitle' => 'License']
                         ),
                         'activeTab' => 'licenses',
-                        'licenses' => $licenses,
+                        'breadcrumbs' => [
+                            [
+                                'href' => '/account/licenses',
+                                'content' => 'All Licenses',
+                            ],
+                            ['content' => 'License'],
+                        ],
+                        'license' => $license,
                     ]
                 )
             )
             ->willReturn('twigReturnTest');
 
-        $responder = new GetAccountLicensesResponder(
+        $responder = new GetAccountLicenseViewResponder(
             TestConfig::$di->get(
                 ResponseFactoryInterface::class
             ),
             $twigEnv,
         );
 
-        $response = $responder($licenses);
+        $response = $responder($license);
 
         self::assertSame(
             'twigReturnTest',

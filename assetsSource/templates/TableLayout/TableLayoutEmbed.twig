@@ -39,16 +39,18 @@
             </div>
         {% endif %}
     {% endif %}
-    <table class="Table">
-        {% if headMarkup %}
-            <thead class="Table__Head">
-                {{ headMarkup|raw }}
-            </thead>
-        {% endif %}
-        {% if bodyMarkup %}
-            <tbody class="Table__Body">
-                {{ bodyMarkup|raw }}
-            </tbody>
-        {% endif %}
-    </table>
+    <div class="TableLayout__Wrapper">
+        <table class="Table">
+            {% if headMarkup %}
+                <thead class="Table__Head">
+                    {{ headMarkup|raw }}
+                </thead>
+            {% endif %}
+            {% if bodyMarkup %}
+                <tbody class="Table__Body">
+                    {{ bodyMarkup|raw }}
+                </tbody>
+            {% endif %}
+        </table>
+    </div>
 </div>
