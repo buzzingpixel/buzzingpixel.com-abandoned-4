@@ -57,6 +57,7 @@ class PostEditAuthorizedDomainsAction
 
         assert(is_string($domains));
 
+        /** @var string[] $domainsArray */
         $domainsArray = preg_split('/\r\n|\r|\n/', $domains);
 
         $final = [];
