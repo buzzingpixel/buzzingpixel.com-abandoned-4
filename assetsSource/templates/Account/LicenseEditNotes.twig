@@ -8,16 +8,16 @@
 
 {% block accountContent %}
     {% embed 'StandardForm/StandardFormEmbed.twig' with {
-        heading: 'Edit Authorized Domains on<br>' ~ license.id,
+        heading: 'Edit Notes on<br>' ~ license.id,
         submitButtonContent: 'Submit',
         license: license,
     } only %}
         {% block standardFormContent %}
             {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
             {{ inputs.textArea(
-                'Authorized Domains (one per line)',
-                'authorized_domains',
-                license.authorizedDomains|join('\n'),
+                'Notes',
+                'notes',
+                license.notes,
                 message
             ) }}
         {% endblock %}

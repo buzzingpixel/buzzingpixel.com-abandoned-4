@@ -6,6 +6,7 @@ use App\Http\Account\GetAccountAction;
 use App\Http\Account\Licenses\AuthorizedDomains\GetEditAuthorizedDomainsAction;
 use App\Http\Account\Licenses\AuthorizedDomains\PostEditAuthorizedDomainsAction;
 use App\Http\Account\Licenses\GetAccountLicensesAction;
+use App\Http\Account\Licenses\Notes\GetEditNotesAction;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
@@ -52,6 +53,11 @@ return static function (App $app) : void {
         $r->post(
             '/licenses/authorized-domains/{id}',
             PostEditAuthorizedDomainsAction::class
+        );
+
+        $r->get(
+            '/licenses/notes/{id}',
+            GetEditNotesAction::class
         );
     })->add(RequireLogInAction::class);
 };
