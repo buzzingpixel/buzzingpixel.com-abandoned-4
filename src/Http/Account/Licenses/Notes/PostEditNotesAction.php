@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Account\Licenses\AuthorizedDomains;
+namespace App\Http\Account\Licenses\Notes;
 
 use App\Licenses\LicenseApi;
 use App\Payload\Payload;
@@ -14,10 +14,8 @@ use Slim\Flash\Messages as FlashMessages;
 use Throwable;
 use function assert;
 use function is_array;
-use function Safe\preg_split;
-use function trim;
 
-class PostEditAuthorizedDomainsAction
+class PostEditNotesAction
 {
     private LicenseApi $licenseApi;
     private FlashMessages $flashMessages;
@@ -51,24 +49,7 @@ class PostEditAuthorizedDomainsAction
 
         assert(is_array($post));
 
-        $domains = (string) ($post['authorized_domains'] ?? '');
-
-        /** @var string[] $domainsArray */
-        $domainsArray = preg_split('/\r\n|\r|\n/', $domains);
-
-        $final = [];
-
-        foreach ($domainsArray as $domain) {
-            $domain = trim($domain);
-
-            if ($domain === '') {
-                continue;
-            }
-
-            $final[] = $domain;
-        }
-
-        $license->authorizedDomains = $final;
+        $license->notes = (string) ($post['notes'] ?? '');
 
         $payload = $this->licenseApi->saveLicense($license);
 
@@ -84,7 +65,7 @@ class PostEditAuthorizedDomainsAction
             return $this->responseFactory->createResponse(303)
                 ->withHeader(
                     'Location',
-                    '/account/licenses/authorized-domains/' . $id
+                    '/account/licenses/notes/' . $id
                 );
         }
 
@@ -92,7 +73,7 @@ class PostEditAuthorizedDomainsAction
             'PostMessage',
             [
                 'status' => Payload::STATUS_SUCCESSFUL,
-                'result' => ['message' => 'Authorized domains updated successfully'],
+                'result' => ['message' => 'Notes updated successfully'],
             ]
         );
 
