@@ -111,4 +111,13 @@ class OrderModelTest extends TestCase
             $model->items,
         );
     }
+
+    public function testIsSet() : void
+    {
+        $model = new OrderModel();
+
+        self::assertTrue(isset($model->items));
+
+        self::assertFalse(isset($model->asdf));
+    }
 }

@@ -11,6 +11,7 @@ use App\Http\Account\Licenses\Notes\PostEditNotesAction;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
+use App\Http\Account\Purchases\GetAccountPurchasesAction;
 use App\Http\Account\Register\PostRegisterAction;
 use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Config\NoOp;
@@ -64,6 +65,11 @@ return static function (App $app) : void {
         $r->post(
             '/licenses/notes/{id}',
             PostEditNotesAction::class
+        );
+
+        $r->get(
+            '/purchases',
+            GetAccountPurchasesAction::class
         );
     })->add(RequireLogInAction::class);
 };

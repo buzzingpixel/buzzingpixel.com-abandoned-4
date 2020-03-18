@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Licenses\Services;
 
+use App\Licenses\Models\LicenseModel;
 use App\Licenses\Services\FetchUsersLicenses;
 use App\Licenses\Transformers\TransformLicenseRecordToModel;
-use App\Persistence\Constants;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Persistence\RecordQuery;
 use App\Persistence\RecordQueryFactory;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Tests\TestConfig;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -21,25 +19,11 @@ class FetchUsersLicensesTest extends TestCase
 {
     public function test() : void
     {
-        $expires = new DateTimeImmutable();
-
         $user     = new UserModel();
         $user->id = 'foo-user-id';
 
-        $record                         = new LicenseRecord();
-        $record->id                     = 'foo-id';
-        $record->owner_user_id          = 'asdf';
-        $record->item_key               = 'foo-key';
-        $record->item_title             = 'foo-title';
-        $record->major_version          = 'foo-major-version';
-        $record->version                = 'foo-version';
-        $record->last_available_version = 'foo-last-avail-version';
-        $record->notes                  = 'foo-notes';
-        $record->authorized_domains     = '["foo","bar"]';
-        $record->is_disabled            = '0';
-        $record->expires                = $expires->format(
-            Constants::POSTGRES_OUTPUT_FORMAT
-        );
+        $record     = new LicenseRecord();
+        $record->id = 'foo-id';
 
         $recordQuery = $this->createMock(RecordQuery::class);
 
@@ -97,72 +81,28 @@ class FetchUsersLicensesTest extends TestCase
                 static fn(LicenseRecord $record) => $recordQuery
             );
 
+        $model = new LicenseModel();
+
+        $transformer = $this->createMock(
+            TransformLicenseRecordToModel::class
+        );
+
+        $transformer->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($record),
+                self::equalTo($user),
+            )
+            ->willReturn($model);
+
         $service = new FetchUsersLicenses(
             $recordQueryFactory,
-            TestConfig::$di->get(
-                TransformLicenseRecordToModel::class
-            )
-        );
-
-        $models = $service($user);
-
-        self::assertCount(1, $models);
-
-        $model = $models[0];
-
-        self::assertSame(
-            'foo-id',
-            $model->id,
+            $transformer
         );
 
         self::assertSame(
-            $user,
-            $model->ownerUser
-        );
-
-        self::assertSame(
-            'foo-key',
-            $model->itemKey,
-        );
-
-        self::assertSame(
-            'foo-title',
-            $model->itemTitle,
-        );
-
-        self::assertSame(
-            'foo-major-version',
-            $model->majorVersion,
-        );
-
-        self::assertSame(
-            'foo-version',
-            $model->version,
-        );
-
-        self::assertSame(
-            'foo-last-avail-version',
-            $model->lastAvailableVersion,
-        );
-
-        self::assertSame(
-            'foo-notes',
-            $model->notes,
-        );
-
-        self::assertSame(
-            [
-                0 => 'foo',
-                1 => 'bar',
-            ],
-            $model->authorizedDomains,
-        );
-
-        self::assertFalse($model->isDisabled);
-
-        self::assertSame(
-            $expires->format(DateTimeImmutable::ATOM),
-            $model->expires->format(DateTimeImmutable::ATOM),
+            [$model],
+            $service($user)
         );
     }
 }

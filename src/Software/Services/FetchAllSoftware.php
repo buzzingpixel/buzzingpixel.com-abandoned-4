@@ -48,9 +48,7 @@ class FetchAllSoftware
         }
 
         $softwareIds = array_map(
-            static function (SoftwareRecord $record) {
-                return $record->id;
-            },
+            static fn(SoftwareRecord $record) => $record->id,
             $records
         );
 
@@ -58,11 +56,7 @@ class FetchAllSoftware
         $versionRecords = ($this->recordQueryFactory)(
             new SoftwareVersionRecord()
         )
-            ->withWhere(
-                'software_id',
-                $softwareIds,
-                'IN'
-            )
+            ->withWhere('software_id', $softwareIds, 'IN')
             ->withOrder('released_on', 'desc')
             ->withOrder('major_version', 'desc')
             ->withOrder('version', 'desc')

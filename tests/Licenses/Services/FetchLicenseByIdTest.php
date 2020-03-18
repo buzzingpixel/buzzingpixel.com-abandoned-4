@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Licenses\Services;
 
 use App\Licenses\Models\LicenseModel;
-use App\Licenses\Services\FetchUserLicenseById;
+use App\Licenses\Services\FetchLicenseById;
 use App\Licenses\Transformers\TransformLicenseRecordToModel;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Persistence\RecordQuery;
@@ -14,14 +14,10 @@ use App\Users\Models\UserModel;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
-
-class FetchUserLicenseByIdTest extends TestCase
+class FetchLicenseByIdTest extends TestCase
 {
     public function testWhenExceptionThrown() : void
     {
-        $user = new UserModel();
-
         $recordQueryFactory = $this->createMock(
             RecordQueryFactory::class
         );
@@ -36,12 +32,12 @@ class FetchUserLicenseByIdTest extends TestCase
         $transformer->expects(self::never())
             ->method(self::anything());
 
-        $service = new FetchUserLicenseById(
+        $service = new FetchLicenseById(
             $recordQueryFactory,
             $transformer,
         );
 
-        self::assertNull($service($user, 'foo-id'));
+        self::assertNull($service('foo-id'));
     }
 
     public function testWhenNoLicense() : void
@@ -56,20 +52,12 @@ class FetchUserLicenseByIdTest extends TestCase
         $recordQuery->expects(self::at(0))
             ->method('withWhere')
             ->with(
-                self::equalTo('owner_user_id'),
-                self::equalTo('foo-user-id')
-            )
-            ->willReturn($recordQuery);
-
-        $recordQuery->expects(self::at(1))
-            ->method('withWhere')
-            ->with(
                 self::equalTo('id'),
                 self::equalTo('foo-id')
             )
             ->willReturn($recordQuery);
 
-        $recordQuery->expects(self::at(2))
+        $recordQuery->expects(self::at(1))
             ->method('one')
             ->willReturn(null);
 
@@ -90,12 +78,12 @@ class FetchUserLicenseByIdTest extends TestCase
         $transformer->expects(self::never())
             ->method(self::anything());
 
-        $service = new FetchUserLicenseById(
+        $service = new FetchLicenseById(
             $recordQueryFactory,
             $transformer,
         );
 
-        self::assertNull($service($user, 'foo-id'));
+        self::assertNull($service('foo-id', $user));
     }
 
     public function test() : void
@@ -113,20 +101,12 @@ class FetchUserLicenseByIdTest extends TestCase
         $recordQuery->expects(self::at(0))
             ->method('withWhere')
             ->with(
-                self::equalTo('owner_user_id'),
-                self::equalTo('foo-user-id')
-            )
-            ->willReturn($recordQuery);
-
-        $recordQuery->expects(self::at(1))
-            ->method('withWhere')
-            ->with(
                 self::equalTo('id'),
                 self::equalTo('foo-id')
             )
             ->willReturn($recordQuery);
 
-        $recordQuery->expects(self::at(2))
+        $recordQuery->expects(self::at(1))
             ->method('one')
             ->willReturn($record);
 
@@ -154,14 +134,14 @@ class FetchUserLicenseByIdTest extends TestCase
             )
             ->willReturn($model);
 
-        $service = new FetchUserLicenseById(
+        $service = new FetchLicenseById(
             $recordQueryFactory,
             $transformer,
         );
 
         self::assertSame(
             $model,
-            $service($user, 'foo-id')
+            $service('foo-id', $user)
         );
     }
 }
