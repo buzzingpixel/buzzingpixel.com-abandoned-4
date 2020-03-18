@@ -1,0 +1,63 @@
+{% do requireVariables({
+    orders: 'array',
+}) %}
+
+{# @var \App\Orders\Models\OrderModel[] orders #}
+
+{% extends 'Account/_AccountLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% block accountContent %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        orders: orders,
+        user: user,
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Order #</td>
+                <td class="Table__HeadCol">Total</td>
+                <td class="Table__HeadCol">Items</td>
+                <td class="Table__HeadCol">Date</td>
+                <td class="Table__HeadCol"></td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            {% if orders|length < 1 %}
+                <tr class="Table__Row Table__Row--IsNoResultsRow">
+                    <td class="Table__Col Table__Col--IsNoResultsRow" colspan="5">
+                        You don&rsquo;t have any orders yet
+                    </td>
+                </tr>
+            {% endif %}
+            {% for order in orders %}
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        {{ order.id }}
+                    </td>
+                    <td class="Table__Col">
+                        ${{ order.total|number_format(2, '.') }}
+                    </td>
+                    <td class="Table__Col">
+                        {% for item in order.items %}
+                            {# @var \App\Orders\Models\OrderItemModel item #}
+                            {{ item.itemTitle }}<br>
+                        {% endfor %}
+                    </td>
+                    <td class="Table__Col">
+                        {{ order.date
+                            .setTimezone(user.timezone)
+                            .format('Y/m/d')
+                        }}
+                    </td>
+                    <td class="Table__Col">
+                        <a href="/account/purchases/view/{{ order.id }}">
+                            More&nbsp;&raquo;
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

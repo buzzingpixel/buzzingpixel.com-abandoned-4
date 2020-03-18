@@ -6,9 +6,13 @@
 
 {% extends 'Account/_AccountLayout.twig' %}
 
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
 {% block accountContent %}
     {% embed 'TableLayout/TableLayoutEmbed.twig' with {
-        license: license
+        license: license,
+        user: user,
     } only %}
         {% block headMarkup %}
             <tr class="Table__HeadRow">
@@ -88,7 +92,10 @@
                     Expires
                 </td>
                 <td class="Table__Col">
-                    {{ license.expires.format('Y/m/d') }}
+                    {{ license.expires
+                        .setTimezone(user.timezone)
+                        .format('Y/m/d')
+                    }}
                 </td>
                 <td class="Table__Col">
                 </td>

@@ -8,6 +8,7 @@ use App\Licenses\Models\LicenseModel;
 use App\Persistence\Constants;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Users\Models\UserModel;
+use App\Users\UserApi;
 use DateTimeImmutable;
 use Safe\Exceptions\JsonException;
 use function assert;
@@ -17,16 +18,31 @@ use function Safe\json_decode;
 
 class TransformLicenseRecordToModel
 {
+    private UserApi $userApi;
+
+    public function __construct(UserApi $userApi)
+    {
+        $this->userApi = $userApi;
+    }
+
     /**
      * @throws JsonException
      */
     public function __invoke(
         LicenseRecord $record,
-        UserModel $ownerUser
+        ?UserModel $ownerUser = null
     ) : LicenseModel {
         $model = new LicenseModel();
 
         $model->id = $record->id;
+
+        if ($ownerUser === null || $ownerUser->id !== $record->owner_user_id) {
+            $ownerUser = $this->userApi->fetchUserById(
+                $record->owner_user_id
+            );
+        }
+
+        assert($ownerUser instanceof UserModel);
 
         $model->ownerUser = $ownerUser;
 

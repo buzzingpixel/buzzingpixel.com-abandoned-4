@@ -100,6 +100,11 @@ class OrderModel
         }
     }
 
+    public function __isset(string $name) : bool
+    {
+        return $name === 'items';
+    }
+
     /**
      * @return mixed
      */
