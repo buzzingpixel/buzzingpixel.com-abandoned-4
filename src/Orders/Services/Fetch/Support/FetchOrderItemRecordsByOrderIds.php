@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Orders\Services\Fetch;
+namespace App\Orders\Services\Fetch\Support;
 
 use App\Persistence\Orders\OrderItemRecord;
 use App\Persistence\RecordQueryFactory;

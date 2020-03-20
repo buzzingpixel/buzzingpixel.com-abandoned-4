@@ -12,6 +12,7 @@ use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\Purchases\GetAccountPurchasesAction;
+use App\Http\Account\Purchases\View\GetAccountPurchaseViewAction;
 use App\Http\Account\Register\PostRegisterAction;
 use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Config\NoOp;
@@ -70,6 +71,11 @@ return static function (App $app) : void {
         $r->get(
             '/purchases',
             GetAccountPurchasesAction::class
+        );
+
+        $r->get(
+            '/purchases/view/{id}',
+            GetAccountPurchaseViewAction::class
         );
     })->add(RequireLogInAction::class);
 };

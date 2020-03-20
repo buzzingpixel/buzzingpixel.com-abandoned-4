@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Orders\Services\Fetch;
+namespace Tests\Orders\Services\Fetch\Support;
 
-use App\Orders\Services\Fetch\FetchOrderItemRecordsByOrderIds;
+use App\Orders\Services\Fetch\Support\FetchOrderItemRecordsByOrderIds;
 use App\Persistence\Orders\OrderItemRecord;
 use App\Persistence\RecordQuery;
 use App\Persistence\RecordQueryFactory;
