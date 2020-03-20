@@ -1,6 +1,9 @@
 {% set message = message ?? {} %}
 {% set headMarkup = (block('headMarkup') ?? headMarkup ?? false) %}
 {% set bodyMarkup = (block('bodyMarkup') ?? bodyMarkup ?? false) %}
+{% set section2title = (block('section2title') ?? section2title ?? false) %}
+{% set section2HeadMarkup = (block('section2HeadMarkup') ?? section2HeadMarkup ?? false) %}
+{% set section2BodyMarkup = (block('section2BodyMarkup') ?? section2BodyMarkup ?? false) %}
 {% set showMessagesFromFlash = showMessagesFromFlash ?? true %}
 
 <div class="TableLayout">
@@ -53,4 +56,23 @@
             {% endif %}
         </table>
     </div>
+    {% if section2title %}
+        <h3 class="TableLayout__Heading">{{ section2title|smartypants }}</h3>
+    {% endif %}
+    {% if section2HeadMarkup or section2BodyMarkup %}
+        <div class="TableLayout__Wrapper">
+            <table class="Table">
+                {% if section2HeadMarkup %}
+                    <thead class="Table__Head">
+                        {{ section2HeadMarkup|raw }}
+                    </thead>
+                {% endif %}
+                {% if section2BodyMarkup %}
+                    <tbody class="Table__Body">
+                        {{ section2BodyMarkup|raw }}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+    {% endif %}
 </div>

@@ -1,0 +1,126 @@
+{% do requireVariables({
+    order: 'App\\Orders\\Models\\OrderModel',
+}) %}
+
+{# @var \App\Orders\Models\OrderModel order #}
+
+{% extends 'Account/_AccountLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% block accountContent %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        order: order,
+        user: user,
+        section2title: 'Order Items',
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Item</td>
+                <td class="Table__HeadCol">Value</td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Order ID
+                </td>
+                <td class="Table__Col">
+                    {{ order.id }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Date
+                </td>
+                <td class="Table__Col">
+                    {{ order.date.setTimezone(user.timezone).format('Y/m/d') }}
+                </td>
+            </tr>
+            {% if order.subtotal != order.total %}
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        Subtotal
+                    </td>
+                    <td class="Table__Col">
+                        ${{ order.subtotal|number_format(2) }}
+                    </td>
+                </tr>
+            {% endif %}
+            {% if order.tax > 0 %}
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        Tax
+                    </td>
+                    <td class="Table__Col">
+                        ${{ order.tax|number_format(2) }}
+                    </td>
+                </tr>
+            {% endif %}
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Total
+                </td>
+                <td class="Table__Col">
+                    ${{ order.total|number_format(2) }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Name
+                </td>
+                <td class="Table__Col">
+                    {{ order.name|smartypants }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Company
+                </td>
+                <td class="Table__Col">
+                    {{ order.company|smartypants }}
+                </td>
+            </tr>
+            <tr class="Table__Row">
+                <td class="Table__Col">
+                    Address
+                </td>
+                <td class="Table__Col">
+                    {{ order.address|smartypants }}<br>
+                    {% if order.addressContinued %}
+                        {{ order.addressContinued|smartypants }}<br>
+                    {% endif %}
+                    {{ order.city|smartypants }}, {{ order.state|smartypants }} {{ order.postalCode }}, {{ order.country|smartypants }}
+                </td>
+            </tr>
+        {% endblock %}
+        {% block section2HeadMarkup %}
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Title</td>
+                <td class="Table__HeadCol">Price</td>
+                <td class="Table__HeadCol"></td>
+            </tr>
+        {% endblock %}
+        {% block section2BodyMarkup %}
+            {% for item in order.items %}
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        {{ item.itemTitle|smartypants }}
+                    </td>
+                    <td class="Table__Col">
+                        ${{ item.price|number_format(2) }}
+                    </td>
+                    <td class="Table__Col">
+                        {% if user.id == item.license.ownerUser.id %}
+                            <a href="/account/licenses/view/{{ item.license.id }}">
+                                View License &raquo;
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+

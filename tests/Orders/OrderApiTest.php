@@ -6,7 +6,8 @@ namespace Tests\Orders;
 
 use App\Orders\Models\OrderModel;
 use App\Orders\OrderApi;
-use App\Orders\Services\Fetch\FetchUsersOrdersMaster;
+use App\Orders\Services\Fetch\FetchUserOrderByid\FetchUserOrderById;
+use App\Orders\Services\Fetch\FetchUsersOrders\FetchUsersOrdersMaster;
 use App\Orders\Services\SaveOrder\SaveOrderMaster;
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
@@ -86,6 +87,48 @@ class OrderApiTest extends TestCase
         self::assertSame(
             $orderModels,
             $api->fetchCurrentUserOrders()
+        );
+    }
+
+    public function testFetchCurrentUserOrderById() : void
+    {
+        $order = new OrderModel();
+
+        $user = new UserModel();
+
+        $userApi = $this->createMock(UserApi::class);
+
+        $userApi->expects(self::once())
+            ->method('fetchLoggedInUser')
+            ->willReturn($user);
+
+        $service = $this->createMock(FetchUserOrderById::class);
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+                self::equalTo('foo-id'),
+            )
+            ->willReturn($order);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::at(0))
+            ->method('get')
+            ->with(self::equalTo(UserApi::class))
+            ->willReturn($userApi);
+
+        $di->expects(self::at(1))
+            ->method('get')
+            ->with(self::equalTo(FetchUserOrderById::class))
+            ->willReturn($service);
+
+        $api = new OrderApi($di);
+
+        self::assertSame(
+            $order,
+            $api->fetchCurrentUserOrderById('foo-id')
         );
     }
 }

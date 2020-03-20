@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Orders\Services\Fetch;
+namespace Tests\Orders\Services\Fetch\FetchUsersOrders;
 
 use App\Licenses\LicenseApi;
 use App\Licenses\Models\LicenseModel;
-use App\Orders\Services\Fetch\FetchOrderItemRecordsByOrderIds;
-use App\Orders\Services\Fetch\FetchUserOrderRecords;
-use App\Orders\Services\Fetch\FetchUsersOrdersMaster;
+use App\Orders\Services\Fetch\FetchUsersOrders\FetchUserOrderRecords;
+use App\Orders\Services\Fetch\FetchUsersOrders\FetchUsersOrdersMaster;
+use App\Orders\Services\Fetch\Support\FetchOrderItemRecordsByOrderIds;
 use App\Orders\Transformers\TransformOrderItemRecordToModel;
 use App\Orders\Transformers\TransformOrderRecordToModel;
 use App\Persistence\Constants;
