@@ -1,0 +1,76 @@
+table {
+    /* Reset */
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+
+    background-color: #fff;
+    border: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+}
+
+.PrintOrderBody {
+    background-color: #fff;
+    font-size: 14px;
+}
+
+.PrintOrder {
+    padding: 40px;
+}
+
+.PrintOrder__Header {
+    height: 56px;
+    margin-bottom: 60px;
+}
+
+.PrintOrder__HeaderLogo {
+    float: left;
+    height: 56px;
+    margin-right: 40px;
+    width: 200px;
+}
+
+.PrintOrder__HeaderOrderNumber {
+    text-align: right;
+}
+
+.PrintOrder__Addresses {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 40px;
+}
+
+.PrintOrder__Items {
+    width: 100%;
+}
+
+.PrintOrder__ItemsHead,
+.PrintOrder__ItemsHeadRow,
+.PrintOrder__ItemsHeadCol {
+    background-color: #000;
+    color: #fff;
+    text-align: left;
+}
+
+.PrintOrder__ItemsHeadCol,
+.PrintOrder__ItemsCol {
+    padding: 4px 10px;
+}
+
+.PrintOrder__ItemsCol {
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.PrintOrder__ItemsRow--Totals {
+    font-weight: var(--PrimaryFontBoldWeight);
+}
+
+.PrintOrder__ItemsCol--Key {
+    text-align: right;
+}
+
+.PrintOrder__ItemsCol--LastRow {
+    border-bottom: none;
+}
