@@ -12,6 +12,7 @@ use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\Profile\GetAccountProfileAction;
+use App\Http\Account\Profile\PostAccountProfileEditAction;
 use App\Http\Account\Purchases\GetAccountPurchasesAction;
 use App\Http\Account\Purchases\Printing\GetAccountPurchasePrintAction;
 use App\Http\Account\Purchases\View\GetAccountPurchaseViewAction;
@@ -88,6 +89,11 @@ return static function (App $app) : void {
         $r->get(
             '/profile',
             GetAccountProfileAction::class
+        );
+
+        $r->post(
+            '/profile',
+            PostAccountProfileEditAction::class
         );
     })->add(RequireLogInAction::class);
 };
