@@ -20,7 +20,7 @@
     } only %}
         {% block standardFormContent %}
             {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
-            {{ inputs.checkbox('Admin?', 'is_admin', user.isAdmin(), message) }}
+            {{ inputs.checkbox('Admin?', 'is_admin', user.isAdmin, message) }}
             {{ inputs.textInput('Email', 'email_address', user.emailAddress, message, 'email') }}
             {{ inputs.timeZoneChooser('Timezone', 'timezone', user.timezone.getName(), message) }}
             {{ inputs.textInput('First Name', 'first_name', user.firstName, message) }}
