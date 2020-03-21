@@ -16,6 +16,22 @@
         section2title: 'Order Items',
     } only %}
         {% block headMarkup %}
+            <tr class="Table__HeadControlRow">
+                <td class="Table__HeadControlCol" colspan="2">
+                    <a
+                        href="#1"
+                        onClick="window.open(
+                            '/account/purchases/print/{{ order.id }}',
+                            'Print Order',
+                            'resizable,height=800,width=800'
+                        );
+                        return false;"
+                        class="button"
+                    >
+                        Print
+                    </a>
+                </td>
+            </tr>
             <tr class="Table__HeadRow">
                 <td class="Table__HeadCol">Item</td>
                 <td class="Table__HeadCol">Value</td>
