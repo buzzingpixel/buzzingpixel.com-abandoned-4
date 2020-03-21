@@ -17,9 +17,20 @@
 {% endmacro %}
 
 {% macro textInput(label, name, value = '', message = {}, type = "text") %}
+    {% set labelText = label %}
+    {% set labelDescription = '' %}
+
+    {% if label is iterable %}
+        {% set labelText = label.label %}
+        {% set labelDescription = label.description %}
+    {% endif %}
+
     <div class="StandardForm__FieldSet">
         <label for="{{ name }}" class="label StandardForm__Label">
-            {{ label }}
+            {{ labelText|smartypants }}<br>
+            {% if labelDescription %}
+                <small><em>{{ labelDescription|smartypants|widont }}</em></small>
+            {% endif %}
         </label>
         <input
             type="{{ type }}"

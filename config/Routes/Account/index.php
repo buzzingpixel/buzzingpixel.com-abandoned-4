@@ -11,6 +11,7 @@ use App\Http\Account\Licenses\Notes\PostEditNotesAction;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
+use App\Http\Account\Profile\GetAccountProfileAction;
 use App\Http\Account\Purchases\GetAccountPurchasesAction;
 use App\Http\Account\Purchases\Printing\GetAccountPurchasePrintAction;
 use App\Http\Account\Purchases\View\GetAccountPurchaseViewAction;
@@ -82,6 +83,11 @@ return static function (App $app) : void {
         $r->get(
             '/purchases/print/{id}',
             GetAccountPurchasePrintAction::class
+        );
+
+        $r->get(
+            '/profile',
+            GetAccountProfileAction::class
         );
     })->add(RequireLogInAction::class);
 };

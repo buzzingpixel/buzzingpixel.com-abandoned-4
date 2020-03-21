@@ -1,0 +1,83 @@
+{% do requireVariables({
+    user: 'App\\Users\\Models\\UserModel',
+}) %}
+
+{# @var \App\Users\Models\UserModel user #}
+
+{% extends 'Account/_AccountLayout.twig' %}
+
+{% block accountContent %}
+    {% embed 'StandardForm/StandardFormEmbed.twig' with {
+        heading: 'Edit Your Profile (' ~ user.emailAddress ~ ')',
+        submitButtonContent: 'Submit',
+        user: user,
+    } only %}
+        {% block standardFormContent %}
+            {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+            {{ inputs.timeZoneChooser(
+                'Timezone',
+                'timezone',
+                user.timezone.getName(),
+                message
+            ) }}
+            {{ inputs.textInput(
+                'First Name',
+                'first_name',
+                user.firstName,
+                message
+            ) }}
+            {{ inputs.textInput(
+                'Last Name',
+                'last_name',
+                user.lastName,
+                message
+            ) }}
+            {{ inputs.textInput(
+                {
+                    label: 'Display Name',
+                    description: 'Used in public support requests to keep your real name non-public. Your first and last name will be used if left blank.',
+                },
+                'display_name',
+                user.displayName,
+                message
+            ) }}
+            {{ inputs.textInput(
+                'Billing Name',
+                'billing_name',
+                user.billingName,
+                message
+            ) }}
+            {{ inputs.textInput(
+                'Billing Company',
+                'billing_company',
+                user.billingCompany,
+                message
+            ) }}
+            {{ inputs.textInput(
+                'Billing Phone',
+                'billing_phone',
+                user.billingPhone,
+                message
+            ) }}
+            {{ inputs.textInput(
+                'Billing Address',
+                'billing_address',
+                user.billingAddress,
+                message
+            ) }}
+            {{ inputs.countryChooser(
+                'Billing Country',
+                'billing_country',
+                user.billingCountry,
+                message
+            ) }}
+            {{ inputs.textInput(
+                'Billing Postal Code',
+                'billing_postal_code',
+                user.billingPostalCode,
+                message
+            ) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
