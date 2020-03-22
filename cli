@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 use Config\SetupDockerDatabase;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application;
-use Whoops\Run as WhoopsRun;
 
 // Run bootstrap and get di container
 $bootstrap = require __DIR__ . '/config/bootstrap.php';
@@ -14,12 +14,11 @@ $bootstrap = require __DIR__ . '/config/bootstrap.php';
 $container = $bootstrap();
 
 // Create application
+/** @var Application $app */
 $app = $container->get(Application::class);
 
-// Use Whoops to catch the exceptions is Whoops exists
-if (class_exists(WhoopsRun::class)) {
-    $app->setCatchExceptions(false);
-}
+// We'll handle exceptions below so we can implement logging
+$app->setCatchExceptions(false);
 
 // Add the config command for setting up the database
 $app->add($container->get(SetupDockerDatabase::class));
@@ -53,4 +52,26 @@ foreach ($finalIterator as $files) {
 }
 
 // Run the application
-$app->run();
+try {
+    $app->run();
+} catch (Throwable $exception) {
+    // Get the logger
+    $logger = $container->get(LoggerInterface::class);
+
+    // Log the error
+    $logger->error(
+        'A console exception was thrown',
+        ['exception' => $exception]
+    );
+
+    // Handle the error
+    echo 'An exception was thrown' . PHP_EOL;
+
+    if (function_exists('dd')) {
+        dd($exception);
+    } else {
+        echo 'Message: ' . $exception->getMessage() . PHP_EOL;
+        echo 'File: ' . $exception->getFile() . PHP_EOL;
+        echo 'Line: ' . $exception->getLine() . PHP_EOL;
+    }
+}
