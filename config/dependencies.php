@@ -14,9 +14,14 @@ use buzzingpixel\cookieapi\CookieApi;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use buzzingpixel\cookieapi\PhpFunctions;
 use Config\Factories\TwigEnvironmentFactory;
+use Config\Logging\Logger;
+use Monolog\Handler\RollbarHandler;
+use Monolog\Handler\StreamHandler as MonologStreamHandler;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
+use Rollbar\Rollbar;
 use Slim\Csrf\Guard as CsrfGuard;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -69,6 +74,40 @@ return [
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),
+    LoggerInterface::class => static function () {
+        $logLevel = getenv('LOG_LEVEL') ?: 'DEBUG';
+
+        $logger = new Logger('app');
+
+        $logPath = getenv('LOG_FILE');
+
+        if ($logPath !== false) {
+            $logger->pushHandler(
+                new MonologStreamHandler(
+                    $logPath,
+                    constant(Logger::class . '::' . $logLevel),
+                ),
+            );
+        }
+
+        $rollBarAccessToken = getenv('ROLLBAR_ACCESS_TOKEN');
+
+        if ($rollBarAccessToken !== false) {
+            Rollbar::init(
+                [
+                    'access_token' => $rollBarAccessToken,
+                    'environment' => getenv('ROLLBAR_ENVIRONMENT') ?:
+                        'dev',
+                ]
+            );
+
+            $logger->pushHandler(
+                new RollbarHandler(Rollbar::logger())
+            );
+        }
+
+        return $logger;
+    },
     Mandrill::class => static function () {
         return new Mandrill(getenv('MANDRILL_API_KEY'));
     },
