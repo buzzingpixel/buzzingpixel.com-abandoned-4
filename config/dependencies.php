@@ -7,6 +7,9 @@ use App\Content\Changelog\ParseChangelogFromMarkdownFile;
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Modules\ExtractModulesFromPath;
 use App\Content\Software\ExtractSoftwareInfoFromPath;
+use App\Email\Adapters\MandrillSendMailAdapter;
+use App\Email\Configuration\MandrillConfig;
+use App\Email\Interfaces\SendMailAdapter;
 use buzzingpixel\cookieapi\CookieApi;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use buzzingpixel\cookieapi\PhpFunctions;
@@ -66,6 +69,18 @@ return [
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),
+    Mandrill::class => static function () {
+        return new Mandrill(getenv('MANDRILL_API_KEY'));
+    },
+    MandrillConfig::class => static function () {
+        $conf = new MandrillConfig();
+
+        $conf->fromEmail = (string) getenv('WEBMASTER_EMAIL_ADDRESS');
+
+        $conf->fromName = (string) getenv('WEBMASTER_NAME');
+
+        return $conf;
+    },
     ParseChangelogFromMarkdownFile::class => autowire(ParseChangelogFromMarkdownFile::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
@@ -114,6 +129,7 @@ return [
         }
     },
     ResponseFactoryInterface::class => autowire(ResponseFactory::class),
+    SendMailAdapter::class => autowire(MandrillSendMailAdapter::class),
     TwigEnvironment::class => static function (ContainerInterface $di) {
         return (new TwigEnvironmentFactory())($di);
     },
