@@ -125,6 +125,12 @@ parameters:
         -
             message: '#Result of || is always true\.#'
             path: %currentWorkingDirectory%/tests/Users/Services/GeneratePasswordResetTokenTest.php
+        -
+            message: '#Access to an undefined property Mandrill::\$messages\.#'
+            path: %currentWorkingDirectory%/src/Email/Adapters/MandrillSendMailAdapter.php
+        -
+            message: '#Access to an undefined property Mandrill&PHPUnit\\Framework\\MockObject\\MockObject::\$messages\.#'
+            path: %currentWorkingDirectory%/tests/Email/Adapters/MandrillSendMailAdapterTest.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php
