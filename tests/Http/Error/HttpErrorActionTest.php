@@ -11,6 +11,7 @@ use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Factory\ResponseFactory;
 
@@ -21,16 +22,30 @@ class HttpErrorActionTest extends TestCase
     /** @var MockObject&ServerRequestInterface */
     private $request;
 
+    /** @var MockObject&LoggerInterface */
+    private $logger;
+
     protected function setUp() : void
     {
+        $this->logger = $this->createMock(
+            LoggerInterface::class
+        );
+
         $responseFactory = new ResponseFactory();
 
         $this->action = new HttpErrorAction(
-            new Error404Responder($responseFactory),
-            new Error500Responder($responseFactory)
+            new Error404Responder(
+                $responseFactory
+            ),
+            new Error500Responder(
+                $responseFactory,
+                $this->logger
+            )
         );
 
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request = $this->createMock(
+            ServerRequestInterface::class
+        );
 
         $this->request = $request;
     }
@@ -39,25 +54,56 @@ class HttpErrorActionTest extends TestCase
     {
         $exception = new HttpNotFoundException($this->request);
 
-        $response = ($this->action)($this->request, $exception);
+        $this->logger->expects(self::never())
+            ->method(self::anything());
+
+        $response = ($this->action)(
+            $this->request,
+            $exception
+        );
 
         self::assertSame(404, $response->getStatusCode());
 
-        self::assertSame('Page not found', $response->getReasonPhrase());
+        self::assertSame(
+            'Page not found',
+            $response->getReasonPhrase()
+        );
 
-        self::assertSame('Page not found', (string) $response->getBody());
+        self::assertSame(
+            'Page not found',
+            (string) $response->getBody()
+        );
     }
 
     public function testError500() : void
     {
         $exception = new Exception();
 
-        $response = ($this->action)($this->request, $exception);
+        $this->logger->expects(self::once())
+            ->method('error')
+            ->with(
+                self::equalTo('An exception was thrown'),
+                self::equalTo(['exception' => $exception]),
+            );
 
-        self::assertSame(500, $response->getStatusCode());
+        $response = ($this->action)(
+            $this->request,
+            $exception
+        );
 
-        self::assertSame('An internal server error occurred', $response->getReasonPhrase());
+        self::assertSame(
+            500,
+            $response->getStatusCode()
+        );
 
-        self::assertSame('An internal server error occurred', (string) $response->getBody());
+        self::assertSame(
+            'An internal server error occurred',
+            $response->getReasonPhrase()
+        );
+
+        self::assertSame(
+            'An internal server error occurred',
+            (string) $response->getBody()
+        );
     }
 }

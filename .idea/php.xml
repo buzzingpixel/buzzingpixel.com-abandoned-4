@@ -168,6 +168,7 @@
       <path value="$PROJECT_DIR$/vendor/dg/bypass-finals" />
       <path value="$PROJECT_DIR$/vendor/mandrill/mandrill" />
       <path value="$PROJECT_DIR$/vendor/html2text/html2text" />
+      <path value="$PROJECT_DIR$/vendor/rollbar/rollbar" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
