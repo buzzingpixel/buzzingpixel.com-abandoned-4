@@ -36,7 +36,9 @@ class Payload
     public function __construct(string $status, array $result = [])
     {
         if ($this->isInitialized) {
-            throw new LogicException('Payload instances can only be initialized once.');
+            throw new LogicException(
+                'Payload instances can only be initialized once.'
+            );
         }
 
         if (! defined(self::class . '::STATUS_' . $status)) {
