@@ -1,0 +1,37 @@
+{
+    // General
+    "editor.renderIndentGuides": true,
+    "editor.rulers": [80, 120],
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+
+    // PHPSAB (PHPCS)
+    "phpsab.fixerEnable": false,
+    "phpsab.snifferEnable": true,
+    "phpsab.executablePathCS": "./vendor/bin/phpcs",
+    "phpsab.standard": "./phpcs.xml",
+    "phpsab.snifferMode": "onType",
+    "phpsab.snifferShowSources": true,
+
+    // PHP Docblocker
+    "php-docblocker.gap": true,
+    "php-docblocker.useShortNames": true,
+
+    // Tasks on save
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "src\\/.*?\\.php$",
+                "cmd": "${workspaceRoot}/vendor/bin/phpcbf ${file} --standard=${workspaceRoot}/phpcs.xml",
+            },
+            {
+                "match": "src\\/.*?\\.php$",
+                "cmd": "${workspaceRoot}/vendor/bin/php-cs-fixer fix ${file} --using-cache=no --config=${workspaceRoot}/.php_cs",
+            },
+            {
+                "match": "assetsSource\\/js\\/.*?\\.js$|assetsSource\\\\js\\\\.*?\\.js$",
+                "cmd": "${workspaceRoot}/platform/node_modules/.bin/eslint --fix ${file}",
+            },
+        ],
+    },
+}
