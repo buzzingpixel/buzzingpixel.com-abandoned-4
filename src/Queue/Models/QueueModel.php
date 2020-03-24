@@ -46,5 +46,5 @@ class QueueModel
 
     public DateTimeImmutable $addedAt;
 
-    public ?DateTimeImmutable $finishedAt;
+    public ?DateTimeImmutable $finishedAt = null;
 }
