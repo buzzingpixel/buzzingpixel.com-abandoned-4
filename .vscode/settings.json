@@ -13,12 +13,6 @@
     "phpsab.snifferMode": "onType",
     "phpsab.snifferShowSources": true,
 
-    // devsense
-    "php.problems.exclude": {
-        "*": true,
-    },
-    "php.format.codeStyle" : "PSR-2",
-
     // Tasks on save
     "emeraldwalk.runonsave": {
         "commands": [
