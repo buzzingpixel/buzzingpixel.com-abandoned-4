@@ -9,9 +9,6 @@
             "pathMappings": {
                 "/opt/project": "${workspaceRoot}"
             },
-            "ignore": [
-                "**/vendor/**/*.php"
-            ],
             "xdebugSettings": {
                 "show_hidden": 1
             },
@@ -21,9 +18,6 @@
             "type": "php",
             "request": "launch",
             "port": 9000,
-            "ignore": [
-                "**/vendor/**/*.php"
-            ],
             "xdebugSettings": {
                 "show_hidden": 1
             },
