@@ -24,7 +24,7 @@ class TransformQueueModelToRecord
 
         $record->has_started = $model->hasStarted ? '1' : '0';
 
-        $record->is_running = $model->isRunning ? '1' : '1';
+        $record->is_running = $model->isRunning ? '1' : '0';
 
         $record->assume_dead_after = $model->assumeDeadAfter->format(
             DateTimeInterface::ATOM
