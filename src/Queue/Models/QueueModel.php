@@ -11,7 +11,7 @@ use function assert;
 use function is_array;
 
 /**
- * @property QueueItemModel[] $Items
+ * @property QueueItemModel[] $items
  */
 class QueueModel
 {
@@ -75,6 +75,7 @@ class QueueModel
 
         assert(is_array($value));
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($value as $item) {
             assert($item instanceof QueueItemModel);
 

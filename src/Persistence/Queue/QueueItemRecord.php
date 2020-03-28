@@ -20,11 +20,11 @@ class QueueItemRecord extends Record
     /** @var int|bool|string */
     public $is_finished = '0';
 
-    public string $finished_at = '';
+    public ?string $finished_at = '';
 
     public string $class = '';
 
     public string $method = '';
 
-    public string $context = '';
+    public ?string $context = null;
 }

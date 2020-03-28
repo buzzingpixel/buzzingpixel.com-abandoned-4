@@ -12,14 +12,16 @@ class QueueItemModel
 
     public QueueModel $queue;
 
+    public int $runOrder = 1;
+
     public bool $isFinished = false;
 
-    public ?DateTimeImmutable $finishedAt;
+    public ?DateTimeImmutable $finishedAt = null;
 
     public string $class = '';
 
     public string $method = '__invoke';
 
     /** @var mixed[]|null */
-    public ?array $context;
+    public ?array $context = null;
 }

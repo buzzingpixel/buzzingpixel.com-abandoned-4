@@ -39,5 +39,5 @@ class QueueRecord extends Record
 
     public string $added_at = '';
 
-    public string $finished_at = '';
+    public ?string $finished_at = null;
 }
