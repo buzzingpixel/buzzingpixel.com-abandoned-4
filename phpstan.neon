@@ -160,6 +160,9 @@ parameters:
         - %currentWorkingDirectory%/tests/Licenses/LicenseApiTest.php
         - %currentWorkingDirectory%/src/Licenses/LicenseApi.php
         - %currentWorkingDirectory%/tests/Http/Account/Licenses/GetAccountLicensesResponderTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/AddToQueueTest.php
+        - %currentWorkingDirectory%/tests/Queue/QueueApiTest.php
+        - %currentWorkingDirectory%/tests/Queue/Models/QueueModelTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
