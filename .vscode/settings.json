@@ -17,11 +17,11 @@
     "emeraldwalk.runonsave": {
         "commands": [
             {
-                "match": "src\\/.*?\\.php$",
+                "match": "src\\/.*?\\.php$|tests\\/.*?\\.php$",
                 "cmd": "${workspaceRoot}/vendor/bin/phpcbf ${file} --standard=${workspaceRoot}/phpcs.xml",
             },
             {
-                "match": "src\\/.*?\\.php$",
+                "match": "src\\/.*?\\.php$|tests\\/.*?\\.php$",
                 "cmd": "${workspaceRoot}/vendor/bin/php-cs-fixer fix ${file} --using-cache=no --config=${workspaceRoot}/.php_cs",
             },
             {
