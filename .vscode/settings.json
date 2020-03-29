@@ -30,4 +30,17 @@
             },
         ],
     },
+
+    // Database Connections
+    "sqltools.connections": [
+        {
+            "database": "buzzingpixel",
+            "dialect": "PostgreSQL",
+            "name": "BuzzingPixelDev",
+            "password": "secret",
+            "port": 18974,
+            "server": "localhost",
+            "username": "buzzingpixel"
+        }
+    ],
 }
