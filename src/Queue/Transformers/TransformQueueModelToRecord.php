@@ -32,6 +32,10 @@ class TransformQueueModelToRecord
 
         if ($setInitial) {
             $record->initial_assume_dead_after = $record->assume_dead_after;
+        } else {
+            $record->initial_assume_dead_after = $model->assumeDeadAfter->format(
+                DateTimeInterface::ATOM
+            );
         }
 
         $record->is_finished = $model->isFinished ? '1' : '0';
