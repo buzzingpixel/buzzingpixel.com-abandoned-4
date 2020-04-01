@@ -29,6 +29,7 @@
             <ul class="TabbedLayout__Tabs">
                 {{ _self.tab('software', 'Software', activeTab) }}
                 {{ _self.tab('users', 'Users', activeTab) }}
+                {{ _self.tab('queue', 'Queue', activeTab) }}
             </ul>
             <div class="TabbedLayout__Content">
                 {{ block('adminContent') ?? '' }}

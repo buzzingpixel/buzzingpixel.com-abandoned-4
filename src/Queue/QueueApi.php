@@ -9,6 +9,7 @@ use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\Services\AddToQueue;
 use App\Queue\Services\FetchNextQueueItem;
+use App\Queue\Services\FetchStalledItems;
 use App\Queue\Services\MarkItemAsStarted;
 use App\Queue\Services\MarkStoppedDueToError;
 use App\Queue\Services\PostRun;
@@ -86,5 +87,18 @@ class QueueApi
         assert($service instanceof MarkStoppedDueToError);
 
         $service($queueModel, $exception);
+    }
+
+    /**
+     * @return QueueModel[]
+     */
+    public function fetchStalledItems() : array
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchStalledItems::class);
+
+        assert($service instanceof FetchStalledItems);
+
+        return $service();
     }
 }

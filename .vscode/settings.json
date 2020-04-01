@@ -13,6 +13,9 @@
     "phpsab.snifferMode": "onType",
     "phpsab.snifferShowSources": true,
 
+    // Twig
+    "symfonyHelper.templatesFolder": "assetsSource/templates",
+
     // Tasks on save
     "emeraldwalk.runonsave": {
         "commands": [
