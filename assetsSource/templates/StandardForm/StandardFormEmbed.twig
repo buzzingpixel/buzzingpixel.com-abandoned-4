@@ -2,6 +2,8 @@
 {% set heading = (block('heading') ?? heading ?? false) %}
 {% set submitButtonContent = (block('submitButtonContent') ?? submitButtonContent ?? false) %}
 {% set message = message ?? false %}
+{% set useStandardMaxWidth = useStandardMaxWidth ?? true %}
+{% set actionSelectorOptions = actionSelectorOptions ?? [] %}
 
 {% if not message %}
     {% set message = flash('PostMessage') %}
@@ -14,7 +16,7 @@
 
 <form
     method="{{ method }}"
-    class="form StandardForm StandardForm--IsMaxWidth800"
+    class="form StandardForm{% if useStandardMaxWidth %} StandardForm--IsMaxWidth800{% endif %}"
     enctype="multipart/form-data"
 >
     <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
@@ -29,6 +31,10 @@
     {{ inputs.displayMessage(message) }}
 
     {{ block('standardFormContent') ?? standardFormContent ?? '' }}
+
+    {% if actionSelectorOptions|length > 0 %}
+        {{ inputs.actionSelectorOptions(actionSelectorOptions) }}
+    {% endif %}
 
     {% if submitButtonContent %}
         {{ inputs.submitButton(submitButtonContent) }}
