@@ -12,72 +12,79 @@
 {% endif %}
 
 {% block adminContent %}
-    {% embed 'StandardForm/StandardFormEmbed.twig' with {
-        useStandardMaxWidth: false,
-        actionSelectorOptions: [
-            {
-                value: '',
-                content: '-- Select an Action --',
-                selected: true,
-            },
-            {
-                value: 'restart',
-                content: 'Restart',
-            },
-            {
-                value: 'delete',
-                content: 'Delete',
-            },
-        ],
-        submitButtonContent: 'Submit',
-    } %}
-        {% block standardFormContent %}
-            {% embed 'TableLayout/TableLayoutEmbed.twig' with {
-                message: message,
-                stalledItems: stalledItems,
-            } only %}
-                {% block headMarkup %}
-                    <tr class="Table__HeadRow">
-                        <td class="Table__HeadCol">Name</td>
-                        <td class="Table__HeadCol">Handle</td>
-                        <td class="Table__HeadCol">Percent Complete</td>
-                        <td class="Table__HeadCol">Error</td>
-                        <td class="Table__HeadCol"></td>
-                    </tr>
-                {% endblock %}
-                {% block bodyMarkup %}
-                    {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
-
-                    {% if stalledItems|length < 1 %}
-                        <tr class="Table__Row Table__Row--IsNoResultsRow">
-                            <td class="Table__Col Table__Col--IsNoResultsRow" colspan="7">
-                                No stalled tasks.
-                            </td>
+    {% if stalledItems|length > 0 %}
+        {% embed 'StandardForm/StandardFormEmbed.twig' with {
+            useStandardMaxWidth: false,
+            heading: 'Stalled Items',
+            actionSelectorOptions: [
+                {
+                    value: '',
+                    content: '-- Select an Action --',
+                    selected: true,
+                },
+                {
+                    value: 'restart',
+                    content: 'Restart',
+                },
+                {
+                    value: 'delete',
+                    content: 'Delete',
+                },
+                {
+                    value: 'clear_all',
+                    content: 'Clear All',
+                },
+            ],
+            submitButtonContent: 'Submit',
+        } %}
+            {% block standardFormContent %}
+                {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+                    message: message,
+                    stalledItems: stalledItems,
+                } only %}
+                    {% block headMarkup %}
+                        <tr class="Table__HeadRow">
+                            <td class="Table__HeadCol">Name</td>
+                            <td class="Table__HeadCol">Handle</td>
+                            <td class="Table__HeadCol">Percent Complete</td>
+                            <td class="Table__HeadCol">Error</td>
+                            <td class="Table__HeadCol"></td>
                         </tr>
-                    {% endif %}
-                    {% for item in stalledItems %}
-                        {# @var \App\Queue\Models\QueueModel item #}
+                    {% endblock %}
+                    {% block bodyMarkup %}
+                        {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
 
-                        <tr class="Table__Row">
-                            <td class="Table__Col">
-                                {{ item.displayName|smartypants }}
-                            </td>
-                            <td class="Table__Col">
-                                {{ item.handle }}
-                            </td>
-                            <td class="Table__Col">
-                                {{ item.percentComplete }}
-                            </td>
-                            <td class="Table__Col" >
-                                <pre style="max-width: 60vw"><code>{{ item.errorMessage }}</code></pre>
-                            </td>
-                            <td class="Table__Col">
-                                {{ inputs.checkbox('', 'selected_items[]', false) }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% endblock %}
-            {% endembed %}
-        {% endblock %}
-    {% endembed %}
+                        {% if stalledItems|length < 1 %}
+                            <tr class="Table__Row Table__Row--IsNoResultsRow">
+                                <td class="Table__Col Table__Col--IsNoResultsRow" colspan="7">
+                                    No stalled tasks.
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for item in stalledItems %}
+                            {# @var \App\Queue\Models\QueueModel item #}
+
+                            <tr class="Table__Row">
+                                <td class="Table__Col">
+                                    {{ item.displayName|smartypants }}
+                                </td>
+                                <td class="Table__Col">
+                                    {{ item.handle }}
+                                </td>
+                                <td class="Table__Col">
+                                    {{ item.percentComplete }}
+                                </td>
+                                <td class="Table__Col" >
+                                    <pre style="max-width: 55vw;"><code style="max-height: 200px;">{{ item.errorMessage }}</code></pre>
+                                </td>
+                                <td class="Table__Col">
+                                    {{ inputs.checkbox('', 'selected_items[]', false) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 {% endblock %}
