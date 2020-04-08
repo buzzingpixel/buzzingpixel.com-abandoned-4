@@ -13,7 +13,7 @@ use Throwable;
 use function assert;
 use function in_array;
 use function is_array;
-use function json_decode;
+use function Safe\json_decode;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 

@@ -131,6 +131,24 @@ parameters:
         -
             message: '#Access to an undefined property Mandrill&PHPUnit\\Framework\\MockObject\\MockObject::\$messages\.#'
             path: %currentWorkingDirectory%/tests/Email/Adapters/MandrillSendMailAdapterTest.php
+        -
+            message: '#Parameter \#2 $time of static method DateTimeImmutable::createFromFormat\(\) expects string, string|null given\.#'
+            path: %currentWorkingDirectory%/src/Queue/Transformers/QueueRecordToModel.php
+        -
+            message: '#Parameter \#2 $time of static method DateTimeImmutable::createFromFormat\(\) expects string, string|null given\.#'
+            path: %currentWorkingDirectory%/src/Queue/Transformers/QueueItemRecordToModel.php
+        -
+            message: '#Variable method call on mixed\.#'
+            path: %currentWorkingDirectory%/src/Queue/Services/RunItem.php
+        -
+            message: '#Parameter \#1 $input of function array_walk expects array, App\\Persistence\\Queue\\QueueItemRecord|array given\.#'
+            path: %currentWorkingDirectory%/src/Queue/Services/AbstractFetch.php
+        -
+            message: '#Using \$this outside a class\.#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/Queue.php
+        -
+            message: '#Undefined variable: \$this#'
+            path: %currentWorkingDirectory%/config/Routes/Admin/Queue.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php
