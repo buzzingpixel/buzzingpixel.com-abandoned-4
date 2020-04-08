@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\Services\AddToQueue;
+use App\Queue\Services\FetchIncomplete;
 use App\Queue\Services\FetchNextQueueItem;
 use App\Queue\Services\FetchStalledItems;
 use App\Queue\Services\MarkItemAsStarted;
@@ -98,6 +99,19 @@ class QueueApi
         $service = $this->di->get(FetchStalledItems::class);
 
         assert($service instanceof FetchStalledItems);
+
+        return $service();
+    }
+
+    /**
+     * @return QueueModel[]
+     */
+    public function fetchIncomplete() : array
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchIncomplete::class);
+
+        assert($service instanceof FetchIncomplete);
 
         return $service();
     }

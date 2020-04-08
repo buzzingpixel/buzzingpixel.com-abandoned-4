@@ -7,9 +7,7 @@ namespace App\Queue\Services;
 use App\Persistence\Queue\QueueRecord;
 use App\Queue\Models\QueueModel;
 
-// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
-
-class FetchStalledItems extends AbstractFetch
+class FetchIncomplete extends AbstractFetch
 {
     /**
      * @return QueueModel[]
@@ -19,7 +17,7 @@ class FetchStalledItems extends AbstractFetch
         $records = ($this->recordQueryFactory)(
             new QueueRecord()
         )
-            ->withWhere('finished_due_to_error', '1')
+            ->withWhere('is_finished', '0')
             ->withOrder('added_at', 'asc')
             ->all();
 

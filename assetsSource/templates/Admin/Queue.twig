@@ -1,10 +1,15 @@
 {% do requireVariables({
     stalledItems: 'array',
+    incompleteItems: 'array',
 }) %}
 
 {# @var \App\Queue\Models\QueueModel stalledItems #}
+{# @var \App\Queue\Models\QueueModel incompleteItems #}
 
 {% extends 'Admin/_AdminLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
 
 {% set message = flash('PostMessage') %}
 {% if message[0] is defined %}
@@ -86,5 +91,47 @@
                 {% endembed %}
             {% endblock %}
         {% endembed %}
+        <br><br>
     {% endif %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        incompleteItems: incompleteItems,
+        sectionTitle: 'Items In Queue',
+        user: user,
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Name</td>
+                <td class="Table__HeadCol">Handle</td>
+                <td class="Table__HeadCol">Percent Complete</td>
+                <td class="Table__HeadCol">Added At</td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            {% if incompleteItems|length < 1 %}
+                <tr class="Table__Row Table__Row--IsNoResultsRow">
+                    <td class="Table__Col Table__Col--IsNoResultsRow" colspan="7">
+                        No items are in the queue.
+                    </td>
+                </tr>
+            {% endif %}
+            {% for item in incompleteItems %}
+                {# @var \App\Queue\Models\QueueModel item #}
+
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        {{ item.displayName|smartypants }}
+                    </td>
+                    <td class="Table__Col">
+                        {{ item.handle }}
+                    </td>
+                    <td class="Table__Col">
+                        {{ item.percentComplete }}
+                    </td>
+                    <td>
+                        {{ item.addedAt.setTimezone(user.timezone).format('Y-m-d h:i a') }}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

@@ -32,6 +32,7 @@ class GetAdminQueueAction
                 ),
                 'activeTab' => 'queue',
                 'stalledItems' => $this->queueApi->fetchStalledItems(),
+                'incompleteItems' => $this->queueApi->fetchIncomplete(),
             ],
         );
     }
