@@ -66,6 +66,7 @@ abstract class AbstractFetch
         foreach ($itemRecords as $record) {
             assert($record instanceof QueueItemRecord);
 
+            /** @psalm-suppress InvalidPropertyAssignmentValue */
             $this->mappedItemRecords[$record->queue_id][] = $record;
         }
 
@@ -82,6 +83,7 @@ abstract class AbstractFetch
 
         $itemRecords = $this->mappedItemRecords[$queueModel->id] ?? [];
 
+        /** @psalm-suppress PossiblyInvalidArgument */
         array_walk(
             $itemRecords,
             fn(QueueItemRecord $itemRecord) => ($this->queueItemRecordToModel)(

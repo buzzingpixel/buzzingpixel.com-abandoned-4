@@ -18,8 +18,10 @@ class RunItem
 
     public function __invoke(QueueItemModel $item) : void
     {
+        /** @psalm-suppress MixedAssignment */
         $class = $this->di->get($item->class);
 
+        /** @psalm-suppress MixedMethodCall */
         $class->{$item->method}($item->context);
     }
 }

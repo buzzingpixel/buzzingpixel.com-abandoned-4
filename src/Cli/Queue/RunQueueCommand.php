@@ -35,7 +35,7 @@ class RunQueueCommand extends Command
     {
         $this->logger->info('Queue command is running next item in queue');
 
-        $item = $this->queueApi->fetchNextQueueItem(true);
+        $item = $this->queueApi->fetchNextQueueItem();
 
         if ($item === null) {
             $msg = 'There are no items in the queue';

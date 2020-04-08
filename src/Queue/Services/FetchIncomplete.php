@@ -14,6 +14,7 @@ class FetchIncomplete extends AbstractFetch
      */
     public function __invoke() : array
     {
+        /** @var QueueRecord[] $records */
         $records = ($this->recordQueryFactory)(
             new QueueRecord()
         )

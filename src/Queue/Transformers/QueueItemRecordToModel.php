@@ -12,6 +12,7 @@ use DateTimeImmutable;
 use Throwable;
 use function assert;
 use function in_array;
+use function is_array;
 use function json_decode;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -37,6 +38,7 @@ class QueueItemRecordToModel
         );
 
         try {
+            /** @psalm-suppress PossiblyNullArgument */
             $finishedAt = DateTimeImmutable::createFromFormat(
                 Constants::POSTGRES_OUTPUT_FORMAT,
                 $record->finished_at,
@@ -53,7 +55,12 @@ class QueueItemRecordToModel
 
         $model->method = $record->method;
 
-        $model->context = json_decode($record->context, true);
+        /** @psalm-suppress MixedAssignment */
+        $context = json_decode((string) $record->context, true);
+
+        if (is_array($context)) {
+            $model->context = $context;
+        }
 
         return $model;
     }

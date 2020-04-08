@@ -71,6 +71,7 @@ class QueueRecordToModel
         $model->addedAt = $addedAt;
 
         try {
+            /** @psalm-suppress PossiblyNullArgument */
             $finishedAt = DateTimeImmutable::createFromFormat(
                 Constants::POSTGRES_OUTPUT_FORMAT,
                 $record->finished_at,
