@@ -142,7 +142,7 @@ parameters:
             path: %currentWorkingDirectory%/src/Queue/Services/RunItem.php
         -
             message: '#Parameter \#1 $input of function array_walk expects array, App\\Persistence\\Queue\\QueueItemRecord|array given\.#'
-            path: %currentWorkingDirectory%/src/Queue/Services/AbstractFetch.php
+            path: %currentWorkingDirectory%/src/Queue/Services/FetchHelper.php
         -
             message: '#Using \$this outside a class\.#'
             path: %currentWorkingDirectory%/config/Routes/Admin/Queue.php
@@ -181,6 +181,16 @@ parameters:
         - %currentWorkingDirectory%/tests/Queue/Services/AddToQueueTest.php
         - %currentWorkingDirectory%/tests/Queue/QueueApiTest.php
         - %currentWorkingDirectory%/tests/Queue/Models/QueueModelTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/FetchIncompleteTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/FetchHelperTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/FetchNextQueueItemTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/FetchStalledItemsTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/MarkItemAsStartedTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/MarkStoppedDueToErrorTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/PostRunTest.php
+        - %currentWorkingDirectory%/tests/Queue/Services/RunItemTest.php
+        - %currentWorkingDirectory%/tests/Http/Admin/Queue/GetAdminQueueActionTest.php
+        - %currentWorkingDirectory%/tests/Cli/Queue/RunQueueCommandTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

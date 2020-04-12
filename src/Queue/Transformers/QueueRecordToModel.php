@@ -45,6 +45,8 @@ class QueueRecordToModel
 
         assert($assumeDeadAfter instanceof DateTimeImmutable);
 
+        $model->assumeDeadAfter = $assumeDeadAfter;
+
         $model->isFinished = in_array(
             $record->is_finished,
             ['1', 1, 'true', true],

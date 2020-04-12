@@ -16,10 +16,9 @@ use function assert;
 use function count;
 
 // phpcs:disable SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix
-
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
-abstract class AbstractFetch
+class FetchHelper
 {
     protected RecordQueryFactory $recordQueryFactory;
     protected QueueRecordToModel $queueRecordToModel;
@@ -43,7 +42,7 @@ abstract class AbstractFetch
      *
      * @return QueueModel[]
      */
-    protected function processRecords(array $records) : array
+    public function processRecords(array $records) : array
     {
         $recordIds = array_map(
             static fn(QueueRecord $r) => $r->id,

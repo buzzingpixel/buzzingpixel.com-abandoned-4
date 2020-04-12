@@ -46,14 +46,12 @@ class PostRun
 
         $item->queue->percentComplete = $finishedItems / $totalItems * 100;
 
-        if ($totalItems >= $finishedItems) {
-            $item->queue->percentComplete = 100;
+        if ($finishedItems >=$totalItems) {
+            $item->queue->percentComplete = 100.0;
 
             $item->queue->isFinished = true;
 
-            $item->finishedAt = $item->finishedAt;
-        } elseif ($finishedItems <= 0) {
-            $item->queue->percentComplete = 0;
+            $item->queue->finishedAt = $item->finishedAt;
         }
 
         $queueRecord = ($this->queueModelToRecord)($item->queue);

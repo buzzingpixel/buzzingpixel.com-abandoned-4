@@ -55,8 +55,12 @@ class QueueItemRecordToModel
 
         $model->method = $record->method;
 
-        /** @psalm-suppress MixedAssignment */
-        $context = json_decode((string) $record->context, true);
+        try {
+            /** @psalm-suppress MixedAssignment */
+            $context = json_decode((string) $record->context, true);
+        } catch (Throwable $e) {
+            $context = null;
+        }
 
         if (is_array($context)) {
             $model->context = $context;

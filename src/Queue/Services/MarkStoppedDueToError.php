@@ -10,18 +10,19 @@ use App\Queue\Transformers\TransformQueueModelToRecord;
 use DateTimeImmutable;
 use DateTimeZone;
 use Throwable;
+use function get_class;
 use const PHP_EOL;
 
 class MarkStoppedDueToError
 {
-    private TransformQueueModelToRecord $queueModeToRecord;
+    private TransformQueueModelToRecord $queueModelToRecord;
     private SaveExistingRecord $saveExistingRecord;
 
     public function __construct(
-        TransformQueueModelToRecord $queueModeToRecord,
+        TransformQueueModelToRecord $queueModelToRecord,
         SaveExistingRecord $saveExistingRecord
     ) {
-        $this->queueModeToRecord  = $queueModeToRecord;
+        $this->queueModelToRecord = $queueModelToRecord;
         $this->saveExistingRecord = $saveExistingRecord;
     }
 
@@ -33,7 +34,8 @@ class MarkStoppedDueToError
 
         if ($e !== null) {
             $eol  = PHP_EOL . PHP_EOL;
-            $msg  = 'Error Code: ' . $e->getCode() . $eol;
+            $msg .= 'Exception Type: ' . get_class($e) . $eol;
+            $msg .= 'Error Code: ' . $e->getCode() . $eol;
             $msg .= 'File: ' . $e->getFile() . $eol;
             $msg .= 'Line: ' . $e->getLine() . $eol;
             $msg .= 'Message: ' . $e->getMessage() . $eol;
@@ -49,7 +51,7 @@ class MarkStoppedDueToError
             new DateTimeZone('UTC'),
         );
 
-        $record = ($this->queueModeToRecord)($model);
+        $record = ($this->queueModelToRecord)($model);
 
         ($this->saveExistingRecord)($record);
     }
