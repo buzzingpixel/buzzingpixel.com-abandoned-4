@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Admin\Queue\GetAdminQueueAction;
+use App\Http\Admin\Queue\PostAdminQueueAction;
 use Config\NoOp;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -12,9 +13,8 @@ return static function (RouteCollectorProxy $r) : void {
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
 
-        $r->get(
-            '',
-            GetAdminQueueAction::class
-        );
+        $r->get('', GetAdminQueueAction::class);
+
+        $r->post('', PostAdminQueueAction::class);
     });
 };

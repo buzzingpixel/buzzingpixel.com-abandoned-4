@@ -8,12 +8,16 @@ use App\Payload\Payload;
 use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\Services\AddToQueue;
+use App\Queue\Services\ClearAllStalledItems;
+use App\Queue\Services\DeleteQueuesByIds;
 use App\Queue\Services\FetchIncomplete;
 use App\Queue\Services\FetchNextQueueItem;
 use App\Queue\Services\FetchStalledItems;
 use App\Queue\Services\MarkItemAsStarted;
 use App\Queue\Services\MarkStoppedDueToError;
 use App\Queue\Services\PostRun;
+use App\Queue\Services\RestartAllStalledItems;
+use App\Queue\Services\RestartQueuesByIds;
 use App\Queue\Services\RunItem;
 use Psr\Container\ContainerInterface;
 use Throwable;
@@ -114,5 +118,51 @@ class QueueApi
         assert($service instanceof FetchIncomplete);
 
         return $service();
+    }
+
+    /**
+     * @param string[] $ids
+     */
+    public function restartQueuesByIds(array $ids) : void
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(RestartQueuesByIds::class);
+
+        assert($service instanceof RestartQueuesByIds);
+
+        $service($ids);
+    }
+
+    public function restartAllStalledItems() : void
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(RestartAllStalledItems::class);
+
+        assert($service instanceof RestartAllStalledItems);
+
+        $service();
+    }
+
+    /**
+     * @param string[] $ids
+     */
+    public function deleteQueuesByIds(array $ids) : void
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(DeleteQueuesByIds::class);
+
+        assert($service instanceof DeleteQueuesByIds);
+
+        $service($ids);
+    }
+
+    public function clearAllStalledItems() : void
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(ClearAllStalledItems::class);
+
+        assert($service instanceof ClearAllStalledItems);
+
+        $service();
     }
 }

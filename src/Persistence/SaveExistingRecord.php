@@ -50,7 +50,10 @@ class SaveExistingRecord
 
             return new Payload(Payload::STATUS_UPDATED);
         } catch (Throwable $e) {
-            return new Payload(Payload::STATUS_NOT_UPDATED, ['message' => 'An unknown error occurred']);
+            return new Payload(
+                Payload::STATUS_NOT_UPDATED,
+                ['message' => 'An unknown error occurred']
+            );
         }
     }
 }

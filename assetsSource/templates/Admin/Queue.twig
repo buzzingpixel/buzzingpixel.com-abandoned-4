@@ -32,6 +32,10 @@
                     content: 'Restart',
                 },
                 {
+                    value: 'restart_all',
+                    content: 'Restart All',
+                },
+                {
                     value: 'delete',
                     content: 'Delete',
                 },
@@ -44,7 +48,7 @@
         } %}
             {% block standardFormContent %}
                 {% embed 'TableLayout/TableLayoutEmbed.twig' with {
-                    message: message,
+                    showMessagesFromFlash: false,
                     stalledItems: stalledItems,
                 } only %}
                     {% block headMarkup %}
