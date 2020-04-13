@@ -83,7 +83,7 @@
                                     <pre style="max-width: 55vw;"><code style="max-height: 200px;">{{ item.errorMessage }}</code></pre>
                                 </td>
                                 <td class="Table__Col">
-                                    {{ inputs.checkbox('', 'selected_items[]', false) }}
+                                    {{ inputs.checkbox('', 'selected_items[' ~ item.id ~ ']', false) }}
                                 </td>
                             </tr>
                         {% endfor %}
