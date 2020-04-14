@@ -9,12 +9,16 @@ use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\QueueApi;
 use App\Queue\Services\AddToQueue;
+use App\Queue\Services\ClearAllStalledItems;
+use App\Queue\Services\DeleteQueuesByIds;
 use App\Queue\Services\FetchIncomplete;
 use App\Queue\Services\FetchNextQueueItem;
 use App\Queue\Services\FetchStalledItems;
 use App\Queue\Services\MarkItemAsStarted;
 use App\Queue\Services\MarkStoppedDueToError;
 use App\Queue\Services\PostRun;
+use App\Queue\Services\RestartAllStalledItems;
+use App\Queue\Services\RestartQueuesByIds;
 use App\Queue\Services\RunItem;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -291,5 +295,127 @@ class QueueApiTest extends TestCase
             [$queueModel1, $queueModel2],
             $api->fetchIncomplete()
         );
+    }
+
+    public function testRestartQueuesByIds() : void
+    {
+        $ids = ['foo-id-1', 'foo-id-2'];
+
+        $service = $this->createMock(RestartQueuesByIds::class);
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with($ids);
+
+        assert(
+            $service instanceof RestartQueuesByIds &&
+            $service instanceof MockObject,
+        );
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(RestartQueuesByIds::class))
+            ->willReturn($service);
+
+        assert(
+            $di instanceof ContainerInterface &&
+            $di instanceof MockObject,
+        );
+
+        $api = new QueueApi($di);
+
+        $api->restartQueuesByIds($ids);
+    }
+
+    public function testRestartAllStalledItems() : void
+    {
+        $service = $this->createMock(RestartAllStalledItems::class);
+
+        $service->expects(self::once())
+            ->method('__invoke');
+
+        assert(
+            $service instanceof RestartAllStalledItems &&
+            $service instanceof MockObject,
+        );
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(RestartAllStalledItems::class))
+            ->willReturn($service);
+
+        assert(
+            $di instanceof ContainerInterface &&
+            $di instanceof MockObject,
+        );
+
+        $api = new QueueApi($di);
+
+        $api->restartAllStalledItems();
+    }
+
+    public function testDeleteQueuesByIds() : void
+    {
+        $ids = ['foo-id-1', 'foo-id-2'];
+
+        $service = $this->createMock(DeleteQueuesByIds::class);
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with($ids);
+
+        assert(
+            $service instanceof DeleteQueuesByIds &&
+            $service instanceof MockObject,
+        );
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(DeleteQueuesByIds::class))
+            ->willReturn($service);
+
+        assert(
+            $di instanceof ContainerInterface &&
+            $di instanceof MockObject,
+        );
+
+        $api = new QueueApi($di);
+
+        $api->deleteQueuesByIds($ids);
+    }
+
+    public function testClearAllStalledItems() : void
+    {
+        $service = $this->createMock(ClearAllStalledItems::class);
+
+        $service->expects(self::once())
+            ->method('__invoke');
+
+        assert(
+            $service instanceof ClearAllStalledItems &&
+            $service instanceof MockObject,
+        );
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(ClearAllStalledItems::class))
+            ->willReturn($service);
+
+        assert(
+            $di instanceof ContainerInterface &&
+            $di instanceof MockObject,
+        );
+
+        $api = new QueueApi($di);
+
+        $api->clearAllStalledItems();
     }
 }
