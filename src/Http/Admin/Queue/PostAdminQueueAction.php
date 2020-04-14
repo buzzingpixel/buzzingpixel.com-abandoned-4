@@ -114,7 +114,7 @@ class PostAdminQueueAction
 
                 break;
             default:
-                $msg =[
+                $msg = [
                     'status' => Payload::STATUS_ERROR,
                     'result' => ['message' => 'Unrecognized action'],
                 ];
