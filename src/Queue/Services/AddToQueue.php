@@ -45,7 +45,7 @@ class AddToQueue
 
             $queueModel->id = $this->uuidFactory->uuid1()->toString();
 
-            $queueRecord = ($this->queueToRecord)($queueModel, true);
+            $queueRecord = ($this->queueToRecord)($queueModel);
 
             $payload = ($this->saveNewRecord)($queueRecord);
 

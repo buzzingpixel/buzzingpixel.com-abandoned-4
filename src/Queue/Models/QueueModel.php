@@ -28,6 +28,8 @@ class QueueModel
             '+5 minutes',
             new DateTimeZone('UTC')
         );
+
+        $this->initialAssumeDeadAfter = $this->assumeDeadAfter;
     }
 
     public string $id = '';
@@ -41,6 +43,8 @@ class QueueModel
     public bool $isRunning = false;
 
     public DateTimeImmutable $assumeDeadAfter;
+
+    public DateTimeImmutable $initialAssumeDeadAfter;
 
     public bool $isFinished = false;
 
