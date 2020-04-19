@@ -13,19 +13,18 @@
     "phpsab.snifferMode": "onType",
     "phpsab.snifferShowSources": true,
 
-    // PHP Docblocker
-    "php-docblocker.gap": true,
-    "php-docblocker.useShortNames": true,
+    // Twig
+    "symfonyHelper.templatesFolder": "assetsSource/templates",
 
     // Tasks on save
     "emeraldwalk.runonsave": {
         "commands": [
             {
-                "match": "src\\/.*?\\.php$",
+                "match": "src\\/.*?\\.php$|tests\\/.*?\\.php$",
                 "cmd": "${workspaceRoot}/vendor/bin/phpcbf ${file} --standard=${workspaceRoot}/phpcs.xml",
             },
             {
-                "match": "src\\/.*?\\.php$",
+                "match": "src\\/.*?\\.php$|tests\\/.*?\\.php$",
                 "cmd": "${workspaceRoot}/vendor/bin/php-cs-fixer fix ${file} --using-cache=no --config=${workspaceRoot}/.php_cs",
             },
             {
@@ -34,4 +33,17 @@
             },
         ],
     },
+
+    // Database Connections
+    "sqltools.connections": [
+        {
+            "database": "buzzingpixel",
+            "dialect": "PostgreSQL",
+            "name": "BuzzingPixelDev",
+            "password": "secret",
+            "port": 18974,
+            "server": "localhost",
+            "username": "buzzingpixel"
+        }
+    ],
 }

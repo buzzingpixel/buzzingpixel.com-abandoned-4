@@ -22,6 +22,9 @@ return static function (App $app) : void {
 
         $userRoutes = require __DIR__ . '/Users.php';
         $userRoutes($r);
+
+        $queueRoutes = require __DIR__ . '/Queue.php';
+        $queueRoutes($r);
     })->add(RequireAdminAction::class)
     ->add(RequireLogInAction::class);
 };

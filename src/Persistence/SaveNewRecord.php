@@ -26,12 +26,16 @@ class SaveNewRecord
         $values = implode(', ', $record->getFields(true));
 
         if (! $record->id) {
-            return new Payload(Payload::STATUS_NOT_CREATED, ['message' => 'A record ID is required']);
+            return new Payload(
+                Payload::STATUS_NOT_CREATED,
+                ['message' => 'A record ID is required']
+            );
         }
 
         try {
             $statement = $this->pdo->prepare(
-                'INSERT INTO ' . $record->getTableName() . ' (' . $into . ') VALUES (' . $values . ')'
+                'INSERT INTO ' . $record->getTableName() .
+                    ' (' . $into . ') VALUES (' . $values . ')'
             );
 
             $success = $statement->execute($record->getBindValues());
@@ -45,7 +49,10 @@ class SaveNewRecord
                 'id' => $record->id,
             ]);
         } catch (Throwable $e) {
-            return new Payload(Payload::STATUS_NOT_CREATED, ['message' => 'An unknown error occurred']);
+            return new Payload(
+                Payload::STATUS_NOT_CREATED,
+                ['message' => 'An unknown error occurred']
+            );
         }
     }
 }

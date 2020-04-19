@@ -2,16 +2,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Listen for XDebug",
+            "name": "Listen for XDebug Docker",
             "type": "php",
             "request": "launch",
             "port": 10000,
             "pathMappings": {
                 "/opt/project": "${workspaceRoot}"
             },
-            "ignore": [
-                "**/vendor/**/*.php"
-            ],
+            "xdebugSettings": {
+                "show_hidden": 1
+            },
+        },
+        {
+            "name": "Listen for XDebug Local",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
             "xdebugSettings": {
                 "show_hidden": 1
             },

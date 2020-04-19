@@ -202,6 +202,23 @@
     </div>
 {% endmacro %}
 
+{% macro actionSelectorOptions(options) %}
+    <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
+        <select name="action">
+            {% for option in options %}
+                <option
+                    value="{{ option.value }}"
+                    {% if option['selected'] is defined and option['selected'] == true %}
+                    selected
+                    {% endif %}
+                >
+                    {{ option.content|smartypants }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+{% endmacro %}
+
 {% macro submitButton(label) %}
     <div class="StandardForm__FieldSet StandardForm__FieldSet--IsFooterControl">
         <input

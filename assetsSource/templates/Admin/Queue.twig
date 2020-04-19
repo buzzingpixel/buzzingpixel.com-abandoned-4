@@ -1,0 +1,141 @@
+{% do requireVariables({
+    stalledItems: 'array',
+    incompleteItems: 'array',
+}) %}
+
+{# @var \App\Queue\Models\QueueModel stalledItems #}
+{# @var \App\Queue\Models\QueueModel incompleteItems #}
+
+{% extends 'Admin/_AdminLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% block adminContent %}
+    {% if stalledItems|length > 0 %}
+        {% embed 'StandardForm/StandardFormEmbed.twig' with {
+            useStandardMaxWidth: false,
+            heading: 'Stalled Items',
+            actionSelectorOptions: [
+                {
+                    value: '',
+                    content: '-- Select an Action --',
+                    selected: true,
+                },
+                {
+                    value: 'restart',
+                    content: 'Restart',
+                },
+                {
+                    value: 'restart_all',
+                    content: 'Restart All',
+                },
+                {
+                    value: 'delete',
+                    content: 'Delete',
+                },
+                {
+                    value: 'clear_all',
+                    content: 'Clear All',
+                },
+            ],
+            submitButtonContent: 'Submit',
+        } %}
+            {% block standardFormContent %}
+                {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+                    showMessagesFromFlash: false,
+                    stalledItems: stalledItems,
+                } only %}
+                    {% block headMarkup %}
+                        <tr class="Table__HeadRow">
+                            <td class="Table__HeadCol">Name</td>
+                            <td class="Table__HeadCol">Handle</td>
+                            <td class="Table__HeadCol">Percent Complete</td>
+                            <td class="Table__HeadCol">Error</td>
+                            <td class="Table__HeadCol"></td>
+                        </tr>
+                    {% endblock %}
+                    {% block bodyMarkup %}
+                        {% import "StandardForm/Macros/StandardFormInputs.twig" as inputs %}
+
+                        {% if stalledItems|length < 1 %}
+                            <tr class="Table__Row Table__Row--IsNoResultsRow">
+                                <td class="Table__Col Table__Col--IsNoResultsRow" colspan="7">
+                                    No stalled tasks.
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for item in stalledItems %}
+                            {# @var \App\Queue\Models\QueueModel item #}
+
+                            <tr class="Table__Row">
+                                <td class="Table__Col">
+                                    {{ item.displayName|smartypants }}
+                                </td>
+                                <td class="Table__Col">
+                                    {{ item.handle }}
+                                </td>
+                                <td class="Table__Col">
+                                    {{ item.percentComplete }}
+                                </td>
+                                <td class="Table__Col" >
+                                    <pre style="max-width: 55vw;"><code style="max-height: 200px;">{{ item.errorMessage }}</code></pre>
+                                </td>
+                                <td class="Table__Col">
+                                    {{ inputs.checkbox('', 'selected_items[' ~ item.id ~ ']', false) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+        {% endembed %}
+        <br><br>
+    {% endif %}
+    {% embed 'TableLayout/TableLayoutEmbed.twig' with {
+        incompleteItems: incompleteItems,
+        sectionTitle: 'Items In Queue',
+        user: user,
+    } only %}
+        {% block headMarkup %}
+            <tr class="Table__HeadRow">
+                <td class="Table__HeadCol">Name</td>
+                <td class="Table__HeadCol">Handle</td>
+                <td class="Table__HeadCol">Percent Complete</td>
+                <td class="Table__HeadCol">Added At</td>
+            </tr>
+        {% endblock %}
+        {% block bodyMarkup %}
+            {% if incompleteItems|length < 1 %}
+                <tr class="Table__Row Table__Row--IsNoResultsRow">
+                    <td class="Table__Col Table__Col--IsNoResultsRow" colspan="7">
+                        No items are in the queue.
+                    </td>
+                </tr>
+            {% endif %}
+            {% for item in incompleteItems %}
+                {# @var \App\Queue\Models\QueueModel item #}
+
+                <tr class="Table__Row">
+                    <td class="Table__Col">
+                        {{ item.displayName|smartypants }}
+                    </td>
+                    <td class="Table__Col">
+                        {{ item.handle }}
+                    </td>
+                    <td class="Table__Col">
+                        {{ item.percentComplete }}
+                    </td>
+                    <td>
+                        {{ item.addedAt.setTimezone(user.timezone).format('Y-m-d h:i a') }}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

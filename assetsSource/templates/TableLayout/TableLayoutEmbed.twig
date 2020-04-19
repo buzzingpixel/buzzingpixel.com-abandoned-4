@@ -1,6 +1,7 @@
 {% set message = message ?? {} %}
 {% set headMarkup = (block('headMarkup') ?? headMarkup ?? false) %}
 {% set bodyMarkup = (block('bodyMarkup') ?? bodyMarkup ?? false) %}
+{% set sectionTitle = (block('sectionTitle') ?? sectionTitle ?? false) %}
 {% set section2title = (block('section2title') ?? section2title ?? false) %}
 {% set section2HeadMarkup = (block('section2HeadMarkup') ?? section2HeadMarkup ?? false) %}
 {% set section2BodyMarkup = (block('section2BodyMarkup') ?? section2BodyMarkup ?? false) %}
@@ -41,6 +42,9 @@
                 </div>
             </div>
         {% endif %}
+    {% endif %}
+    {% if sectionTitle %}
+        <h3 class="TableLayout__Heading">{{ sectionTitle|smartypants }}</h3>
     {% endif %}
     <div class="TableLayout__Wrapper">
         <table class="Table">
