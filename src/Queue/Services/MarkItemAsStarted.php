@@ -8,6 +8,8 @@ use App\Payload\Payload;
 use App\Persistence\SaveExistingRecord;
 use App\Queue\Models\QueueModel;
 use App\Queue\Transformers\TransformQueueModelToRecord;
+use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 
 class MarkItemAsStarted
@@ -29,6 +31,17 @@ class MarkItemAsStarted
 
         $model->isRunning = true;
 
+        $diff = $model->addedAt->diff($model->initialAssumeDeadAfter);
+
+        $newAssumeDeadAfter = new DateTimeImmutable(
+            'now',
+            new DateTimeZone('UTC')
+        );
+
+        $newAssumeDeadAfter = $newAssumeDeadAfter->add($diff);
+
+        $model->assumeDeadAfter = $newAssumeDeadAfter;
+
         $record = ($this->queueModelToRecord)($model);
 
         $payload = ($this->saveExistingRecord)($record);
@@ -37,6 +50,6 @@ class MarkItemAsStarted
             return;
         }
 
-        throw new Exception('An unknown error occured');
+        throw new Exception('An unknown error occurred');
     }
 }

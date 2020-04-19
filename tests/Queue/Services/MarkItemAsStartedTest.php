@@ -31,6 +31,11 @@ class MarkItemAsStartedTest extends TestCase
             new DateTimeZone('UTC')
         );
 
+        $newAssumeDeadAfter = new DateTimeImmutable(
+            'now',
+            new DateTimeZone('UTC')
+        );
+
         $addedAt = new DateTimeImmutable(
             '15 years ago',
             new DateTimeZone('UTC')
@@ -41,19 +46,29 @@ class MarkItemAsStartedTest extends TestCase
             new DateTimeZone('UTC')
         );
 
-        $model                     = new QueueModel();
-        $model->id                 = 'modelId';
-        $model->handle             = 'modelHandle';
-        $model->displayName        = 'modelDisplayName';
-        $model->hasStarted         = false;
-        $model->isRunning          = false;
-        $model->assumeDeadAfter    = $assumeDeadAfter;
-        $model->isFinished         = false;
-        $model->finishedDueToError = false;
-        $model->errorMessage       = 'modelErrorMessage';
-        $model->percentComplete    = 3.2;
-        $model->addedAt            = $addedAt;
-        $model->finishedAt         = $finishedAt;
+        $newAssumeDeadAfter = new DateTimeImmutable(
+            'now',
+            new DateTimeZone('UTC')
+        );
+
+        $diff = $addedAt->diff($assumeDeadAfter);
+
+        $newAssumeDeadAfter = $newAssumeDeadAfter->add($diff);
+
+        $model                         = new QueueModel();
+        $model->id                     = 'modelId';
+        $model->handle                 = 'modelHandle';
+        $model->displayName            = 'modelDisplayName';
+        $model->hasStarted             = false;
+        $model->isRunning              = false;
+        $model->assumeDeadAfter        = $assumeDeadAfter;
+        $model->initialAssumeDeadAfter = $assumeDeadAfter;
+        $model->isFinished             = false;
+        $model->finishedDueToError     = false;
+        $model->errorMessage           = 'modelErrorMessage';
+        $model->percentComplete        = 3.2;
+        $model->addedAt                = $addedAt;
+        $model->finishedAt             = $finishedAt;
 
         $saveExistingRecord = $this->createMock(
             SaveExistingRecord::class
@@ -65,7 +80,8 @@ class MarkItemAsStartedTest extends TestCase
                 static function (QueueRecord $record) use (
                     $assumeDeadAfter,
                     $addedAt,
-                    $finishedAt
+                    $finishedAt,
+                    $newAssumeDeadAfter
                 ) : Payload {
                     self::assertSame(
                         'modelId',
@@ -93,10 +109,17 @@ class MarkItemAsStartedTest extends TestCase
                     );
 
                     self::assertSame(
-                        $assumeDeadAfter->format(
+                        $newAssumeDeadAfter->format(
                             DateTimeInterface::ATOM
                         ),
                         $record->assume_dead_after,
+                    );
+
+                    self::assertSame(
+                        $assumeDeadAfter->format(
+                            DateTimeInterface::ATOM
+                        ),
+                        $record->initial_assume_dead_after,
                     );
 
                     self::assertSame(
@@ -156,33 +179,48 @@ class MarkItemAsStartedTest extends TestCase
     public function testWhenNotUpdated() : void
     {
         $assumeDeadAfter = new DateTimeImmutable(
-            '12 years ago',
+            '10 years ago',
+            new DateTimeZone('UTC')
+        );
+
+        $newAssumeDeadAfter = new DateTimeImmutable(
+            'now',
             new DateTimeZone('UTC')
         );
 
         $addedAt = new DateTimeImmutable(
-            '7 years ago',
+            '15 years ago',
             new DateTimeZone('UTC')
         );
 
         $finishedAt = new DateTimeImmutable(
-            '3 years ago',
+            '2 years ago',
             new DateTimeZone('UTC')
         );
 
-        $model                     = new QueueModel();
-        $model->id                 = 'modelId';
-        $model->handle             = 'modelHandle';
-        $model->displayName        = 'modelDisplayName';
-        $model->hasStarted         = false;
-        $model->isRunning          = false;
-        $model->assumeDeadAfter    = $assumeDeadAfter;
-        $model->isFinished         = false;
-        $model->finishedDueToError = false;
-        $model->errorMessage       = 'modelErrorMessage';
-        $model->percentComplete    = 3.2;
-        $model->addedAt            = $addedAt;
-        $model->finishedAt         = $finishedAt;
+        $newAssumeDeadAfter = new DateTimeImmutable(
+            'now',
+            new DateTimeZone('UTC')
+        );
+
+        $diff = $addedAt->diff($assumeDeadAfter);
+
+        $newAssumeDeadAfter = $newAssumeDeadAfter->add($diff);
+
+        $model                         = new QueueModel();
+        $model->id                     = 'modelId';
+        $model->handle                 = 'modelHandle';
+        $model->displayName            = 'modelDisplayName';
+        $model->hasStarted             = false;
+        $model->isRunning              = false;
+        $model->assumeDeadAfter        = $assumeDeadAfter;
+        $model->initialAssumeDeadAfter = $assumeDeadAfter;
+        $model->isFinished             = false;
+        $model->finishedDueToError     = false;
+        $model->errorMessage           = 'modelErrorMessage';
+        $model->percentComplete        = 3.2;
+        $model->addedAt                = $addedAt;
+        $model->finishedAt             = $finishedAt;
 
         $saveExistingRecord = $this->createMock(
             SaveExistingRecord::class
@@ -194,7 +232,8 @@ class MarkItemAsStartedTest extends TestCase
                 static function (QueueRecord $record) use (
                     $assumeDeadAfter,
                     $addedAt,
-                    $finishedAt
+                    $finishedAt,
+                    $newAssumeDeadAfter
                 ) : Payload {
                     self::assertSame(
                         'modelId',
@@ -222,10 +261,17 @@ class MarkItemAsStartedTest extends TestCase
                     );
 
                     self::assertSame(
-                        $assumeDeadAfter->format(
+                        $newAssumeDeadAfter->format(
                             DateTimeInterface::ATOM
                         ),
                         $record->assume_dead_after,
+                    );
+
+                    self::assertSame(
+                        $assumeDeadAfter->format(
+                            DateTimeInterface::ATOM
+                        ),
+                        $record->initial_assume_dead_after,
                     );
 
                     self::assertSame(
@@ -286,8 +332,14 @@ class MarkItemAsStartedTest extends TestCase
 
         assert($exception instanceof Exception);
 
+        $msg = 'An unknown error occurred';
+
+        if ($exception->getMessage() !== $msg) {
+            throw $exception;
+        }
+
         self::assertSame(
-            'An unknown error occured',
+            'An unknown error occurred',
             $exception->getMessage(),
         );
 
