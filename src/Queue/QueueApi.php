@@ -9,6 +9,7 @@ use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\Services\AddToQueue;
 use App\Queue\Services\CleanDeadItems;
+use App\Queue\Services\CleanOldItems;
 use App\Queue\Services\ClearAllStalledItems;
 use App\Queue\Services\DeleteQueuesByIds;
 use App\Queue\Services\FetchIncomplete;
@@ -53,6 +54,9 @@ class QueueApi
         return $service();
     }
 
+    /**
+     * @throws Throwable
+     */
     public function markAsStarted(QueueModel $queueModel) : void
     {
         /** @psalm-suppress MixedAssignment */
@@ -176,6 +180,19 @@ class QueueApi
         $service = $this->di->get(CleanDeadItems::class);
 
         assert($service instanceof CleanDeadItems);
+
+        return $service();
+    }
+
+    /**
+     * Returns the number of dead items cleaned
+     */
+    public function cleanOldItems() : int
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(CleanOldItems::class);
+
+        assert($service instanceof CleanOldItems);
 
         return $service();
     }

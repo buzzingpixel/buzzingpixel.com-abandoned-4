@@ -11,6 +11,7 @@ use App\Queue\Transformers\TransformQueueModelToRecord;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
+use Throwable;
 
 class MarkItemAsStarted
 {
@@ -25,6 +26,9 @@ class MarkItemAsStarted
         $this->saveExistingRecord = $saveExistingRecord;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function __invoke(QueueModel $model) : void
     {
         $model->hasStarted = true;
@@ -33,6 +37,7 @@ class MarkItemAsStarted
 
         $diff = $model->addedAt->diff($model->initialAssumeDeadAfter);
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $newAssumeDeadAfter = new DateTimeImmutable(
             'now',
             new DateTimeZone('UTC')

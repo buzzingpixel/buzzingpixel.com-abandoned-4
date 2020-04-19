@@ -10,6 +10,7 @@ use App\Queue\Models\QueueModel;
 use App\Queue\QueueApi;
 use App\Queue\Services\AddToQueue;
 use App\Queue\Services\CleanDeadItems;
+use App\Queue\Services\CleanOldItems;
 use App\Queue\Services\ClearAllStalledItems;
 use App\Queue\Services\DeleteQueuesByIds;
 use App\Queue\Services\FetchIncomplete;
@@ -448,5 +449,35 @@ class QueueApiTest extends TestCase
         $api = new QueueApi($di);
 
         self::assertSame(42, $api->cleanDeadItems());
+    }
+
+    public function testCleanOldItems() : void
+    {
+        $service = $this->createMock(CleanOldItems::class);
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->willReturn(42);
+
+        assert(
+            $service instanceof CleanOldItems &&
+            $service instanceof MockObject,
+        );
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(CleanOldItems::class))
+            ->willReturn($service);
+
+        assert(
+            $di instanceof ContainerInterface &&
+            $di instanceof MockObject,
+        );
+
+        $api = new QueueApi($di);
+
+        self::assertSame(42, $api->cleanOldItems());
     }
 }
