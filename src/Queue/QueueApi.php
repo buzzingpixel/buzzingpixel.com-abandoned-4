@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\Services\AddToQueue;
+use App\Queue\Services\CleanDeadItems;
 use App\Queue\Services\ClearAllStalledItems;
 use App\Queue\Services\DeleteQueuesByIds;
 use App\Queue\Services\FetchIncomplete;
@@ -164,5 +165,18 @@ class QueueApi
         assert($service instanceof ClearAllStalledItems);
 
         $service();
+    }
+
+    /**
+     * Returns the number of dead items cleaned
+     */
+    public function cleanDeadItems() : int
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(CleanDeadItems::class);
+
+        assert($service instanceof CleanDeadItems);
+
+        return $service();
     }
 }

@@ -34,7 +34,10 @@ class DeleteQueuesByIds
             return;
         }
 
-        $in = implode(',', array_fill(0, count($ids), '?'));
+        $in = implode(
+            ',',
+            array_fill(0, count($ids), '?')
+        );
 
         $this->transactionManager->beginTransaction();
 
