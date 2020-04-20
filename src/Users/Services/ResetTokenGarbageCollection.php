@@ -36,7 +36,8 @@ class ResetTokenGarbageCollection
         $format = $datetime->format(Constants::POSTGRES_OUTPUT_FORMAT);
 
         $statement = $this->pdo->prepare(
-            'DELETE FROM user_sessions WHERE last_touched_at < ?'
+            'DELETE FROM user_password_reset_tokens ' .
+            ' WHERE created_at < ?'
         );
 
         $statement->execute([$format]);
