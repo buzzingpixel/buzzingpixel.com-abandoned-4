@@ -17,6 +17,8 @@ use App\Http\Account\Purchases\GetAccountPurchasesAction;
 use App\Http\Account\Purchases\Printing\GetAccountPurchasePrintAction;
 use App\Http\Account\Purchases\View\GetAccountPurchaseViewAction;
 use App\Http\Account\Register\PostRegisterAction;
+use App\Http\Account\RequestPasswordReset\Msg\GetMessageAction;
+use App\Http\Account\RequestPasswordReset\PostRequestPasswordResetAction;
 use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Config\NoOp;
 use Slim\App;
@@ -36,6 +38,16 @@ return static function (App $app) : void {
         $r->get('/log-out', GetLogOutAction::class);
 
         $r->post('/log-out', GetLogOutAction::class);
+
+        $r->post(
+            '/request-password-reset',
+            PostRequestPasswordResetAction::class
+        );
+
+        $r->get(
+            '/request-password-reset/msg',
+            GetMessageAction::class
+        );
     });
 
     // Auth required

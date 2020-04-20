@@ -18,6 +18,7 @@ use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
 use App\Users\Services\PostalCodeService;
+use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use Psr\Container\ContainerInterface;
@@ -100,6 +101,16 @@ class UserApi
         assert($service instanceof GeneratePasswordResetToken);
 
         return $service($user);
+    }
+
+    public function requestPasswordResetEmail(UserModel $user) : void
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(RequestPasswordResetEmail::class);
+
+        assert($service instanceof RequestPasswordResetEmail);
+
+        $service($user);
     }
 
     public function fetchUserByResetToken(string $token) : ?UserModel

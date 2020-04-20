@@ -23,7 +23,10 @@ class SaveNewRecord
     {
         $into = implode(', ', $record->getFields());
 
-        $values = implode(', ', $record->getFields(true));
+        $values = implode(
+            ', ',
+            $record->getFields(true)
+        );
 
         if (! $record->id) {
             return new Payload(
@@ -38,7 +41,9 @@ class SaveNewRecord
                     ' (' . $into . ') VALUES (' . $values . ')'
             );
 
-            $success = $statement->execute($record->getBindValues());
+            $success = $statement->execute(
+                $record->getBindValues()
+            );
 
             if (! $success) {
                 throw new Exception();

@@ -13,6 +13,7 @@ use function getenv;
  * @method string rootPath()
  * @method string pathToContentDirectory()
  * @method string pathToSecureStorageDirectory()
+ * @method string siteUrl()
  * @method string siteName()
  * @method string twitterHandle()
  * @method array stylesheets()
@@ -31,6 +32,19 @@ class General extends SimpleModel
         static::$pathToContentDirectory = $rootPath . '/content';
 
         static::$pathToSecureStorageDirectory = $rootPath . '/secure-storage';
+
+        if (getenv('SITE_URL') !== false) {
+            static::$siteUrl = getenv('SITE_URL');
+        }
+
+        if (! static::$devMode ||
+            getenv('USE_DYNAMIC_SITE_URL') !== 'true' ||
+            ! isset($_SERVER['HTTP_HOST'])
+        ) {
+            return;
+        }
+
+        static::$siteUrl = 'https://' . $_SERVER['HTTP_HOST'];
     }
 
     public static bool $devMode = false;
@@ -40,6 +54,8 @@ class General extends SimpleModel
     public static string $pathToContentDirectory = '';
 
     public static string $pathToSecureStorageDirectory = '';
+
+    public static string $siteUrl = 'https://www.buzzingpixel.com';
 
     public static string $siteName = 'BuzzingPixel';
 
