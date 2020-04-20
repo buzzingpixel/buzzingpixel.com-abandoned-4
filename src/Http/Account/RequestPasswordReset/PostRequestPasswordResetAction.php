@@ -7,6 +7,7 @@ namespace App\Http\Account\RequestPasswordReset;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 use function assert;
 use function is_array;
 
@@ -23,9 +24,13 @@ class PostRequestPasswordResetAction
         $this->responder = $responder;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
         $post = $request->getParsedBody();
+
         assert(is_array($post));
 
         $emailAddress = (string) ($post['email_address'] ?? '');
@@ -36,9 +41,9 @@ class PostRequestPasswordResetAction
             return ($this->responder)();
         }
 
-        // TODO: throttle the amount of password resets user can attempt
-        // query for the amount of tokens that are currently in existence
-        // if there are 5 or more, don't send a token
+        if ($this->userApi->fetchTotalUserResetTokens($user) > 5) {
+            return ($this->responder)();
+        }
 
         $this->userApi->requestPasswordResetEmail($user);
 
