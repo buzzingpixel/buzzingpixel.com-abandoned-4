@@ -23,6 +23,7 @@ use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
 return static function (App $app) : void {
+    // No auth required
     $app->group('/account', function (RouteCollectorProxy $r) : void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container
@@ -37,6 +38,7 @@ return static function (App $app) : void {
         $r->post('/log-out', GetLogOutAction::class);
     });
 
+    // Auth required
     $app->group('/account', function (RouteCollectorProxy $r) : void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container
