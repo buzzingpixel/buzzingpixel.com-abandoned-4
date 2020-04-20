@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Queue\Services;
 
 use App\Persistence\Constants;
+use App\Persistence\Queue\QueueItemRecord;
 use App\Persistence\Queue\QueueRecord;
 use App\Persistence\RecordQuery;
 use App\Persistence\RecordQueryFactory;
@@ -129,9 +130,18 @@ class CleanOldItemsTest extends TestCase
             ->with(['queueId1', 'queueId2'])
             ->willReturn(true);
 
+        $itemStatement = $this->createMock(
+            PDOStatement::class
+        );
+
+        $itemStatement->expects(self::once())
+            ->method('execute')
+            ->with(['queueId1', 'queueId2'])
+            ->willReturn(true);
+
         $pdo = $this->createMock(PDO::class);
 
-        $pdo->expects(self::once())
+        $pdo->expects(self::at(0))
             ->method('prepare')
             ->with(
                 self::equalTo(
@@ -140,6 +150,17 @@ class CleanOldItemsTest extends TestCase
                 ),
             )
             ->willReturn($queueStatement);
+
+        $pdo->expects(self::at(1))
+            ->method('prepare')
+            ->with(
+                self::equalTo(
+                    'DELETE FROM ' .
+                    (new QueueItemRecord())->getTableName() .
+                    ' WHERE queue_id IN (?,?)',
+                ),
+            )
+            ->willReturn($itemStatement);
 
         $service = new CleanOldItems(
             $recordQueryFactory,

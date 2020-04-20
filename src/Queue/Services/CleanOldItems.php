@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Queue\Services;
 
 use App\Persistence\Constants;
+use App\Persistence\Queue\QueueItemRecord;
 use App\Persistence\Queue\QueueRecord;
 use App\Persistence\RecordQueryFactory;
 use DateTimeImmutable;
@@ -66,12 +67,19 @@ class CleanOldItems
             array_fill(0, count($ids), '?')
         );
 
-        $statement = $this->pdo->prepare(
+        $queueStatement = $this->pdo->prepare(
             'DELETE FROM ' . (new QueueRecord())->getTableName() .
             ' WHERE id IN (' . $in . ')',
         );
 
-        $statement->execute($ids);
+        $queueStatement->execute($ids);
+
+        $itemStatement = $this->pdo->prepare(
+            'DELETE FROM ' . (new QueueItemRecord())->getTableName() .
+            ' WHERE queue_id IN (' . $in . ')',
+        );
+
+        $itemStatement->execute($ids);
 
         return $total;
     }
