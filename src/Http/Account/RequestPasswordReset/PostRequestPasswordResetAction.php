@@ -35,7 +35,9 @@ class PostRequestPasswordResetAction
 
         $emailAddress = (string) ($post['email_address'] ?? '');
 
-        $user = $this->userApi->fetchUserByEmailAddress($emailAddress);
+        $user = $this->userApi->fetchUserByEmailAddress(
+            $emailAddress
+        );
 
         if ($user === null) {
             return ($this->responder)();

@@ -7,6 +7,7 @@ namespace App\Users\Services;
 use App\Persistence\Users\UserPasswordResetTokenRecord;
 use App\Users\Models\UserModel;
 use PDO;
+use function is_array;
 
 class FetchTotalUserResetTokens
 {
@@ -27,8 +28,13 @@ class FetchTotalUserResetTokens
 
         $statement->execute(['id' => $user->id]);
 
+        /** @psalm-suppress MixedAssignment */
         $result = $statement->fetch();
 
-        return (int) $result['count'];
+        if (! is_array($result)) {
+            return 0;
+        }
+
+        return (int) ($result['count'] ?? 0);
     }
 }
