@@ -18,9 +18,10 @@ class PostRequestPasswordResetResponder
 
     public function __invoke() : ResponseInterface
     {
-        $response = $this->responseFactory->createResponse();
-
         return $this->responseFactory->createResponse(303)
-            ->withHeader('Location', '/account/request-password-reset/msg');
+            ->withHeader(
+                'Location',
+                '/account/request-password-reset/msg'
+            );
     }
 }
