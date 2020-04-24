@@ -23,7 +23,7 @@ class FetchTotalUserResetTokens
         $statement = $this->pdo->prepare(
             'SELECT COUNT(*) FROM ' .
                 (new UserPasswordResetTokenRecord())->getTableName() .
-            ' WHERE user_id = :id'
+                ' WHERE user_id = :id'
         );
 
         $statement->execute(['id' => $user->id]);

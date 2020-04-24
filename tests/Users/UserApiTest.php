@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
+use App\Users\Services\FetchTotalUserResetTokens;
 use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
@@ -18,6 +19,7 @@ use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
 use App\Users\Services\PostalCodeService;
+use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use App\Users\UserApi;
@@ -129,6 +131,29 @@ class UserApiTest extends TestCase
         self::assertCount(1, $this->callArgs);
 
         self::assertSame($this->userModel, $this->callArgs[0]);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testRequestPasswordResetEmail() : void
+    {
+        $this->userApi->requestPasswordResetEmail(
+            $this->userModel
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testFetchTotalUserResetTokens() : void
+    {
+        self::assertSame(
+            42,
+            $this->userApi->fetchTotalUserResetTokens(
+                $this->userModel
+            )
+        );
     }
 
     public function testFetchUserByResetToken() : void
@@ -275,6 +300,10 @@ class UserApiTest extends TestCase
                 return $this->mockFetchUsersBySearch();
             case PostalCodeService::class:
                 return $this->mockPostalCodeService();
+            case RequestPasswordResetEmail::class:
+                return $this->mockRequestPasswordResetEmail();
+            case FetchTotalUserResetTokens::class:
+                return $this->mockFetchTotalUserResetTokens();
         }
 
         throw new Exception('Unknown class');
@@ -522,6 +551,39 @@ class UserApiTest extends TestCase
                     $model->displayName = 'FooDisplayName';
                 }
             );
+
+        return $mock;
+    }
+
+    /**
+     * @return RequestPasswordResetEmail&MockObject
+     */
+    private function mockRequestPasswordResetEmail() : RequestPasswordResetEmail
+    {
+        $mock = $this->createMock(
+            RequestPasswordResetEmail::class
+        );
+
+        $mock->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($this->userModel));
+
+        return $mock;
+    }
+
+    /**
+     * @return FetchTotalUserResetTokens&MockObject
+     */
+    private function mockFetchTotalUserResetTokens() : FetchTotalUserResetTokens
+    {
+        $mock = $this->createMock(
+            FetchTotalUserResetTokens::class
+        );
+
+        $mock->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($this->userModel))
+            ->willReturn(42);
 
         return $mock;
     }
