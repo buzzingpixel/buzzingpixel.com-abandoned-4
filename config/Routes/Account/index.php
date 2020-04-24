@@ -19,6 +19,7 @@ use App\Http\Account\Purchases\View\GetAccountPurchaseViewAction;
 use App\Http\Account\Register\PostRegisterAction;
 use App\Http\Account\RequestPasswordReset\Msg\GetMessageAction;
 use App\Http\Account\RequestPasswordReset\PostRequestPasswordResetAction;
+use App\Http\Account\ResetPasswordWithToken\ResetPasswordWithTokenAction;
 use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Config\NoOp;
 use Slim\App;
@@ -47,6 +48,11 @@ return static function (App $app) : void {
         $r->get(
             '/request-password-reset/msg',
             GetMessageAction::class
+        );
+
+        $r->get(
+            '/reset-pw-with-token/{token}',
+            ResetPasswordWithTokenAction::class
         );
     });
 
