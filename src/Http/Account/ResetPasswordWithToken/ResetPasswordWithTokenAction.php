@@ -8,6 +8,7 @@ use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Throwable;
 
 class ResetPasswordWithTokenAction
 {
@@ -23,12 +24,11 @@ class ResetPasswordWithTokenAction
     }
 
     /**
+     * @throws Throwable
      * @throws HttpNotFoundException
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        // TODO: Implement __invoke() method
-
         $token = (string) $request->getAttribute('token');
 
         $user = $this->userApi->fetchUserByResetToken($token);
@@ -37,6 +37,6 @@ class ResetPasswordWithTokenAction
             throw new HttpNotFoundException($request);
         }
 
-        return ($this->responder)($user);
+        return ($this->responder)($user, $token);
     }
 }
