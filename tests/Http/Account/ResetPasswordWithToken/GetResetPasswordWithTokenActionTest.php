@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Http\Account\ResetPasswordWithToken;
 
-use App\Http\Account\ResetPasswordWithToken\ResetPasswordWithTokenAction;
-use App\Http\Account\ResetPasswordWithToken\ResetPasswordWithTokenResponder;
+use App\Http\Account\ResetPasswordWithToken\GetResetPasswordWithTokenAction;
+use App\Http\Account\ResetPasswordWithToken\GetResetPasswordWithTokenResponder;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
 
-class ResetPasswordWithTokenActionTest extends TestCase
+class GetResetPasswordWithTokenActionTest extends TestCase
 {
     /**
      * @throws Throwable
@@ -29,7 +29,7 @@ class ResetPasswordWithTokenActionTest extends TestCase
             ->willReturn(null);
 
         $responder = $this->createMock(
-            ResetPasswordWithTokenResponder::class
+            GetResetPasswordWithTokenResponder::class
         );
 
         $responder->expects(self::never())
@@ -44,7 +44,7 @@ class ResetPasswordWithTokenActionTest extends TestCase
             ->with(self::equalTo('token'))
             ->willReturn('fooToken');
 
-        $action = new ResetPasswordWithTokenAction(
+        $action = new GetResetPasswordWithTokenAction(
             $userApi,
             $responder,
         );
@@ -82,7 +82,7 @@ class ResetPasswordWithTokenActionTest extends TestCase
         );
 
         $responder = $this->createMock(
-            ResetPasswordWithTokenResponder::class
+            GetResetPasswordWithTokenResponder::class
         );
 
         $responder->expects(self::once())
@@ -102,7 +102,7 @@ class ResetPasswordWithTokenActionTest extends TestCase
             ->with(self::equalTo('token'))
             ->willReturn('barToken');
 
-        $action = new ResetPasswordWithTokenAction(
+        $action = new GetResetPasswordWithTokenAction(
             $userApi,
             $responder,
         );

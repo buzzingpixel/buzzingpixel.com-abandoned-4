@@ -10,14 +10,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
 
-class ResetPasswordWithTokenAction
+class GetResetPasswordWithTokenAction
 {
     private UserApi $userApi;
-    private ResetPasswordWithTokenResponder $responder;
+    private GetResetPasswordWithTokenResponder $responder;
 
     public function __construct(
         UserApi $userApi,
-        ResetPasswordWithTokenResponder $responder
+        GetResetPasswordWithTokenResponder $responder
     ) {
         $this->userApi   = $userApi;
         $this->responder = $responder;

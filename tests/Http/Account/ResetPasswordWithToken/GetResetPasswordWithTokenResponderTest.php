@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Http\Account\ResetPasswordWithToken;
 
 use App\Content\Meta\MetaPayload;
-use App\Http\Account\ResetPasswordWithToken\ResetPasswordWithTokenResponder;
+use App\Http\Account\ResetPasswordWithToken\GetResetPasswordWithTokenResponder;
 use App\Users\Models\UserModel;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -13,7 +13,7 @@ use Tests\TestConfig;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
 
-class ResetPasswordWithTokenResponderTest extends TestCase
+class GetResetPasswordWithTokenResponderTest extends TestCase
 {
     /**
      * @throws Throwable
@@ -42,7 +42,7 @@ class ResetPasswordWithTokenResponderTest extends TestCase
             )
             ->willReturn('fooTwigRender');
 
-        $responder = new ResetPasswordWithTokenResponder(
+        $responder = new GetResetPasswordWithTokenResponder(
             TestConfig::$di->get(
                 ResponseFactoryInterface::class
             ),

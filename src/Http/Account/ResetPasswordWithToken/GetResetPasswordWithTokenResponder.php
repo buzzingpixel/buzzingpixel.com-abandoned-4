@@ -10,7 +10,7 @@ use App\Users\Models\UserModel;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-class ResetPasswordWithTokenResponder extends StandardResponderConstructor
+class GetResetPasswordWithTokenResponder extends StandardResponderConstructor
 {
     /**
      * @throws Throwable
