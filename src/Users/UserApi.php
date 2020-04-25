@@ -22,6 +22,7 @@ use App\Users\Services\PostalCodeService;
 use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
+use App\Users\Services\ValidateUserPassword;
 use Psr\Container\ContainerInterface;
 use Throwable;
 use function assert;
@@ -63,6 +64,16 @@ class UserApi
         assert($service instanceof FetchUserById);
 
         return $service($id);
+    }
+
+    public function validateUserPassword(UserModel $user, string $password) : bool
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(ValidateUserPassword::class);
+
+        assert($service instanceof ValidateUserPassword);
+
+        return $service($user, $password);
     }
 
     public function logUserIn(UserModel $user, string $password) : Payload

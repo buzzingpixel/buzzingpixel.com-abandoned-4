@@ -22,6 +22,7 @@ use App\Users\Services\PostalCodeService;
 use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
+use App\Users\Services\ValidateUserPassword;
 use App\Users\UserApi;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -82,6 +83,41 @@ class UserApiTest extends TestCase
             'testId',
             $this->callArgs[0]
         );
+    }
+
+    public function testValidateUserPassword() : void
+    {
+        $user = new UserModel();
+
+        $password = 'FooBarPass';
+
+        $service = $this->createMock(
+            ValidateUserPassword::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+                self::equalTo($password),
+            )
+            ->willReturn(true);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(ValidateUserPassword::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        self::assertTrue($api->validateUserPassword(
+            $user,
+            $password
+        ));
     }
 
     public function testLogUserIn() : void

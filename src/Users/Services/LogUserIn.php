@@ -9,49 +9,36 @@ use App\Users\Models\UserModel;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use DateTimeImmutable;
 use DateTimeZone;
-use function password_hash;
-use function password_needs_rehash;
-use function password_verify;
 use function Safe\strtotime;
-use const PASSWORD_DEFAULT;
 
 class LogUserIn
 {
-    private SaveUser $saveUser;
+    private ValidateUserPassword $validateUserPassword;
     private CreateUserSession $createUserSession;
     private CookieApiInterface $cookieApi;
 
     public function __construct(
-        SaveUser $saveUser,
+        ValidateUserPassword $validateUserPassword,
         CreateUserSession $createUserSession,
         CookieApiInterface $cookieApi
     ) {
-        $this->saveUser          = $saveUser;
-        $this->createUserSession = $createUserSession;
-        $this->cookieApi         = $cookieApi;
+        $this->validateUserPassword = $validateUserPassword;
+        $this->createUserSession    = $createUserSession;
+        $this->cookieApi            = $cookieApi;
     }
 
     public function __invoke(UserModel $user, string $password) : Payload
     {
-        $hash = $user->passwordHash;
+        $validPassword = ($this->validateUserPassword)(
+            $user,
+            $password
+        );
 
-        if (! password_verify($password, $hash)) {
+        if (! $validPassword) {
             return new Payload(
                 Payload::STATUS_NOT_VALID,
                 ['message' => 'Your password is invalid']
             );
-        }
-
-        if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
-            /**
-             * @psalm-suppress NullArgument
-             */
-            $user->passwordHash = (string) password_hash(
-                $password,
-                PASSWORD_DEFAULT
-            );
-
-            ($this->saveUser)($user);
         }
 
         $createSessionPayload = ($this->createUserSession)($user);

@@ -8,7 +8,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\CreateUserSession;
 use App\Users\Services\LogUserIn;
-use App\Users\Services\SaveUser;
+use App\Users\Services\ValidateUserPassword;
 use buzzingpixel\cookieapi\CookieApi;
 use buzzingpixel\cookieapi\interfaces\CookieInterface;
 use DateTimeImmutable;
@@ -18,9 +18,6 @@ use Throwable;
 use function assert;
 use function date;
 use function func_get_args;
-use function password_hash;
-use const PASSWORD_ARGON2I;
-use const PASSWORD_DEFAULT;
 
 class LogUserInTest extends TestCase
 {
@@ -29,14 +26,27 @@ class LogUserInTest extends TestCase
      */
     public function testWhenPasswordDoesNotVerify() : void
     {
-        $service = new LogUserIn(
-            $this->createMock(SaveUser::class),
-            $this->createMock(CreateUserSession::class),
-            $this->createMock(CookieApi::class)
+        $userModel = new UserModel();
+
+        $validateUserPassword = $this->createMock(
+            ValidateUserPassword::class
         );
 
-        $userModel               = new UserModel();
-        $userModel->passwordHash = 'FakeHash';
+        $validateUserPassword->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($userModel),
+                self::equalTo('FakePass'),
+            )
+            ->willReturn(false);
+
+        $service = new LogUserIn(
+            $validateUserPassword,
+            $this->createMock(
+                CreateUserSession::class
+            ),
+            $this->createMock(CookieApi::class)
+        );
 
         $payload = $service(
             $userModel,
@@ -57,22 +67,31 @@ class LogUserInTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testLoginWhenPasswordNeedsRehashAndSessionPayloadError() : void
+    public function testLogInWhenUnableToCreateSession() : void
     {
-        $password = 'FooBarPassword';
+        $user = new UserModel();
 
-        $passwordHash = (string) password_hash(
-            $password,
-            PASSWORD_ARGON2I
+        $validateUserPassword = $this->createMock(
+            ValidateUserPassword::class
         );
 
-        $user               = new UserModel();
-        $user->passwordHash = $passwordHash;
+        $validateUserPassword->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+                self::equalTo('FooBarPassword'),
+            )
+            ->willReturn(true);
 
-        $createSessionPayload = new Payload(Payload::STATUS_NOT_CREATED);
+        $password = 'FooBarPassword';
+
+        $createSessionPayload = new Payload(
+            Payload::STATUS_NOT_VALID,
+            ['id' => 'FooBarId']
+        );
 
         $service = new LogUserIn(
-            $this->mockSaveUser(true),
+            $validateUserPassword,
             $this->mockCreateUserSession(
                 $user,
                 $createSessionPayload
@@ -87,14 +106,10 @@ class LogUserInTest extends TestCase
             $payload->getStatus()
         );
 
-        self::assertCount(1, $this->saveUserCallArgs);
-
-        $saveUserModel = $this->saveUserCallArgs[0];
-        assert($saveUserModel instanceof UserModel || $saveUserModel === null);
-
-        self::assertSame($user, $saveUserModel);
-
-        self::assertNotSame($passwordHash, $user->passwordHash);
+        self::assertSame(
+            [],
+            $payload->getResult()
+        );
     }
 
     /**
@@ -102,15 +117,21 @@ class LogUserInTest extends TestCase
      */
     public function testLogIn() : void
     {
-        $password = 'FooBarPassword';
+        $user = new UserModel();
 
-        $passwordHash = (string) password_hash(
-            $password,
-            PASSWORD_DEFAULT
+        $validateUserPassword = $this->createMock(
+            ValidateUserPassword::class
         );
 
-        $user               = new UserModel();
-        $user->passwordHash = $passwordHash;
+        $validateUserPassword->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+                self::equalTo('FooBarPassword'),
+            )
+            ->willReturn(true);
+
+        $password = 'FooBarPassword';
 
         $createSessionPayload = new Payload(
             Payload::STATUS_CREATED,
@@ -118,7 +139,7 @@ class LogUserInTest extends TestCase
         );
 
         $service = new LogUserIn(
-            $this->mockSaveUser(false),
+            $validateUserPassword,
             $this->mockCreateUserSession(
                 $user,
                 $createSessionPayload
@@ -138,7 +159,10 @@ class LogUserInTest extends TestCase
             $payload->getResult()
         );
 
-        self::assertCount(7, $this->makeCookieCallArgs);
+        self::assertCount(
+            7,
+            $this->makeCookieCallArgs
+        );
 
         self::assertSame(
             'user_session_token',
@@ -151,9 +175,16 @@ class LogUserInTest extends TestCase
         );
 
         $cookieDateTime = $this->makeCookieCallArgs[2];
-        assert($cookieDateTime instanceof DateTimeImmutable || $cookieDateTime === null);
 
-        self::assertInstanceOf(DateTimeImmutable::class, $cookieDateTime);
+        assert(
+            $cookieDateTime instanceof DateTimeImmutable ||
+            $cookieDateTime === null
+        );
+
+        self::assertInstanceOf(
+            DateTimeImmutable::class,
+            $cookieDateTime
+        );
 
         $currentYear = (int) date('Y');
 
@@ -178,47 +209,27 @@ class LogUserInTest extends TestCase
 
         self::assertTrue($this->makeCookieCallArgs[6]);
 
-        self::assertCount(1, $this->saveCookieCallArgs);
+        self::assertCount(
+            1,
+            $this->saveCookieCallArgs
+        );
 
         $saveCookieCookie = $this->saveCookieCallArgs[0];
-        assert($saveCookieCookie instanceof CookieInterface || $saveCookieCookie === null);
 
-        self::assertInstanceOf(CookieInterface::class, $saveCookieCookie);
+        assert(
+            $saveCookieCookie instanceof CookieInterface ||
+            $saveCookieCookie === null
+        );
 
-        self::assertSame('FooBarCookieName', $saveCookieCookie->name());
-    }
+        self::assertInstanceOf(
+            CookieInterface::class,
+            $saveCookieCookie
+        );
 
-    /**
-     * @return SaveUser&MockObject
-     */
-    private function mockSaveUser(bool $expectSave = false) : SaveUser
-    {
-        $this->saveUserCallArgs = [];
-
-        $mock = $this->createMock(SaveUser::class);
-
-        if (! $expectSave) {
-            $mock->expects(self::never())
-                ->method(self::anything());
-
-            return $mock;
-        }
-
-        $mock->expects(self::once())
-            ->method('__invoke')
-            ->willReturnCallback([$this, 'saveUserCallback']);
-
-        return $mock;
-    }
-
-    /** @var mixed[] */
-    private array $saveUserCallArgs = [];
-
-    public function saveUserCallback() : Payload
-    {
-        $this->saveUserCallArgs = func_get_args();
-
-        return new Payload(Payload::STATUS_SUCCESSFUL);
+        self::assertSame(
+            'FooBarCookieName',
+            $saveCookieCookie->name()
+        );
     }
 
     /**
