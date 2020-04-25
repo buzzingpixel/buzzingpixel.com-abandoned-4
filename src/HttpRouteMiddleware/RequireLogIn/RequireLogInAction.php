@@ -8,10 +8,11 @@ use App\Content\Meta\MetaPayload;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
-class RequireLogInAction
+class RequireLogInAction implements MiddlewareInterface
 {
     private UserApi $userApi;
     private RequireLoginResponder $responder;
@@ -27,7 +28,7 @@ class RequireLogInAction
     /**
      * @throws Throwable
      */
-    public function __invoke(
+    public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
     ) : ResponseInterface {

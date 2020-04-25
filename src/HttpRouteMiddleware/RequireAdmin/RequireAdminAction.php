@@ -8,10 +8,11 @@ use App\Content\Meta\MetaPayload;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
-class RequireAdminAction
+class RequireAdminAction implements MiddlewareInterface
 {
     private RequireAdminResponder $responder;
     private UserApi $userApi;
@@ -27,7 +28,7 @@ class RequireAdminAction
     /**
      * @throws Throwable
      */
-    public function __invoke(
+    public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
     ) : ResponseInterface {

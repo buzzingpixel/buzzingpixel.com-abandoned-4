@@ -16,12 +16,24 @@ return static function (App $app) : void {
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
 
-        $r->get('', GetCartAction::class);
+        $r->get(
+            '',
+            GetCartAction::class
+        );
 
-        $r->get('/add/{slug}', GetAddToCartAction::class);
+        $r->get(
+            '/add/{slug}',
+            GetAddToCartAction::class
+        );
 
-        $r->get('/update-quantity/{slug}/{quantity:\d+}', GetCartUpdateQuantityAction::class);
+        $r->get(
+            '/update-quantity/{slug}/{quantity:\d+}',
+            GetCartUpdateQuantityAction::class
+        );
 
-        $r->get('/clear', GetClearCartAction::class);
+        $r->get(
+            '/clear',
+            GetClearCartAction::class
+        );
     });
 };
