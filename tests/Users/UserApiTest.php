@@ -100,6 +100,7 @@ class UserApiTest extends TestCase
             ->with(
                 self::equalTo($user),
                 self::equalTo($password),
+                self::equalTo(false),
             )
             ->willReturn(true);
 
@@ -116,7 +117,8 @@ class UserApiTest extends TestCase
 
         self::assertTrue($api->validateUserPassword(
             $user,
-            $password
+            $password,
+            false
         ));
     }
 

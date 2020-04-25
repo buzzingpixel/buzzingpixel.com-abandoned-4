@@ -66,14 +66,24 @@ class UserApi
         return $service($id);
     }
 
-    public function validateUserPassword(UserModel $user, string $password) : bool
-    {
+    /**
+     * @param bool $rehashPasswordIfNeeded Only set false if about to update password
+     */
+    public function validateUserPassword(
+        UserModel $user,
+        string $password,
+        bool $rehashPasswordIfNeeded = true
+    ) : bool {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(ValidateUserPassword::class);
 
         assert($service instanceof ValidateUserPassword);
 
-        return $service($user, $password);
+        return $service(
+            $user,
+            $password,
+            $rehashPasswordIfNeeded
+        );
     }
 
     public function logUserIn(UserModel $user, string $password) : Payload
