@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Account\ChangePassword\GetChangePasswordAction;
 use App\Http\Account\GetAccountAction;
 use App\Http\Account\Licenses\AuthorizedDomains\GetEditAuthorizedDomainsAction;
 use App\Http\Account\Licenses\AuthorizedDomains\PostEditAuthorizedDomainsAction;
@@ -120,6 +121,11 @@ return static function (App $app) : void {
         $r->post(
             '/profile',
             PostAccountProfileEditAction::class
+        );
+
+        $r->get(
+            '/change-password',
+            GetChangePasswordAction::class
         );
     })->add(RequireLogInAction::class);
 };
