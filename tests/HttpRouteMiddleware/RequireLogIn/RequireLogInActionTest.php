@@ -17,6 +17,7 @@ use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use stdClass;
 use Throwable;
+use function assert;
 use function func_get_args;
 
 class RequireLogInActionTest extends TestCase
@@ -60,7 +61,7 @@ class RequireLogInActionTest extends TestCase
         $this->handler->expects(self::never())
             ->method(self::anything());
 
-        $response = ($this->action)(
+        $response = $this->action->process(
             $this->request,
             $this->handler
         );
@@ -72,8 +73,8 @@ class RequireLogInActionTest extends TestCase
 
         self::assertCount(2, $args);
 
-        /** @var MetaPayload|null $metaPayLoad */
         $metaPayLoad = $args[0];
+        assert($metaPayLoad instanceof MetaPayload || $metaPayLoad === null);
 
         self::assertInstanceOf(MetaPayload::class, $metaPayLoad);
 
@@ -99,7 +100,7 @@ class RequireLogInActionTest extends TestCase
             ->with(self::equalTo($this->request))
             ->willReturn($this->response);
 
-        $response = ($this->action)(
+        $response = $this->action->process(
             $this->request,
             $this->handler
         );

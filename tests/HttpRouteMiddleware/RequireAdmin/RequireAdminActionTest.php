@@ -42,7 +42,7 @@ class RequireAdminActionTest extends TestCase
 
         $this->internalSetUp();
 
-        $response = ($this->action)(
+        $response = $this->action->process(
             $this->request,
             $this->handler
         );
@@ -71,7 +71,7 @@ class RequireAdminActionTest extends TestCase
 
         $this->internalSetUp();
 
-        $response = ($this->action)(
+        $response = $this->action->process(
             $this->request,
             $this->handler
         );
@@ -101,7 +101,7 @@ class RequireAdminActionTest extends TestCase
 
         $this->internalSetUp();
 
-        $response = ($this->action)(
+        $response = $this->action->process(
             $this->request,
             $this->handler
         );

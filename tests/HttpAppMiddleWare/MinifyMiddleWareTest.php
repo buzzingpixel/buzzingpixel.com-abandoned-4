@@ -47,7 +47,7 @@ class MinifyMiddleWareTest extends TestCase
         $this->minifier->expects(self::never())
             ->method(self::anything());
 
-        $response = ($this->middleware)(
+        $response = $this->middleware->process(
             $this->request,
             $this->handler
         );
@@ -77,7 +77,7 @@ class MinifyMiddleWareTest extends TestCase
         $this->minifier->expects(self::never())
             ->method(self::anything());
 
-        $response = ($this->middleware)(
+        $response = $this->middleware->process(
             $this->request,
             $this->handler
         );
@@ -107,7 +107,7 @@ class MinifyMiddleWareTest extends TestCase
         $this->minifier->expects(self::never())
             ->method(self::anything());
 
-        $response = ($this->middleware)(
+        $response = $this->middleware->process(
             $this->request,
             $this->handler
         );
@@ -166,7 +166,7 @@ class MinifyMiddleWareTest extends TestCase
             ->with(self::equalTo($stream))
             ->willReturn($newResponse);
 
-        $response = ($this->middleware)(
+        $response = $this->middleware->process(
             $this->request,
             $this->handler
         );

@@ -13,6 +13,9 @@ return static function (App $app) : void {
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
 
-        $r->get('/user/payload', GetUserPayloadAction::class);
+        $r->get(
+            '/user/payload',
+            GetUserPayloadAction::class
+        );
     });
 };

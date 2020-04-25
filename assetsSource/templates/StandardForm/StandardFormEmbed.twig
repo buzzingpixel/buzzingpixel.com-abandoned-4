@@ -21,6 +21,16 @@
 >
     <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
     <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+    <label for="a_password" style="display:none !important">
+        <input
+            id="a_password"
+            type="text"
+            name="a_password"
+            style="display:none !important"
+            tabindex="-1"
+            autocomplete="off"
+        >
+    </label>
 
     {% if heading %}
         <h2 class="StandardForm__Heading">

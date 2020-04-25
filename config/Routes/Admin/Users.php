@@ -18,18 +18,39 @@ return static function (RouteCollectorProxy $r) : void {
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
 
-        $r->get('[/page/{page:(?!(?:0|1)$)\d+}]', GetAdminUsersDisplayAction::class);
+        $r->get(
+            '[/page/{page:(?!(?:0|1)$)\d+}]',
+            GetAdminUsersDisplayAction::class
+        );
 
-        $r->get('/search[/page/{page:(?!(?:0|1)$)\d+}]', GetAdminSearchUsersDisplayAction::class);
+        $r->get(
+            '/search[/page/{page:(?!(?:0|1)$)\d+}]',
+            GetAdminSearchUsersDisplayAction::class
+        );
 
-        $r->get('/create', GetAdminUserCreateAction::class);
+        $r->get(
+            '/create',
+            GetAdminUserCreateAction::class
+        );
 
-        $r->post('/create', PostAdminUserCreateAction::class);
+        $r->post(
+            '/create',
+            PostAdminUserCreateAction::class
+        );
 
-        $r->get('/view/{id}', GetAdminUserViewAction::class);
+        $r->get(
+            '/view/{id}',
+            GetAdminUserViewAction::class
+        );
 
-        $r->get('/edit/{id}', GetAdminUserEditAction::class);
+        $r->get(
+            '/edit/{id}',
+            GetAdminUserEditAction::class
+        );
 
-        $r->post('/edit/{id}', PostAdminUserEditAction::class);
+        $r->post(
+            '/edit/{id}',
+            PostAdminUserEditAction::class
+        );
     });
 };
