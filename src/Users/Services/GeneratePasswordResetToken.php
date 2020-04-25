@@ -43,7 +43,9 @@ class GeneratePasswordResetToken
 
         $record->user_id = $user->id;
 
-        $record->created_at = $currentDate->format(DateTimeInterface::ATOM);
+        $record->created_at = $currentDate->format(
+            DateTimeInterface::ATOM
+        );
 
         return ($this->saveNewRecord)($record);
     }

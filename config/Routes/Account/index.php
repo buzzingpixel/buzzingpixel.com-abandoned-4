@@ -17,12 +17,17 @@ use App\Http\Account\Purchases\GetAccountPurchasesAction;
 use App\Http\Account\Purchases\Printing\GetAccountPurchasePrintAction;
 use App\Http\Account\Purchases\View\GetAccountPurchaseViewAction;
 use App\Http\Account\Register\PostRegisterAction;
+use App\Http\Account\RequestPasswordReset\Msg\GetMessageAction;
+use App\Http\Account\RequestPasswordReset\PostRequestPasswordResetAction;
+use App\Http\Account\ResetPasswordWithToken\GetResetPasswordWithTokenAction;
+use App\Http\Account\ResetPasswordWithToken\PostResetPasswordWithTokenAction;
 use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Config\NoOp;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
 return static function (App $app) : void {
+    // No auth required
     $app->group('/account', function (RouteCollectorProxy $r) : void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container
@@ -35,8 +40,29 @@ return static function (App $app) : void {
         $r->get('/log-out', GetLogOutAction::class);
 
         $r->post('/log-out', GetLogOutAction::class);
+
+        $r->post(
+            '/request-password-reset',
+            PostRequestPasswordResetAction::class
+        );
+
+        $r->get(
+            '/request-password-reset/msg',
+            GetMessageAction::class
+        );
+
+        $r->get(
+            '/reset-pw-with-token/{token}',
+            GetResetPasswordWithTokenAction::class
+        );
+
+        $r->post(
+            '/reset-pw-with-token/{token}',
+            PostResetPasswordWithTokenAction::class
+        );
     });
 
+    // Auth required
     $app->group('/account', function (RouteCollectorProxy $r) : void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container

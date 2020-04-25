@@ -1,0 +1,28 @@
+{% do requireVariables({
+    message: 'string',
+}) %}
+
+{# @var string messageType #}
+{% set messageType = messageType ?? 'success' %}
+
+{% extends '_Layout.twig' %}
+
+{% set messageClass = 'Message--IsSuccess' %}
+
+{% if messageType == 'warning' %}
+    {% set messageClass = 'Message--IsWarning' %}
+{% elseif messageType == 'error' %}
+    {% set messageClass = 'Message--IsError' %}
+{% endif %}
+
+{% block content %}
+    <section class="LogInForm">
+        <div class="LogInForm__Message">
+            <div class="Message {{ messageClass }}">
+                <div class="Message__Inner">
+                    {{ message|smartypants|widont }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

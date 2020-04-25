@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
+use App\Users\Services\FetchTotalUserResetTokens;
 use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
@@ -18,9 +19,11 @@ use App\Users\Services\GeneratePasswordResetToken;
 use App\Users\Services\LogCurrentUserOut;
 use App\Users\Services\LogUserIn;
 use App\Users\Services\PostalCodeService;
+use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use Psr\Container\ContainerInterface;
+use Throwable;
 use function assert;
 
 class UserApi
@@ -98,6 +101,29 @@ class UserApi
         $service = $this->di->get(GeneratePasswordResetToken::class);
 
         assert($service instanceof GeneratePasswordResetToken);
+
+        return $service($user);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function requestPasswordResetEmail(UserModel $user) : void
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(RequestPasswordResetEmail::class);
+
+        assert($service instanceof RequestPasswordResetEmail);
+
+        $service($user);
+    }
+
+    public function fetchTotalUserResetTokens(UserModel $user) : int
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchTotalUserResetTokens::class);
+
+        assert($service instanceof FetchTotalUserResetTokens);
 
         return $service($user);
     }
