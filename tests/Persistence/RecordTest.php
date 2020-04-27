@@ -17,14 +17,4 @@ class RecordTest extends TestCase
             $record->getTableName()
         );
     }
-
-    public function testShortTableName() : void
-    {
-        $record = new ShortNameRec();
-
-        self::assertSame(
-            'ShortNameRec',
-            $record->getTableName()
-        );
-    }
 }

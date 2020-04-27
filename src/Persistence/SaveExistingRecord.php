@@ -22,7 +22,10 @@ class SaveExistingRecord
     public function __invoke(Record $record) : Payload
     {
         if (! $record->id) {
-            return new Payload(Payload::STATUS_NOT_UPDATED, ['message' => 'A record ID is required']);
+            return new Payload(
+                Payload::STATUS_NOT_UPDATED,
+                ['message' => 'A record ID is required']
+            );
         }
 
         try {
@@ -42,7 +45,9 @@ class SaveExistingRecord
 
             $statement = $this->pdo->prepare($sql);
 
-            $success = $statement->execute($record->getBindValues());
+            $success = $statement->execute(
+                $record->getBindValues()
+            );
 
             if (! $success) {
                 throw new Exception();

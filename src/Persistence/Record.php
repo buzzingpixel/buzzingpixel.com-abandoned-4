@@ -6,13 +6,7 @@ namespace App\Persistence;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Throwable;
 use function array_map;
-use function lcfirst;
-use function mb_strlen;
-use function mb_strpos;
-use function mb_substr;
-use function strrev;
 
 abstract class Record
 {
@@ -22,59 +16,33 @@ abstract class Record
 
     public function getTableName() : string
     {
-        // @codeCoverageIgnoreStart
-
-        try {
-            if (static::$tableName !== '') {
-                return static::$tableName;
-            }
-
-            $reflectionClass = new ReflectionClass($this);
-
-            $shortName = (string) $reflectionClass->getShortName();
-
-            $rev = strrev($shortName);
-
-            if (mb_strpos($rev, 'droceR') !== 0) {
-                return $shortName;
-            }
-
-            $shortNameLength = (int) mb_strlen($shortName);
-
-            return lcfirst((string) (mb_substr($shortName, 0, $shortNameLength - 6))) . 's';
-        } catch (Throwable $e) {
-            return '';
-        }
-
-        // @codeCoverageIgnoreEnd
+        return static::$tableName;
     }
 
     /**
      * @return string[]
+     *
+     * @noinspection PhpDocMissingThrowsInspection
      */
     public function getFields(bool $prefixNamesForBind = false) : array
     {
         $prefixNamesWith = $prefixNamesForBind ? ':' : '';
 
-        try {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            $reflectionClass = new ReflectionClass($this);
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $reflectionClass = new ReflectionClass($this);
 
-            $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC);
+        $properties = $reflectionClass->getProperties(
+            ReflectionProperty::IS_PUBLIC
+        );
 
-            return array_map(
-                static function (ReflectionProperty $property) use ($prefixNamesWith) {
-                    return $prefixNamesWith . $property->getName();
-                },
-                $properties
-            );
-
-            // @codeCoverageIgnoreStart
-        } catch (Throwable $e) {
-            return [];
-        }
-
-        // @codeCoverageIgnoreEnd
+        return array_map(
+            static function (ReflectionProperty $property) use (
+                $prefixNamesWith
+            ) {
+                return $prefixNamesWith . $property->getName();
+            },
+            $properties
+        );
     }
 
     /**
