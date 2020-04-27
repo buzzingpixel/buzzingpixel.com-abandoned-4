@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Account\Cards\GetAccountCardsAction;
 use App\Http\Account\ChangePassword\GetChangePasswordAction;
 use App\Http\Account\ChangePassword\PostChangePasswordAction;
 use App\Http\Account\GetAccountAction;
@@ -132,6 +133,11 @@ return static function (App $app) : void {
         $r->post(
             '/change-password',
             PostChangePasswordAction::class
+        );
+
+        $r->get(
+            '/cards',
+            GetAccountCardsAction::class
         );
     })->add(RequireLogInAction::class);
 };
