@@ -43,6 +43,7 @@
         "slim/flash": "^0.4.0",
         "slim/psr7": "^0.6.0",
         "slim/slim": "^4.3",
+        "stripe/stripe-php": "^7.29",
         "symfony/console": "^4.3",
         "symfony/yaml": "^4.3",
         "twig/twig": "^2.12"
