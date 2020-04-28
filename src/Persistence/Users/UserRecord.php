@@ -48,6 +48,8 @@ class UserRecord extends Record
 
     public string $created_at = '';
 
+    public string $stripe_id = '';
+
     /**
      * @return array<string, string>
      */

@@ -62,6 +62,8 @@ class UserModel
 
     public DateTimeImmutable $createdAt;
 
+    public string $stripeId = '';
+
     /**
      * @return mixed[]
      */
