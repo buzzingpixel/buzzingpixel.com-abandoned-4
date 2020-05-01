@@ -22,6 +22,7 @@ use App\Users\Services\PostalCodeService;
 use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
+use App\Users\Services\UpdateStripeCustomer;
 use App\Users\Services\ValidateUserPassword;
 use App\Users\UserApi;
 use Exception;
@@ -624,5 +625,38 @@ class UserApiTest extends TestCase
             ->willReturn(42);
 
         return $mock;
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testUpdateStripeCustomer() : void
+    {
+        $user = new UserModel();
+
+        $service = $this->createMock(
+            UpdateStripeCustomer::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+            );
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(UpdateStripeCustomer::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        $api->updateStripeCustomer(
+            $user
+        );
     }
 }
