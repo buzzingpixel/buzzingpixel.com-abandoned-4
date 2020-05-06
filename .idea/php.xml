@@ -169,12 +169,13 @@
       <path value="$PROJECT_DIR$/vendor/mandrill/mandrill" />
       <path value="$PROJECT_DIR$/vendor/html2text/html2text" />
       <path value="$PROJECT_DIR$/vendor/rollbar/rollbar" />
+      <path value="$PROJECT_DIR$/vendor/stripe/stripe-php" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
     <interpreters>
       <interpreter id="c8c005eb-a527-4039-a077-884b3caa2bbf" name="buzzingpixel_php:latest" home="docker://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="buzzingpixel_php:latest" DOCKER_REMOTE_PROJECT_PATH="/opt/project" INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" />
+        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="buzzingpixel_php:latest" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
       </interpreter>
     </interpreters>
   </component>
@@ -244,9 +245,10 @@
   </component>
   <component name="PhpProjectServersManager">
     <servers>
-      <server host="buzzingpixel.localtest.me" id="2ea523d0-b20b-4a03-ac31-7ad77af53425" name="buzzingpixel.localtest.me" port="443" use_path_mappings="true">
+      <server host="_" id="39fdf861-6bb9-4543-93c8-05b4aed4c1c9" name="Local Dev Server" port="26087" use_path_mappings="true">
         <path_mappings>
           <mapping local-root="$PROJECT_DIR$" remote-root="/opt/project" />
+          <mapping local-root="$PROJECT_DIR$/public" remote-root="/opt/project/public" />
         </path_mappings>
       </server>
     </servers>

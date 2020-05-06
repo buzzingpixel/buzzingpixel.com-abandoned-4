@@ -3,8 +3,7 @@
 source ../../dev 2> /dev/null;
 
 function provision() {
-    docker build -t buzzingpixel:php-dev docker/php-dev;
-    docker run -it -v ${PWD}:/app -v buzzingpixel_composer-home-volume:/composer-home-volume --env COMPOSER_HOME=/composer-home-volume -w /app ${composerDockerImage} bash -c "composer install";
+    docker exec -it --user root --workdir /opt/project buzzingpixel-php bash -c "composer install";
 
     if [[ "${isMacOs}" = "true" ]]; then
         docker run -it -v ${PWD}:/app -v buzzingpixel_node-modules-volume:/app/node_modules -v buzzingpixel_yarn-cache-volume:/usr/local/share/.cache/yarn -w /app ${nodeDockerImage} bash -c "yarn";
