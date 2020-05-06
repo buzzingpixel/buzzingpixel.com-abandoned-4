@@ -54,6 +54,15 @@
                         {{ linkContent }}
                     </a>
                 </div>
+            {% elseif not cart.user %}
+                <div class="CartInfo__Item">
+                    <a
+                        href="/cart/log-in"
+                        class="button CartInfo__Button"
+                    >
+                        Log In
+                    </a>
+                </div>
             {% endif %}
         </div>
         <div class="Cart__Items">

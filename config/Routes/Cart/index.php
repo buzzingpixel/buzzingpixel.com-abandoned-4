@@ -6,6 +6,7 @@ use App\Http\Cart\GetAddToCartAction;
 use App\Http\Cart\GetCartAction;
 use App\Http\Cart\GetCartUpdateQuantityAction;
 use App\Http\Cart\GetClearCartAction;
+use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Config\NoOp;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -36,4 +37,13 @@ return static function (App $app) : void {
             GetClearCartAction::class
         );
     });
+
+    // Auth required
+    $app->group('/cart', function (RouteCollectorProxy $r) : void {
+        // We have to use $this so PHPCS will be happy and not convert to
+        // static function. $this is an instance of the DI Container
+        $this->get(NoOp::class)();
+
+        $r->redirect('/log-in', '/cart');
+    })->add(RequireLogInAction::class);
 };

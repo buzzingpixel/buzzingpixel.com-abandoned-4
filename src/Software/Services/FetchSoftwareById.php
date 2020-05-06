@@ -50,7 +50,11 @@ class FetchSoftwareById
         )
             ->withWhere('id', $id)
             ->one();
-        assert($softwareRecord instanceof SoftwareRecord || $softwareRecord === null);
+
+        assert(
+            $softwareRecord instanceof SoftwareRecord ||
+            $softwareRecord === null
+        );
 
         if ($softwareRecord === null) {
             return null;
