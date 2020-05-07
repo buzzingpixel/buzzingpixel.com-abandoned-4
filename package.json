@@ -9,6 +9,7 @@
         "css-prod": "node assets/bin/css-prod.mjs",
         "stylelint": "node assets/bin/stylelint.mjs",
         "javascript": "node assets/bin/javascript.mjs",
+        "javascript-prod": "node assets/bin/javascript-prod.mjs",
         "eslint": "node assets/bin/eslint.mjs"
     },
     "name": "buzzingpixel-website",
