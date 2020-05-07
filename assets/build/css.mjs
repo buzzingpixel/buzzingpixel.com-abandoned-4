@@ -142,9 +142,6 @@ export default (prod) => {
             // If prod is requested, get a hash of the css content and insert
             // it into the file path for cache breaking
             if (prod === true) {
-                // Empty the path
-                fs.emptyDirSync(cssOutputPath);
-
                 // Get a hash of the css content
                 const md5 = crypto.createHash('md5');
                 const hash = `${md5.update(result.css).digest('hex')}`;
@@ -155,6 +152,9 @@ export default (prod) => {
                 // Update the manifest path
                 manifestPath = `${hash}/${manifestPath}`;
             }
+
+            // Empty the path
+            fs.emptyDirSync(cssOutputPath);
 
             // Make sure gitignore is in place
             fs.writeFileSync(
