@@ -44,7 +44,7 @@ class TwigEnvironmentFactory
 
         $loader = $di->get(FilesystemLoader::class);
 
-        $loader->addPath($projectPath . '/assetsSource/templates');
+        $loader->addPath($projectPath . '/assets/templates');
 
         $twig = new TwigEnvironment(
             $loader,

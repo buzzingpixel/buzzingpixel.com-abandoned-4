@@ -5,7 +5,7 @@
     "jsOneToOneMode": true,
     "proxy": "https://buzzingpixel.localtest.me",
     "watch": [
-        "assetsSource/templates/**",
+        "assets/templates/**",
         "config/**",
         "content/**",
         "src/**"

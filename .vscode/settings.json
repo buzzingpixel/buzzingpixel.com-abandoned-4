@@ -14,7 +14,7 @@
     "phpsab.snifferShowSources": true,
 
     // Twig
-    "symfonyHelper.templatesFolder": "assetsSource/templates",
+    "symfonyHelper.templatesFolder": "assets/templates",
 
     // Tasks on save
     "emeraldwalk.runonsave": {
@@ -28,7 +28,7 @@
                 "cmd": "${workspaceRoot}/vendor/bin/php-cs-fixer fix ${file} --using-cache=no --config=${workspaceRoot}/.php_cs",
             },
             {
-                "match": "assetsSource\\/js\\/.*?\\.js$|assetsSource\\\\js\\\\.*?\\.js$",
+                "match": "assets\\/js\\/.*?\\.js$|assets\\\\js\\\\.*?\\.js$",
                 "cmd": "${workspaceRoot}/platform/node_modules/.bin/eslint --fix ${file}",
             },
         ],
