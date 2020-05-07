@@ -47,7 +47,7 @@ COPY ./docker/php/php-custom-config.ini /usr/local/etc/php/conf.d/php-custom-con
 COPY ./docker/php/fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 
 # Add composer
-COPY --from=composer:1.9.3 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.10.5 /usr/bin/composer /usr/bin/composer
 
 
 

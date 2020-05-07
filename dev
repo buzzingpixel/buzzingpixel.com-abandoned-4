@@ -30,7 +30,7 @@ secondArg=${2};
 
 isMacOs=false;
 composeFiles="-f docker-compose.yml -f docker-compose.dev.yml";
-nodeDockerImage="node:12.12.0";
+nodeDockerImage="node:13.8.0";
 
 if [[ "$(uname)" = "Darwin" ]] || [[ "$(uname)" = "darwin" ]]; then
     isMacOs=true;

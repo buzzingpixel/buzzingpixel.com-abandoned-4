@@ -31,5 +31,8 @@ COPY ./docker/web/nginx-local.conf /etc/nginx/conf.d/local.conf
 ###################
 FROM base as prod
 
-# Copy dev config
+# Copy prod config
 COPY ./docker/web/nginx-prod.conf /etc/nginx/conf.d/prod.conf
+
+# Copy the project files into the image for optimal production performance
+COPY . /opt/project
