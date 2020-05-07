@@ -63,14 +63,13 @@ class General extends SimpleModel
 
     /** @var string[] */
     public static array $stylesheets = [
-        'https://fonts.googleapis.com/css?family=Arvo:400,400i,700,700i|Noto+Sans+SC:100,300,400,500,700,900',
-        // Deployment process will change the filename to something like style.min.1553365271.css
+        'https://rsms.me/inter/inter.css',
         '/assets/css/style.min.css',
     ];
 
     /** @var array<string, array<string, string>|string> */
     public static array $jsFiles = [
-        'vue' => 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js',
+        'alpine' => 'https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js',
         'main' => [
             'src' => '/assets/js/main.js?v=',
             'type' => 'module',
