@@ -7,6 +7,7 @@ namespace Config\Factories;
 use App\HttpResponse\Twig\Extensions\Countries;
 use App\HttpResponse\Twig\Extensions\FetchLoggedInUser;
 use App\HttpResponse\Twig\Extensions\PhpFunctions;
+use App\HttpResponse\Twig\Extensions\ReadJson;
 use App\HttpResponse\Twig\Extensions\RequireVariables;
 use App\HttpResponse\Twig\Extensions\Slugify;
 use App\HttpResponse\Twig\Extensions\TemplateExists;
@@ -88,6 +89,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(Countries::class));
 
         $twig->addExtension($di->get(TimeZoneList::class));
+
+        $twig->addExtension($di->get(ReadJson::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
