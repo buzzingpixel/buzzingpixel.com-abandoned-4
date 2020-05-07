@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import fs from 'fs-extra';
 import hexRGBA from 'postcss-hexrgba';
 import out from 'cli-output';
@@ -11,11 +12,12 @@ import tailwindcss from 'tailwindcss';
 
 const appDir = process.cwd();
 const cssLocation = `${appDir}/assets/css`;
-const cssOutputFile = `${appDir}/public/assets/css/style.min.css`;
+const cssOutputPath = `${appDir}/public/assets/css`;
+const cssOutputFileName = 'style.min.css';
 const startFile = `${appDir}/assets/css/start.pcss`;
 const libDir = `${appDir}/assets/css/lib`;
 
-export default () => {
+export default (prod) => {
     const mediaQueries = [];
     const mediaQueryCss = {};
     const files = {};
@@ -96,7 +98,9 @@ export default () => {
     // Process the CSS through postcss with desired plugins
     postcss(
         [
+            // Use tailwind
             tailwindcss,
+            // Formerly autoprefixer
             postcssPresetEnv({
                 features: {
                     'custom-properties': {
@@ -109,6 +113,7 @@ export default () => {
                     'focus-within-pseudo-class': false,
                 },
             }),
+            // Purge out CSS that's not being used by our markup
             purgecss({
                 content: [
                     `${appDir}/assets/templates/**/*.html`,
@@ -116,7 +121,9 @@ export default () => {
                 ],
                 defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
             }),
+            // Allow us to use hex in RGBA
             hexRGBA,
+            // Minifier
             postcssClean({
                 level: 2,
             }),
@@ -126,7 +133,54 @@ export default () => {
             from: undefined,
         })
         .then((result) => {
+            // Start the output file with the path
+            let cssOutputFile = cssOutputPath;
+
+            // Create the relative file path for the manifest
+            let manifestPath = cssOutputFileName;
+
+            // If prod is requested, get a hash of the css content and insert
+            // it into the file path for cache breaking
+            if (prod === true) {
+                // Empty the path
+                fs.emptyDirSync(cssOutputPath);
+
+                // Get a hash of the css content
+                const md5 = crypto.createHash('md5');
+                const hash = `${md5.update(result.css).digest('hex')}`;
+
+                // and insert it into the file path for cache breaking
+                cssOutputFile += `/${hash}`;
+
+                // Update the manifest path
+                manifestPath = `${hash}/${manifestPath}`;
+            }
+
+            // Make sure gitignore is in place
+            fs.writeFileSync(
+                `${cssOutputPath}/.gitignore`,
+                '*\n!.gitignore\n',
+            );
+
+            // If the directory doesn't exist, create it
+            if (!fs.existsSync(cssOutputFile)) {
+                fs.mkdirSync(cssOutputFile, { recursive: true });
+            }
+
+            // Now add the file name to the output filename
+            cssOutputFile += `/${cssOutputFileName}`;
+
+            // Write the file to disk
             fs.writeFileSync(cssOutputFile, result.css);
+
+            fs.writeFileSync(
+                `${cssOutputPath}/manifest.json`,
+                JSON.stringify({
+                    [cssOutputFileName]: manifestPath,
+                }, null, 4),
+            );
+
+            // All done
             out.success('CSS compiled');
         })
         .catch((error) => {
