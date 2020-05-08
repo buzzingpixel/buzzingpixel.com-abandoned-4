@@ -62,17 +62,8 @@ class General extends SimpleModel
     public static string $twitterHandle = 'buzzingpixel';
 
     /** @var string[] */
-    public static array $stylesheets = [
-        'https://rsms.me/inter/inter.css',
-        '/assets/css/style.min.css',
-    ];
+    public static array $stylesheets = ['https://rsms.me/inter/inter.css'];
 
     /** @var array<string, array<string, string>|string> */
-    public static array $jsFiles = [
-        'alpine' => 'https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js',
-        'main' => [
-            'src' => '/assets/js/main.js?v=',
-            'type' => 'module',
-        ],
-    ];
+    public static array $jsFiles = ['https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js'];
 }
