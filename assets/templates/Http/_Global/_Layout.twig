@@ -80,11 +80,12 @@
     {# Get any queued up scripts and styles for head #}
     {{ block('endHead') ?? '' }}
 </head>
-<body>
+<body class="antialiased font-sans bg-gray-200">
     {# Get any queued up body items #}
     {{ block('beginBody') ?? '' }}
 
     {# Get content #}
+    {% include 'Http/_Global/MainNav.twig' only %}
     <main>
         {{ block('content') ?? '' }}
     </main>

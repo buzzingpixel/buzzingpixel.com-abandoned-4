@@ -12,7 +12,7 @@ class MainMenu extends SimpleModel
     public static array $menu = [
         [
             'href' => '#0',
-            'content' => 'software',
+            'content' => 'Software',
             'subItems' => [
                 [
                     'href' => '/software/ansel-craft',
@@ -58,7 +58,7 @@ class MainMenu extends SimpleModel
         ],
         [
             'href' => '#0',
-            'content' => 'support',
+            'content' => 'Support',
             'subItems' => [
                 [
                     'href' => '/support',
