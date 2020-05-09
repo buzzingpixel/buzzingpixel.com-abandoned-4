@@ -15,6 +15,7 @@ module.exports = {
                 'caribbean-green': '#00bf8f',
                 jade: '#00a67c',
                 'deep-sea': '#008c69',
+                'aqua-deep': '#005c45',
                 'spring-wood': '#f6f2ee',
                 champagne: '#fae8d8',
                 'gold-sand': '#e6b894',
@@ -23,11 +24,19 @@ module.exports = {
                 'pumpkin-skin': '#b7580c',
                 'rich-gold': '#9f4d0b',
                 'totem-pole': '#9f290b',
+                'blue-smoke': '#788480',
                 nandor: '#545f5c',
                 'mine-shaft': '#313131',
+                'mine-shaft-dark': '#232323',
+                'cod-gray': '#171717',
                 'lighter-red': '#ee908f',
                 'light-red': '#ca5153',
                 red: '#870f12',
+            },
+            screens: {
+                dark: {
+                    raw: '(prefers-color-scheme: dark)',
+                },
             },
             fontFamily: {
                 // eslint-disable-next-line no-undef
