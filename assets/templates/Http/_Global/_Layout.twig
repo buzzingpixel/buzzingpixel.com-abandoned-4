@@ -85,15 +85,16 @@
         type="text/javascript"
     ></script>
 </head>
-<body class="antialiased font-sans bg-gray-200">
+<body class="antialiased font-sans bg-white">
     {# Get any queued up body items #}
     {{ block('beginBody') ?? '' }}
 
     {# Get content #}
     {% include 'Http/_Global/MainNav.twig' only %}
-    <main>
+    <main class="bg-gray-200">
         {{ block('content') ?? '' }}
     </main>
+    {% include 'Http/_Global/Footer.twig' only %}
 
     {# Output JS from globals #}
     {% for jsFile in GeneralConfig.jsFiles %}
