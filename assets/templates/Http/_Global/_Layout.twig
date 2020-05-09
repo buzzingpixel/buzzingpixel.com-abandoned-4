@@ -79,6 +79,11 @@
 
     {# Get any queued up scripts and styles for head #}
     {{ block('endHead') ?? '' }}
+
+    <script
+        src="/assets/js/{{ readJson(GeneralConfig.rootPath ~ '/public/assets/js/manifest.json')['run-when-ready.js'] }}"
+        type="text/javascript"
+    ></script>
 </head>
 <body class="antialiased font-sans bg-gray-200">
     {# Get any queued up body items #}

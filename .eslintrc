@@ -13,6 +13,7 @@
         "parser": "babel-eslint"
     },
     "rules": {
+        "no-param-reassign": 0,
         "import/extensions": ["error", "never", { "js": "always", "mjs": "always" }],
         "indent": ["error", 4, {
             "SwitchCase": 1,

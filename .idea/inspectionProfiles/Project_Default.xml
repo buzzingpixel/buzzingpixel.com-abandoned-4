@@ -8,7 +8,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="11">
+          <list size="13">
             <item index="0" class="java.lang.String" itemvalue="x-data" />
             <item index="1" class="java.lang.String" itemvalue="@click" />
             <item index="2" class="java.lang.String" itemvalue=":class" />
@@ -20,11 +20,14 @@
             <item index="8" class="java.lang.String" itemvalue="x-transition:leave" />
             <item index="9" class="java.lang.String" itemvalue="x-transition:leave-start" />
             <item index="10" class="java.lang.String" itemvalue="x-transition:leave-end" />
+            <item index="11" class="java.lang.String" itemvalue="x-text" />
+            <item index="12" class="java.lang.String" itemvalue="x-init" />
           </list>
         </value>
       </option>
       <option name="myCustomValuesEnabled" value="true" />
     </inspection_tool>
+    <inspection_tool class="NodeModulesDependencies" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpCSFixerValidationInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false">
       <option name="ALLOW_RISKY_RULES" value="true" />
     </inspection_tool>
