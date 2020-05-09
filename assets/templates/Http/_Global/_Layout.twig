@@ -85,13 +85,13 @@
         type="text/javascript"
     ></script>
 </head>
-<body class="antialiased font-sans bg-white">
+<body class="antialiased font-sans bg-nandor">
     {# Get any queued up body items #}
     {{ block('beginBody') ?? '' }}
 
     {# Get content #}
     {% include 'Http/_Global/MainNav.twig' only %}
-    <main class="bg-gray-200">
+    <main class="bg-aqua-haze">
         {{ block('content') ?? '' }}
     </main>
     {% include 'Http/_Global/Footer.twig' only %}

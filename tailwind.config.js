@@ -16,6 +16,7 @@ module.exports = {
                 jade: '#00a67c',
                 'deep-sea': '#008c69',
                 'spring-wood': '#f6f2ee',
+                champagne: '#fae8d8',
                 'gold-sand': '#e6b894',
                 whiskey: '#d89c6d',
                 meteor: '#cf640e',

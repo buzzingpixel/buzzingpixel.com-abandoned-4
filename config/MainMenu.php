@@ -10,6 +10,10 @@ class MainMenu extends SimpleModel
 {
     /** @var mixed[] */
     public static array $menu = [
+        // [
+        //     'href' => '/test',
+        //     'content' => 'Test',
+        // ],
         [
             'href' => '#0',
             'content' => 'Software',

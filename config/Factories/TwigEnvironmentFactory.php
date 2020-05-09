@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Factories;
 
+use App\HttpResponse\Twig\Extensions\BreakToSpace;
 use App\HttpResponse\Twig\Extensions\Countries;
 use App\HttpResponse\Twig\Extensions\FetchLoggedInUser;
 use App\HttpResponse\Twig\Extensions\PhpFunctions;
@@ -91,6 +92,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(TimeZoneList::class));
 
         $twig->addExtension($di->get(ReadJson::class));
+
+        $twig->addExtension($di->get(BreakToSpace::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
