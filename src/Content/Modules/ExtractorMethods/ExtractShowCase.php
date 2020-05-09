@@ -35,9 +35,9 @@ trait ExtractShowCase
             [];
 
         return new ShowCasePayload([
-            'preHeadline' => (string) ($parsedYaml['preHeadline'] ?? ''),
             'headline' => (string) ($parsedYaml['headline'] ?? ''),
             'subHeadline' => (string) ($parsedYaml['subHeadline'] ?? ''),
+            'content' => (string) ($parsedYaml['content'] ?? ''),
             'ctas' => array_map([$this, 'mapYamlCtaToPayload'], $yamlCtas),
             'showCaseImage' => $this->mapYamlImageToPayload($yamlShowCaseImage),
         ]);

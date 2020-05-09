@@ -1,0 +1,25 @@
+{# @var \Config\General GeneralConfig #}
+{# @var \App\Content\Modules\ModulePayload modulePayload #}
+
+<div class="Modules">
+    {% for payload in modulePayload.getItems() %}
+        {% set templatePath = 'Http/Modules/' ~ payload.getName() ~ '.twig' %}
+
+        {% if templateExists(templatePath) %}
+            {% include templatePath with {
+                payload: payload,
+                moduleCount: loop.index,
+            } only %}
+        {% else %}
+            {% if GeneralConfig.devMode %}
+                <div class="text-center dark:text-white">
+                    <br><br><br>
+                    ==============================<br>
+                    TODO: Implement module: {{ payload.getName() }}<br>
+                    ==============================<br>
+                    <br><br><br>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>

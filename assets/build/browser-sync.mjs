@@ -6,12 +6,14 @@ const appDir = process.cwd();
 const cssOutputFile = `${appDir}/public/assets/css/style.min.css`;
 const jsOutputDir = `${appDir}/public/assets/js//**`;
 const srcDir = `${appDir}/src//**`;
+const contentDir = `${appDir}/content//**`;
 const templatesDir = `${appDir}/assets/templates//**`;
 
 const watchFiles = [
     cssOutputFile,
     jsOutputDir,
     srcDir,
+    contentDir,
     templatesDir,
     '!*.diff',
     '!*.err',

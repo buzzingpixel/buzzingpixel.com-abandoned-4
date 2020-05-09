@@ -1,0 +1,7 @@
+{% extends 'Http/_Global/_Layout.twig' %}
+
+{% block content %}
+    {% include 'Http/Modules/_Includer.twig' with {
+        modulePayload: modulePayload
+    } only %}
+{% endblock %}

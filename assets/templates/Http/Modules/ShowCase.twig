@@ -1,0 +1,254 @@
+{# @var \App\Content\Modules\Payloads\ShowCasePayload payload #}
+{# @var int moduleCount #}
+
+<section
+    class="{{ breakToSpace(
+        '
+        relative
+        bg-white
+        dark:bg-nandor
+        overflow-hidden
+        '
+    ) }}"
+    data-name="ShowCase"
+>
+    <div
+        class="max-w-screen-xl mx-auto"
+        data-name="ShowCase__ContentArea"
+    >
+        <div class="{{ breakToSpace(
+            '
+            relative
+            z-10
+            pb-8
+            bg-white
+            dark:bg-nandor
+            sm:pb-16
+            md:pb-20
+            lg:max-w-2xl
+            lg:w-full
+            lg:pb-28
+            xl:pb-32
+            '
+        ) }}">
+            <svg
+                class="{{ breakToSpace(
+                    '
+                    hidden
+                    lg:block
+                    absolute
+                    right-0
+                    inset-y-0
+                    h-full
+                    w-48
+                    text-white
+                    dark:text-nandor
+                    transform
+                    translate-x-1/2
+                    '
+                ) }}"
+                fill="currentColor"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                data-name="ShowCase__Angle"
+            >
+                <polygon points="50,0 100,0 50,100 0,100" />
+            </svg>
+            <span
+                class="{{ breakToSpace(
+                    '
+                    block
+                    relative
+                    pt-6
+                    px-4
+                    sm:px-6
+                    lg:px-8
+                    '
+                ) }}"
+                data-name="ShowCase__TopSpacer"
+            ></span>
+            <div class="{{ breakToSpace(
+                '
+                mt-10
+                mx-auto
+                max-w-screen-xl
+                px-4
+                sm:mt-12
+                sm:px-6
+                md:mt-16
+                lg:mt-20
+                lg:px-8
+                xl:mt-28
+                '
+            ) }}">
+                <div
+                    class="{{ breakToSpace(
+                        '
+                        sm:text-center
+                        lg:text-left
+                        '
+                    ) }}"
+                    data-name="ShowCase__Content"
+                >
+                    <h2 class="{{ breakToSpace(
+                        '
+                        text-4xl
+                        tracking-tight
+                        leading-10
+                        font-extrabold
+                        text-gray-900
+                        dark:text-white
+                        sm:text-5xl
+                        sm:leading-none
+                        md:text-6xl
+                        '
+                    ) }}">
+                        {{ payload.headline|smartypants }}
+                        {% if payload.subHeadline %}
+                            <div class="{{ breakToSpace(
+                                '
+                                text-rich-gold
+                                dark:text-champagne
+                                text-xl
+                                leading-7
+                                mt-2
+                                sm:text-2xl
+                                sm:leading-8
+                                md:text-3xl
+                                sm:leading-10
+                                font-normal
+                                '
+                            ) }}">
+                                {{ payload.subHeadline|smartypants|widont }}
+                            </div>
+                        {% endif %}
+                    </h2>
+                    {% if payload.content %}
+                        <p class="{{ breakToSpace(
+                            '
+                            mt-3
+                            text-base
+                            text-gray-500
+                            dark:text-gray-200
+                            sm:mt-5
+                            sm:text-lg
+                            sm:max-w-xl
+                            sm:mx-auto
+                            md:mt-5
+                            md:text-xl
+                            lg:mx-0
+                            '
+                        ) }}">
+                            {{ payload.content|smartypants|widont }}
+                        </p>
+                    {% endif %}
+                    {% if payload.ctas|length > 0 %}
+                        <div class="{{ breakToSpace(
+                            '
+                            mt-5
+                            sm:mt-8
+                            sm:flex
+                            sm:justify-center
+                            lg:justify-start
+                            '
+                        ) }}">
+                            {% for cta in payload.ctas %}
+                                {% set ctaClasses = [
+                                    'rounded-md',
+                                    'shadow',
+                                ] %}
+                                {% if not loop.first %}
+                                    {% set ctaClasses = ctaClasses|merge([
+                                        'mt-3',
+                                        'sm:mt-0',
+                                        'sm:ml-3',
+                                    ]) %}
+                                {% endif %}
+                                <div class="{{ ctaClasses|join(' ') }}">
+                                    <a
+                                        href="{{ cta.href }}"
+                                        class="{{ breakToSpace(
+                                            '
+                                            w-full
+                                            flex
+                                            items-center
+                                            justify-center
+                                            px-8
+                                            py-3
+                                            border
+                                            border-transparent
+                                            text-base
+                                            leading-6
+                                            font-medium
+                                            rounded-md
+                                            text-white
+                                            dark:text-gray-800
+                                            bg-pumpkin-skin
+                                            dark:bg-gold-sand
+                                            hover:bg-rich-gold
+                                            dark:hover:bg-whiskey
+                                            focus:outline-none
+                                            focus:shadow-outline
+                                            transition
+                                            duration-150
+                                            ease-in-out
+                                            md:py-4
+                                            md:text-lg
+                                            md:px-10
+                                            '
+                                        ) }}"
+                                    >
+                                        {{ cta.content|smartypants|widont }}
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        class="{{ breakToSpace(
+            '
+            lg:absolute
+            lg:inset-y-0
+            lg:right-0
+            lg:w-1/2
+            bg-gray-200
+            '
+        ) }}"
+        data-name="ShowCase__Image"
+    >
+        {% if payload.showCaseImage.oneX %}
+            <picture>
+                {% if payload.showCaseImage.sources|length %}
+                    {% for source in payload.showCaseImage.sources %}
+                        <source
+                            srcset="{{ source.oneX }} 1x{% if source.twoX %}, {{ source.twoX() }} 2x{% endif %}"
+                            media="{{ source.mediaQuery }}"
+                        >
+                    {% endfor %}
+                {% endif %}
+                <img
+                    class="{{ breakToSpace(
+                        '
+                        h-56
+                        w-full
+                        object-cover
+                        sm:h-72
+                        md:h-96
+                        lg:w-full
+                        lg:h-full
+                        '
+                    ) }}"
+                    src="{{ payload.showCaseImage.oneX }}"
+                    {% if payload.showCaseImage.twoX %}
+                    srcset="{{ payload.showCaseImage.oneX }} 1x, {{ payload.showCaseImage.twoX }} 2x"
+                    {% endif %}
+                    alt=""
+                >
+            </picture>
+        {% endif %}
+    </div>
+</section>
