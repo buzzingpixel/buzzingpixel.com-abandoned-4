@@ -15,6 +15,7 @@ use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use buzzingpixel\cookieapi\interfaces\CookieInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -223,17 +224,21 @@ class FetchLoggedInUserTest extends TestCase
 
         self::assertSame($userModel, ($this->service)());
 
-        $currentTime = new DateTimeImmutable();
+        $currentTime = new DateTimeImmutable(
+            'now',
+            new DateTimeZone('UTC')
+        );
 
         $updatedLastTouchedAt = DateTimeImmutable::createFromFormat(
             DateTimeInterface::ATOM,
             $userSessionRecord->last_touched_at
         );
+
         assert($updatedLastTouchedAt instanceof DateTimeImmutable);
 
         self::assertSame(
-            $currentTime->format('Y-m-d H:i:s'),
-            $updatedLastTouchedAt->format('Y-m-d H:i:s')
+            $currentTime->format('Y-m-d H:i'),
+            $updatedLastTouchedAt->format('Y-m-d H:i')
         );
     }
 

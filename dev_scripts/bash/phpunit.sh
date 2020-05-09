@@ -14,6 +14,6 @@ function phpunit() {
 
 function phpunit-coverage() {
     # Run in Docker
-     docker run -it -v ${PWD}:/app -w /app buzzingpixel-php bash -c "php -d memory_limit=4G /app/vendor/phpunit/phpunit/phpunit --configuration /app/phpunit.xml ${allArgsExceptFirst}";
+     docker exec -it -w /opt/project buzzingpixel-php bash -c "php -d memory_limit=4G /opt/project/vendor/phpunit/phpunit/phpunit --configuration /opt/project/phpunit.xml ${allArgsExceptFirst}";
     return 0;
 }

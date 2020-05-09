@@ -9,6 +9,11 @@
          colors="true"
          printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
          verbose="true">
+
+    <extensions>
+        <extension class="Tests\BypassFinalListener" />
+    </extensions>
+
     <testsuites>
         <testsuite name="BuzzingPixel.com">
             <directory suffix="Test.php">tests</directory>
@@ -31,4 +36,5 @@
         <log type="coverage-text" target="php://stdout" showOnlySummary="true" />
         <log type="coverage-html" target="public/code_coverage/" showUncoveredFiles="true" lowUpperBound="35" highLowerBound="70" />
     </logging>
+
 </phpunit>
