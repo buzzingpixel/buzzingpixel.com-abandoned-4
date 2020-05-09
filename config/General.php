@@ -64,6 +64,6 @@ class General extends SimpleModel
     /** @var string[] */
     public static array $stylesheets = ['https://rsms.me/inter/inter.css'];
 
-    /** @var array<string, array<string, string>|string> */
+    /** @var string[] */
     public static array $jsFiles = ['https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js'];
 }

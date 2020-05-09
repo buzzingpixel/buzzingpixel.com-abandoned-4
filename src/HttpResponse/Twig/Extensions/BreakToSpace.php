@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\HttpResponse\Twig\Extensions;
 
+use Throwable;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use function preg_replace;
+use function Safe\preg_replace;
 use function trim;
 
 class BreakToSpace extends AbstractExtension
@@ -27,8 +28,12 @@ class BreakToSpace extends AbstractExtension
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function breakToSpaceMethod(string $classes) : string
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return trim(preg_replace(
             '/\s\s+/',
             ' ',
