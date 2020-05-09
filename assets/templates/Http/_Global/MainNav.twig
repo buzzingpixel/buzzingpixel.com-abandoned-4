@@ -4,10 +4,11 @@
     x-data="{
         mobileMenuIsActive: false,
     }"
-    xmlns:x-transition="http://www.w3.org/1999/xhtml">
+    xmlns:x-transition="http://www.w3.org/1999/xhtml"
+>
     <div class="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
         <div data-name="MainNav__Logo">
-            <a href="/" class="block w-32">
+            <a href="/" class="block w-32 text-gray-700 hover:text-gray-900 transition duration-150 ease-in-out">
                 {% include 'Http/Svg/BzpxlLogoWide.svg' only %}
             </a>
         </div>
@@ -97,7 +98,7 @@
             <div class="flex items-center space-x-4">
                 <a
                     href="/account"
-                    class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white"
+                    class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-caribbean-green hover:bg-jade text-white transition ease-in-out duration-200"
                 >
                     {% include 'Http/Svg/Account.svg' with {
                         class: 'w-5',
@@ -106,7 +107,7 @@
                 {# TODO: badge cart icon #}
                 <a
                     href="/cart"
-                    class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white"
+                    class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-caribbean-green hover:bg-jade text-white transition ease-in-out duration-200"
                 >
                     {% include 'Http/Svg/Cart.svg' with {
                         class: 'w-5',
@@ -130,7 +131,7 @@
             <div class="rounded-lg shadow-xs bg-white divide-y-2 divide-gray-50">
                 <div class="pt-5 pb-6 px-5 space-y-6">
                     <div class="flex items-center justify-between">
-                        <a href="/" class="block w-32">
+                        <a href="/" class="block w-32 text-gray-700 hover:text-gray-900 transition duration-150 ease-in-out">
                             {% include 'Http/Svg/BzpxlLogoWide.svg' only %}
                         </a>
                         <div class="-mr-2">
@@ -189,7 +190,7 @@
                         <div class="flex items-center justify-center space-x-4">
                             <a
                                 href="/account"
-                                class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white"
+                                class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-caribbean-green hover:bg-jade text-white transition ease-in-out duration-200"
                             >
                                 {% include 'Http/Svg/Account.svg' with {
                                     class: 'w-5',
@@ -198,7 +199,7 @@
                             {# TODO: badge cart icon #}
                             <a
                                 href="/cart"
-                                class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white"
+                                class="block flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-caribbean-green hover:bg-jade text-white transition ease-in-out duration-200"
                             >
                                 {% include 'Http/Svg/Cart.svg' with {
                                     class: 'w-5',
