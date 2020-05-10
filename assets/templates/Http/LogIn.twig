@@ -1,0 +1,339 @@
+{# Twig Globals #}
+{# @var \Slim\Csrf\Guard csrf #}
+{# @var string redirectTo #}
+
+{% extends 'Http/_Global/_Layout.twig' %}
+
+{% set message = flash('LoginFormMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% set activeTab = 'LogInTab' %}
+{% if message['result']['active'] is defined %}
+    {% set activeTab = message.result.active %}
+{% endif %}
+
+{% set hiddenInputs %}
+    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+    <input type="hidden" name="redirect_to" value="{{ redirectTo }}">
+    <label for="a_password" style="display:none !important">
+        <input
+            id="a_password"
+            type="text"
+            name="a_password"
+            style="display:none !important"
+            tabindex="-1"
+            autocomplete="off"
+        >
+    </label>
+{% endset %}
+
+{% macro navItem(params) %}
+    {% set params = {
+        active: false,
+        id: false,
+    }|merge(params) %}
+
+    {% set classes = [
+        'px-3',
+        'py-2',
+        'font-medium',
+        'text-sm',
+        'leading-5',
+        'rounded-md',
+        'text-gray-500',
+        'dark:text-white',
+        'hover:text-gray-800',
+        'dark:hover:text-gray-300',
+        'focus:outline-none',
+        'focus:text-gray-800',
+        'focus:bg-gold-sand',
+    ] %}
+
+    {% set activeClasses = [
+        'text-gray-700',
+        'dark:text-gray-700',
+        'dark:hover:text-gray-700',
+        'bg-gold-sand',
+        'focus:outline-none',
+        'focus:text-gray-900',
+        'focus:bg-whiskey',
+        'dark:focus:text-gray-900',
+        'dark:focus:bg-whiskey',
+    ] %}
+
+    {% if params.active %}
+        {% set classes = classes|merge(activeClasses) %}
+    {% endif %}
+
+    <a
+        href="#"
+        class="{{ classes|join(' ') }}"
+        role="presentation"
+        aria-selected="{{ params.active ? 'true' : 'false' }}"
+        {% if params.id %}
+        id="{{ params.id }}"
+        {% endif %}
+        :class="{'{{ activeClasses|join(' ') }}': activeTab === '{{ params.id }}'}"
+        :aria-selected="activeTab === '{{ params.id }}' ? 'true' : 'false'"
+        @click="activeTab = '{{ params.id }}'"
+    >
+        {{ params.content|smartypants }}
+    </a>
+{% endmacro %}
+
+{% macro input(params) %}
+    {% set params = {
+        type: 'text',
+        required: false,
+        isFirst: false,
+        prefix: '',
+        value: '',
+        errorMessage: '',
+    }|merge(params) %}
+
+    {% set inputClasses = [
+        'appearance-none',
+        'block',
+        'w-full',
+        'px-3',
+        'py-2',
+        'border',
+        'rounded-md',
+        'placeholder-gray-400',
+        'focus:outline-none',
+        'focus:shadow-outline-blue',
+        'focus:border-blue-300',
+        'transition',
+        'duration-150',
+        'ease-in-out',
+        'sm:text-sm',
+        'sm:leading-5',
+    ] %}
+
+    {% if params.errorMessage %}
+        {% set inputClasses = inputClasses|merge([
+            'border-red',
+            'bg-lighter-red',
+        ]) %}
+    {% else %}
+        {% set inputClasses = inputClasses|merge([
+            'border-gray-300',
+            'dark:bg-blue-smoke',
+            'dark:border-gray-400',
+        ]) %}
+    {% endif %}
+
+    <div
+        {% if not params.isFirst %}
+            class="mt-6"
+        {% endif %}
+    >
+        <label
+            for="{{ params.prefix ~ params.name }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100"
+        >
+            {{ params.content|smartypants }}
+        </label>
+        <div class="mt-1 rounded-md shadow-sm">
+            <input
+                id="{{ params.prefix ~ params.name }}"
+                type="{{ params.type }}"
+                name="{{ params.name }}"
+                value="{{ params.value }}"
+                class="{{ inputClasses|join(' ') }}"
+                {% if params.required %}
+                required
+                {% endif %}
+            >
+        </div>
+        {% if params.errorMessage %}
+            <div class="mt-2 text-red">
+                {{ params.errorMessage|smartypants|widont }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro submit(params) %}
+    {% set params = {
+        content: 'Submit',
+    }|merge(params) %}
+
+    <div class="mt-6">
+        <span class="block w-full rounded-md shadow-sm">
+            <button
+                type="submit"
+                class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white dark:text-gray-900 bg-meteor dark:bg-champagne hover:bg-pumpkin-skin dark:hover:bg-gold-sand focus:outline-none focus:border-rich-gold dark:focus:bg-whiskey focus:shadow-outline-rich-gold active:bg-rich-gold transition duration-150 ease-in-out"
+            >
+                {{ params.content|smartypants }}
+            </button>
+        </span>
+    </div>
+{% endmacro %}
+
+{% set errorMessage %}
+    {% if message['status'] is defined %}
+        {% set class = 'bg-lighter-red border-light-red text-red' %}
+        {% if message.status == 'SUCCESSFUL' %}
+            {% set class = 'bg-green-100 border-green-400 text-green-700' %}
+        {% endif %}
+        <div
+            class="{{ class }} border mb-6 px-4 py-3 rounded relative"
+            role="alert"
+        >
+            <p class="mb-1">
+                <strong class="font-bold">There was a problem</strong>
+            </p>
+            <p>
+                {{ message.result.message|default('')|smartypants|widont }}
+            </p>
+        </div>
+    {% endif %}
+{% endset %}
+
+{% block content %}
+    <div
+        class="min-h-screen flex justify-center py-12 sm:px-6 lg:px-8"
+        x-data="{ activeTab: '{{ activeTab }}' }"
+    >
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <nav
+                class="flex justify-center mb-5"
+            >
+                {{ _self.navItem({
+                    active: activeTab == 'LogInTab',
+                    content: 'Log In',
+                    id: 'LogInTab',
+                }) }}
+                {{ _self.navItem({
+                    active: activeTab == 'RegisterTab',
+                    content: 'Sign Up',
+                    id: 'RegisterTab',
+                }) }}
+                {{ _self.navItem({
+                    active: activeTab == 'ResetPasswordTab',
+                    content: 'Forgot Password',
+                    id: 'ResetPasswordTab',
+                }) }}
+            </nav>
+            <div class="bg-white dark:bg-nandor py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <form
+                    action="/account/log-in"
+                    {% if activeTab != 'LogInTab' %}
+                    class="hidden"
+                    {% endif %}
+                    method="POST"
+                    accept-charset="UTF-8"
+                    aria-hidden="false"
+                    aria-labelledby="LogInTab"
+                    :class="{'hidden': activeTab !== 'LogInTab'}"
+                    :aria-hidden="activeTab === 'LogInTab' ? 'false' : 'true'"
+                >
+                    {% if message['status'] is defined and activeTab == 'LogInTab' %}
+                        {{ errorMessage|raw }}
+                    {% endif %}
+                    {{ hiddenInputs }}
+                    {{ _self.input({
+                        isFirst: true,
+                        type: 'email',
+                        name: 'email_address',
+                        prefix: "LogInForm_",
+                        content: 'Email address',
+                        required: true,
+                        errorMessage: message['result']['inputs']['emailAddress'] ?? '',
+                    }) }}
+                    {{ _self.input({
+                        type: 'password',
+                        name: 'password',
+                        prefix: "LogInForm_",
+                        content: 'Password',
+                        required: true,
+                        errorMessage: message['result']['inputs']['password'] ?? '',
+                    }) }}
+                    {{ _self.submit({
+                        content: 'Log In',
+                    }) }}
+                </form>
+                <form
+                    action="/account/register"
+                    {% if activeTab != 'RegisterTab' %}
+                    class="hidden"
+                    {% endif %}
+                    method="POST"
+                    aria-hidden="true"
+                    aria-labelledby="RegisterTab"
+                    :class="{'hidden': activeTab !== 'RegisterTab'}"
+                    :aria-hidden="activeTab === 'RegisterTab' ? 'false' : 'true'"
+                >
+                    {% if message['status'] is defined and activeTab == 'RegisterTab' %}
+                        {{ errorMessage|raw }}
+                    {% endif %}
+                    {{ hiddenInputs }}
+                    {{ _self.input({
+                        type: 'email',
+                        name: 'email_address',
+                        prefix: "SignUpForm_",
+                        content: 'Email address',
+                        required: true,
+                        errorMessage: message['result']['inputs']['emailAddress'] ?? '',
+                    }) }}
+                    {{ _self.input({
+                        type: 'password',
+                        name: 'password',
+                        prefix: "SignUpForm_",
+                        content: 'Password',
+                        required: true,
+                        errorMessage: message['result']['inputs']['password'] ?? '',
+                    }) }}
+                    {{ _self.input({
+                        type: 'password',
+                        name: 'confirm_password',
+                        prefix: "SignUpForm_",
+                        content: 'Confirm Password',
+                        required: true,
+                        errorMessage: message['result']['inputs']['confirmPassword'] ?? '',
+                    }) }}
+                    {{ _self.submit({
+                        content: 'Register',
+                    }) }}
+                </form>
+                <form
+                    action="/account/request-password-reset"
+                    {% if activeTab != 'ResetPasswordTab' %}
+                    class="hidden"
+                    {% endif %}
+                    method="POST"
+                    aria-hidden="true"
+                    aria-labelledby="ResetPasswordTab"
+                    :class="{'hidden': activeTab !== 'ResetPasswordTab'}"
+                    :aria-hidden="activeTab === 'ResetPasswordTab' ? 'false' : 'true'"
+                >
+                    {% if message['status'] is defined and activeTab == 'ResetPasswordTab' %}
+                        {{ errorMessage|raw }}
+                    {% endif %}
+                    {{ hiddenInputs }}
+                    {{ _self.input({
+                        isFirst: true,
+                        type: 'email',
+                        prefix: "ForgotPasswordForm_",
+                        name: 'email_address',
+                        content: 'Email address',
+                        required: true,
+                        errorMessage: message['result']['inputs']['emailAddress'] ?? '',
+                    }) }}
+                    {{ _self.submit({
+                        content: 'Request Reset Email',
+                    }) }}
+                </form>
+            </div>
+            <small class="block mt-4 text-gray-400 link-formatting text-center">
+                By using this site, logging in, or registering, you agree to abide by the <a href="/terms">terms&nbsp;of&nbsp;service</a>,
+                <a href="/privacy">privacy&nbsp;policy</a>, and <a href="/cookies">cookie&nbsp;policy</a>.
+            </small>
+        </div>
+    </div>
+{% endblock %}
+

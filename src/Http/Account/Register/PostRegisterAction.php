@@ -45,7 +45,7 @@ class PostRegisterAction
                     Payload::STATUS_NOT_VALID,
                     [
                         'message' => 'Password confirmation must match password',
-                        'active' => 'register',
+                        'active' => 'RegisterTab',
                         'inputs' => [
                             'password' => 'Password must match Password Confirmation',
                             'confirmPassword' => 'Password Confirmation must match password',
@@ -67,7 +67,7 @@ class PostRegisterAction
                 $saveUserPayload->getStatus(),
                 [
                     'message' => $saveUserPayload->getResult()['message'] ?? '',
-                    'active' => 'register',
+                    'active' => 'RegisterTab',
                     'inputs' => $saveUserPayload->getResult(),
                 ]
             ),
