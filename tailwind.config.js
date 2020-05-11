@@ -25,6 +25,7 @@ module.exports = {
                 'rich-gold': '#9f4d0b',
                 'totem-pole': '#9f290b',
                 'blue-smoke': '#788480',
+                'nandor-light': '#626f6c',
                 nandor: '#545f5c',
                 'mine-shaft': '#313131',
                 'mine-shaft-dark': '#232323',
