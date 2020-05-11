@@ -12,6 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use function assert;
 use function func_get_args;
 
 class PostRegisterActionTest extends TestCase
@@ -50,8 +51,8 @@ class PostRegisterActionTest extends TestCase
 
         self::assertCount(2, $this->responderCallArgs);
 
-        /** @var Payload|null $callPayload */
         $callPayload = $this->responderCallArgs[0];
+        assert($callPayload instanceof Payload || $callPayload === null);
 
         self::assertInstanceOf(Payload::class, $callPayload);
 
@@ -63,7 +64,7 @@ class PostRegisterActionTest extends TestCase
         self::assertSame(
             [
                 'message' => 'Password confirmation must match password',
-                'active' => 'register',
+                'active' => 'RegisterTab',
                 'inputs' => [
                     'password' => 'Password must match Password Confirmation',
                     'confirmPassword' => 'Password Confirmation must match password',
@@ -92,8 +93,8 @@ class PostRegisterActionTest extends TestCase
 
         self::assertCount(2, $this->responderCallArgs);
 
-        /** @var Payload|null $callPayload */
         $callPayload = $this->responderCallArgs[0];
+        assert($callPayload instanceof Payload || $callPayload === null);
 
         self::assertInstanceOf(Payload::class, $callPayload);
 
@@ -105,7 +106,7 @@ class PostRegisterActionTest extends TestCase
         self::assertSame(
             [
                 'message' => 'TestMessage',
-                'active' => 'register',
+                'active' => 'RegisterTab',
                 'inputs' =>
                     ['message' => 'TestMessage'],
             ],
