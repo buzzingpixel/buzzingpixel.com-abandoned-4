@@ -25,7 +25,7 @@ class GetAccountLicensesResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/Licenses.twig',
+            'Http/Account/Licenses.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Your Licenses']

@@ -1,0 +1,220 @@
+{# @var string activeTab #}
+
+{% extends 'Http/_Global/_Layout.twig' %}
+
+{% set breadcrumbs = breadcrumbs ?? [] %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% set nav = [
+    {
+        href: '/account/licenses',
+        content: 'Licenses',
+        isActive: activeTab == 'licenses',
+        isFirst: true,
+    },
+    {
+        href: '/account/purchases',
+        content: 'Purchases',
+        isActive: activeTab == 'purchases',
+    },
+    {
+        href: '/account/profile',
+        content: 'Profile',
+        isActive: activeTab == 'profile',
+    },
+    {
+        href: '/account/change-password',
+        content: 'Change Password',
+        isActive: activeTab == 'change-password',
+    }
+] %}
+
+{% if user.isAdmin %}
+    {% set nav = nav|merge([{
+        href: '/admin',
+        content: 'Admin &rarr;',
+    }]) %}
+{% endif %}
+
+{% set nav = nav|merge([{
+    href: '/account/log-out',
+    content: 'Log Out &rarr;',
+}]) %}
+
+{% macro navItem(params) %}
+    {% set params = {
+        href: '',
+        content: '',
+        isActive: false,
+        isFirst: false,
+    }|merge(params) %}
+
+    {% set classes = [
+        'group',
+        'flex',
+        'items-center',
+        'px-2',
+        'py-2',
+        'text-base',
+        'dark:text-gray-200',
+        'leading-6',
+        'font-medium',
+        'rounded-md',
+        'transition',
+        'ease-in-out duration-150',
+    ] %}
+
+    {% if not params.isFirst %}
+        {% set classes = classes|merge([
+            'mt-1',
+        ]) %}
+    {% endif %}
+
+    {% if params.isActive %}
+        {% set classes = classes|merge([
+            'text-gray-900',
+            'bg-champagne',
+            'dark:bg-gold-sand',
+            'dark:text-gray-900',
+            'focus:outline-none',
+            'focus:bg-gold-sand',
+        ]) %}
+    {% else %}
+        {% set classes = classes|merge([
+            'text-gray-600',
+            'hover:text-gray-900',
+            'hover:bg-spring-wood',
+            'dark:hover:bg-champagne',
+            'focus:text-gray-900',
+            'focus:bg-champagne',
+        ]) %}
+    {% endif %}
+
+    <a
+        href="{{ params.href }}"
+        class="{{ classes|join(' ') }}"
+    >
+        {{ params.content|smartypants|widont }}
+    </a>
+{% endmacro %}
+
+{% block content %}
+    <div
+        class="flex overflow-hidden bg-gray-100 dark:bg-nandor"
+        x-data="{{ breakToSpace('{
+            data: {
+                mobileMenuIsActive: false,
+            }
+        }') }}"
+        xmlns:x-transition="http://www.w3.org/1999/xhtml"
+    >
+        {# Off-canvas menu for mobile #}
+        <div
+            class="md:hidden"
+            x-show="data.mobileMenuIsActive"
+            style="display: none;"
+        >
+            <div class="fixed inset-0 flex z-40">
+                <div
+                    class="fixed inset-0"
+                    x-show="data.mobileMenuIsActive"
+                    x-transition:enter="transition-opacity ease-linear duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition-opacity ease-linear duration-300"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                >
+                    <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+                </div>
+                <div
+                    class="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-mine-shaft pt-12"
+                    x-show="data.mobileMenuIsActive"
+                    x-transition:enter="transition ease-in-out duration-300 transform"
+                    x-transition:enter-start="-translate-x-full"
+                    x-transition:enter-end="translate-x-0"
+                    x-transition:leave="transition ease-in-out duration-300 transform"
+                    x-transition:leave-start="translate-x-0"
+                    x-transition:leave-end="-translate-x-full"
+                >
+                    <div class="absolute top-0 right-0 -mr-14 p-1 top-18">
+                        <button
+                            class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none bg-gray-500 hover:bg-gray-400 focus:bg-gray-600"
+                            aria-label="Close sidebar"
+                            x-show="data.mobileMenuIsActive"
+                            x-transition:enter="transition-opacity ease-linear duration-300"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                            x-transition:leave="transition-opacity ease-linear duration-300"
+                            x-transition:leave-start="opacity-100"
+                            x-transition:leave-end="opacity-0"
+                            @click="data.mobileMenuIsActive = false"
+                        >
+                            <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                        <nav class="mt-5 px-2">
+                            {% for navItem in nav %}
+                                {{ _self.navItem(navItem) }}
+                            {% endfor %}
+                        </nav>
+                    </div>
+                </div>
+                <div class="flex-shrink-0 w-14">
+                    <!-- Force sidebar to shrink to fit close icon -->
+                </div>
+            </div>
+        </div>
+
+        {# Static sidebar for desktop #}
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 border-r border-gray-200 bg-white dark:bg-mine-shaft">
+                <div class="h-0 flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+                    <nav class="mt-3 flex-1 px-2 bg-white dark:bg-mine-shaft">
+                        {% for navItem in nav %}
+                            {{ _self.navItem(navItem) }}
+                        {% endfor %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        {# Primary Area #}
+        <div class="flex flex-col w-0 flex-1 overflow-hidden">
+            {# Mobile Nav Opener #}
+            <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+                <button
+                    class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-500 transition ease-in-out duration-150"
+                    aria-label="Open sidebar"
+                    @click="data.mobileMenuIsActive = true"
+                >
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+
+            {# Primary Content #}
+            <div class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+                <div class="mx-auto px-4 sm:px-6 md:px-8">
+                    {% include 'Http/Includes/BreadCrumbs.twig' with {
+                        breadcrumbs: breadcrumbs,
+                    } only %}
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                        {{ heading|smartypants|widont }}
+                    </h2>
+                </div>
+                <div class="mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="py-4">
+                        {{ block('accountContent') ?? '<div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg h-96"></div>' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
