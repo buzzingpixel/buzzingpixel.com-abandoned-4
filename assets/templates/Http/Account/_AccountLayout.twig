@@ -3,6 +3,7 @@
 {% extends 'Http/_Global/_Layout.twig' %}
 
 {% set breadcrumbs = breadcrumbs ?? [] %}
+{% set heading = heading ?? '' %}
 
 {# @var \App\Users\Models\UserModel user #}
 {% set user = fetchLoggedInUser() %}
@@ -173,7 +174,7 @@
 
         {# Static sidebar for desktop #}
         <div class="hidden md:flex md:flex-shrink-0">
-            <div class="flex flex-col w-64 border-r border-gray-200 bg-white dark:bg-mine-shaft">
+            <div class="flex flex-col w-64 border-r border-gray-200 dark:border-gray-400 bg-white dark:bg-mine-shaft">
                 <div class="h-0 flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                     <nav class="mt-3 flex-1 px-2 bg-white dark:bg-mine-shaft">
                         {% for navItem in nav %}
@@ -201,14 +202,18 @@
 
             {# Primary Content #}
             <div class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
-                <div class="mx-auto px-4 sm:px-6 md:px-8">
-                    {% include 'Http/Includes/BreadCrumbs.twig' with {
-                        breadcrumbs: breadcrumbs,
-                    } only %}
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-                        {{ heading|smartypants|widont }}
-                    </h2>
-                </div>
+                {% if heading or breadcrumbs|length > 0 %}
+                    <div class="mx-auto px-4 sm:px-6 md:px-8">
+                        {% include 'Http/Includes/BreadCrumbs.twig' with {
+                            breadcrumbs: breadcrumbs,
+                        } only %}
+                        {% if heading %}
+                            <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                                {{ heading|smartypants|widont }}
+                            </h2>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <div class="mx-auto px-4 sm:px-6 md:px-8">
                     <div class="py-4">
                         {{ block('accountContent') ?? '<div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg h-96"></div>' }}
