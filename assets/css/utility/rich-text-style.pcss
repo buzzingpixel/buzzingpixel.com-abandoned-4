@@ -1,7 +1,87 @@
-.rich-text-style p {
+.rich-text-style {
+    @apply leading-normal;
+}
+
+.rich-text-style > * + *,
+.rich-text-style li + li,
+.rich-text-style li > p + p,
+.rich-text-style blockquote > * + * {
     @apply mt-4;
 }
 
-.rich-text-style p:first-child {
+.rich-text-style strong {
+    @apply font-bold;
+}
+
+.rich-text-style a {
+    color: theme('colors.meteor');
+
+    @apply underline;
+}
+
+.rich-text-style a:hover {
+    color: theme('colors.rich-gold');
+}
+
+.rich-text-style h1 {
+    @apply leading-tight text-2xl font-bold mt-8;
+}
+
+.rich-text-style h1:first-child {
     @apply mt-0;
+}
+
+.rich-text-style h2 {
+    @apply leading-tight text-xl font-bold mt-8;
+}
+
+.rich-text-style h2:first-child {
+    @apply mt-0;
+}
+
+.rich-text-style h3 {
+    @apply leading-tight text-lg font-bold mt-8;
+}
+
+.rich-text-style h3:first-child {
+    @apply mt-0;
+}
+
+.rich-text-style code {
+    @apply font-mono text-sm inline bg-gray-200 px-1;
+}
+
+.rich-text-style pre code {
+    @apply block bg-gray-800 p-4 rounded text-gray-100;
+}
+
+.rich-text-style blockquote {
+    @apply border-l-4 border-gray-300 pl-4 text-gray-700 m-5;
+}
+
+.rich-text-style ul {
+    list-style-type: disc;
+}
+
+.rich-text-style ul,
+.rich-text-style ol {
+    @apply pl-10;
+}
+
+@screen dark {
+    .rich-text-style a {
+        color: theme('colors.champagne');
+    }
+
+    .rich-text-style a:hover {
+        color: theme('colors.gold-sand');
+    }
+
+    .rich-text-style code {
+        @apply bg-gray-800;
+    }
+
+    .rich-text-style blockquote {
+        @apply text-gray-300;
+    }
 }

@@ -1,0 +1,58 @@
+{# @var \App\Licenses\Models\LicenseModel license #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{% import 'Http/Macros/Forms/Buttons.twig' as Buttons %}
+{% import 'Http/Macros/Forms/HiddenInputs.twig' as HiddenInputs %}
+
+{% block accountContent %}
+    <div class="bg-white dark:bg-blue-smoke shadow overflow-hidden sm:rounded-lg max-w-3xl">
+        <div class="px-4 py-5 border-b border-gray-200 dark:border-gray-400 sm:px-6">
+            <form
+                method="post"
+                enctype="multipart/form-data"
+            >
+                {{ HiddenInputs.hiddenInputs() }}
+                <div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                        {{ license.itemTitle|smartypants|widont }}
+                    </h3>
+                    <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">
+                        {{ license.id }}
+                    </p>
+                </div>
+                <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
+                    <div class="sm:col-span-6">
+                        <label for="notes" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200">
+                            Notes
+                        </label>
+                        <p class="text-sm text-gray-500 dark:text-gray-300">Use markdown for formatting</p>
+                        <div class="mt-1 rounded-md shadow-sm">
+                            <textarea
+                                name="notes"
+                                id="notes"
+                                rows="6"
+                                class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200"
+                            >{{ license.notes }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 pt-5">
+                    <div class="flex justify-end">
+                        <span class="inline-flex rounded-md shadow-sm">
+                            {{ Buttons.neutralLink({
+                                content: 'Cancel',
+                                href: '/account/licenses/view/' ~ license.id,
+                            }) }}
+                        </span>
+                        <span class="ml-3 inline-flex rounded-md shadow-sm">
+                            {{ Buttons.actionButton({
+                                content: 'Save',
+                            }) }}
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
