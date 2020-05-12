@@ -1,0 +1,25 @@
+{# @var \Slim\Csrf\Guard csrf #}
+
+{% macro hiddenInputs(params) %}
+    {% if not params %}
+        {% set params = {} %}
+    {% endif %}
+    {% set params = {
+        redirectTo: '',
+    }|merge(params) %}
+    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+    {% if params.redirectTo %}
+    <input type="hidden" name="redirect_to" value="{{ params.redirectTo }}">
+    {% endif %}
+    <label for="a_password" style="display:none !important">
+        <input
+            id="a_password"
+            type="text"
+            name="a_password"
+            style="display:none !important"
+            tabindex="-1"
+            autocomplete="off"
+        >
+    </label>
+{% endmacro %}

@@ -20,7 +20,7 @@ class GetEditAuthorizedDomainsResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/LicenseEditAuthorizedDomains.twig',
+            'Http/Account/LicenseEditAuthorizedDomains.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Edit Authorized Domains on License']
@@ -35,7 +35,6 @@ class GetEditAuthorizedDomainsResponder extends StandardResponderConstructor
                         'href' => '/account/licenses/view/' . $license->id,
                         'content' => 'License',
                     ],
-                    ['content' => 'Edit Domains'],
                 ],
                 'license' => $license,
             ]
