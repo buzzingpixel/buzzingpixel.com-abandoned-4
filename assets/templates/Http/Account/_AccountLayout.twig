@@ -103,7 +103,7 @@
 
 {% block content %}
     <div
-        class="flex overflow-hidden bg-gray-100 dark:bg-nandor"
+        class="flex bg-gray-100 dark:bg-nandor"
         x-data="{{ breakToSpace('{
             data: {
                 mobileMenuIsActive: false,
@@ -186,7 +186,7 @@
         </div>
 
         {# Primary Area #}
-        <div class="flex flex-col w-0 flex-1 overflow-hidden">
+        <div class="flex flex-col w-0 flex-1">
             {# Mobile Nav Opener #}
             <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
                 <button
@@ -201,7 +201,7 @@
             </div>
 
             {# Primary Content #}
-            <div class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+            <div class="flex-1 relative z-0 pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
                 {% if heading or breadcrumbs|length > 0 %}
                     <div class="mx-auto px-4 sm:px-6 md:px-8">
                         {% include 'Http/Includes/BreadCrumbs.twig' with {

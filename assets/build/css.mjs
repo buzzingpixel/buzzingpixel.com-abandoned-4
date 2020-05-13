@@ -120,7 +120,10 @@ export default (prod) => {
                     `${appDir}/assets/templates/**/*.twig`,
                 ],
                 defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
-                whitelistPatternsChildren: [/rich-text/],
+                whitelistPatternsChildren: [
+                    /rich-text/,
+                    /choices/,
+                ],
             }),
             // Allow us to use hex in RGBA
             hexRGBA,
