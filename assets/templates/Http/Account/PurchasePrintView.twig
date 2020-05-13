@@ -1,0 +1,179 @@
+{# @var \App\Orders\Models\OrderModel order #}
+
+<!doctype html>
+<html lang="en">
+<head>
+    {# Reporting for duty #}
+    <title>Order: {{ order.id }}</title>
+
+    {# Technical browser configuration stuff #}
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% for stylesheet in GeneralConfig.stylesheets %}
+    <link rel="stylesheet" href="{{ stylesheet }}">
+    {% endfor %}
+    <link
+        rel="stylesheet"
+        href="/assets/css/{{ readJson(GeneralConfig.rootPath ~ '/public/assets/css/manifest.json')['style.min.css'] }}"
+    >
+    <style>
+        table {
+            /* Reset */
+            border-collapse: collapse;
+            border-spacing: 0;
+            empty-cells: show;
+
+            background-color: #fff;
+            border: 0;
+            overflow: hidden;
+            padding: 0;
+            width: 100%;
+        }
+
+        .PrintOrderBody {
+            background-color: #fff;
+            font-size: 14px;
+        }
+
+        .PrintOrder {
+            padding: 40px;
+        }
+
+        .PrintOrder__Header {
+            height: 56px;
+            margin-bottom: 60px;
+        }
+
+        .PrintOrder__HeaderLogo {
+            float: left;
+            height: 56px;
+            margin-right: 40px;
+            width: 200px;
+        }
+
+        .PrintOrder__HeaderOrderNumber {
+            text-align: right;
+        }
+
+        .PrintOrder__Addresses {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 40px;
+        }
+
+        .PrintOrder__Items {
+            width: 100%;
+        }
+
+        .PrintOrder__ItemsHead,
+        .PrintOrder__ItemsHeadRow,
+        .PrintOrder__ItemsHeadCol {
+            background-color: #000;
+            color: #fff;
+            text-align: left;
+        }
+
+        .PrintOrder__ItemsHeadCol,
+        .PrintOrder__ItemsCol {
+            padding: 4px 10px;
+        }
+
+        .PrintOrder__ItemsCol {
+            border-bottom: 1px solid #dfdfdf;
+        }
+
+        .PrintOrder__ItemsRow--Totals {
+            font-weight: var(--PrimaryFontBoldWeight);
+        }
+
+        .PrintOrder__ItemsCol--Key {
+            text-align: right;
+        }
+
+        .PrintOrder__ItemsCol--LastRow {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="PrintOrderBody">
+    <div class="PrintOrder font-sans">
+        <div class="PrintOrder__Header">
+            <div class="PrintOrder__HeaderLogo">
+                {% include 'Http/Svg/BzpxlLogoWide.svg' only %}
+            </div>
+            <div class="PrintOrder__HeaderOrderNumber">
+                Order: {{ order.id }}<br>
+                Date: {{ order.date.format('F j, Y') }}<br>
+            </div>
+        </div>
+        <div class="PrintOrder__Addresses">
+            <div class="PrintOrder__Address">
+                BuzzingPixel, LLC<br>
+                1530 Halifax Dr<br>
+                Spring Hill, TN 37174
+            </div>
+            <div class="PrintOrder__Address">
+                Billed To:<br>
+                {{ order.name|smartypants }}<br>
+                {% if order.company %}
+                    {{ order.company|smartypants }}
+                {% endif %}
+                {{ order.address|smartypants }}<br>
+                {% if order.addressContinued %}
+                    {{ order.addressContinued|smartypants }}<br>
+                {% endif %}
+                {{ order.city|smartypants }}, {{ order.state }} {{ order.postalCode }}, {{ order.country }}
+            </div>
+        </div>
+        <table class="PrintOrder__Items">
+            <thead class="PrintOrder__ItemsHead">
+                <tr class="PrintOrder__ItemsHeadRow">
+                    <th class="PrintOrder__ItemsHeadCol">Item</th>
+                    <th class="PrintOrder__ItemsHeadCol">LicenseKey</th>
+                    <th class="PrintOrder__ItemsHeadCol">Amount</th>
+                </tr>
+            </thead>
+            <tbody class="PrintOrder__ItemsBody">
+                {% for item in order.items %}
+                    <tr class="PrintOrder__ItemsRow">
+                        <td class="PrintOrder__ItemsCol">{{ item.itemTitle|smartypants }}</td>
+                        <td class="PrintOrder__ItemsCol">{{ item.license.id }}</td>
+                        <td class="PrintOrder__ItemsCol">${{ item.price|number_format(2) }}</td>
+                    </tr>
+                {% endfor %}
+                {% if order.tax > 0 %}
+                    <tr class="PrintOrder__ItemsRow PrintOrder__ItemsRow--Totals">
+                        <td class="PrintOrder__ItemsCol PrintOrder__ItemsCol--Key" colspan="2">
+                            Subtotal:
+                        </td>
+                        <td class="PrintOrder__ItemsCol">
+                            ${{ order.subtotal|number_format(2) }}
+                        </td>
+                    </tr>
+                    <tr class="PrintOrder__ItemsRow PrintOrder__ItemsRow--Totals">
+                        <td class="PrintOrder__ItemsCol PrintOrder__ItemsCol--Key" colspan="2">
+                            Tax:
+                        </td>
+                        <td class="PrintOrder__ItemsCol">
+                            ${{ order.tax|number_format(2) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr class="PrintOrder__ItemsRow PrintOrder__ItemsRow--Totals">
+                    <td class="PrintOrder__ItemsCol PrintOrder__ItemsCol--Key PrintOrder__ItemsCol--LastRow" colspan="2">
+                        Total:
+                    </td>
+                    <td class="PrintOrder__ItemsCol PrintOrder__ItemsCol--LastRow">
+                        ${{ order.total|number_format(2) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        window.print();
+    </script>
+</body>
+

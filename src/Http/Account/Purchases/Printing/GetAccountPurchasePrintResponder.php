@@ -19,7 +19,7 @@ class GetAccountPurchasePrintResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/PurchasePrintView.twig',
+            'Http/Account/PurchasePrintView.twig',
             ['order' => $order]
         ));
 
