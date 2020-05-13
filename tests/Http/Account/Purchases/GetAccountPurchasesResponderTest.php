@@ -27,7 +27,7 @@ class GetAccountPurchasesResponderTest extends TestCase
         $twigEnv->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/Purchases.twig'),
+                self::equalTo('Http/Account/Purchases.twig'),
                 self::equalTo(
                     [
                         'metaPayload' => new MetaPayload(

@@ -22,7 +22,7 @@ class GetAccountPurchasesResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/Purchases.twig',
+            'Http/Account/Purchases.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Your Purchases']
