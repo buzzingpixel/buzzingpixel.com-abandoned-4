@@ -20,7 +20,7 @@ class GetAccountPurchaseViewResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/PurchaseView.twig',
+            'Http/Account/PurchaseView.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Purchase']
@@ -31,7 +31,6 @@ class GetAccountPurchaseViewResponder extends StandardResponderConstructor
                         'href' => '/account/purchases',
                         'content' => 'All Purchases',
                     ],
-                    ['content' => 'Purchase'],
                 ],
                 'order' => $order,
             ]

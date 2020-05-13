@@ -27,7 +27,7 @@ class GetAccountPurchaseViewResponderTest extends TestCase
         $twigEnv->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/PurchaseView.twig'),
+                self::equalTo('Http/Account/PurchaseView.twig'),
                 self::equalTo(
                     [
                         'metaPayload' => new MetaPayload(
@@ -39,7 +39,6 @@ class GetAccountPurchaseViewResponderTest extends TestCase
                                 'href' => '/account/purchases',
                                 'content' => 'All Purchases',
                             ],
-                            ['content' => 'Purchase'],
                         ],
                         'order' => $order,
                     ]

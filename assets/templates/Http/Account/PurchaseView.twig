@@ -1,0 +1,152 @@
+{# @var \App\Orders\Models\OrderModel order #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% set tableItems = [
+    {
+        key: 'Order ID',
+        value: order.id,
+    },
+    {
+        key: 'Date',
+        value: order.date.setTimezone(user.timezone).format('Y/m/d g:i a'),
+    },
+] %}
+
+{% if order.subtotal != order.total %}
+    {% set tableItems = tableItems|merge([{
+        key: 'Subtotal',
+        value: "$#{order.subtotal|number_format(2)}",
+    }]) %}
+{% endif %}
+
+{% if order.tax != order.tax %}
+    {% set tableItems = tableItems|merge([{
+        key: 'Tax',
+        value: "$#{order.tax|number_format(2)}",
+    }]) %}
+{% endif %}
+
+{% set tableItems = tableItems|merge([{
+    key: 'Total',
+    value: "$#{order.total|number_format(2)}",
+}]) %}
+
+{% if order.name %}
+    {% set tableItems = tableItems|merge([{
+        key: 'Name on Order',
+        value: order.name,
+    }]) %}
+{% endif %}
+
+{% if order.company %}
+    {% set tableItems = tableItems|merge([{
+        key: 'Company',
+        value: order.company,
+    }]) %}
+{% endif %}
+
+{% if order.address or order.city or order.state or order.postalCode or order.country %}
+    {% set addressString %}
+        {{ order.address|smartypants }}<br>
+        {% if order.addressContinued %}
+            {{ order.addressContinued|smartypants }}<br>
+        {% endif %}
+        {{ order.city|smartypants }}, {{ order.state|smartypants }} {{ order.postalCode }}, {{ order.country|smartypants }}
+    {% endset %}
+
+    {% set tableItems = tableItems|merge([{
+        key: 'Address',
+        value: addressString,
+    }]) %}
+{% endif %}
+
+{% block accountContent %}
+    <div class="bg-white dark:bg-blue-smoke shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 border-b border-gray-200 dark:border-gray-400 sm:px-6">
+            {#<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                {{ order.date
+                    .setTimezone(user.timezone)
+                    .format('Y/m/d g:i a')
+                }}
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-300">
+                {{ order.id }}
+            </p>#}
+            <div class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-no-wrap">
+                <div class="ml-4 mt-2">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                        Order at {{ order.date
+                            .setTimezone(user.timezone)
+                            .format('Y/m/d g:i a')
+                        }}
+                    </h3>
+                </div>
+                <div class="ml-4 mt-2 flex-shrink-0">
+                    <span class="inline-flex rounded-md shadow-sm">
+                        <a
+                            href="#1"
+                            onClick="window.open(
+                            '/account/purchases/print/{{ order.id }}',
+                            'Print Order',
+                            'resizable,height=800,width=800'
+                            );
+                            return false;"
+                            class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white dark:text-gray-900 bg-meteor dark:bg-champagne hover:bg-pumpkin-skin dark:hover:bg-gold-sand focus:outline-none focus:border-rich-gold dark:focus:bg-whiskey focus:shadow-outline-rich-gold active:bg-rich-gold transition duration-150 ease-in-out"
+                        >
+                            Print
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <dl>
+                {% for item in tableItems %}
+                    <div class="{% if loop.index is even %}bg-white dark:bg-blue-smoke{% else%} bg-gray-50 dark:bg-nandor-light{% endif%} px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-300">
+                            {{ item.key|smartypants|widont }}
+                        </dt>
+                        <dd class="mt-1 text-sm dark:text-gray-100 leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{ item.value|smartypants|widont }}
+                        </dd>
+                    </div>
+                {% endfor %}
+                <div class="{% if tableItems|length is odd %}bg-white dark:bg-blue-smoke{% else%} bg-gray-50 dark:bg-nandor-light{% endif%} px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-300">
+                        Order Items
+                    </dt>
+                    <dd class="mt-1 text-sm dark:text-gray-100 leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <ul class="border border-gray-200 dark:border-gray-400 rounded-md max-w-lg">
+                            {% for item in order.items %}
+                            <li class="{% if not loop.first %}border-t border-gray-200 dark:border-gray-400{% endif %} pl-3 pr-4 py-3 flex items-center justify-between text-sm dark:text-gray-100 leading-5">
+                                <div class="w-0 flex-1 flex items-center">
+                                    <svg class="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="ml-2 flex-1 w-0">
+                                        {{ item.itemTitle|smartypants }} (${{ item.price|number_format(2) }})
+                                    </span>
+                                </div>
+                                {% if user.id == item.license.ownerUser.id %}
+                                    <div class="ml-4 flex-shrink-0">
+                                        <a
+                                            href="/account/licenses/view/{{ item.license.id }}"
+                                            class="font-medium text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline transition duration-150 ease-in-out"
+                                        >
+                                            License&nbsp;&rarr;
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+{% endblock %}
