@@ -4,8 +4,15 @@
 
 {% set heading = 'Software Admin' %}
 
+{% set contentClass = 'max-w-xl' %}
+
+{% set actionButton = {
+    href: '/admin/software/create',
+    content: 'New',
+} %}
+
 {% block adminContent %}
-    <div class="mt-5 max-w-xl">
+    <div class="mt-5">
         <div class="bg-white dark:bg-blue-smoke shadow overflow-hidden sm:rounded-md">
             <ul>
                 {% for software in softwareModels %}

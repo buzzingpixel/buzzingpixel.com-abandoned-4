@@ -8,6 +8,8 @@
 {# @var \App\Users\Models\UserModel user #}
 {% set user = fetchLoggedInUser() %}
 
+{% import 'Http/Macros/Forms/Buttons.twig' as Buttons %}
+
 {% set nav = [
     {
         href: '/admin/software',
@@ -184,7 +186,12 @@
             </div>
 
             {# Primary Content #}
-            <div class="flex-1 relative z-0 pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+            <div class="flex-1 relative z-0 pt-2 pb-6 focus:outline-none md:py-6 {{ contentClass }}" tabindex="0">
+                {% if actionButton is defined %}
+                    <div class="float-right mr-4 sm:mr-6 md:mr-8 ml-2">
+                        {{ Buttons.actionLink(actionButton) }}
+                    </div>
+                {% endif %}
                 {% if heading or breadcrumbs|length > 0 %}
                     <div class="mx-auto px-4 sm:px-6 md:px-8">
                         {% include 'Http/Includes/BreadCrumbs.twig' with {
