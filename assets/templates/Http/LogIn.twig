@@ -176,8 +176,10 @@
 
 {% set errorMessage %}
     {% if message['status'] is defined %}
+        {% set title = 'There was a problem' %}
         {% set class = 'bg-lighter-red border-light-red text-red' %}
         {% if message.status == 'SUCCESSFUL' %}
+            {% set title = 'Success!' %}
             {% set class = 'bg-green-100 border-green-400 text-green-700' %}
         {% endif %}
         <div
@@ -185,7 +187,9 @@
             role="alert"
         >
             <p class="mb-1">
-                <strong class="font-bold">There was a problem</strong>
+                <strong class="font-bold">
+                    {{ title|smartypants|widont }}
+                </strong>
             </p>
             <p>
                 {{ message.result.message|default('')|smartypants|widont }}
