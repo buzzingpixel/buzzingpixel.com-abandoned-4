@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use stdClass;
 use Throwable;
+use function assert;
 use function func_get_args;
 
 class GetAdminSoftwareActionTest extends TestCase
@@ -66,14 +67,15 @@ class GetAdminSoftwareActionTest extends TestCase
 
         self::assertCount(2, $args);
 
-        self::assertSame('Admin/Software.twig', $args[0]);
+        self::assertSame('Http/Admin/Software.twig', $args[0]);
 
         $context = $args[1];
 
         self::assertCount(3, $context);
 
-        /** @var MetaPayload $metaPayload */
         $metaPayload = $context['metaPayload'];
+
+        assert($metaPayload instanceof MetaPayload);
 
         self::assertSame(
             'Software | Admin',

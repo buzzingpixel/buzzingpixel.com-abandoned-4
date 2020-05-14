@@ -29,7 +29,7 @@ class GetAdminSoftwareAction
     public function __invoke() : ResponseInterface
     {
         return ($this->responder)(
-            'Admin/Software.twig',
+            'Http/Admin/Software.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Software | Admin']
