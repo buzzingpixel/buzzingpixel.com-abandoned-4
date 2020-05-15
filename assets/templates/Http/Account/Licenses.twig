@@ -1,62 +1,7 @@
-{# @var array<string, \App\Licenses\Models\LicenseModel[]> licenses #}
-
 {% extends 'Http/Account/_AccountLayout.twig' %}
 
-{% set heading = 'Licenses' %}
-
 {% block accountContent %}
-    {% for licenseGroup in licenses %}
-        <div class="{% if loop.first %}mt-5{% else %} mt-16{% endif %}">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 ml-2 mb-2">
-                {{ licenseGroup|first.itemTitle }}
-            </h3>
-            <div class="bg-white dark:bg-blue-smoke shadow overflow-hidden sm:rounded-md">
-                <ul>
-                    {% for license in licenseGroup %}
-                        {# @var \App\Licenses\Models\LicenseModel license #}
-                        <li class="{% if not loop.first %} border-t border-gray-200 dark:border-gray-400{% endif %}">
-                            <a
-                                href="/account/licenses/view/{{ license.id }}"
-                                class="block hover:bg-gray-50 dark:hover:bg-nandor-light focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
-                            >
-                                <div class="flex items-center px-4 py-4 sm:px-6">
-                                    <div class="min-w-0 flex-1 flex items-center">
-                                        <div class="min-w-0 flex-1 pr-4 md:grid md:grid-cols-2 md:gap-4">
-                                            <div>
-                                                <div class="text-sm leading-5 font-medium text-jade dark:text-aqua-island truncate">
-                                                    {{ license.itemTitle }}
-                                                </div>
-                                                <div class="mt-2 flex items-center text-sm leading-5 text-gray-500 dark:text-gray-200">
-                                                    <span class="truncate">{{ license.id }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="hidden md:block">
-                                                <div>
-                                                    {% if license.authorizedDomains|length < 1 %}
-                                                        <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">
-                                                            {{ "You haven't added any authorized domains"|smartypants|widont }}
-                                                        </p>
-                                                    {% endif %}
-                                                    {% for domain in license.authorizedDomains %}
-                                                        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500 dark:text-gray-200">
-                                                            <span class="truncate">{{ domain }}</span>
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <svg class="h-5 w-5 text-gray-400 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    {% endfor %}
+    {% include 'Http/_Infrastructure/Components/WideLists.twig' with {
+        groups: groups,
+    } only %}
 {% endblock %}

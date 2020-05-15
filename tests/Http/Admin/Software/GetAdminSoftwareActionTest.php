@@ -23,9 +23,17 @@ class GetAdminSoftwareActionTest extends TestCase
      */
     public function test() : void
     {
+        $software1       = new SoftwareModel();
+        $software1->name = 'Software 1';
+        $software1->slug = 'software-1';
+
+        $software2       = new SoftwareModel();
+        $software2->name = 'Software 2';
+        $software2->slug = 'software-2';
+
         $softwareModels = [
-            new SoftwareModel(),
-            new SoftwareModel(),
+            $software1,
+            $software2,
         ];
 
         $response = $this->createMock(
@@ -71,7 +79,7 @@ class GetAdminSoftwareActionTest extends TestCase
 
         $context = $args[1];
 
-        self::assertCount(3, $context);
+        self::assertCount(4, $context);
 
         $metaPayload = $context['metaPayload'];
 
@@ -86,9 +94,26 @@ class GetAdminSoftwareActionTest extends TestCase
 
         self::assertSame('software', $context['activeTab']);
 
+        self::assertSame('Software Admin', $context['heading']);
+
         self::assertSame(
-            $softwareModels,
-            $context['softwareModels']
+            [
+                [
+                    'items' => [
+                        [
+                            'href' => '/admin/software/view/',
+                            'title' => 'Software 1',
+                            'subtitle' => 'software-1',
+                        ],
+                        [
+                            'href' => '/admin/software/view/',
+                            'title' => 'Software 2',
+                            'subtitle' => 'software-2',
+                        ],
+                    ],
+                ],
+            ],
+            $context['groups']
         );
     }
 }

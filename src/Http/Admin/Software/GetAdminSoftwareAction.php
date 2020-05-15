@@ -6,9 +6,11 @@ namespace App\Http\Admin\Software;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
+use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use function array_map;
 
 class GetAdminSoftwareAction
 {
@@ -28,6 +30,17 @@ class GetAdminSoftwareAction
      */
     public function __invoke() : ResponseInterface
     {
+        $software = array_map(
+            static function (SoftwareModel $software) {
+                return [
+                    'href' => '/admin/software/view/' . $software->id,
+                    'title' => $software->name,
+                    'subtitle' => $software->slug,
+                ];
+            },
+            $this->softwareApi->fetchAllSoftware()
+        );
+
         return ($this->responder)(
             'Http/Admin/Software.twig',
             [
@@ -35,7 +48,8 @@ class GetAdminSoftwareAction
                     ['metaTitle' => 'Software | Admin']
                 ),
                 'activeTab' => 'software',
-                'softwareModels' => $this->softwareApi->fetchAllSoftware(),
+                'heading' => 'Software Admin',
+                'groups' => [['items' => $software]],
             ],
         );
     }

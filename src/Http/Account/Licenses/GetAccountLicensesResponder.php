@@ -9,6 +9,8 @@ use App\Http\StandardResponderConstructor;
 use App\Licenses\Models\LicenseModel;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use function array_values;
+use function count;
 
 class GetAccountLicensesResponder extends StandardResponderConstructor
 {
@@ -24,6 +26,34 @@ class GetAccountLicensesResponder extends StandardResponderConstructor
     ) : ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
+        $groups = [];
+
+        foreach (array_values($licenses) as $key => $group) {
+            /** @var LicenseModel[] $group */
+            foreach ($group as $license) {
+                if (! isset($groups[$key]['title'])) {
+                    $groups[$key]['title'] = $license->itemTitle;
+                }
+
+                $column2 = "You haven't added any authorized domains";
+
+                if (count($license->authorizedDomains) > 0) {
+                    $column2 = [];
+
+                    foreach ($license->authorizedDomains as $domain) {
+                        $column2[] = $domain;
+                    }
+                }
+
+                $groups[$key]['items'][] = [
+                    'href' => '/account/licenses/view/' . $license->id,
+                    'title' => $license->itemTitle,
+                    'subtitle' => $license->id,
+                    'column2' => $column2,
+                ];
+            }
+        }
+
         $response->getBody()->write($this->twigEnvironment->render(
             'Http/Account/Licenses.twig',
             [
@@ -31,7 +61,8 @@ class GetAccountLicensesResponder extends StandardResponderConstructor
                     ['metaTitle' => 'Your Licenses']
                 ),
                 'activeTab' => 'licenses',
-                'licenses' => $licenses,
+                'heading' => 'Licenses',
+                'groups' => $groups,
             ]
         ));
 

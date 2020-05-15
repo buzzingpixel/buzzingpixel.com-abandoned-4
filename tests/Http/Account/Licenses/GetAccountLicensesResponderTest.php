@@ -6,6 +6,7 @@ namespace Tests\Http\Account\Licenses;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Account\Licenses\GetAccountLicensesResponder;
+use App\Licenses\Models\LicenseModel;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Tests\TestConfig;
@@ -19,7 +20,17 @@ class GetAccountLicensesResponderTest extends TestCase
      */
     public function test() : void
     {
-        $licenses = ['test'];
+        $license = new LicenseModel();
+
+        $license->id = 'foo-id';
+
+        $license->itemTitle = 'Foo Title';
+
+        $license->authorizedDomains[] = 'Foo Domain 1';
+
+        $license->authorizedDomains[] = 'Foo Domain 2';
+
+        $licenses = ['foo' => [$license]];
 
         $twigEnv = $this->createMock(TwigEnvironment::class);
 
@@ -33,9 +44,25 @@ class GetAccountLicensesResponderTest extends TestCase
                             ['metaTitle' => 'Your Licenses']
                         ),
                         'activeTab' => 'licenses',
-                        'licenses' => $licenses,
-                    ]
-                )
+                        'heading' => 'Licenses',
+                        'groups' => [
+                            [
+                                'title' => 'Foo Title',
+                                'items' => [
+                                    [
+                                        'href' => '/account/licenses/view/foo-id',
+                                        'title' => 'Foo Title',
+                                        'subtitle' => 'foo-id',
+                                        'column2' => [
+                                            'Foo Domain 1',
+                                            'Foo Domain 2',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ),
             )
             ->willReturn('twigReturnTest');
 
