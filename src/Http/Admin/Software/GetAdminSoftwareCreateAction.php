@@ -24,7 +24,7 @@ class GetAdminSoftwareCreateAction
     public function __invoke() : ResponseInterface
     {
         return ($this->responder)(
-            'Admin/SoftwareCreate.twig',
+            'Http/Admin/SoftwareCreate.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Create New Software | Admin']
@@ -35,7 +35,6 @@ class GetAdminSoftwareCreateAction
                         'href' => '/admin/software',
                         'content' => 'Software Admin',
                     ],
-                    ['content' => 'Create New Software'],
                 ],
             ],
         );

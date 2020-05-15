@@ -1,0 +1,249 @@
+{% extends 'Http/Account/_AdminLayout.twig' %}
+
+{% import 'Http/Macros/Forms/Buttons.twig' as Buttons %}
+{% import 'Http/Macros/Forms/HiddenInputs.twig' as HiddenInputs %}
+
+{% set heading = 'Create New Software' %}
+
+{% set message = flash('PostMessage') %}
+{% if message[0] is defined %}
+    {% set message = message[0] %}
+{% endif %}
+
+{% macro textInput(params) %}
+    {% set params = {
+        label: '',
+        small: '',
+        name: '',
+        value: '',
+        errorMessage: '',
+    }|merge(params) %}
+    <div class="mt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <label
+            for="{{ params.name }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 sm:mt-px sm:pt-2"
+        >
+            {{ params.label|smartypants|widont }}
+            {% if params.small %}
+                <small class="block">
+                    {{ params.small|smartypants|widont }}
+                </small>
+            {% endif %}
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <div class="rounded-md shadow-sm">
+                <input
+                    name="{{ params.name }}"
+                    id="{{ params.name }}"
+                    class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if params.errorMessage %} border-red bg-lighter-red{% endif %}"
+                    value="{{ params.value }}"
+                >
+            </div>
+            {% if params.errorMessage %}
+                <div class="mt-2 text-red">
+                    {{ params.errorMessage|smartypants|widont }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro checkbox(params) %}
+    {% set params = {
+        label: '',
+        small: '',
+        name: '',
+        isChecked: false,
+        errorMessage: '',
+    }|merge(params) %}
+    <div class="mt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <label
+            for="{{ params.name }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100"
+        >
+            {{ params.label|smartypants|widont }}
+        </label>
+        <div>
+            <div>
+                <div class="relative flex items-start">
+                    <div class="absolute flex items-center h-5">
+                        <input
+                            id="{{ params.name }}"
+                            name="{{ params.name }}"
+                            type="checkbox"
+                            class="form-checkbox h-4 w-4 text-jade transition duration-150 ease-in-out dark:bg-gray-600"
+                            value="true"
+                            {% if params.isChecked %}
+                            checked
+                            {% endif %}
+                        >
+                    </div>
+                    <div class="pl-7 text-sm leading-5">
+                        <label for="{{ params.name }}" class="font-medium text-gray-700 dark:text-gray-100">
+                            {{ params.label|smartypants|widont }}
+                        </label>
+                        {% if params.small %}
+                            <p class="text-gray-500">
+                                {{ params.small|smartypants|widont }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if params.errorMessage %}
+                <div class="mt-2 text-red">
+                    {{ params.errorMessage|smartypants|widont }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro fileChooser(params) %}
+    {% set params = {
+        label: '',
+        small: '',
+        name: '',
+        errorMessage: '',
+    }|merge(params) %}
+    <div class="mt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <label
+            for="{{ params.name }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 sm:mt-px sm:pt-2"
+        >
+            {{ params.label|smartypants|widont }}
+            {% if params.small %}
+                <small class="block">
+                    {{ params.small|smartypants|widont }}
+                </small>
+            {% endif %}
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <div class="rounded-md shadow-sm">
+                <input
+                    type="file"
+                    name="{{ params.name }}"
+                    id="{{ params.name }}"
+                    class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if params.errorMessage %} border-red bg-lighter-red{% endif %}"
+                >
+            </div>
+            {% if params.errorMessage %}
+                <div class="mt-2 text-red">
+                    {{ params.errorMessage|smartypants|widont }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% block adminContent %}
+    <div class="bg-white dark:bg-blue-smoke shadow sm:rounded-lg max-w-4xl">
+        {% if message['status'] is defined %}
+            {% set title = 'There was a problem' %}
+            {% set class = 'bg-lighter-red border-light-red text-red' %}
+            {% if message.status == 'SUCCESSFUL' %}
+                {% set title = 'Success!' %}
+                {% set class = 'bg-green-100 border-green-400 text-green-700' %}
+            {% endif %}
+            <div
+                class="{{ class }} border px-4 py-3 relative sm:rounded-t-lg"
+                role="alert"
+            >
+                <p class="mb-1">
+                    <strong class="font-bold">
+                        {{ title|smartypants|widont }}
+                    </strong>
+                </p>
+                <p>
+                    {{ message.result.message|default('')|smartypants|widont }}
+                </p>
+            </div>
+        {% endif %}
+        <div class="px-4 py-5 sm:px-6">
+            <form
+                method="post"
+                enctype="multipart/form-data"
+            >
+                <div>
+                    {{ HiddenInputs.hiddenInputs() }}
+                    <div>
+                        <span class="ml-3 rounded-md shadow-sm float-right">
+                            {{ Buttons.actionButton({
+                                content: 'Create',
+                            }) }}
+                        </span>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                            {{ 'Create New Software'|smartypants|widont }}
+                        </h3>
+                    </div>
+                    <div class="mt-8 border-t border-gray-200 pt-4 sm:mt-5 sm:pt-0">
+                        <div class="-mt-6">
+                            {{ _self.textInput({
+                                label: 'Name',
+                                name: 'name',
+                                value: message['result']['inputValues']['name'] ?? '',
+                                errorMessage: message['result']['inputMessages']['name'] ?? '',
+                            }) }}
+                            {{ _self.textInput({
+                                label: 'Slug',
+                                name: 'slug',
+                                value: message['result']['inputValues']['slug'] ?? '',
+                                errorMessage: message['result']['inputMessages']['slug'] ?? '',
+                            }) }}
+                            {{ _self.checkbox({
+                                label: 'For Sale?',
+                                name: 'for_sale',
+                                isChecked: message['result']['inputValues']['for_sale'] ?? false,
+                                errorMessage: message['result']['inputMessages']['for_sale'] ?? '',
+                            }) }}
+                            {{ _self.textInput({
+                                label: 'Price',
+                                name: 'price',
+                                value: message['result']['inputValues']['price'] ?? '0',
+                                errorMessage: message['result']['inputMessages']['price'] ?? '',
+                            }) }}
+                            {{ _self.textInput({
+                                label: 'Renewal Price',
+                                name: 'renewal_price',
+                                value: message['result']['inputValues']['renewal_price'] ?? '0',
+                                errorMessage: message['result']['inputMessages']['renewal_price'] ?? '',
+                            }) }}
+                            {{ _self.checkbox({
+                                label: 'Subscription?',
+                                name: 'subscription',
+                                isChecked: message['result']['inputValues']['subscription'] ?? false,
+                                errorMessage: message['result']['inputMessages']['subscription'] ?? '',
+                            }) }}
+                            {{ _self.textInput({
+                                label: 'Initial Major Version',
+                                name: 'major_version',
+                                value: message['result']['inputValues']['major_version'] ?? '',
+                                errorMessage: message['result']['inputMessages']['major_version'] ?? '',
+                            }) }}
+                            {{ _self.textInput({
+                                label: 'Initial Version',
+                                name: 'version',
+                                value: message['result']['inputValues']['version'] ?? '',
+                                errorMessage: message['result']['inputMessages']['version'] ?? '',
+                            }) }}
+                            {{ _self.fileChooser({
+                                label: 'File Download',
+                                name: 'version',
+                                errorMessage: message['result']['inputMessages']['download_file'] ?? '',
+                            }) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 border-t border-gray-200 pt-5">
+                    <div class="flex justify-end">
+                        <span class="ml-3 inline-flex rounded-md shadow-sm">
+                            {{ Buttons.actionButton({
+                                content: 'Create',
+                            }) }}
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
