@@ -3,5 +3,6 @@
 {% block accountContent %}
     {% include 'Http/_Infrastructure/Components/WideLists.twig' with {
         groups: groups,
+        noItemsContent: "You don't have any purchases to display yet.",
     } only %}
 {% endblock %}
