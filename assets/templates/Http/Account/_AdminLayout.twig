@@ -1,6 +1,6 @@
 {# @var string activeTab #}
 
-{% extends 'Http/_Global/_Layout.twig' %}
+{% extends 'Http/_Infrastructure/_Layout.twig' %}
 
 {% set breadcrumbs = breadcrumbs ?? [] %}
 {% set heading = heading ?? '' %}
@@ -9,7 +9,7 @@
 {# @var \App\Users\Models\UserModel user #}
 {% set user = fetchLoggedInUser() %}
 
-{% import 'Http/Macros/Forms/Buttons.twig' as Buttons %}
+{% import 'Http/_Infrastructure/Macros/Forms/Buttons.twig' as Buttons %}
 
 {% set nav = [
     {
@@ -195,7 +195,7 @@
                 {% endif %}
                 {% if heading or breadcrumbs|length > 0 %}
                     <div class="mx-auto px-4 sm:px-6 md:px-8">
-                        {% include 'Http/Includes/BreadCrumbs.twig' with {
+                        {% include 'Http/_Infrastructure/Includes/BreadCrumbs.twig' with {
                             breadcrumbs: breadcrumbs,
                         } only %}
                         {% if heading %}

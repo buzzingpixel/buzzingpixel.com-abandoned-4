@@ -3,7 +3,7 @@
 
 <div class="Modules">
     {% for payload in modulePayload.getItems() %}
-        {% set templatePath = 'Http/Modules/' ~ payload.getName() ~ '.twig' %}
+        {% set templatePath = 'Http/_Infrastructure/Modules/' ~ payload.getName() ~ '.twig' %}
 
         {% if templateExists(templatePath) %}
             {% include templatePath with {

@@ -2,7 +2,7 @@
 {# @var \Slim\Csrf\Guard csrf #}
 {# @var string redirectTo #}
 
-{% extends 'Http/_Global/_Layout.twig' %}
+{% extends 'Http/_Infrastructure/_Layout.twig' %}
 
 {% set message = flash('LoginFormMessage') %}
 {% if message[0] is defined %}
