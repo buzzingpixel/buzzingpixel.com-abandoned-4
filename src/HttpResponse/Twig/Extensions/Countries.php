@@ -22,15 +22,16 @@ class Countries extends AbstractExtension
      */
     public function getFunctions() : array
     {
-        return [$this->getFunction()];
-    }
-
-    public function getFunction() : TwigFunction
-    {
-        return new TwigFunction(
-            'countries',
-            [$this, 'countries']
-        );
+        return [
+            new TwigFunction(
+                'countries',
+                [$this, 'countries']
+            ),
+            new TwigFunction(
+                'countriesSelectArray',
+                [$this, 'countriesSelectArray']
+            ),
+        ];
     }
 
     /**
@@ -39,5 +40,19 @@ class Countries extends AbstractExtension
     public function countries() : array
     {
         return $this->ISO3166->all();
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function countriesSelectArray() : array
+    {
+        $array = [];
+
+        foreach ($this->ISO3166->all() as $country) {
+            $array[$country['alpha2']] = $country['name'];
+        }
+
+        return $array;
     }
 }

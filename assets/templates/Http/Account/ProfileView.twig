@@ -2,227 +2,78 @@
 
 {% extends 'Http/Account/_AccountLayout.twig' %}
 
-{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
-{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
-
-{% set message = flash('PostMessage') %}
-{% if message[0] is defined %}
-    {% set message = message[0] %}
-{% endif %}
-
-{% macro textInput(params) %}
-    {% set params = {
-        label: '',
-        small: '',
-        name: '',
-        value: '',
-        errorMessage: '',
-    }|merge(params) %}
-    <div class="mt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <label
-            for="{{ params.name }}"
-            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 sm:mt-px sm:pt-2"
-        >
-            {{ params.label|smartypants|widont }}
-            {% if params.small %}
-                <small class="block">
-                    {{ params.small|smartypants|widont }}
-                </small>
-            {% endif %}
-        </label>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <div class="rounded-md shadow-sm">
-                <input
-                    name="{{ params.name }}"
-                    id="{{ params.name }}"
-                    class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if params.errorMessage %} border-red bg-lighter-red{% endif %}"
-                    value="{{ params.value }}"
-                >
-            </div>
-            {% if params.errorMessage %}
-                <div class="mt-2 text-red">
-                    {{ params.errorMessage|smartypants|widont }}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-{% endmacro %}
-
 {% block accountContent %}
-    <div class="bg-white dark:bg-blue-smoke shadow sm:rounded-lg max-w-4xl">
-        {% if message['status'] is defined %}
-            {% set title = 'There was a problem' %}
-            {% set class = 'bg-lighter-red border-light-red text-red' %}
-            {% if message.status == 'SUCCESSFUL' %}
-                {% set title = 'Your data was saved!' %}
-                {% set class = 'bg-green-100 border-green-400 text-green-700' %}
-            {% endif %}
-            <div
-                class="{{ class }} border px-4 py-3 relative sm:rounded-t-lg"
-                role="alert"
-            >
-                <p class="mb-1">
-                    <strong class="font-bold">
-                        {{ title|smartypants|widont }}
-                    </strong>
-                </p>
-                <p>
-                    {{ message.result.message|default('')|smartypants|widont }}
-                </p>
-            </div>
-        {% endif %}
-        <div class="px-4 py-5 sm:px-6">
-            <form
-                method="post"
-                enctype="multipart/form-data"
-            >
-                <div>
-                    {{ Inputs.hiddenInputs() }}
-                    <div>
-                        <span class="ml-3 rounded-md shadow-sm float-right">
-                            {{ Buttons.actionButton({
-                                content: 'Save',
-                            }) }}
-                        </span>
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                            {{ 'Edit Your Profile'|smartypants|widont }}
-                        </h3>
-                        <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">
-                            {{ user.emailAddress|smartypants|widont }}
-                        </p>
-                    </div>
-                    <div class="mt-8 border-t border-gray-200 pt-4 sm:mt-5 sm:pt-0">
-                        <div class="-mt-6">
-                            <div class="mt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <label for="timezone" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 sm:mt-px sm:pt-2">
-                                    Timezone
-                                </label>
-                                {% set timezoneError = message['result']['inputMessages']['timezone'] ?? '' %}
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <div class="rounded-md shadow-sm{% if timezoneError %} select-wrapper-error{% endif %}">
-                                        <select
-                                            name="timezone"
-                                            id="timezone"
-                                            class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5{% if timezoneError %} border-red bg-lighter-red{% endif %}"
-                                            ref="select"
-                                        >
-                                            <option value="">Choose timezone&hellip;</option>
-                                            {% for zoneKey,zone in timeZoneList() %}
-                                                <option
-                                                    value="{{ zoneKey }}"
-                                                    {% if message['result']['inputValues']['timezone'] is defined %}
-                                                    {% if message['result']['inputValues']['timezone'] == zoneKey %}
-                                                    selected
-                                                    {% endif %}
-                                                    {% elseif user.timezone.name == zoneKey %}
-                                                    selected
-                                                    {% endif %}
-                                                >
-                                                    {{ zone }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    {% if timezoneError %}
-                                        <div class="mt-2 text-red">
-                                            {{ timezoneError|smartypants|widont }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {{ _self.textInput({
-                                label: 'First Name',
-                                name: 'first_name',
-                                value: message['result']['inputValues']['first_name'] ?? user.firstName,
-                                errorMessage: message['result']['inputMessages']['first_name'] ?? '',
-                            }) }}
-                            {{ _self.textInput({
-                                label: 'Last Name',
-                                name: 'last_name',
-                                value: message['result']['inputValues']['last_name'] ?? user.lastName,
-                                errorMessage: message['result']['inputMessages']['last_name'] ?? '',
-                            }) }}
-                            {{ _self.textInput({
-                                label: 'Display Name',
-                                small: 'Used in public support requests to keep your real name non-public. Your first and last name will be used if left blank.',
-                                name: 'display_name',
-                                value: message['result']['inputValues']['display_name'] ?? user.displayName,
-                                errorMessage: message['result']['inputMessages']['display_name'] ?? '',
-                            }) }}
-                            {{ _self.textInput({
-                                label: 'Billing Name',
-                                name: 'billing_name',
-                                value: message['result']['inputValues']['billing_name'] ?? user.billingName,
-                                errorMessage: message['result']['inputMessages']['billing_name'] ?? '',
-                            }) }}
-                            {{ _self.textInput({
-                                label: 'Billing Company',
-                                name: 'billing_company',
-                                value: message['result']['inputValues']['billing_company'] ?? user.billingCompany,
-                                errorMessage: message['result']['inputMessages']['billing_company'] ?? '',
-                            }) }}
-                            {{ _self.textInput({
-                                label: 'Billing Phone',
-                                name: 'billing_phone',
-                                value: message['result']['inputValues']['billing_phone'] ?? user.billingPhone,
-                                errorMessage: message['result']['inputMessages']['billing_phone'] ?? '',
-                            }) }}
-                            {{ _self.textInput({
-                                label: 'Billing Address',
-                                name: 'billing_address',
-                                value: message['result']['inputValues']['billing_address'] ?? user.billingAddress,
-                                errorMessage: message['result']['inputMessages']['billing_address'] ?? '',
-                            }) }}
-                            <div class="mt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label for="billing_country" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 sm:mt-px sm:pt-2">
-                                    Billing Country
-                                </label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <div class="rounded-md shadow-sm">
-                                        <select
-                                            name="billing_country"
-                                            id="billing_country"
-                                            class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                            ref="select"
-                                        >
-                                            <option value="">Choose country&hellip;</option>
-                                            {% for country in countries() %}
-                                                <option
-                                                    value="{{ country.alpha2 }}"
-                                                    {% if message['result']['inputValues']['billing_country'] is defined %}
-                                                    {% if message['result']['inputValues']['billing_country'] == country.alpha2 %}
-                                                    selected
-                                                    {% endif %}
-                                                    {% elseif user.billingCountry == country.alpha2 %}
-                                                    selected
-                                                    {% endif %}
-                                                >
-                                                    {{ country.name }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            {{ _self.textInput({
-                                label: 'Billing Postal Code',
-                                name: 'billing_postal_code',
-                                value: message['result']['inputValues']['billing_postal_code'] ?? user.billingPostalCode,
-                                errorMessage: message['result']['inputMessages']['billing_postal_code'] ?? '',
-                            }) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-8 border-t border-gray-200 pt-5">
-                    <div class="flex justify-end">
-                        <span class="ml-3 inline-flex rounded-md shadow-sm">
-                            {{ Buttons.actionButton({
-                                content: 'Save',
-                            }) }}
-                        </span>
-                    </div>
-                </div>
-            </form>
-        </div>
+    <div class="max-w-4xl">
+        {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+            title: 'Edit Your Profile',
+            subtitle: user.emailAddress,
+            inputs: [
+                {
+                    type: 'select',
+                    label: 'Timezone',
+                    name: 'timezone',
+                    value: user.timezone.name,
+                    options: timeZoneList(),
+                    emptyOption: 'Choose country&hellip;',
+                },
+                {
+                    type: 'text',
+                    label: 'First Name',
+                    name: 'first_name',
+                    value: user.firstName,
+                },
+                {
+                    type: 'text',
+                    label: 'Last Name',
+                    name: 'last_name',
+                    value: user.lastName,
+                },
+                {
+                    type: 'text',
+                    label: 'Display Name',
+                    small: 'Used in public support requests to keep your real name non-public. Your first and last name will be used if left blank.',
+                    name: 'display_name',
+                    value: user.displayName,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Name',
+                    name: 'billing_name',
+                    value: user.billingName,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Company',
+                    name: 'billing_company',
+                    value: user.billingCompany,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Phone',
+                    name: 'billing_phone',
+                    value: user.billingPhone,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Address',
+                    name: 'billing_address',
+                    value: user.billingAddress,
+                },
+                {
+                    type: 'select',
+                    label: 'Billing Country',
+                    name: 'billing_country',
+                    value: user.billingCountry,
+                    options: countriesSelectArray(),
+                    emptyOption: 'Choose country&hellip;',
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Postal Code',
+                    name: 'billing_postal_code',
+                    value: user.billingPostalCode,
+                },
+            ]
+        } only %}
     </div>
 {% endblock %}

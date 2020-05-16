@@ -30,6 +30,7 @@ module.exports = {
                 'mine-shaft': '#313131',
                 'mine-shaft-dark': '#232323',
                 'cod-gray': '#171717',
+                'lightest-red': '#eeadad',
                 'lighter-red': '#ee908f',
                 'light-red': '#ca5153',
                 red: '#870f12',

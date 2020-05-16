@@ -83,6 +83,8 @@ class TwigEnvironmentFactory
 
         $twig->addExtension($di->get(MarkdownTwigExtension::class));
 
+        $twigMessages = $di->get(TwigMessages::class);
+
         $twig->addExtension($di->get(TwigMessages::class));
 
         $twig->addExtension($di->get(FetchLoggedInUser::class));
@@ -102,6 +104,10 @@ class TwigEnvironmentFactory
         $twig->addGlobal('Footer', $di->get(Footer::class));
 
         $twig->addGlobal('csrf', $di->get(Csrf::class));
+
+        $postMessage = $twigMessages->getMessages('PostMessage');
+
+        $twig->addGlobal('PostMessage', $postMessage[0] ?? []);
 
         return $twig;
     }
