@@ -24,15 +24,15 @@
     </label>
 {% endmacro %}
 
-{% macro simpleStackedTextarea(params) %}
+{% macro simpleStackedWrapper(params, input) %}
     {% set params = {
         label: '',
         small: '',
         name: '',
-        rows: 6,
-        value: '',
-        errorMessage: '',
     }|merge(params) %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
     <div class="sm:col-span-6">
         <label
             for="{{ params.name }}"
@@ -46,19 +46,71 @@
             </p>
         {% endif %}
         <div class="mt-1 rounded-md shadow-sm">
-            <textarea
-                name="{{ params.name }}"
-                id="{{ params.name }}"
-                rows="{{ params.rows }}"
-                class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if params.errorMessage %} border-red bg-lighter-red{% endif %}"
-            >{{ params.value }}</textarea>
+            {{ input }}
         </div>
-        {% if params.errorMessage %}
+        {% if errorMessage %}
             <div class="mt-2 text-red">
-                {{ params.errorMessage|smartypants|widont }}
+                {{ errorMessage|smartypants|widont }}
             </div>
         {% endif %}
     </div>
+{% endmacro %}
+
+{% macro simpleStackedText(params) %}
+    {% set params = {
+        name: '',
+        value: '',
+        type: 'text',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <div class="rounded-md shadow-sm">
+            <input
+                type="{{ params.type }}"
+                name="{{ params.name }}"
+                id="{{ params.name }}"
+                class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+                value="{{ value }}"
+            >
+        </div>
+    {% endset %}
+
+    {{ _self.simpleStackedWrapper(params, input) }}
+{% endmacro %}
+
+{% macro simpleStackedTextarea(params) %}
+    {% set params = {
+        name: '',
+        rows: 6,
+        value: '',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <textarea
+            name="{{ params.name }}"
+            id="{{ params.name }}"
+            rows="{{ params.rows }}"
+            class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+        >{{ value }}</textarea>
+    {% endset %}
+
+    {{ _self.simpleStackedWrapper(params, input) }}
 {% endmacro %}
 
 {% macro labelsOnLeftWrapper(params, input) %}
@@ -99,6 +151,7 @@
     {% set params = {
         name: '',
         value: '',
+        type: 'text',
     }|merge(params) %}
 
     {% set value = params.value %}
@@ -112,6 +165,7 @@
     {% set input %}
         <div class="rounded-md shadow-sm">
             <input
+                type="{{ params.type }}"
                 name="{{ params.name }}"
                 id="{{ params.name }}"
                 class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"

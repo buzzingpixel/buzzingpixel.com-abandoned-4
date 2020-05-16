@@ -51,10 +51,10 @@
                     <div class="-mt-6">
                         {% for params in inputs %}
                             {% switch params.type %}
-                                {% case 'text' %}
-                                    {{ Inputs.labelsOnLeftText(params) }}
                                 {% case 'select' %}
                                     {{ Inputs.labelsOnLeftSelect(params) }}
+                                {% default %}
+                                    {{ Inputs.labelsOnLeftText(params) }}
                             {% endswitch %}
                         {% endfor %}
                     </div>

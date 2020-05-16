@@ -37,6 +37,8 @@
                     {% switch params.type %}
                         {% case 'textarea' %}
                             {{ Inputs.simpleStackedTextarea(params) }}
+                        {% default %}
+                            {{ Inputs.simpleStackedText(params) }}
                     {% endswitch %}
                 {% endfor %}
             </div>
