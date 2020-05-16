@@ -1,0 +1,62 @@
+{# @var \Slim\Csrf\Guard csrf #}
+
+{% macro hiddenInputs(params) %}
+    {% if not params %}
+        {% set params = {} %}
+    {% endif %}
+    {% set params = {
+        redirectTo: '',
+    }|merge(params) %}
+    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+    {% if params.redirectTo %}
+        <input type="hidden" name="redirect_to" value="{{ params.redirectTo }}">
+    {% endif %}
+    <label for="a_password" style="display:none !important">
+        <input
+            id="a_password"
+            type="text"
+            name="a_password"
+            style="display:none !important"
+            tabindex="-1"
+            autocomplete="off"
+        >
+    </label>
+{% endmacro %}
+
+{% macro simpleStackedTextarea(params) %}
+    {% set params = {
+        label: '',
+        small: '',
+        name: '',
+        rows: 6,
+        value: '',
+        errorMessage: '',
+    }|merge(params) %}
+    <div class="sm:col-span-6">
+        <label
+            for="{{ params.name }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+        >
+            {{ params.label|smartypants|widont }}
+        </label>
+        {% if params.small %}
+            <p class="text-sm text-gray-500 dark:text-gray-300">
+                {{ params.small|smartypants|widont }}
+            </p>
+        {% endif %}
+        <div class="mt-1 rounded-md shadow-sm">
+            <textarea
+                name="{{ params.name }}"
+                id="{{ params.name }}"
+                rows="{{ params.rows }}"
+                class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if params.errorMessage %} border-red bg-lighter-red{% endif %}"
+            >{{ params.value }}</textarea>
+        </div>
+        {% if params.errorMessage %}
+            <div class="mt-2 text-red">
+                {{ params.errorMessage|smartypants|widont }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}

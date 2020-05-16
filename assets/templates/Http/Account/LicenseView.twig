@@ -68,7 +68,7 @@
 
 {% set notes %}
     <div class="border border-gray-200 dark:border-gray-400 rounded-md max-w-lg p-3 text-sm leading-5 rich-text-style">
-        {{ license.notes|markdownParse }}
+        {{ license.notes|escape|markdownParse }}
     </div>
     <a
         href="/account/licenses/notes/{{ license.id }}"

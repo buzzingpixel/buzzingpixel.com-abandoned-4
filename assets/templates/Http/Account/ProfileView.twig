@@ -2,8 +2,8 @@
 
 {% extends 'Http/Account/_AccountLayout.twig' %}
 
-{% import 'Http/_Infrastructure/Macros/Forms/Buttons.twig' as Buttons %}
-{% import 'Http/_Infrastructure/Macros/Forms/HiddenInputs.twig' as HiddenInputs %}
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
 
 {% set message = flash('PostMessage') %}
 {% if message[0] is defined %}
@@ -77,7 +77,7 @@
                 enctype="multipart/form-data"
             >
                 <div>
-                    {{ HiddenInputs.hiddenInputs() }}
+                    {{ Inputs.hiddenInputs() }}
                     <div>
                         <span class="ml-3 rounded-md shadow-sm float-right">
                             {{ Buttons.actionButton({

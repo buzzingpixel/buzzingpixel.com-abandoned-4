@@ -1,7 +1,7 @@
 {% extends 'Http/Account/_AdminLayout.twig' %}
 
-{% import 'Http/_Infrastructure/Macros/Forms/Buttons.twig' as Buttons %}
-{% import 'Http/_Infrastructure/Macros/Forms/HiddenInputs.twig' as HiddenInputs %}
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
 
 {% set heading = 'Create New Software' %}
 
@@ -165,7 +165,7 @@
                 enctype="multipart/form-data"
             >
                 <div>
-                    {{ HiddenInputs.hiddenInputs() }}
+                    {{ Inputs.hiddenInputs() }}
                     <div>
                         <span class="ml-3 rounded-md shadow-sm float-right">
                             {{ Buttons.actionButton({
