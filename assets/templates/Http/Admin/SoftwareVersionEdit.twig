@@ -1,0 +1,60 @@
+{# @var \App\Software\Models\SoftwareVersionModel softwareVersion #}
+
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% set contentClass = 'max-w-4xl' %}
+
+{% set actionForm = {
+    action: "/admin/software/version/delete/#{softwareVersion.id}",
+    content: 'Delete',
+    confirmAction: 'delete'
+} %}
+
+{% set fileCurrently = softwareVersion.downloadFile ? 'Currently: ' ~ softwareVersion.downloadFile : '' %}
+
+{% block adminContent %}
+    {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+        title: "Edit version \"#{softwareVersion.version}\" of \"#{softwareVersion.software.name}\"",
+        cancelButton: {
+            content: 'Cancel',
+            href: '/admin/software/view/' ~ softwareVersion.software.id,
+        },
+        inputs: [
+            {
+                type: 'text',
+                label: 'Major Version',
+                name: 'major_version',
+                value: softwareVersion.majorVersion,
+            },
+            {
+                type: 'text',
+                label: 'Version',
+                name: 'version',
+                value: softwareVersion.version,
+            },
+            {
+                type: 'file',
+                label: 'New File Download',
+                name: 'new_download_file',
+                small: fileCurrently,
+            },
+            {
+                type: 'text',
+                label: 'Upgrade Price',
+                name: 'upgrade_price',
+                value: softwareVersion.upgradePrice,
+            },
+            {
+                type: 'dateChooser',
+                label: 'Released On',
+                name: 'released_on',
+                value: softwareVersion.releasedOn.
+                    setTimezone(user.timezone).
+                    format('Y-m-d h:i A'),
+            },
+        ],
+    } only %}
+{% endblock %}

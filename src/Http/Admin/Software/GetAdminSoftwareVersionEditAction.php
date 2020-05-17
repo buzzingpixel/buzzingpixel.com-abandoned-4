@@ -45,7 +45,7 @@ class GetAdminSoftwareVersionEditAction
         assert($software instanceof SoftwareModel);
 
         return ($this->responder)(
-            'Admin/SoftwareVersionEdit.twig',
+            'Http/Admin/SoftwareVersionEdit.twig',
             [
                 'metaPayload' => new MetaPayload(
                     [
@@ -61,11 +61,9 @@ class GetAdminSoftwareVersionEditAction
                         'content' => 'Software Admin',
                     ],
                     [
-                        'href' => '/admin/software/view/' .
-                            $software->slug,
+                        'href' => '/admin/software/view/' . $software->id,
                         'content' => $software->name,
                     ],
-                    ['content' => 'Edit Version'],
                 ],
                 'softwareVersion' => $softwareVersion,
             ],
