@@ -1,3 +1,32 @@
+{% macro actionForm(params) %}
+    {% set params = {
+        action: '',
+        content: '',
+        confirmAction: '',
+    }|merge(params) %}
+
+    {% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
+
+    <form
+        method="post"
+        {% if params.action %}
+        action="{{ params.action }}"
+        {% endif %}
+        {% if params.confirmAction %}
+        ref="ConfirmSubmit"
+        data-confirm-action="{{ params.confirmAction }}"
+        {% endif %}
+    >
+        {{ Inputs.hiddenInputs() }}
+        <button
+            type="submit"
+            class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white dark:text-gray-900 bg-meteor dark:bg-champagne hover:bg-pumpkin-skin dark:hover:bg-gold-sand focus:outline-none focus:border-rich-gold dark:focus:bg-whiskey focus:shadow-outline-rich-gold active:bg-rich-gold transition duration-150 ease-in-out"
+        >
+            {{ params.content|smartypants|widont }}
+        </button>
+    </form>
+{% endmacro %}
+
 {% macro actionButton(params) %}
     {% set params = {
         type: 'submit',
@@ -18,6 +47,9 @@
     }|merge(params) %}
     <a
         href="{{ params.href|raw }}"
+        {% if params['onClick'] is defined %}
+        onClick="{{ params.onClick|raw }}"
+        {% endif %}
         class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white dark:text-gray-900 bg-meteor dark:bg-champagne hover:bg-pumpkin-skin dark:hover:bg-gold-sand focus:outline-none focus:border-rich-gold dark:focus:bg-whiskey focus:shadow-outline-rich-gold active:bg-rich-gold transition duration-150 ease-in-out"
     >
         {{ params.content|smartypants|widont }}

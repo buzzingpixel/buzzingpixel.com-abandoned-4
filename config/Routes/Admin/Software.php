@@ -39,12 +39,12 @@ return static function (RouteCollectorProxy $r) : void {
         );
 
         $r->get(
-            '/view/{slug}',
+            '/view/{id}',
             GetAdminSoftwareViewAction::class
         );
 
         $r->get(
-            '/edit/{slug}',
+            '/edit/{id}',
             GetAdminSoftwareEditAction::class
         );
 

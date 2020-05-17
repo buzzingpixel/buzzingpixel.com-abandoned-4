@@ -3,6 +3,8 @@
 {% set actionButton = actionButton ?? false %}
 {% set items = items ?? [] %}
 
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
+
 {% set alternator = [
     'bg-white dark:bg-blue-smoke',
     'bg-gray-50 dark:bg-nandor-light',
@@ -19,22 +21,16 @@
                 {% if actionButton %}
                 <div class="flex items-center justify-between flex-wrap sm:flex-no-wrap">
                 {% endif %}
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                        {{ title|smartypants|widont }}
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-300">
-                        {{ subtitle|smartypants|widont }}
-                    </p>
+                    <div>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                            {{ title|smartypants|widont }}
+                        </h3>
+                        <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-300">
+                            {{ subtitle|smartypants|widont }}
+                        </p>
+                    </div>
                 {% if actionButton %}
-                    <a
-                        href="{{ actionButton.href }}"
-                        {% if actionButton['onClick'] is defined %}
-                        onClick="{{ actionButton.onClick|raw }}"
-                        {% endif %}
-                        class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white dark:text-gray-900 bg-meteor dark:bg-champagne hover:bg-pumpkin-skin dark:hover:bg-gold-sand focus:outline-none focus:border-rich-gold dark:focus:bg-whiskey focus:shadow-outline-rich-gold active:bg-rich-gold transition duration-150 ease-in-out"
-                    >
-                        Print
-                    </a>
+                    {{ Buttons.actionLink(actionButton) }}
                 </div>
                 {% endif %}
             </div>

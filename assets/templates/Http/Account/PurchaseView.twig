@@ -102,6 +102,7 @@
             .setTimezone(user.timezone)
             .format('Y/m/d g:i a'),
         actionButton: {
+            content: 'Print',
             href: '#',
             onClick: "window.open(
                 '/account/purchases/print/" ~ order.id ~ "',

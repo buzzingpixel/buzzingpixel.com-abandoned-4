@@ -4,7 +4,7 @@
         "build-prod": "node assets/bin/build-prod.mjs",
         "watch": "node assets/bin/watch.mjs",
         "watch-css": "node assets/bin/watch-css.mjs",
-        "watch-js": "node assets/bin/watch-css.mjs",
+        "watch-js": "node assets/bin/watch-js.mjs",
         "css": "node assets/bin/css.mjs",
         "css-prod": "node assets/bin/css-prod.mjs",
         "stylelint": "node assets/bin/stylelint.mjs",

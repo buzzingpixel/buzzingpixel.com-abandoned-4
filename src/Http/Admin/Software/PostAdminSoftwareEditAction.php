@@ -45,17 +45,17 @@ class PostAdminSoftwareEditAction
             'subscription' => ($postData['subscription'] ?? '') === 'true',
         ];
 
-        $slugAttribute = (string) $request->getAttribute('slug');
+        $idAttribute = (string) $request->getAttribute('id');
 
-        $software = $this->softwareApi->fetchSoftwareBySlug(
-            $slugAttribute
+        $software = $this->softwareApi->fetchSoftwareById(
+            $idAttribute
         );
 
         if ($software === null) {
             throw new HttpBadRequestException(
                 $request,
                 'Software for specified Slug ' .
-                    $slugAttribute .
+                    $idAttribute .
                     ' could not be found',
             );
         }
