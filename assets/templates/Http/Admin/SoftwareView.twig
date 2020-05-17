@@ -53,10 +53,16 @@
         ]
     } only %}
 
-    {% include 'Http/_Infrastructure/Components/WideLists.twig' with {
-        groups: [{
-            title: 'Versions',
-            items: versions
-        }],
-    } only %}
+    <div class="mt-8">
+        {% include 'Http/_Infrastructure/Components/WideLists.twig' with {
+            groups: [{
+                title: 'Versions',
+                actionButton: {
+                    href: "/admin/software/#{software.id}/add-version",
+                    content: 'Add New Version',
+                },
+                items: versions,
+            }],
+        } only %}
+    </div>
 {% endblock %}

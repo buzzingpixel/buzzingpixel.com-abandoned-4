@@ -1,5 +1,8 @@
 {% set groups = groups ?? [] %}
 {% set noItemsContent = noItemsContent ?? 'There are no items to display' %}
+{% set actionButton = actionButton ?? false %}
+
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
 
 {# {% set groups = [{
     title: 'Foo Title Optional',
@@ -27,10 +30,19 @@
 {% else %}
     {% for group in groups %}
         <div class="{% if loop.first %}mt-5{% else %} mt-16{% endif %}">
+            {% if group['actionButton'] is defined %}
+            <div class="flex items-center justify-between flex-wrap sm:flex-no-wrap mb-4">
+            {% endif %}
             {% if group['title'] is defined %}
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 ml-2 mb-2">
-                    {{ group.title|smartypants|widont }}
-                </h3>
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 ml-2{% if group['actionButton'] is not defined %} mb-2{% endif %}">
+                        {{ group.title|smartypants|widont }}
+                    </h3>
+                </div>
+            {% endif %}
+            {% if group['actionButton'] is defined %}
+                {{ Buttons.actionLink(group.actionButton) }}
+            </div>
             {% endif %}
             {% if group.items|length < 1 %}
                 {{ noContent }}
