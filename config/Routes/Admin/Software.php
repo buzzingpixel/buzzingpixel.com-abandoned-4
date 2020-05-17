@@ -74,12 +74,12 @@ return static function (RouteCollectorProxy $r) : void {
         );
 
         $r->get(
-            '/{slug}/add-version',
+            '/{id}/add-version',
             GetAdminSoftwareAddVersionAction::class
         );
 
         $r->post(
-            '/{slug}/add-version',
+            '/{id}/add-version',
             PostAdminSoftwareAddVersionAction::class
         );
     });

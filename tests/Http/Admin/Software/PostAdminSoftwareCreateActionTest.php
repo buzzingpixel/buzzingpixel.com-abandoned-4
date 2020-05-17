@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
+use function assert;
 
 class PostAdminSoftwareCreateActionTest extends TestCase
 {
@@ -72,8 +73,8 @@ class PostAdminSoftwareCreateActionTest extends TestCase
             $responderArgsHolder->payload
         );
 
-        /** @var Payload $payload */
         $payload = $responderArgsHolder->payload;
+        assert($payload instanceof Payload);
 
         self::assertSame(
             Payload::STATUS_NOT_VALID,
@@ -171,8 +172,8 @@ class PostAdminSoftwareCreateActionTest extends TestCase
             $responderArgsHolder->payload
         );
 
-        /** @var Payload $payload */
         $payload = $responderArgsHolder->payload;
+        assert($payload instanceof Payload);
 
         self::assertSame(
             Payload::STATUS_NOT_VALID,
@@ -267,8 +268,8 @@ class PostAdminSoftwareCreateActionTest extends TestCase
             $responderArgsHolder->payload
         );
 
-        /** @var Payload $payload */
         $payload = $responderArgsHolder->payload;
+        assert($payload instanceof Payload);
 
         self::assertSame(
             Payload::STATUS_NOT_VALID,
@@ -377,8 +378,8 @@ class PostAdminSoftwareCreateActionTest extends TestCase
             $responderArgsHolder->payload
         );
 
-        /** @var Payload $payload */
         $payload = $responderArgsHolder->payload;
+        assert($payload instanceof Payload);
 
         self::assertSame(
             Payload::STATUS_NOT_CREATED,
@@ -395,8 +396,9 @@ class PostAdminSoftwareCreateActionTest extends TestCase
             $softwareApiCallModelHolder->model
         );
 
-        /** @var SoftwareModel $model */
         $model = $softwareApiCallModelHolder->model;
+
+        assert($model instanceof SoftwareModel);
 
         self::assertSame('', $model->id);
 
@@ -517,8 +519,8 @@ class PostAdminSoftwareCreateActionTest extends TestCase
             $responderArgsHolder->payload
         );
 
-        /** @var Payload $payload */
         $payload = $responderArgsHolder->payload;
+        assert($payload instanceof Payload);
 
         self::assertSame(
             Payload::STATUS_CREATED,
@@ -532,8 +534,8 @@ class PostAdminSoftwareCreateActionTest extends TestCase
             $softwareApiCallModelHolder->model
         );
 
-        /** @var SoftwareModel $model */
         $model = $softwareApiCallModelHolder->model;
+        assert($model instanceof SoftwareModel);
 
         self::assertSame('', $model->id);
 

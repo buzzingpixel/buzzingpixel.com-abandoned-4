@@ -48,7 +48,11 @@ class PostAdminSoftwareCreateAction
 
         /** @psalm-suppress MixedAssignment */
         $downloadFile = $request->getUploadedFiles()['download_file'] ?? null;
-        assert($downloadFile instanceof UploadedFileInterface || $downloadFile === null);
+
+        assert(
+            $downloadFile instanceof UploadedFileInterface ||
+            $downloadFile === null
+        );
 
         $inputMessages = [];
 

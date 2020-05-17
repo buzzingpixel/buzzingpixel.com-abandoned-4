@@ -31,8 +31,8 @@ class GetAdminSoftwareAddVersionActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn(null);
 
         $service = new GetAdminSoftwareAddVersionAction(
@@ -46,8 +46,8 @@ class GetAdminSoftwareAddVersionActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $exception = null;
 
@@ -113,11 +113,13 @@ class GetAdminSoftwareAddVersionActionTest extends TestCase
 
         $software->slug = 'foo-slug';
 
+        $software->id = 'foo-id';
+
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $service = new GetAdminSoftwareAddVersionAction(
@@ -131,8 +133,8 @@ class GetAdminSoftwareAddVersionActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $returnResponse = $service($request);
 

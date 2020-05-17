@@ -30,8 +30,8 @@ class GetAdminSoftwareAddVersionAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $software = $this->softwareApi->fetchSoftwareBySlug(
-            (string) $request->getAttribute('slug')
+        $software = $this->softwareApi->fetchSoftwareById(
+            (string) $request->getAttribute('id')
         );
 
         if ($software === null) {
