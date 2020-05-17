@@ -60,8 +60,6 @@ class PostAdminSoftwareEditAction
             );
         }
 
-        $originalSlug = $software->slug;
-
         $inputMessages = [];
 
         if ($inputValues['name'] === '') {
@@ -90,7 +88,7 @@ class PostAdminSoftwareEditAction
                         'inputValues' => $inputValues,
                     ],
                 ),
-                $originalSlug,
+                $software->id,
             );
         }
 
@@ -109,13 +107,13 @@ class PostAdminSoftwareEditAction
                     Payload::STATUS_NOT_UPDATED,
                     ['message' => 'An unknown error occurred'],
                 ),
-                $originalSlug,
+                $software->id,
             );
         }
 
         return ($this->responder)(
             $payload,
-            $software->slug
+            $software->id
         );
     }
 }

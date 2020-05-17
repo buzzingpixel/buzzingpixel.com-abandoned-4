@@ -100,12 +100,6 @@ parameters:
             path: %currentWorkingDirectory%/tests/Http/Admin/Software/PostAdminSoftwareCreateResponderTest.php
         -
             message: '#Offset 1 does not exist on array*#'
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
-        -
-            message: '#Offset 0 does not exist on array*#'
-            path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
-        -
-            message: '#Offset 1 does not exist on array*#'
             path: %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareActionTest.php
         -
             message: '#Offset 0 does not exist on array*#'
@@ -196,6 +190,7 @@ parameters:
         - %currentWorkingDirectory%/tests/Queue/Services/RestartAllStalledItemsTest.php
         - %currentWorkingDirectory%/tests/Queue/Services/RestartQueuesByIdsTest.php
         - %currentWorkingDirectory%/tests/Http/Admin/Queue/PostAdminQueueActionTest.php
+        - %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

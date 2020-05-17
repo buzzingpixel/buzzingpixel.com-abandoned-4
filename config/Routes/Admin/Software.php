@@ -49,7 +49,7 @@ return static function (RouteCollectorProxy $r) : void {
         );
 
         $r->post(
-            '/edit/{slug}',
+            '/edit/{id}',
             PostAdminSoftwareEditAction::class
         );
 

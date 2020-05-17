@@ -91,7 +91,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $origSlug
+                    string $id
                 ) use (
                     $response
                 ) {
@@ -121,7 +121,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
                         ],
                     );
 
-                    self::assertSame('orig-slug', $origSlug);
+                    self::assertSame('foo-id', $id);
 
                     return $response;
                 }
@@ -130,6 +130,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
         $software = new SoftwareModel();
 
         $software->slug = 'orig-slug';
+
+        $software->id = 'foo-id';
 
         $softwareApi = $this->createMock(SoftwareApi::class);
 
@@ -182,7 +184,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $origSlug
+                    string $id
                 ) use (
                     $response
                 ) {
@@ -196,7 +198,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
                         ['message' => 'An unknown error occurred'],
                     );
 
-                    self::assertSame('orig-slug', $origSlug);
+                    self::assertSame('bar-id', $id);
 
                     return $response;
                 }
@@ -205,6 +207,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
         $software = new SoftwareModel();
 
         $software->slug = 'orig-slug';
+
+        $software->id = 'bar-id';
 
         $softwareApi = $this->createMock(SoftwareApi::class);
 
@@ -311,6 +315,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
         $software = new SoftwareModel();
 
         $software->slug = 'orig-slug';
+
+        $software->id = 'foo-id';
 
         $softwareApi = $this->createMock(SoftwareApi::class);
 

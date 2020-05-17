@@ -234,6 +234,12 @@
         isChecked: false,
     }|merge(params) %}
 
+    {% set isChecked = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set isChecked = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
     {% set input %}
         <div class="relative flex items-start">
             <div class="absolute flex items-center h-5">
@@ -243,7 +249,7 @@
                     type="checkbox"
                     class="form-checkbox h-4 w-4 text-jade transition duration-150 ease-in-out dark:bg-gray-600"
                     value="true"
-                    {% if params.isChecked %}
+                    {% if isChecked %}
                     checked
                     {% endif %}
                 >

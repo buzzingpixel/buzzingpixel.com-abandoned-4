@@ -113,6 +113,8 @@ class GetAdminSoftwareEditActionTest extends TestCase
 
         $software->slug = 'foo-id';
 
+        $software->id = 'bar-id';
+
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
@@ -139,7 +141,7 @@ class GetAdminSoftwareEditActionTest extends TestCase
         self::assertSame($response, $returnResponse);
 
         self::assertSame(
-            'Admin/SoftwareEdit.twig',
+            'Http/Admin/SoftwareEdit.twig',
             $holder->template
         );
 
@@ -169,14 +171,17 @@ class GetAdminSoftwareEditActionTest extends TestCase
                     'href' => '/admin/software',
                     'content' => 'Software Admin',
                 ],
-                ['content' => 'Edit Software'],
+                [
+                    'href' => '/admin/software/view/bar-id',
+                    'content' => 'Foo Name',
+                ],
             ],
             $holder->context['breadcrumbs'],
         );
 
         self::assertSame(
             $software,
-            $holder->context['softwareModel'],
+            $holder->context['software'],
         );
     }
 }
