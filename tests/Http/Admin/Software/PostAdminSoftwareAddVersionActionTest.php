@@ -90,7 +90,7 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $holder->payload = null;
 
-        $holder->softwareSlug = null;
+        $holder->softwareId = null;
 
         $software = new SoftwareModel();
 
@@ -118,14 +118,14 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $slug
+                    string $id
                 ) use (
                     $holder,
                     $response
                 ) {
                     $holder->payload = $payload;
 
-                    $holder->softwareSlug = $slug;
+                    $holder->softwareId = $id;
 
                     return $response;
                 }
@@ -198,8 +198,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
         );
 
         self::assertSame(
-            $software->slug,
-            $holder->softwareSlug
+            $software->id,
+            $holder->softwareId
         );
     }
 
@@ -212,7 +212,7 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $holder->payload = null;
 
-        $holder->softwareSlug = null;
+        $holder->softwareId = null;
 
         $software = new SoftwareModel();
 
@@ -240,14 +240,14 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $slug
+                    string $id
                 ) use (
                     $holder,
                     $response
                 ) {
                     $holder->payload = $payload;
 
-                    $holder->softwareSlug = $slug;
+                    $holder->softwareId = $id;
 
                     return $response;
                 }
@@ -325,8 +325,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
         );
 
         self::assertSame(
-            $software->slug,
-            $holder->softwareSlug
+            $software->id,
+            $holder->softwareId
         );
     }
 
@@ -339,7 +339,7 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $holder->payload = null;
 
-        $holder->softwareSlug = null;
+        $holder->softwareId = null;
 
         $software = new SoftwareModel();
 
@@ -367,14 +367,14 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $slug
+                    string $id
                 ) use (
                     $holder,
                     $response
                 ) {
                     $holder->payload = $payload;
 
-                    $holder->softwareSlug = $slug;
+                    $holder->softwareId = $id;
 
                     return $response;
                 }
@@ -447,8 +447,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
         );
 
         self::assertSame(
-            $software->slug,
-            $holder->softwareSlug
+            $software->id,
+            $holder->softwareId
         );
     }
 }

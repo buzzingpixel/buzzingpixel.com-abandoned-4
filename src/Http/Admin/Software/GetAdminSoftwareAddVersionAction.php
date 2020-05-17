@@ -39,7 +39,7 @@ class GetAdminSoftwareAddVersionAction
         }
 
         return ($this->responder)(
-            'Admin/SoftwareAddVersion.twig',
+            'Http/Admin/SoftwareAddVersion.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Create new version for ' . $software->name . ' | Admin']
@@ -51,11 +51,9 @@ class GetAdminSoftwareAddVersionAction
                         'content' => 'Software Admin',
                     ],
                     [
-                        'href' => '/admin/software/view/' .
-                            $software->slug,
+                        'href' => '/admin/software/view/' . $software->id,
                         'content' => $software->name,
                     ],
-                    ['content' => 'Add Version'],
                 ],
                 'software' => $software,
             ],

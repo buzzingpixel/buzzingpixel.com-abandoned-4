@@ -141,7 +141,7 @@ class GetAdminSoftwareAddVersionActionTest extends TestCase
         self::assertSame($response, $returnResponse);
 
         self::assertSame(
-            'Admin/SoftwareAddVersion.twig',
+            'Http/Admin/SoftwareAddVersion.twig',
             $holder->template
         );
 
@@ -163,7 +163,7 @@ class GetAdminSoftwareAddVersionActionTest extends TestCase
 
         $breadCrumbs = $holder->context['breadcrumbs'];
 
-        self::assertCount(3, $breadCrumbs);
+        self::assertCount(2, $breadCrumbs);
 
         self::assertSame(
             [
@@ -172,11 +172,9 @@ class GetAdminSoftwareAddVersionActionTest extends TestCase
                     'content' => 'Software Admin',
                 ],
                 [
-                    'href' => '/admin/software/view/' .
-                        $software->slug,
+                    'href' => '/admin/software/view/' . $software->id,
                     'content' => $software->name,
                 ],
-                ['content' => 'Add Version'],
             ],
             $holder->context['breadcrumbs'],
         );

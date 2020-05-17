@@ -191,6 +191,7 @@ parameters:
         - %currentWorkingDirectory%/tests/Queue/Services/RestartQueuesByIdsTest.php
         - %currentWorkingDirectory%/tests/Http/Admin/Queue/PostAdminQueueActionTest.php
         - %currentWorkingDirectory%/tests/Http/Admin/Software/GetAdminSoftwareViewActionTest.php
+        - %currentWorkingDirectory%/tests/Http/Admin/Software/PostAdminSoftwareCreateActionTest.php
 
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

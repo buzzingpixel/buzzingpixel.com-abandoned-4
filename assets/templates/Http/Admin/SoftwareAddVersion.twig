@@ -1,0 +1,42 @@
+{# @var \App\Software\Models\SoftwareModel software #}
+
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{% block adminContent %}
+    <div class="max-w-4xl">
+        {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+            title: "Add version to \"#{software.name}\"",
+            cancelButton: {
+                content: 'Cancel',
+                href: '/admin/software/view/' ~ software.id,
+            },
+            inputs: [
+                {
+                    type: 'text',
+                    label: 'Major Version',
+                    name: 'major_version',
+                },
+                {
+                    type: 'text',
+                    label: 'Version',
+                    name: 'version',
+                },
+                {
+                    type: 'file',
+                    label: 'File Download',
+                    name: 'download_file',
+                },
+                {
+                    type: 'text',
+                    label: 'Upgrade Price',
+                    name: 'upgrade_price',
+                },
+                {
+                    type: 'dateChooser',
+                    label: 'Released On',
+                    name: 'released_on',
+                },
+            ],
+        } only %}
+    </div>
+{% endblock %}

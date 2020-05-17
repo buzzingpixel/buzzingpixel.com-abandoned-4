@@ -55,6 +55,8 @@
                                     {{ Inputs.labelsOnLeftSelect(params) }}
                                 {% case 'checkbox' %}
                                     {{ Inputs.labelsOnLeftCheckbox(params) }}
+                                {% case 'dateChooser' %}
+                                    {{ Inputs.labelsOnLeftDateChooser(params) }}
                                 {% default %}
                                     {{ Inputs.labelsOnLeftText(params) }}
                             {% endswitch %}

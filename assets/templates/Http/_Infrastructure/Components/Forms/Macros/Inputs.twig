@@ -264,3 +264,33 @@
 
     {{ _self.labelsOnLeftWrapper(params, input) }}
 {% endmacro %}
+
+{% macro labelsOnLeftDateChooser(params) %}
+    {% set params = {
+        name: '',
+        value: '',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <div class="rounded-md shadow-sm">
+            <input
+                type="text"
+                name="{{ params.name }}"
+                id="{{ params.name }}"
+                class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+                value="{{ value }}"
+                ref="flatpickr"
+            >
+        </div>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
+{% endmacro %}
