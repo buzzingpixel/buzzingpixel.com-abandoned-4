@@ -53,6 +53,8 @@
                             {% switch params.type %}
                                 {% case 'select' %}
                                     {{ Inputs.labelsOnLeftSelect(params) }}
+                                {% case 'checkbox' %}
+                                    {{ Inputs.labelsOnLeftCheckbox(params) }}
                                 {% default %}
                                     {{ Inputs.labelsOnLeftText(params) }}
                             {% endswitch %}
