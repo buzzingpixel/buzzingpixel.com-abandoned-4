@@ -1,4 +1,4 @@
-{% extends 'Http/Account/_AdminLayout.twig' %}
+{% extends 'Http/Admin/_AdminLayout.twig' %}
 
 {% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
 {% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
@@ -7,7 +7,6 @@
     <div class="max-w-4xl">
         {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
             title: 'Create New Software',
-            subtitle: user.emailAddress,
             inputs: [
                 {
                     type: 'text',
