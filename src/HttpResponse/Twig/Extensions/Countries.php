@@ -50,6 +50,10 @@ class Countries extends AbstractExtension
         $array = [];
 
         foreach ($this->ISO3166->all() as $country) {
+            /**
+             * @psalm-suppress MixedAssignment
+             * @psalm-suppress MixedArrayOffset
+             */
             $array[$country['alpha2']] = $country['name'];
         }
 

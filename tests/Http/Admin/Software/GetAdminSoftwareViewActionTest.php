@@ -15,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use stdClass;
 use Throwable;
+use function assert;
 use function func_get_args;
 
 class GetAdminSoftwareViewActionTest extends TestCase
@@ -29,8 +30,8 @@ class GetAdminSoftwareViewActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn(null);
 
         $action = new GetAdminSoftwareViewAction(
@@ -44,11 +45,15 @@ class GetAdminSoftwareViewActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
-        /** @var HttpNotFoundException|null $exception */
         $exception = null;
+
+        assert(
+            $exception instanceof HttpNotFoundException ||
+            $exception === null
+        );
 
         try {
             $action($request);
@@ -95,8 +100,8 @@ class GetAdminSoftwareViewActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('bar-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('bar-id'))
             ->willReturn($softwareModel);
 
         $action = new GetAdminSoftwareViewAction(
@@ -110,8 +115,8 @@ class GetAdminSoftwareViewActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('bar-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('bar-id');
 
         $returnResponse = $action($request);
 
@@ -121,14 +126,14 @@ class GetAdminSoftwareViewActionTest extends TestCase
 
         self::assertCount(2, $args);
 
-        self::assertSame('Admin/SoftwareView.twig', $args[0]);
+        self::assertSame('Http/Admin/SoftwareView.twig', $args[0]);
 
         $context = $args[1];
 
         self::assertCount(4, $context);
 
-        /** @var MetaPayload $metaPayload */
         $metaPayload = $context['metaPayload'];
+        assert($metaPayload instanceof MetaPayload);
 
         self::assertSame(
             'FooName | Admin',
@@ -145,14 +150,13 @@ class GetAdminSoftwareViewActionTest extends TestCase
                     'href' => '/admin/software',
                     'content' => 'Software Admin',
                 ],
-                ['content' => 'View Software'],
             ],
             $context['breadcrumbs'],
         );
 
         self::assertSame(
             $softwareModel,
-            $context['softwareModel']
+            $context['software']
         );
     }
 }

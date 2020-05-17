@@ -54,7 +54,7 @@ class PostAdminSoftwareEditAction
         if ($software === null) {
             throw new HttpBadRequestException(
                 $request,
-                'Software for specified Slug ' .
+                'Software for specified ID ' .
                     $idAttribute .
                     ' could not be found',
             );

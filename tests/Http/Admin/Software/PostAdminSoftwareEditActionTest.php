@@ -30,8 +30,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn(null);
 
         $action = new PostAdminSoftwareEditAction(
@@ -49,8 +49,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $exception = null;
 
@@ -68,7 +68,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
         );
 
         self::assertSame(
-            'Software for specified Slug foo-slug could not be found',
+            'Software for specified ID foo-id could not be found',
             $exception->getMessage()
         );
     }
@@ -134,8 +134,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $softwareApi->expects(self::never())
@@ -156,8 +156,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $returnResponse = $action($request);
 
@@ -209,8 +209,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $softwareApi->expects(self::once())
@@ -231,7 +231,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
             ->method('getParsedBody')
             ->willReturn([
                 'name' => 'foo-name',
-                'slug' => 'foo-slug',
+                'slug' => 'foo-id',
                 'for_sale' => 'true',
                 'price' => '987.65',
                 'renewal_price' => '293.84',
@@ -240,8 +240,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $returnResponse = $action($request);
 
@@ -253,7 +253,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
         );
 
         self::assertSame(
-            'foo-slug',
+            'foo-id',
             $software->slug,
         );
 
@@ -302,7 +302,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
                         $incomingPayload
                     );
 
-                    self::assertSame('foo-slug', $origSlug);
+                    self::assertSame('foo-id', $origSlug);
 
                     return $response;
                 }
@@ -315,8 +315,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $softwareApi->expects(self::once())
@@ -337,7 +337,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
             ->method('getParsedBody')
             ->willReturn([
                 'name' => 'foo-name',
-                'slug' => 'foo-slug',
+                'slug' => 'foo-id',
                 'for_sale' => 'true',
                 'price' => '987.65',
                 'renewal_price' => '293.84',
@@ -346,8 +346,8 @@ class PostAdminSoftwareEditActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $returnResponse = $action($request);
 
@@ -359,7 +359,7 @@ class PostAdminSoftwareEditActionTest extends TestCase
         );
 
         self::assertSame(
-            'foo-slug',
+            'foo-id',
             $software->slug,
         );
 
