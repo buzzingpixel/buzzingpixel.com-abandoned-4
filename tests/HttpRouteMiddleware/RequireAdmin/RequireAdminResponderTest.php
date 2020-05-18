@@ -25,7 +25,7 @@ class RequireAdminResponderTest extends TestCase
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Unauthorized.twig'),
+                self::equalTo('Http/Unauthorized.twig'),
                 self::equalTo(
                     ['metaPayload' => $metaPayload]
                 )
