@@ -7,6 +7,7 @@ namespace App\Users\Models;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use function trim;
 
 class UserModel
 {
@@ -109,5 +110,10 @@ class UserModel
         );
 
         return $array;
+    }
+
+    public function getFullName() : string
+    {
+        return trim($this->firstName . ' ' . $this->lastName);
     }
 }

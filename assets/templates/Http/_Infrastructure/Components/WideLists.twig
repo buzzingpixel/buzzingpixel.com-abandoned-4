@@ -48,6 +48,21 @@
                 {{ noContent }}
             {% else %}
                 <div class="bg-white dark:bg-blue-smoke shadow overflow-hidden sm:rounded-md">
+                    {% set displayPaginationOnTop = true %}
+                    {% if group['displayPaginationOnTop'] is defined %}
+                        {% set displayPaginationOnTop = group.displayPaginationOnTop %}
+                    {% endif %}
+                    {% if displayPaginationOnTop %}
+                        {% if group['pagination'] is defined %}
+                            {% if group.pagination.totalPages > 1 %}
+                                <div class="border-b border-gray-200">
+                                    {% include 'Http/_Infrastructure/Components/Pagination.twig' with {
+                                        pagination: group.pagination,
+                                    } only %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
                     <ul>
                         {% for item in group.items %}
                             <li class="{% if not loop.first %} border-t border-gray-200 dark:border-gray-400{% endif %}">
@@ -99,6 +114,11 @@
                             </li>
                         {% endfor %}
                     </ul>
+                    {% if group['pagination'] is defined %}
+                        {% include 'Http/_Infrastructure/Components/Pagination.twig' with {
+                            pagination: group.pagination,
+                        } only %}
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
