@@ -7,6 +7,10 @@
 
 {% set heading = 'Users' %}
 
+{% if searchTerm is defined and searchTerm %}
+    {% set heading = 'User Search' %}
+{% endif %}
+
 {% set actionButton = {
     href: '/admin/users/create',
     content: 'New',
@@ -53,6 +57,9 @@
                     class="form-input block w-full rounded-none rounded-l-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                     placeholder="John Doe"
                     name="q"
+                    {% if searchTerm is defined %}
+                    value="{{ searchTerm }}"
+                    {% endif %}
                 >
             </div>
             <button
