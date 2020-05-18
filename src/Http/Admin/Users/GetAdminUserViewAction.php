@@ -40,7 +40,7 @@ class GetAdminUserViewAction
         }
 
         return ($this->responder)(
-            'Admin/UserView.twig',
+            'Http/Admin/UserView.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => $user->emailAddress . ' | Admin']
@@ -51,7 +51,6 @@ class GetAdminUserViewAction
                         'href' => '/admin/users',
                         'content' => 'Users Admin',
                     ],
-                    ['content' => 'View User'],
                 ],
                 'user' => $user,
             ]
