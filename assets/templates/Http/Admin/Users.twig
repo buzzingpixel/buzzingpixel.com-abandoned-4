@@ -38,7 +38,10 @@
 {% endfor %}
 
 {% block adminContent %}
-    <form action="/admin/users/search">
+    <form
+        action="/admin/users/search"
+        ref="PreventEmptySubmit"
+    >
         <label
             for="search"
             class="block text-sm font-medium leading-5 text-gray-700"
@@ -60,6 +63,7 @@
                     {% if searchTerm is defined %}
                     value="{{ searchTerm }}"
                     {% endif %}
+                    data-empty-submit-class="border-red"
                 >
             </div>
             <button
