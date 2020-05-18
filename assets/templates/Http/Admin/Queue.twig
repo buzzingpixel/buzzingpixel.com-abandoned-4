@@ -1,0 +1,101 @@
+{# @var \App\Queue\Models\QueueModel[] stalledItems #}
+{# @var \App\Queue\Models\QueueModel[] incompleteItems #}
+
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% set heading = 'Queue' %}
+
+{% set stalledTableRows = [] %}
+
+{% for queue in stalledItems %}
+    {% set error %}<pre style="max-width: 30vw;"><code style="max-height: 200px;">{{ queue.errorMessage }}</code></pre>{% endset %}
+    {% set stalledTableRows = stalledTableRows|merge([{
+        content: [
+            queue.displayName,
+            queue.handle,
+            queue.percentComplete,
+            queue.addedAt.setTimezone(user.timezone).format('Y-m-d h:i a'),
+            queue.finishedAt.setTimezone(user.timezone).format('Y-m-d h:i a'),
+            error,
+        ],
+        checkboxName: queue.id,
+    }]) %}
+{% endfor %}
+
+{% set incompleteTableRows = [] %}
+
+{% for queue in incompleteItems %}
+    {% set incompleteTableRows = incompleteTableRows|merge([{
+        content: [
+            queue.displayName,
+            queue.handle,
+            queue.percentComplete,
+            queue.addedAt.setTimezone(user.timezone).format('Y-m-d h:i a'),
+        ],
+    }]) %}
+{% endfor %}
+
+{% block adminContent %}
+    {% include 'Http/_Infrastructure/Components/Forms/Includes/Message.twig' with {
+        standAlone: true,
+    } only %}
+
+    {% if incompleteTableRows|length < 1 and stalledItems|length < 1 %}
+        <div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg py-8 px-6 text-center dark:text-gray-200">
+            {{ 'There are no items in the queue'|smartypants|widont }}
+        </div>
+    {% endif %}
+
+    {% if stalledItems|length > 0 %}
+        {% include 'Http/_Infrastructure/Table.twig' with {
+            includeMessages: false,
+            heading: 'Stalled Items',
+            tableHeadings: [
+                'Name',
+                'Handle',
+                'Percent Complete',
+                'Added At',
+                'Error At',
+                'Error',
+            ],
+            tableRows: stalledTableRows,
+            formActions: [
+                {
+                    action: 'restart',
+                    content: 'Restart',
+                },
+                {
+                    action: 'restart_all',
+                    content: 'Restart All',
+                },
+                {
+                    action: 'delete',
+                    content: 'Delete',
+                },
+                {
+                    action: 'clear_all',
+                    content: 'Clear All',
+                },
+            ],
+        } only %}
+    {% endif %}
+
+    {% if incompleteTableRows|length > 0 %}
+        <div{% if stalledItems|length > 0 %} class="mt-20"{% endif %}>
+            {% include 'Http/_Infrastructure/Table.twig' with {
+                includeMessages: false,
+                heading: 'Items In Queue',
+                tableHeadings: [
+                    'Name',
+                    'Handle',
+                    'Percent Complete',
+                    'Added At',
+                ],
+                tableRows: incompleteTableRows,
+            } only %}
+        </div>
+    {% endif %}
+{% endblock %}

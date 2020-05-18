@@ -4,6 +4,8 @@
 
 {% extends 'Http/_Infrastructure/_Layout.twig' %}
 
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
+
 {% set message = flash('LoginFormMessage') %}
 {% if message[0] is defined %}
     {% set message = message[0] %}
@@ -13,22 +15,6 @@
 {% if message['result']['active'] is defined %}
     {% set activeTab = message.result.active %}
 {% endif %}
-
-{% set hiddenInputs %}
-    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
-    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
-    <input type="hidden" name="redirect_to" value="{{ redirectTo }}">
-    <label for="a_password" style="display:none !important">
-        <input
-            id="a_password"
-            type="text"
-            name="a_password"
-            style="display:none !important"
-            tabindex="-1"
-            autocomplete="off"
-        >
-    </label>
-{% endset %}
 
 {% macro navItem(params) %}
     {% set params = {
@@ -239,7 +225,9 @@
                     {% if message['status'] is defined and activeTab == 'LogInTab' %}
                         {{ errorMessage|raw }}
                     {% endif %}
-                    {{ hiddenInputs }}
+                    {{ Inputs.hiddenInputs({
+                        redirectTo: redirectTo
+                    }) }}
                     {{ _self.input({
                         isFirst: true,
                         type: 'email',
@@ -275,7 +263,9 @@
                     {% if message['status'] is defined and activeTab == 'RegisterTab' %}
                         {{ errorMessage|raw }}
                     {% endif %}
-                    {{ hiddenInputs }}
+                    {{ Inputs.hiddenInputs({
+                        redirectTo: redirectTo
+                    }) }}
                     {{ _self.input({
                         type: 'email',
                         name: 'email_address',
@@ -318,7 +308,9 @@
                     {% if message['status'] is defined and activeTab == 'ResetPasswordTab' %}
                         {{ errorMessage|raw }}
                     {% endif %}
-                    {{ hiddenInputs }}
+                    {{ Inputs.hiddenInputs({
+                        redirectTo: redirectTo
+                    }) }}
                     {{ _self.input({
                         isFirst: true,
                         type: 'email',

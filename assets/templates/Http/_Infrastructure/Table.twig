@@ -1,0 +1,215 @@
+{% set heading = heading ?? '' %}
+{% set subheading = subheading ?? '' %}
+{% set actionButton = actionButton ?? false %}
+{% set tableHeadings = tableHeadings ?? [] %}
+{% set tableRows = tableRows ?? [] %}
+{% set formActions = formActions ?? [] %}
+{% set formAction = formAction ?? '' %}
+{% set includeMessages = includeMessages ?? true %}
+
+{#{% include 'Http/_Infrastructure/Table.twig' with {
+    heading: 'Stalled Items',
+    subheading: 'Foo',
+    tableHeadings: [
+        'Name',
+        'Handle',
+        'Percent Complete',
+        'Error',
+    ],
+    tableRows: [
+        {
+            content: [
+            'Col 1',
+            'Col 2',
+            'Col 3',
+        ],
+            checkboxName: 'asdf'
+        },
+        [
+            ['Line 1', 'Line 2'],
+            'Col',
+        ],
+    ],
+    formActions: [
+        {
+            action: 'restart',
+            content: 'Restart',
+        },
+        {
+            action: 'restart_all',
+            content: 'Restart All',
+        },
+        {
+            action: 'delete',
+            content: 'Delete',
+        },
+        {
+            action: 'delete_all',
+            content: 'Delete All',
+        },
+    ],
+} only %}#}
+
+{% set totalColumns = tableHeadings|length %}
+
+{% for columns in tableRows %}
+    {% set totalColumns = max(totalColumns, columns|length) %}
+{% endfor %}
+
+{% if formActions|length > 0 %}
+    {% set totalColumns = totalColumns + 1 %}
+{% endif %}
+
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
+
+<div class="flex flex-col">
+    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 dark:border-gray-400">
+            {% if includeMessages %}
+                {% include 'Http/_Infrastructure/Components/Forms/Includes/Message.twig' only %}
+            {% endif %}
+            {% if heading or subheading or actionButton %}
+                <div
+                    class="bg-white dark:bg-blue-smoke p-4 border-b border-gray-200 dark:border-gray-400"
+                    {% if actionButton %}
+                    style="min-height: 4.4rem;"
+                    {% endif %}
+                >
+                    {% if actionButton %}
+                        <span class="float-right flex justify-end">
+                            {#{% if cancelButton %}
+                                <span class="inline-flex rounded-md shadow-sm">
+                                    {{ Buttons.neutralLink(cancelButton) }}
+                                </span>
+                            {% endif %}#}
+                            <span class="ml-3 rounded-md shadow-sm">
+                                {{ Buttons.actionButton(actionButton) }}
+                            </span>
+                        </span>
+                    {% endif %}
+                    <div>
+                        {% if heading %}
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100{% if subheading%} mb-1{% endif %}">
+                                {{ heading|smartypants|widont }}
+                            </h3>
+                        {% endif %}
+                        {% if subheading %}
+                            <p class="max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-300">
+                                {{ subheading|smartypants|widont }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if formActions|length > 0 %}
+            <form
+                method="post"
+                enctype="multipart/form-data"
+                {% if formAction %}
+                action="{{ formAction }}"
+                {% endif %}
+            >
+            {{ Inputs.hiddenInputs() }}
+            {% endif %}
+            <table class="min-w-full">
+                {% if tableHeadings|length %}
+                    <thead>
+                        <tr>
+                            {% for tableHeading in tableHeadings %}
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 dark:border-gray-400 bg-gray-50 dark:bg-nandor-light text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-100 uppercase tracking-wider"
+                                >
+                                    {{ tableHeading|smartypants|widont }}
+                                </th>
+                            {% endfor %}
+                            {% for i in range(tableHeadings|length, totalColumns) %}
+                                {% if not loop.first %}
+                                    <th class="px-6 py-3 border-b border-gray-200 dark:border-gray-400 bg-gray-50 dark:bg-nandor-light"></th>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                {% endif %}
+                <tbody class="bg-white dark:bg-blue-smoke">
+                    {% for row in tableRows %}
+                        {% set columns = row['content'] is defined ? row['content'] : row %}
+                        <tr>
+                            {% for column in columns %}
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 dark:border-gray-400 dark:text-gray-100 dark:text-gray-100">
+                                    {% if column is iterable %}
+                                        {% for content in column %}
+                                            <div class="text-sm leading-5{% if loop.first %} text-gray-900 dark:text-gray-100{% else %} text-gray-500 dark:text-gray-200{% endif %}">
+                                                {{ content|smartypants|widont }}
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ column|smartypants|widont }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            {% set columnLength = columns|length %}
+                            {% if formActions|length > 0 %}
+                                {% set columnLength = columnLength + 1 %}
+                            {% endif %}
+                            {% for i in range(columnLength, totalColumns) %}
+                                {% if not loop.first %}
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 dark:border-gray-400"></td>
+                                {% endif %}
+                            {% endfor %}
+                            {% if formActions|length > 0 %}
+                                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 dark:border-gray-400 text-sm leading-5 font-medium">
+                                    <label>
+                                        <input
+                                            {% if row['checkboxName'] is defined %}
+                                            name="selected_items[{{ row['checkboxName'] }}]"
+                                            {% endif %}
+                                            type="checkbox"
+                                            class="form-checkbox h-4 w-4 text-jade transition duration-150 ease-in-out dark:bg-gray-600"
+                                            value="true"
+                                        >
+                                    </label>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                {% if formActions|length > 0 %}
+                    <tfoot class="dark:bg-nandor-light">
+                        <tr>
+                            <td
+                                class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"
+                                colspan="{{ totalColumns }}"
+                            >
+                                <label class="inline-block mr-2">
+                                    <select
+                                        name="action"
+                                        class="block form-select transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                                    >
+                                        <option
+                                            value=""
+                                            selected
+                                        >
+                                            -- Select an Action --
+                                        </option>
+                                        {% for action in formActions %}
+                                            <option value="{{ action.action }}">
+                                                {{ action.content|smartypants }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                                {{ Buttons.actionButton({
+                                    content: 'Submit',
+                                }) }}
+                            </td>
+                        </tr>
+                    </tfoot>
+                {% endif %}
+            </table>
+            {% if formActions|length > 0 %}
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>

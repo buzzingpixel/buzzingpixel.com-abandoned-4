@@ -8,6 +8,7 @@ use App\Content\Meta\MetaPayload;
 use App\Http\Admin\GetAdminResponder;
 use App\Queue\QueueApi;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 class GetAdminQueueAction
 {
@@ -22,10 +23,13 @@ class GetAdminQueueAction
         $this->queueApi  = $queueApi;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function __invoke() : ResponseInterface
     {
         return ($this->responder)(
-            'Admin/Queue.twig',
+            'Http/Admin/Queue.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Queue | Admin']
