@@ -92,7 +92,7 @@ class GetAdminUserEditActionTest extends TestCase
                     $user
                 ) {
                     self::assertSame(
-                        'Admin/UserEdit.twig',
+                        'Http/Admin/UserEdit.twig',
                         $template,
                     );
 
@@ -118,7 +118,6 @@ class GetAdminUserEditActionTest extends TestCase
                                 'href' => '/admin/users',
                                 'content' => 'User Admin',
                             ],
-                            ['content' => 'Edit User'],
                         ],
                         $context['breadcrumbs'],
                     );

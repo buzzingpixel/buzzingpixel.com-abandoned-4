@@ -230,11 +230,10 @@
     {% set params = {
         label: '',
         name: '',
-        value: '',
         isChecked: false,
     }|merge(params) %}
 
-    {% set isChecked = params.value %}
+    {% set isChecked = params.isChecked %}
 
     {% if PostMessage['result']['inputValues'][params.name] is defined %}
         {% set isChecked = PostMessage['result']['inputValues'][params.name] %}
