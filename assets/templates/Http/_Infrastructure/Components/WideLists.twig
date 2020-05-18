@@ -71,21 +71,21 @@
                                                     {% endif %}
                                                 </div>
                                                 {% if item['column2'] is defined %}
-                                                <div class="hidden md:block">
-                                                    <div>
-                                                        {% if item.column2 is iterable %}
-                                                            {% for columnItem in item.column2 %}
-                                                                <div class="mt-2 flex items-center text-sm leading-5 text-gray-500 dark:text-gray-200">
-                                                                    <span class="truncate">{{ columnItem|smartypants|widont }}</span>
-                                                                </div>
-                                                            {% endfor %}
-                                                        {% else %}
-                                                            <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">
-                                                                {{ item.column2|smartypants|widont }}
-                                                            </p>
-                                                        {% endif %}
+                                                    <div class="hidden md:block">
+                                                        <div>
+                                                            {% if item.column2 is iterable %}
+                                                                {% for columnItem in item.column2 %}
+                                                                    <div class="{% if not loop.first %}mt-2 {% endif%}flex items-center text-sm leading-5 text-gray-500 dark:text-gray-200">
+                                                                        <span class="truncate">{{ columnItem|smartypants|widont }}</span>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            {% else %}
+                                                                <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">
+                                                                    {{ item.column2|smartypants|widont }}
+                                                                </p>
+                                                            {% endif %}
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 {% endif %}
                                             </div>
                                         </div>

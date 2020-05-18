@@ -1,0 +1,86 @@
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{% block adminContent %}
+    <div class="max-w-4xl">
+        {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+            title: 'Create New User',
+            cancelButton: {
+                content: 'Cancel',
+                href: '/admin/users',
+            },
+            inputs: [
+                {
+                    type: 'checkbox',
+                    label: 'Admin?',
+                    name: 'is_admin',
+                },
+                {
+                    type: 'email',
+                    label: 'Email',
+                    name: 'email_address',
+                },
+                {
+                    type: 'password',
+                    label: 'Password',
+                    name: 'password',
+                },
+                {
+                    type: 'select',
+                    label: 'Timezone',
+                    name: 'timezone',
+                    options: timeZoneList(),
+                    emptyOption: 'Choose country&hellip;',
+                },
+
+                {
+                    type: 'text',
+                    label: 'First Name',
+                    name: 'first_name',
+                },
+                {
+                    type: 'text',
+                    label: 'Last Name',
+                    name: 'last_name',
+                },
+                {
+                    type: 'text',
+                    label: 'Display Name',
+                    small: 'Used in public support requests to keep your real name non-public. Your first and last name will be used if left blank.',
+                    name: 'display_name',
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Name',
+                    name: 'billing_name',
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Company',
+                    name: 'billing_company',
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Phone',
+                    name: 'billing_phone',
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Address',
+                    name: 'billing_address',
+                },
+                {
+                    type: 'select',
+                    label: 'Billing Country',
+                    name: 'billing_country',
+                    options: countriesSelectArray(),
+                    emptyOption: 'Choose country&hellip;',
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Postal Code',
+                    name: 'billing_postal_code',
+                },
+            ]
+        } only %}
+    </div>
+{% endblock %}

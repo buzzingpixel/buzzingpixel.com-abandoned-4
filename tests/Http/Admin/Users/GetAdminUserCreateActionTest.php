@@ -37,7 +37,7 @@ class GetAdminUserCreateActionTest extends TestCase
                     $response
                 ) {
                     self::assertSame(
-                        'Admin/UserCreate.twig',
+                        'Http/Admin/UserCreate.twig',
                         $template,
                     );
 
@@ -63,7 +63,6 @@ class GetAdminUserCreateActionTest extends TestCase
                                 'href' => '/admin/users',
                                 'content' => 'Users Admin',
                             ],
-                            ['content' => 'Create New User'],
                         ],
                         $context['breadcrumbs'],
                     );
