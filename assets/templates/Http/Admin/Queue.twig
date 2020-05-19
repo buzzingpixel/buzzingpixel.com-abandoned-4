@@ -50,7 +50,7 @@
     {% endif %}
 
     {% if stalledItems|length > 0 %}
-        {% include 'Http/_Infrastructure/Table.twig' with {
+        {% include 'Http/_Infrastructure/Components/Table.twig' with {
             includeMessages: false,
             heading: 'Stalled Items',
             tableHeadings: [
@@ -85,7 +85,7 @@
 
     {% if incompleteTableRows|length > 0 %}
         <div{% if stalledItems|length > 0 %} class="mt-20"{% endif %}>
-            {% include 'Http/_Infrastructure/Table.twig' with {
+            {% include 'Http/_Infrastructure/Components/Table.twig' with {
                 includeMessages: false,
                 heading: 'Items In Queue',
                 tableHeadings: [

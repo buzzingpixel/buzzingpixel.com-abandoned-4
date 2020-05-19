@@ -25,7 +25,7 @@ class GetSoftwareResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'SoftwarePage.twig',
+            'Http/Software/SoftwarePage.twig',
             [
                 'metaPayload' => $metaPayload,
                 'modulePayload' => $modulePayload,

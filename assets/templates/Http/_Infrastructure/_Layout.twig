@@ -90,11 +90,11 @@
     {{ block('beginBody') ?? '' }}
 
     {# Get content #}
-    {% include 'Http/_Infrastructure/MainNav.twig' only %}
+    {% include 'Http/_Infrastructure/GlobalIncludes/MainNav.twig' only %}
     <main class="bg-aqua-haze dark:bg-mine-shaft">
         {{ block('content') ?? '' }}
     </main>
-    {% include 'Http/_Infrastructure/Footer.twig' only %}
+    {% include 'Http/_Infrastructure/GlobalIncludes/Footer.twig' only %}
 
     {# Output JS from globals #}
     {% for jsFile in GeneralConfig.jsFiles %}
