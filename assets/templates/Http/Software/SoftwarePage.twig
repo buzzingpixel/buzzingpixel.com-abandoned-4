@@ -1,0 +1,40 @@
+{# @var \App\Content\Meta\MetaPayload metaPayload #}
+{# @var \App\Content\Modules\ModulePayload modulePayload #}
+{# @var \App\Content\Software\SoftwareInfoPayload softwareInfoPayload #}
+{# @var string uriPath #}
+
+{% extends 'Http/_Infrastructure/_SubnavPage.twig' %}
+
+{% set pageTitle = 'Ansel' %}
+
+{% set pageTitleSmall = 'For Craft' %}
+
+{% set activeNavHref = uriPath %}
+
+{% set nav = [{
+    href: uriPath,
+    content: 'Features',
+}] %}
+
+{% if softwareInfoPayload.getHasChangelog() %}
+    {% set nav = nav|merge([{
+        href: uriPath ~ '/changelog',
+        content: 'Changelog',
+    }]) %}
+{% endif %}
+
+{% if softwareInfoPayload.getHasDocumentation() %}
+    {% set nav = nav|merge([{
+        href: uriPath ~ '/documentation',
+        content: 'Documentation',
+    }]) %}
+{% endif %}
+
+{% set actionButtons = softwareInfoPayload.getActionButtons() %}
+
+{% block subnavContent %}
+    {% include 'Http/_Infrastructure/Modules/_Includer.twig' with {
+        modulePayload: modulePayload
+    } only %}
+{% endblock %}
+
