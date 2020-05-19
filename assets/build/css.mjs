@@ -177,6 +177,13 @@ export default (prod) => {
             // Write the file to disk
             fs.writeFileSync(cssOutputFile, result.css);
 
+            if (prod !== true) {
+                fs.writeFileSync(
+                    `${cssOutputPath}/dev-cache-break.txt`,
+                    Date.now(),
+                );
+            }
+
             fs.writeFileSync(
                 `${cssOutputPath}/manifest.json`,
                 JSON.stringify({

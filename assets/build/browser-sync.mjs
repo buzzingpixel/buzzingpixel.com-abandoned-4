@@ -3,18 +3,16 @@ import browsersync from 'browser-sync';
 const bs = browsersync.create();
 
 const appDir = process.cwd();
-const cssOutputFile = `${appDir}/public/assets/css/style.min.css`;
+const cssCacheBreakFile = `${appDir}/public/assets/css//**`;
 const jsOutputDir = `${appDir}/public/assets/js//**`;
 const srcDir = `${appDir}/src//**`;
 const contentDir = `${appDir}/content//**`;
-const templatesDir = `${appDir}/assets/templates//**`;
 
 const watchFiles = [
-    cssOutputFile,
+    cssCacheBreakFile,
     jsOutputDir,
     srcDir,
     contentDir,
-    templatesDir,
     '!*.diff',
     '!*.err',
     '!*.log',
@@ -34,7 +32,7 @@ export default () => {
     bs.init({
         files: watchFiles,
         ghostMode: false,
-        injectChanges: true,
+        injectChanges: false,
         notify: false,
         proxy: 'https://buzzingpixel.localtest.me:26087/',
         reloadDelay: 100,
