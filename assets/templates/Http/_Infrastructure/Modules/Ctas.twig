@@ -1,0 +1,60 @@
+{# @var \App\Content\Modules\Payloads\CtasPayload payload #}
+
+<section class="bg-white">
+    <div class="text-center py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <div>
+            {% for cta in payload.ctas %}
+                {% set outerClasses = [
+                    'm-2',
+                    'inline-block',
+                ] %}
+
+                {% set classes = [
+                    'inline-flex',
+                    'items-center',
+                    'justify-center',
+                    'px-5',
+                    'py-3',
+                    'border',
+                    'border-transparent',
+                    'text-base',
+                    'leading-6',
+                    'font-medium',
+                    'rounded-md',
+                    'focus:outline-none',
+                    'focus:shadow-outline',
+                    'transition',
+                    'duration-150',
+                    'ease-in-out',
+                ] %}
+
+                {% if loop.last %}
+                    {% set outerClasses = outerClasses|merge([
+                        'rounded-md',
+                        'shadow',
+                    ]) %}
+
+                    {% set classes = classes|merge([
+                        'text-white',
+                        'bg-jade',
+                        'hover:bg-deep-sea',
+                    ]) %}
+                {% else %}
+                    {% set classes = classes|merge([
+                        'bg-champagne',
+                        'hover:bg-gold-sand',
+                    ]) %}
+                {% endif %}
+
+                <div class="{{ outerClasses|join(' ') }}">
+                    <a
+                        href="{{ cta.href }}"
+                        class="{{ classes|join(' ') }}"
+                    >
+                        {{ cta.content|smartypants|widont }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
