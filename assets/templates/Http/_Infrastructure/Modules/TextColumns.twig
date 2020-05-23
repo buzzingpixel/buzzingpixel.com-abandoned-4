@@ -1,0 +1,20 @@
+{# @var \App\Content\Modules\Payloads\TextColumnsPayload payload #}
+
+<section class="{% if payload.backgroundColor %}bg-{{ payload.backgroundColor }}{% endif %}">
+    <div class="mx-auto max-w-87-5rem py-7 px-3 sm:py-9 sm:px-5 md:flex md:flex-wrap md:justify-between lg:py-12 lg:px-7">
+        {% for column in payload.getItems() %}
+            <div class="mb-10 md:w-cal-50percent-30px md:w-cal-50percent-30px">
+                {% if column.getHeadline() %}
+                    <h2 class="text-nandor text-3xl mb-3 md:text-3xl leading-tight">
+                        {{ column.getHeadline()|smartypants }}
+                    </h2>
+                {% endif %}
+                {% if column.getContent() %}
+                    <div>
+                        {{ column.getContent()|smartypants|widont }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>

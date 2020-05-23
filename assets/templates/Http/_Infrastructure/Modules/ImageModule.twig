@@ -3,7 +3,7 @@
 {# @var \App\Content\Modules\Payloads\ImagePayload image #}
 {% set image = payload.getImage() %}
 
-<section class="{% if payload.backgroundColor %} bg-{{ payload.backgroundColor }}{% endif %} py-7 px-1 sm:py-9 sm:px-5 lg:py-12 lg:px-7">
+<section class="{% if payload.backgroundColor %}bg-{{ payload.backgroundColor }}{% endif %} py-7 px-1 sm:py-9 sm:px-5 lg:py-12 lg:px-7">
     <div class="{% if not payload.noShadow %} shadow-common{% endif %} mx-auto max-w-87-5rem">
         <picture>
             {% for source in image.getSources() %}
