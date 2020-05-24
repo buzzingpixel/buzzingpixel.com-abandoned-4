@@ -1,4 +1,4 @@
-type: ShowCase
+type: ImageCallOut
 headline: Your Images Transformed
 content: |
   Featuring a great user experience, great performance, drag and drop uploading, and more! The Ansel field type is compatible with Grid, Bloqs, and Low Variables in addition to working right out of the box as a Channel Entry field.
@@ -7,7 +7,7 @@ content: |
 ctas:
   - content: Try Ansel Now!
     href: /software/ansel-ee/download
-showCaseImage:
+image:
   1x: /content-images/ansel-ee/ansel-screen-shot-with-custom-safari-bar-desktop.jpg
   2x: /content-images/ansel-ee/ansel-screen-shot-with-custom-safari-bar-desktop-2x.jpg
   alt: Ansel for ExpressionEngine Screenshot
