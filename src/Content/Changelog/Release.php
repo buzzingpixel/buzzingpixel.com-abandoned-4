@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Content\Changelog;
 
 use MJErwin\ParseAChangelog\Release as ErwinRelease;
+use function count;
 use function in_array;
+use function is_array;
 
 class Release extends ErwinRelease
 {
@@ -20,21 +22,27 @@ class Release extends ErwinRelease
 
     /**
      * @return array<array<string>>
+     *
+     * @psalm-suppress MixedReturnTypeCoercion
      */
     public function getMessageTypesContent() : array
     {
         $arr = [];
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($this->toArray() as $key => $item) {
-            if (! in_array($key, self::MESSAGE_TYPES) ||
-                empty($item)
+            if (! in_array($key, self::MESSAGE_TYPES, true) ||
+                ! is_array($item) ||
+                count($item) < 1
             ) {
                 continue;
             }
 
+            /** @psalm-suppress MixedAssignment */
             $arr[$key] = $item;
         }
 
+        /** @psalm-suppress MixedReturnTypeCoercion */
         return $arr;
     }
 

@@ -79,7 +79,9 @@ class GetChangelogResponderTest extends TestCase
         $this->twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('SoftwareChangelogPage.twig'),
+                self::equalTo(
+                    'Http/Software/ChangelogPage.twig'
+                ),
                 self::equalTo([
                     'metaPayload' => $this->metaPayload,
                     'allChangelogPayload' => $this->allChangelogPayload,
@@ -87,7 +89,7 @@ class GetChangelogResponderTest extends TestCase
                     'pagination' => $this->pagination,
                     'softwareInfoPayload' => $this->softwareInfoPayload,
                     'uriPath' => $this->uriPath,
-                    'activeHref' => $this->uriPath . '/changelog',
+                    'activeNavHref' => $this->uriPath . '/changelog',
                 ])
             )
             ->willReturn('TwigRenderOutputTest');
