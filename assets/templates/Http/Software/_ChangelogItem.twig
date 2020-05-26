@@ -1,5 +1,6 @@
 {% set includeBottomSpacing = includeBottomSpacing ?? false %}
 {% set includeBottomBorder = includeBottomBorder ?? false %}
+{% set includePermalink = includePermalink ?? false %}
 {% set hrefBase = hrefBase ?? '' %}
 
 <div class="{% if includeBottomSpacing %}mb-20 pb-12{% endif %} {% if includeBottomBorder %}border-b border-gray-200{% endif %}">
@@ -7,12 +8,14 @@
         <h2 class="font-bold text-2xl">
             {{ release.version }} &mdash; {{ release.date }}
         </h2>
-        <a
-            href="{{ hrefBase }}/{{ release.version }}"
-            class="font-medium text-xs text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline transition duration-150 ease-in-out"
-        >
-            Permalink &rarr;
-        </a>
+        {% if includePermalink %}
+            <a
+                href="{{ hrefBase }}/{{ release.version }}"
+                class="font-medium text-xs text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline transition duration-150 ease-in-out"
+            >
+                Permalink &rarr;
+            </a>
+        {% endif %}
     </div>
     {% for type,list in release.messageTypesContent %}
         <div class="mb-10">

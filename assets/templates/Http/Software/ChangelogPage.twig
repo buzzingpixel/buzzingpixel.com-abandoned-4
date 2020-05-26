@@ -35,9 +35,10 @@
                 {% for release in changelogPayload.releases %}
                     {% include('Http/Software/_ChangelogItem.twig') with {
                         release: release,
+                        includePermalink: true,
                         hrefBase: pagination.base,
                         includeBottomBorder: true,
-                        includeBottomSpacing: true
+                        includeBottomSpacing: true,
                     } only %}
                 {% endfor %}
                 {% if pagination.totalPages > 0 %}
