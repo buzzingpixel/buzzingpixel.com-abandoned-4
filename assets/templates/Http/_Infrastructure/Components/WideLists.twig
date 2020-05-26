@@ -56,9 +56,11 @@
                         {% if group['pagination'] is defined %}
                             {% if group.pagination.totalPages > 1 %}
                                 <div class="border-b border-gray-200">
-                                    {% include 'Http/_Infrastructure/Components/Pagination.twig' with {
-                                        pagination: group.pagination,
-                                    } only %}
+                                    <div class="px-4 py-3 sm:px-6 bg-white border-t border-gray-200">
+                                        {% include 'Http/_Infrastructure/Components/Pagination.twig' with {
+                                            pagination: group.pagination,
+                                        } only %}
+                                    </div>
                                 </div>
                             {% endif %}
                         {% endif %}
@@ -115,9 +117,13 @@
                         {% endfor %}
                     </ul>
                     {% if group['pagination'] is defined %}
-                        {% include 'Http/_Infrastructure/Components/Pagination.twig' with {
-                            pagination: group.pagination,
-                        } only %}
+                        {% if group.pagination.totalPages > 1 %}
+                            <div class="px-4 py-3 sm:px-6 bg-white border-t border-gray-200">
+                                {% include 'Http/_Infrastructure/Components/Pagination.twig' with {
+                                    pagination: group.pagination,
+                                } only %}
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             {% endif %}

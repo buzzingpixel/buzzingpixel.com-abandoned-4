@@ -1,7 +1,7 @@
 {# @var \App\HttpHelpers\Pagination\Pagination pagination #}
 
 {% if pagination.totalPages > 1 %}
-    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+    <div class="flex items-center justify-between">
         <div class="flex-1 flex justify-between sm:hidden">
             {% if pagination.prevPageLink %}
                 <a

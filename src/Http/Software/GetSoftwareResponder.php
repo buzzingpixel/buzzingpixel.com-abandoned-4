@@ -31,6 +31,7 @@ class GetSoftwareResponder extends StandardResponderConstructor
                 'modulePayload' => $modulePayload,
                 'softwareInfoPayload' => $softwareInfoPayload,
                 'uriPath' => $uriPath,
+                'activeNavHref' => $uriPath,
             ]
         ));
 
