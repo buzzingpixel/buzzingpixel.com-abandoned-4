@@ -1,0 +1,287 @@
+{# @var string uriPath #}
+{# @var string activeHref #}
+{# @var \App\Content\Documentation\DocumentationPagePayload activePage #}
+{# @var \App\Content\Documentation\DocumentationVersionsPayload versions #}
+{# @var \App\Content\Documentation\DocumentationVersionPayload activeVersion #}
+
+{% extends 'Http/Software/_SoftwareLayout.twig' %}
+
+{% macro listItems(listItems, level) %}
+    <ul class="list-disc ml-5{% if level > 1 %} mt-2{% endif %}">
+        {% for listItem in listItems %}
+            <li class="mb-2">
+                {% if gettype(listItem) == 'string' %}
+                    {{ listItem|markdownParseParagraph|smartypants|widont }}
+                {% else %}
+                    {{ listItem.content|markdownParseParagraph|smartypants|widont }}
+                    {% if listItem['children'] is defined and listItem['children'] is iterable %}
+                        {{ _self.listItems(listItem.children, level + 1) }}
+                    {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% set sidebarOuterClasses = [
+    'bg-white',
+    'rounded-lg',
+    'my-2',
+    'shadow-light',
+] %}
+
+{% set sidebarHeaderClasses = [
+    'border-b',
+    'border-gray-200',
+    'p-4',
+    'text-lg',
+    'leading-6',
+    'font-medium',
+    'text-gray-900',
+] %}
+
+{% set sidebarUlClasses = [
+    'p-2',
+] %}
+
+{% set sidebarLinkClasses = [
+    'block',
+    'px-2',
+    'py-3',
+    'my-1',
+    'rounded-md',
+    'transition',
+    'ease-in-out',
+    'duration-150',
+] %}
+
+{% set sidebarInactiveLinkClasses = sidebarLinkClasses|merge([
+    'hover:bg-champagne',
+    'dark:hover:bg-gold-sand',
+    'text-gray-900',
+    'dark:text-gray-200',
+    'dark:hover:text-gray-800',
+]) %}
+
+{% set sidebarActiveLinkClasses = sidebarLinkClasses|merge([
+    'bg-meteor',
+    'text-white',
+]) %}
+
+{% block softwareContent %}
+    <div>
+        {# Sidebar #}
+        <aside class="p-4 max-w-lg lg:inline-block lg:w-22rem lg:align-top">
+            {% if versions.versions|length > 1 %}
+                {# Sidebar Section #}
+                <div class="{{ sidebarOuterClasses|join(' ') }}">
+                    <header class="{{ sidebarHeaderClasses|join(' ') }}">
+                        Doc Versions
+                    </header>
+                    <ul class="{{ sidebarUlClasses|join(' ') }}">
+                        {% for version in versions.versions %}
+                            <li>
+                                {% set thisLinkClasses = sidebarLinkClasses %}
+                                {% if activeVersion.slug == version.slug %}
+                                    {% set thisLinkClasses = thisLinkClasses|merge([
+                                        'bg-meteor',
+                                        'text-white',
+                                    ]) %}
+                                {% endif %}
+                                <a
+                                    class="{{ (activeVersion.slug == version.slug ? sidebarActiveLinkClasses : sidebarInactiveLinkClasses)|join(' ') }}"
+                                    href="{{ uriPath }}/{{ version.slug }}"
+                                >
+                                    {{ version.title|smartypants|widont }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if activeVersion.pages|length > 0 %}
+                {# Sidebar Section #}
+                <div class="{{ sidebarOuterClasses|join(' ') }}">
+                    <header class="{{ sidebarHeaderClasses|join(' ') }}">
+                        Doc Pages
+                    </header>
+                    <ul class="{{ sidebarUlClasses|join(' ') }}">
+                        {% for page in activeVersion.pages %}
+                            <li>
+                                <a
+                                    class="{{ (activePage.slug == page.slug ? sidebarActiveLinkClasses : sidebarInactiveLinkClasses)|join(' ') }}"
+                                    href="{{ uriPath }}/{{ activeVersion.slug }}{{ page.slug ? '/' ~ page.slug : '' }}"
+                                >
+                                    {{ page.title|smartypants|widont }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if activePage.sections|length > 1 %}
+                {# Sidebar Section #}
+                <div class="{{ sidebarOuterClasses|join(' ') }}">
+                    <header class="{{ sidebarHeaderClasses|join(' ') }}">
+                        Page Sections
+                    </header>
+                    <ul class="{{ sidebarUlClasses|join(' ') }}">
+                        {% for section in activePage.sections %}
+                            <li>
+                                <a
+                                    class="{{ sidebarInactiveLinkClasses|join(' ') }}"
+                                    href="#{{ section.title|slugify }}"
+                                >
+                                    {{ section.title|smartypants|widont }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </aside>
+
+        {# Content #}
+        <div class="p-4 lg:inline-block lg:w-cal-100percent-22rem lg:align-top">
+            <div class="bg-white rounded-lg p-4 my-2 shadow-light">
+                <h1
+                    id="{{ activePage.title|slugify }}"
+                    class="font-bold text-4xl mb-8"
+                >
+                    {{ activePage.title|smartypants|widont }}
+                </h1>
+                {# Doc sections #}
+                <div>
+                    {% for section in activePage.sections %}
+                        {# Section #}
+                        <section class="mb-10 pb-10{% if not loop.last %} border-b border-meteor{% endif %}">
+                            {% if section.title %}
+                                <h2
+                                    id="{{ section.title|slugify }}"
+                                    class="font-bold text-2xl mb-4"
+                                >
+                                    <a
+                                        href="#{{ section.title|slugify }}"
+                                        class="text-caribbean-green hover:text-deep-sea transition ease-in-out duration-150"
+                                    >#</a>
+                                    {{ section.title|smartypants|widont }}
+                                </h2>
+                            {% endif %}
+                            {# Section content #}
+                            <div>
+                                {% for contentItem in section.content %}
+                                    <div class="mb-6">
+                                        {% switch contentItem.name %}
+                                            {% case 'Heading' %}
+                                                {% switch contentItem.level %}
+                                                    {% case 4 %}
+                                                        <h4
+                                                            id="{{ contentItem.content|slugify }}"
+                                                            class="font-bold text-lg mb-4"
+                                                        >
+                                                            <a
+                                                                href="#{{ contentItem.content|slugify }}"
+                                                                class="text-caribbean-green hover:text-deep-sea transition ease-in-out duration-150"
+                                                            >#</a>
+                                                            {{ contentItem.content|smartypants|widont }}
+                                                        </h4>
+                                                    {% case 5 %}
+                                                        <h5
+                                                            id="{{ contentItem.content|slugify }}"
+                                                            class="font-bold text-base mb-4"
+                                                        >
+                                                            <a
+                                                                href="#{{ contentItem.content|slugify }}"
+                                                                class="text-caribbean-green hover:text-deep-sea transition ease-in-out duration-150"
+                                                            >#</a>
+                                                            {{ contentItem.content|smartypants|widont }}
+                                                        </h5>
+                                                    {% case 6 %}
+                                                        <h6
+                                                            id="{{ contentItem.content|slugify }}"
+                                                            class="font-bold text-base mb-4"
+                                                        >
+                                                            <a
+                                                                href="#{{ contentItem.content|slugify }}"
+                                                                class="text-caribbean-green hover:text-deep-sea transition ease-in-out duration-150"
+                                                            >#</a>
+                                                            {{ contentItem.content|smartypants|widont }}
+                                                        </h6>
+                                                    {% default %}
+                                                        <h3
+                                                            id="{{ contentItem.content|slugify }}"
+                                                            class="font-bold text-xl mb-4"
+                                                        >
+                                                            <a
+                                                                href="#{{ contentItem.content|slugify }}"
+                                                                class="text-caribbean-green hover:text-deep-sea transition ease-in-out duration-150"
+                                                            >#</a>
+                                                            {{ contentItem.content|smartypants|widont }}
+                                                        </h3>
+                                                {% endswitch %}
+                                            {% case 'List' %}
+                                                {{ _self.listItems(contentItem.listItems, 1) }}
+                                            {% case 'Content' %}
+                                                <div class="rich-text-style">
+                                                    {{ contentItem.content|smartypants|widont }}
+                                                </div>
+                                            {% case 'Codeblock' %}
+                                                <div class="relative{% if contentItem.heading %} mt-8{% endif %}">
+                                                    {% if contentItem.heading %}
+                                                        <div class="rounded-sm text-white block text-sm font-bold px-2 py-1 absolute left-0 top-0 -mt-4 ml-2">
+                                                            <span class="z-10 absolute inset-0 bg-jade opacity-75"></span>
+                                                            <span class="z-20 relative">
+                                                                {{ contentItem.heading|smartypants|widont }}
+                                                            </span>
+                                                        </div>
+                                                    {% endif %}
+                                                    <pre><code class="language-{{ contentItem.lang }}">{{ contentItem.content }}</code></pre>
+                                                </div>
+                                            {% case 'Image' %}
+                                                <div>
+                                                    <picture>
+                                                        GetDocumentationPageResponderTest    {% for source in contentItem.getSources() %}
+                                                            <source
+                                                                srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                                                                media="{{ source.getMediaQuery() }}"
+                                                            >
+                                                        {% endfor %}
+                                                        <img
+                                                            src="{{ contentItem.getOneX() }}"
+                                                            {% if contentItem.getTwoX() %}
+                                                                srcset="{{ contentItem.getOneX() }} 1x, {{ contentItem.getTwoX() }} 2x"
+                                                            {% endif %}
+                                                            alt="{{ contentItem.getAlt()|smartypants|widont }}"
+                                                            class="shadow-light"
+                                                        >
+                                                    </picture>
+                                                </div>
+                                            {% case 'Note' %}
+                                                <div>
+                                                    <div class="rounded-sm border border-aqua-island bg-spring-wood my-5 p-5 relative{% if contentItem.heading %} mt-8{% endif %}">
+                                                        {% if contentItem.heading %}
+                                                            <div class="rounded-sm text-white block text-sm font-bold px-2 py-1 absolute left-0 top-0 -mt-4 ml-2">
+                                                                <span class="z-10 absolute inset-0 bg-jade opacity-75"></span>
+                                                                <span class="z-20 relative">
+                                                                    {{ contentItem.heading|smartypants|widont }}
+                                                                </span>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="rich-text-style">
+                                                            {{ contentItem.content|smartypants|widont }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% default %}
+                                                {{ dump(contentItem) }}
+                                        {% endswitch %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

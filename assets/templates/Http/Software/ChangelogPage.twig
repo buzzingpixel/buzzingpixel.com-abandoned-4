@@ -10,7 +10,7 @@
 {% block softwareContent %}
     <div class="max-w-screen-xl mx-auto">
         <div class="sm:flex">
-            <div class="hidden sm:flex sm:flex-shrink-0">
+            <aside class="hidden sm:flex sm:flex-shrink-0">
                 <ol class="w-32 md:w-40 lg:w-48 p-6 md:p-10 lg:p-16">
                     {% for release in allChangelogPayload.releases %}
                         <li>
@@ -23,8 +23,8 @@
                         </li>
                     {% endfor %}
                 </ol>
-            </div>
-            <div class="p-6 md:p-10 lg:p-16 sm:flex sm:flex-col sm:flex-1 sm:border-l sm:border-gray-200">
+            </aside>
+            <section class="p-6 md:p-10 lg:p-16 sm:flex sm:flex-col sm:flex-1 sm:border-l sm:border-gray-200">
                 {% if pagination.totalPages > 0 %}
                     <div class="mb-10">
                         {% include 'Http/_Infrastructure/Components/Pagination.twig' with {
@@ -46,7 +46,7 @@
                         pagination: pagination,
                     } only %}
                 {% endif %}
-            </div>
+            </section>
         </div>
     </div>
 {% endblock %}

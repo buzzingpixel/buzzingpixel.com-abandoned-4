@@ -10,6 +10,8 @@ use App\Content\Documentation\DocumentationVersionPayload;
 use App\Content\Documentation\DocumentationVersionsPayload;
 use App\Content\Meta\ExtractMetaFromPath;
 use App\Content\Meta\MetaPayload;
+use App\Content\Software\ExtractSoftwareInfoFromPath;
+use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetDocumentationPageAction;
 use App\Http\Software\GetDocumentationPageResponder;
 use App\HttpHelpers\Segments\ExtractUriSegments;
@@ -21,7 +23,10 @@ use Psr\Http\Message\UriInterface;
 use Slim\Exception\HttpNotFoundException;
 use Tests\TestConfig;
 use Throwable;
+use function assert;
 use function func_get_args;
+use function is_array;
+use function is_string;
 
 class GetDocumentationPageActionTest extends TestCase
 {
@@ -118,16 +123,16 @@ class GetDocumentationPageActionTest extends TestCase
             $response
         );
 
-        /** @var array $args */
         $args = $this->responderArgs;
-        self::assertCount(5, $args);
+        assert(is_array($args));
+        self::assertCount(6, $args);
 
-        /** @var string $arg1 */
         $arg1 = $args[0];
+        assert(is_string($arg1));
         self::assertSame('/software/ansel-craft', $arg1);
 
-        /** @var MetaPayload|null $arg2 */
         $arg2 = $args[1];
+        assert($arg2 instanceof MetaPayload || $arg2 === null);
         self::assertInstanceOf(MetaPayload::class, $arg2);
         self::assertSame(
             'Test Active Title | Documentation | Test Meta Title',
@@ -135,19 +140,26 @@ class GetDocumentationPageActionTest extends TestCase
         );
         self::assertSame('', $arg2->getMetaDescription());
 
-        /** @var DocumentationPagePayload $arg3 */
         $arg3 = $args[2];
+        assert($arg3 instanceof DocumentationPagePayload);
         self::assertSame($this->activePage, $arg3);
 
-        /** @var DocumentationVersionPayload $arg4 */
         $arg4 = $args[3];
+        assert($arg4 instanceof DocumentationVersionPayload);
         self::assertSame($this->activeVersion, $arg4);
 
-        /** @var DocumentationVersionsPayload $arg5 */
         $arg5 = $args[4];
+        assert($arg5 instanceof DocumentationVersionsPayload);
         self::assertSame(
             $this->documentationVersionsPayload,
             $arg5
+        );
+
+        $arg6 = $args[5];
+        assert($arg6 instanceof SoftwareInfoPayload);
+        self::assertSame(
+            'fooBarTest',
+            $arg6->getSlug(),
         );
     }
 
@@ -175,7 +187,8 @@ class GetDocumentationPageActionTest extends TestCase
             $this->mockResponder(),
             TestConfig::$di->get(ExtractUriSegments::class),
             $this->mockDocumentationVersionsCollector(),
-            $this->mockExtractMetaFromPath()
+            $this->mockExtractMetaFromPath(),
+            $this->mockExtractSoftwareInfoFromPath()
         );
     }
 
@@ -345,5 +358,24 @@ class GetDocumentationPageActionTest extends TestCase
         );
 
         return $uri;
+    }
+
+    /**
+     * @return ExtractSoftwareInfoFromPath&MockObject
+     *
+     * @throws Throwable
+     */
+    private function mockExtractSoftwareInfoFromPath()
+    {
+        $softwareInfoPayload = new SoftwareInfoPayload(['slug' => 'fooBarTest']);
+
+        $extractor = $this->createMock(
+            ExtractSoftwareInfoFromPath::class
+        );
+
+        $extractor->method('__invoke')
+            ->willReturn($softwareInfoPayload);
+
+        return $extractor;
     }
 }

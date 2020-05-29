@@ -6,6 +6,7 @@ namespace App\Http\Software;
 
 use App\Content\Documentation\CollectDocumentationVersionsFromPath;
 use App\Content\Meta\ExtractMetaFromPath;
+use App\Content\Software\ExtractSoftwareInfoFromPath;
 use App\HttpHelpers\Segments\ExtractUriSegments;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,17 +19,20 @@ class GetDocumentationPageAction
     private ExtractUriSegments $extractUriSegments;
     private CollectDocumentationVersionsFromPath $collectDocumentationVersionsFromPath;
     private ExtractMetaFromPath $extractMetaFromPath;
+    private ExtractSoftwareInfoFromPath $extractSoftwareInfoFromPath;
 
     public function __construct(
         GetDocumentationPageResponder $responder,
         ExtractUriSegments $extractUriSegments,
         CollectDocumentationVersionsFromPath $collectDocumentationVersionsFromPath,
-        ExtractMetaFromPath $extractMetaFromPath
+        ExtractMetaFromPath $extractMetaFromPath,
+        ExtractSoftwareInfoFromPath $extractSoftwareInfoFromPath
     ) {
         $this->responder                            = $responder;
         $this->extractUriSegments                   = $extractUriSegments;
         $this->collectDocumentationVersionsFromPath = $collectDocumentationVersionsFromPath;
         $this->extractMetaFromPath                  = $extractMetaFromPath;
+        $this->extractSoftwareInfoFromPath          = $extractSoftwareInfoFromPath;
     }
 
     /**
@@ -44,6 +48,10 @@ class GetDocumentationPageAction
         $uriSegments = ($this->extractUriSegments)($request->getUri());
 
         $contentPath = PathMap::PATH_MAP['/' . $uriSegments->getPathFromSegmentSlice(2)];
+
+        $softwareInfoPayload = ($this->extractSoftwareInfoFromPath)(
+            $contentPath
+        );
 
         $versions = ($this->collectDocumentationVersionsFromPath)($contentPath);
 
@@ -72,7 +80,8 @@ class GetDocumentationPageAction
             $newMetaPayload,
             $activePage,
             $activeVersion,
-            $versions
+            $versions,
+            $softwareInfoPayload
         );
     }
 }
