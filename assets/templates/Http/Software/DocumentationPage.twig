@@ -240,7 +240,7 @@
                                             {% case 'Image' %}
                                                 <div>
                                                     <picture>
-                                                        GetDocumentationPageResponderTest    {% for source in contentItem.getSources() %}
+                                                        {% for source in contentItem.getSources() %}
                                                             <source
                                                                 srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
                                                                 media="{{ source.getMediaQuery() }}"

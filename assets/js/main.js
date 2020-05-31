@@ -4,6 +4,7 @@ import CartQuantity from './Components/CartQuantity.js';
 import ConfirmSubmit from './Components/ConfirmSubmit.js';
 import Flatpickr from './Components/Flatpickr.js';
 import PreventEmptySubmit from './Components/PreventEmptySubmit.js';
+import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
 import Selects from './Components/Selects.js';
 
 window.Methods.CartQuantity = CartQuantity;
@@ -21,10 +22,19 @@ if (flatpickrEls.length > 0) {
 }
 
 // Prevent empty submit
-const emptySubmitEls = document.querySelectorAll('[ref="PreventEmptySubmit"]');
+const emptySubmitEls = document.querySelectorAll(
+    '[ref="PreventEmptySubmit"]',
+);
 emptySubmitEls.forEach((el) => {
     new PreventEmptySubmit(el);
 });
+
+// Load prism code highlighting
+if (document.querySelector('code')
+    || document.querySelector('pre')
+) {
+    new PrismCodeHighlighting();
+}
 
 // Selects
 const selectEls = document.querySelectorAll('[ref="select"]');
