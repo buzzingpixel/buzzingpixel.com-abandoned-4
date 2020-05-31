@@ -3,11 +3,13 @@
 import CartQuantity from './Components/CartQuantity.js';
 import ConfirmSubmit from './Components/ConfirmSubmit.js';
 import Flatpickr from './Components/Flatpickr.js';
+import LeftFixedScroll from './Components/LeftFixedScroll.js';
 import PreventEmptySubmit from './Components/PreventEmptySubmit.js';
 import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
 import Selects from './Components/Selects.js';
 
 window.Methods.CartQuantity = CartQuantity;
+window.Methods.LeftFixedScroll = LeftFixedScroll;
 
 // ConfirmSubmit
 const forms = document.querySelectorAll('[ref="ConfirmSubmit"]');

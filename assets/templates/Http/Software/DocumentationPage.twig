@@ -71,74 +71,87 @@
 {% block softwareContent %}
     <div>
         {# Sidebar #}
-        <aside class="p-4 max-w-lg lg:inline-block lg:w-22rem lg:align-top">
-            {% if versions.versions|length > 1 %}
-                {# Sidebar Section #}
-                <div class="{{ sidebarOuterClasses|join(' ') }}">
-                    <header class="{{ sidebarHeaderClasses|join(' ') }}">
-                        Doc Versions
-                    </header>
-                    <ul class="{{ sidebarUlClasses|join(' ') }}">
-                        {% for version in versions.versions %}
-                            <li>
-                                {% set thisLinkClasses = sidebarLinkClasses %}
-                                {% if activeVersion.slug == version.slug %}
-                                    {% set thisLinkClasses = thisLinkClasses|merge([
-                                        'bg-meteor',
-                                        'text-white',
-                                    ]) %}
-                                {% endif %}
-                                <a
-                                    class="{{ (activeVersion.slug == version.slug ? sidebarActiveLinkClasses : sidebarInactiveLinkClasses)|join(' ') }}"
-                                    href="{{ uriPath }}/{{ version.slug }}"
-                                >
-                                    {{ version.title|smartypants|widont }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            {% if activeVersion.pages|length > 0 %}
-                {# Sidebar Section #}
-                <div class="{{ sidebarOuterClasses|join(' ') }}">
-                    <header class="{{ sidebarHeaderClasses|join(' ') }}">
-                        Doc Pages
-                    </header>
-                    <ul class="{{ sidebarUlClasses|join(' ') }}">
-                        {% for page in activeVersion.pages %}
-                            <li>
-                                <a
-                                    class="{{ (activePage.slug == page.slug ? sidebarActiveLinkClasses : sidebarInactiveLinkClasses)|join(' ') }}"
-                                    href="{{ uriPath }}/{{ activeVersion.slug }}{{ page.slug ? '/' ~ page.slug : '' }}"
-                                >
-                                    {{ page.title|smartypants|widont }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            {% if activePage.sections|length > 1 %}
-                {# Sidebar Section #}
-                <div class="{{ sidebarOuterClasses|join(' ') }}">
-                    <header class="{{ sidebarHeaderClasses|join(' ') }}">
-                        Page Sections
-                    </header>
-                    <ul class="{{ sidebarUlClasses|join(' ') }}">
-                        {% for section in activePage.sections %}
-                            <li>
-                                <a
-                                    class="{{ sidebarInactiveLinkClasses|join(' ') }}"
-                                    href="#{{ section.title|slugify }}"
-                                >
-                                    {{ section.title|smartypants|widont }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+        <aside class="max-w-lg lg:inline-block lg:w-22rem lg:align-top">
+            <div
+                class="z-40 p-4 lg:w-22rem"
+                ref="leftFixedScroll"
+                x-init="RunWhenReady('LeftFixedScroll', data);"
+                x-data="{{ breakToSpace('{
+                    data: {
+                        isSticky: false,
+                        stickyAt: 140
+                    }
+                }') }}"
+                :class="{ 'lg:left-fixed-scroll': data.isSticky }"
+            >
+                {% if versions.versions|length > 1 %}
+                    {# Sidebar Section #}
+                    <div class="{{ sidebarOuterClasses|join(' ') }}">
+                        <header class="{{ sidebarHeaderClasses|join(' ') }}">
+                            Doc Versions
+                        </header>
+                        <ul class="{{ sidebarUlClasses|join(' ') }}">
+                            {% for version in versions.versions %}
+                                <li>
+                                    {% set thisLinkClasses = sidebarLinkClasses %}
+                                    {% if activeVersion.slug == version.slug %}
+                                        {% set thisLinkClasses = thisLinkClasses|merge([
+                                            'bg-meteor',
+                                            'text-white',
+                                        ]) %}
+                                    {% endif %}
+                                    <a
+                                        class="{{ (activeVersion.slug == version.slug ? sidebarActiveLinkClasses : sidebarInactiveLinkClasses)|join(' ') }}"
+                                        href="{{ uriPath }}/{{ version.slug }}"
+                                    >
+                                        {{ version.title|smartypants|widont }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if activeVersion.pages|length > 0 %}
+                    {# Sidebar Section #}
+                    <div class="{{ sidebarOuterClasses|join(' ') }}">
+                        <header class="{{ sidebarHeaderClasses|join(' ') }}">
+                            Doc Pages
+                        </header>
+                        <ul class="{{ sidebarUlClasses|join(' ') }}">
+                            {% for page in activeVersion.pages %}
+                                <li>
+                                    <a
+                                        class="{{ (activePage.slug == page.slug ? sidebarActiveLinkClasses : sidebarInactiveLinkClasses)|join(' ') }}"
+                                        href="{{ uriPath }}/{{ activeVersion.slug }}{{ page.slug ? '/' ~ page.slug : '' }}"
+                                    >
+                                        {{ page.title|smartypants|widont }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if activePage.sections|length > 1 %}
+                    {# Sidebar Section #}
+                    <div class="{{ sidebarOuterClasses|join(' ') }}">
+                        <header class="{{ sidebarHeaderClasses|join(' ') }}">
+                            Page Sections
+                        </header>
+                        <ul class="{{ sidebarUlClasses|join(' ') }}">
+                            {% for section in activePage.sections %}
+                                <li>
+                                    <a
+                                        class="{{ sidebarInactiveLinkClasses|join(' ') }}"
+                                        href="#{{ section.title|slugify }}"
+                                    >
+                                        {{ section.title|smartypants|widont }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
         </aside>
 
         {# Content #}
