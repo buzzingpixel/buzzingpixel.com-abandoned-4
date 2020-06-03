@@ -31,7 +31,9 @@ class GetResetPasswordWithTokenResponderTest extends TestCase
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/ResetPassword.twig'),
+                self::equalTo(
+                    'Http/Account/ResetPassword.twig'
+                ),
                 self::equalTo([
                     'metaPayload' => new MetaPayload(
                         ['metaTitle' => 'Reset your Password']
