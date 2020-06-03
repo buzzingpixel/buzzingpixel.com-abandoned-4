@@ -26,7 +26,7 @@ class GetMessageActionTest extends TestCase
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('MessageOnly.twig'),
+                self::equalTo('Http/MessageOnly.twig'),
                 self::equalTo([
                     'metaPayload' => new MetaPayload(
                         ['metaTitle' => 'Password Reset']
