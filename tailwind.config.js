@@ -35,11 +35,13 @@ module.exports = {
                 'light-red': '#ca5153',
                 red: '#870f12',
             },
-            screens: {
-                dark: {
-                    raw: '(prefers-color-scheme: dark)',
-                },
-            },
+            // Disabling the "dark:" media query for now. It's taking too much
+            // time
+            // screens: {
+            //     dark: {
+            //         raw: '(prefers-color-scheme: dark)',
+            //     },
+            // },
             fontFamily: {
                 // eslint-disable-next-line no-undef
                 sans: ['Inter var', ...defaultTheme.fontFamily.sans],
