@@ -1,0 +1,146 @@
+{# @var \App\Cart\Models\CartModel cart #}
+
+{% extends 'Http/_Infrastructure/_Layout.twig' %}
+
+{% set infoItems = [
+    {
+        key: 'Items in Cart',
+        val: cart.totalQuantity,
+    },
+    {
+        key: 'Subtotal',
+        val: '$' ~ cart.calculateSubTotal|number_format(2),
+    },
+    {
+        key: 'Tax',
+        val: '$' ~ cart.calculateTax|number_format(2),
+    },
+    {
+        key: 'Total',
+        val: '$' ~ cart.calculateTotal|number_format(2),
+    },
+] %}
+
+{% block content %}
+    {% if cart.items|length < 1 %}
+        <div class="px-10 py-32 max-w-2xl mx-auto">
+            <div class="border-4 border-dashed border-gray-200 rounded-lg py-8 px-6 text-center">
+                {{ 'You don\'t have anything in your cart yet. But that\'s easy to fix. Up above in the menu, select one of the products from the "software" menu!'|smartypants|widont }}
+            </div>
+        </div>
+    {% else %}
+        <div class="bg-gray-100 md:py-6 xl:py-10">
+            <div
+                class="max-w-88rem mx-auto lg:flex lg:flex-row lg:flex-row-reverse"
+                data-name="Cart"
+            >
+                <div class="p-8 max-w-2xl mx-auto lg:max-w-none lg:w-1/3">
+                    <div
+                        class="rounded-md shadow bg-white"
+                        data-name="Cart__Info"
+                    >
+                        {% for item in infoItems %}
+                            {% set classes = [
+                                'relative',
+                                'px-4',
+                                'py-4',
+                                'sm:px-6',
+                            ] %}
+                            {% if loop.first %}
+                                {% set classes = classes|merge([
+                                    'border-t',
+                                    'border-gray-200',
+                                ]) %}
+                            {% endif %}
+                            {% if loop.index is even %}
+                                {% set classes = classes|merge([
+                                    'bg-gray-100',
+                                ]) %}
+                            {% endif %}
+                            <div class="{{ classes|join(' ') }}">
+                                <span class="block font-bold">
+                                    {{ item.key|smartypants|widont }}
+                                </span>
+                                <span class="block absolute right-0 top-0 mt-4 mr-4">
+                                    {{ item.val|smartypants|widont }}
+                                </span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3">
+                        {% if not cart.user %}
+                            <a
+                                {# TODO: Cart log-in route #}
+                                href="/cart/log-in"
+                                class="block rounded-md shadow bg-white py-2 px-4 text-sm text-center leading-5 text-white font-medium bg-meteor hover:bg-pumpkin-skin focus:border-rich-gold focus:shadow-outline-rich-gold active:bg-rich-gold"
+                            >
+                                Log In To Pay
+                            </a>
+                        {% elseif not cart.canPurchase %}
+                            <p class="text-sm m-4">
+                                {{ 'You need to have your profile completed and at least one payment source associated with your account in order to check out.'|smartypants|widont }}
+                            </p>
+                            <a
+                                href="/account/profile"
+                                class="block rounded-md shadow bg-white py-2 px-4 text-sm text-center leading-5 text-white font-medium bg-meteor hover:bg-pumpkin-skin focus:border-rich-gold focus:shadow-outline-rich-gold active:bg-rich-gold"
+                            >
+                                Go to profile
+                            </a>
+                        {% else %}
+                            {# TODO: Display which card to use and a pay button #}
+                            TODO: Display which card to use and a pay button
+                        {% endif %}
+                    </div>
+                </div>
+                <div
+                    class="p-8 max-w-2xl mx-auto lg:max-w-none lg:w-2/3"
+                    data-name="Cart__Items"
+                >
+                    <div
+                        class="rounded-md shadow bg-white"
+                        data-name="Cart__Info"
+                    >
+                        {% for item in cart.items %}
+                            {% set classes = [
+                                'relative',
+                                'px-4',
+                                'py-4',
+                                'sm:px-6',
+                            ] %}
+                            {% if loop.first %}
+                                {% set classes = classes|merge([
+                                    'border-t',
+                                    'border-gray-200',
+                                ]) %}
+                            {% endif %}
+                            {% if loop.index is even %}
+                                {% set classes = classes|merge([
+                                    'bg-gray-100',
+                                ]) %}
+                            {% endif %}
+                            <div class="{{ classes|join(' ') }}">
+                                <span class="block font-bold mb-1 sm:inline-block sm:align-top sm:w-cal-100percent-6point3rem">
+                                    {{ item.software.name|smartypants }}
+                                </span>
+                                <span class="block sm:text-right sm:inline-block align-top sm:w-24">
+                                    <span class="block mb-1">
+                                        ${{ item.software.price|number_format(2) }}
+                                    </span>
+                                    <span class="block">
+                                        <label>
+                                            <input
+                                                type="text"
+                                                class="form-input inline-block w-14 rounded-md transition ease-in-out duration-150 text-sm leading-none py-1 px-2 sm:text-right"
+                                                value="{{ item.quantity }}"
+                                            >
+                                        </label>
+                                    </span>
+                                </span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

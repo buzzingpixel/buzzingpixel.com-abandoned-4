@@ -28,7 +28,7 @@ class GetChangelogResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'SoftwareChangelogPage.twig',
+            'Http/Software/ChangelogPage.twig',
             [
                 'metaPayload' => $metaPayload,
                 'allChangelogPayload' => $allChangelogPayload,
@@ -36,7 +36,7 @@ class GetChangelogResponder extends StandardResponderConstructor
                 'pagination' => $pagination,
                 'softwareInfoPayload' => $softwareInfoPayload,
                 'uriPath' => $uriPath,
-                'activeHref' => $uriPath . '/changelog',
+                'activeNavHref' => $uriPath . '/changelog',
             ]
         ));
 

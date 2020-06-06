@@ -1,0 +1,68 @@
+{# @var \App\Software\Models\SoftwareModel software #}
+
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% set contentClass = 'max-w-4xl' %}
+
+{% set actionForm = {
+    action: "/admin/software/delete/#{software.id}",
+    content: 'Delete',
+    confirmAction: 'delete'
+} %}
+
+{% set versions = [] %}
+
+{% for version in software.versions %}
+    {% set versions = versions|merge([{
+        href: "/admin/software/version/edit/#{version.id}",
+        title: version.version,
+        subtitle: version.releasedOn
+            .setTimezone(user.timezone)
+            .format('Y-m-d h:i a'),
+    }]) %}
+{% endfor %}
+
+{% block adminContent %}
+    {% include 'Http/_Infrastructure/Components/LeftAlignedStripedCard.twig' with {
+        title: software.name,
+        subtitle: software.slug,
+        actionButton: {
+            href: "/admin/software/edit/#{software.id}",
+            content: 'Edit',
+        },
+        items: [
+            {
+                title: 'For Sale?',
+                content: software.isForSale ? 'Yes' : 'No',
+            },
+            {
+                title: 'Price',
+                content: "$#{software.price|number_format(2)}",
+            },
+            {
+                title: 'Renewal Price',
+                content: "$#{software.renewalPrice|number_format(2)}",
+            },
+            {
+                title: 'Subscription?',
+                content: software.isSubscription ? 'Yes' : 'No',
+            },
+        ]
+    } only %}
+
+    <div class="mt-8">
+        {% include 'Http/_Infrastructure/Components/WideLists.twig' with {
+            groups: [{
+                title: 'Versions',
+                actionButton: {
+                    href: "/admin/software/#{software.id}/add-version",
+                    content: 'Add New Version',
+                },
+                items: versions,
+            }],
+        } only %}
+    </div>
+{% endblock %}

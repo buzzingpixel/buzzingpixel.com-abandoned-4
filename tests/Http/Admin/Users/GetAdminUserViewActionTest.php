@@ -92,7 +92,7 @@ class GetAdminUserViewActionTest extends TestCase
                     $user
                 ) {
                     self::assertSame(
-                        'Admin/UserView.twig',
+                        'Http/Admin/UserView.twig',
                         $template,
                     );
 
@@ -118,7 +118,6 @@ class GetAdminUserViewActionTest extends TestCase
                                 'href' => '/admin/users',
                                 'content' => 'Users Admin',
                             ],
-                            ['content' => 'View User'],
                         ],
                         $context['breadcrumbs'],
                     );

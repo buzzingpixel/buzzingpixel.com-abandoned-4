@@ -23,9 +23,9 @@ class ExtractShowCaseTest extends TestCase
     {
         $payload = $this->extractor->runTest([]);
 
-        self::assertSame('', $payload->getPreHeadline());
         self::assertSame('', $payload->getHeadline());
         self::assertSame('', $payload->getSubHeadline());
+        self::assertSame('', $payload->getContent());
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
@@ -45,9 +45,9 @@ class ExtractShowCaseTest extends TestCase
             'showCaseImage' => 'BarBaz',
         ]);
 
-        self::assertSame('', $payload->getPreHeadline());
         self::assertSame('', $payload->getHeadline());
         self::assertSame('', $payload->getSubHeadline());
+        self::assertSame('', $payload->getContent());
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
@@ -63,14 +63,14 @@ class ExtractShowCaseTest extends TestCase
     public function testNonStringValues() : void
     {
         $payload = $this->extractor->runTest([
-            'preHeadline' => 234,
             'headline' => 356.23,
             'subHeadline' => true,
+            'content' => 234,
         ]);
 
-        self::assertSame('234', $payload->getPreHeadline());
         self::assertSame('356.23', $payload->getHeadline());
         self::assertSame('1', $payload->getSubHeadline());
+        self::assertSame('234', $payload->getContent());
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
@@ -86,9 +86,9 @@ class ExtractShowCaseTest extends TestCase
     public function testShowCaseImageNoSources() : void
     {
         $payload = $this->extractor->runTest([
-            'preHeadline' => 'TestPreHeadline',
             'headline' => 'TestHeadline',
             'subHeadline' => 'TestSubHeadline',
+            'content' => 'TestPreHeadline',
             'showCaseImage' => [
                 '1x' => 'TestShowCaseSrc',
                 '2x' => 'TestShowCaseSrcset',
@@ -96,9 +96,9 @@ class ExtractShowCaseTest extends TestCase
             ],
         ]);
 
-        self::assertSame('TestPreHeadline', $payload->getPreHeadline());
         self::assertSame('TestHeadline', $payload->getHeadline());
         self::assertSame('TestSubHeadline', $payload->getSubHeadline());
+        self::assertSame('TestPreHeadline', $payload->getContent());
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
@@ -114,9 +114,9 @@ class ExtractShowCaseTest extends TestCase
     public function testShowCaseImageWhenSourcesNotArray() : void
     {
         $payload = $this->extractor->runTest([
-            'preHeadline' => 'TestPreHeadline',
             'headline' => 'TestHeadline',
             'subHeadline' => 'TestSubHeadline',
+            'content' => 'TestPreHeadline',
             'showCaseImage' => [
                 '1x' => 'TestShowCaseSrc',
                 '2x' => 'TestShowCaseSrcset',
@@ -125,9 +125,9 @@ class ExtractShowCaseTest extends TestCase
             ],
         ]);
 
-        self::assertSame('TestPreHeadline', $payload->getPreHeadline());
         self::assertSame('TestHeadline', $payload->getHeadline());
         self::assertSame('TestSubHeadline', $payload->getSubHeadline());
+        self::assertSame('TestPreHeadline', $payload->getContent());
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
@@ -143,9 +143,9 @@ class ExtractShowCaseTest extends TestCase
     public function testWithShowCaseImageSources() : void
     {
         $payload = $this->extractor->runTest([
-            'preHeadline' => 'TestPreHeadline',
             'headline' => 'TestHeadline',
             'subHeadline' => 'TestSubHeadline',
+            'content' => 'TestPreHeadline',
             'showCaseImage' => [
                 '1x' => 'TestShowCaseSrc',
                 '2x' => 'TestShowCaseSrcset',
@@ -161,9 +161,9 @@ class ExtractShowCaseTest extends TestCase
             ],
         ]);
 
-        self::assertSame('TestPreHeadline', $payload->getPreHeadline());
         self::assertSame('TestHeadline', $payload->getHeadline());
         self::assertSame('TestSubHeadline', $payload->getSubHeadline());
+        self::assertSame('TestPreHeadline', $payload->getContent());
         self::assertSame([], $payload->getCtas());
 
         $showCaseImage = $payload->getShowCaseImage();
@@ -200,9 +200,9 @@ class ExtractShowCaseTest extends TestCase
             ],
         ]);
 
-        self::assertSame('', $payload->getPreHeadline());
         self::assertSame('', $payload->getHeadline());
         self::assertSame('', $payload->getSubHeadline());
+        self::assertSame('', $payload->getContent());
 
         $showCaseImage = $payload->getShowCaseImage();
         self::assertSame('', $showCaseImage->getOneX());

@@ -28,7 +28,7 @@ class GetEditAuthorizedDomainsResponderTest extends TestCase
             ->method('render')
             ->with(
                 self::equalTo(
-                    'Account/LicenseEditAuthorizedDomains.twig'
+                    'Http/Account/LicenseEditAuthorizedDomains.twig'
                 ),
                 self::equalTo(
                     [
@@ -45,7 +45,6 @@ class GetEditAuthorizedDomainsResponderTest extends TestCase
                                 'href' => '/account/licenses/view/' . $license->id,
                                 'content' => 'License',
                             ],
-                            ['content' => 'Edit Domains'],
                         ],
                         'license' => $license,
                     ]

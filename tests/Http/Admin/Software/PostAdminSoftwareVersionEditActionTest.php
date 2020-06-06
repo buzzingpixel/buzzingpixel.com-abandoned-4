@@ -96,7 +96,7 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
                 static function (
                     Payload $payload,
                     string $versionId,
-                    string $softwareSlug
+                    string $softwareId
                 ) use (
                     $response
                 ) {
@@ -130,8 +130,8 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
                     );
 
                     self::assertSame(
-                        'foo-software-slug',
-                        $softwareSlug,
+                        'foo-software-id',
+                        $softwareId,
                     );
 
                     return $response;
@@ -145,6 +145,8 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
         $software = new SoftwareModel();
 
         $software->slug = 'foo-software-slug';
+
+        $software->id = 'foo-software-id';
 
         $software->addVersion($softwareVersion);
 
@@ -212,7 +214,7 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
                 static function (
                     Payload $payload,
                     string $versionId,
-                    string $softwareSlug
+                    string $softwareId
                 ) use (
                     $response
                 ) {
@@ -232,8 +234,8 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
                     );
 
                     self::assertSame(
-                        'foo-software-slug',
-                        $softwareSlug,
+                        'foo-software-id',
+                        $softwareId,
                     );
 
                     return $response;
@@ -247,6 +249,8 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
         $software = new SoftwareModel();
 
         $software->slug = 'foo-software-slug';
+
+        $software->id = 'foo-software-id';
 
         $software->addVersion($softwareVersion);
 
@@ -370,7 +374,7 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
                 static function (
                     Payload $incomingPayload,
                     string $versionId,
-                    string $softwareSlug
+                    string $softwareId
                 ) use (
                     $response,
                     $payload
@@ -386,8 +390,8 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
                     );
 
                     self::assertSame(
-                        'foo-software-slug',
-                        $softwareSlug,
+                        'foo-software-id',
+                        $softwareId,
                     );
 
                     return $response;
@@ -401,6 +405,8 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
         $software = new SoftwareModel();
 
         $software->slug = 'foo-software-slug';
+
+        $software->id = 'foo-software-id';
 
         $software->addVersion($softwareVersion);
 

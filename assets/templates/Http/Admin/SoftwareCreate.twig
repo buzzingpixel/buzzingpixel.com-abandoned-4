@@ -1,0 +1,58 @@
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{% block adminContent %}
+    <div class="max-w-4xl">
+        {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+            title: 'Create New Software',
+            inputs: [
+                {
+                    type: 'text',
+                    label: 'Name',
+                    name: 'name',
+                },
+                {
+                    type: 'text',
+                    label: 'Slug',
+                    name: 'slug',
+                },
+                {
+                    type: 'checkbox',
+                    label: 'For Sale?',
+                    name: 'for_sale',
+                },
+                {
+                    type: 'text',
+                    label: 'Price',
+                    name: 'price',
+                    value: '0',
+                },
+                {
+                    type: 'text',
+                    label: 'Renewal Price',
+                    name: 'renewal_price',
+                    value: '0',
+                },
+                {
+                    type: 'checkbox',
+                    label: 'Subscription?',
+                    name: 'subscription',
+                },
+                {
+                    type: 'text',
+                    label: 'Initial Major Version',
+                    name: 'major_version',
+                },
+                {
+                    type: 'text',
+                    label: 'Initial Version',
+                    name: 'version',
+                },
+                {
+                    type: 'file',
+                    label: 'File Download',
+                    name: 'download_file',
+                },
+            ]
+        } only %}
+    </div>
+{% endblock %}

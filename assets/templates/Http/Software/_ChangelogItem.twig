@@ -1,0 +1,36 @@
+{% set includeBottomSpacing = includeBottomSpacing ?? false %}
+{% set includeBottomBorder = includeBottomBorder ?? false %}
+{% set includePermalink = includePermalink ?? false %}
+{% set hrefBase = hrefBase ?? '' %}
+
+<div class="{% if includeBottomSpacing %}mb-20 pb-12{% endif %} {% if includeBottomBorder %}border-b border-gray-200{% endif %}">
+    <div class="mb-10">
+        <h2 class="font-bold text-2xl">
+            {{ release.version }} &mdash; {{ release.date }}
+        </h2>
+        {% if includePermalink %}
+            <a
+                href="{{ hrefBase }}/{{ release.version }}"
+                class="font-medium text-xs text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline transition duration-150 ease-in-out"
+            >
+                Permalink &rarr;
+            </a>
+        {% endif %}
+    </div>
+    {% for type,list in release.messageTypesContent %}
+        <div class="mb-10">
+            <h3
+                class="inline-block items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium leading-5 border bg-aqua-haze-2 text-deep-sea border-deep-sea mb-3"
+            >
+                {{ type|capitalize|smartypants|widont }}
+            </h3>
+            <ul class="ml-5 list-disc">
+                {% for item in list %}
+                    <li class="mb-2 rich-text-style">
+                        {{ item|markdownParse|smartypants|widont }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>

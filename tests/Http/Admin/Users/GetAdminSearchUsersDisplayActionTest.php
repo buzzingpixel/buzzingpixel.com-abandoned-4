@@ -103,11 +103,11 @@ class GetAdminSearchUsersDisplayActionTest extends TestCase
                     $users
                 ) {
                     self::assertSame(
-                        'Admin/Users.twig',
+                        'Http/Admin/Users.twig',
                         $template,
                     );
 
-                    self::assertCount(5, $context);
+                    self::assertCount(6, $context);
 
                     $metaPayload = $context['metaPayload'];
 

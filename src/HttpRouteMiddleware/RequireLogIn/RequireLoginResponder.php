@@ -21,7 +21,7 @@ class RequireLoginResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'LogIn.twig',
+            'Http/LogIn.twig',
             [
                 'metaPayload' => $metaPayload,
                 'redirectTo' => $redirectTo,

@@ -1,0 +1,53 @@
+{# @var \App\Software\Models\SoftwareModel software #}
+
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{% block adminContent %}
+    <div class="max-w-4xl">
+        {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+            title: "Edit \"#{software.name}\"",
+            cancelButton: {
+                content: 'Cancel',
+                href: '/admin/software/view/' ~ software.id,
+            },
+            inputs: [
+                {
+                    type: 'text',
+                    label: 'Name',
+                    name: 'name',
+                    value: software.name,
+                },
+                {
+                    type: 'text',
+                    label: 'Slug',
+                    name: 'slug',
+                    value: software.slug,
+                },
+                {
+                    type: 'checkbox',
+                    label: 'For Sale?',
+                    name: 'for_sale',
+                    isChecked: software.isForSale,
+                },
+                {
+                    type: 'text',
+                    label: 'Price',
+                    name: 'price',
+                    value: software.price,
+                },
+                {
+                    type: 'text',
+                    label: 'Renewal Price',
+                    name: 'renewal_price',
+                    value: software.renewalPrice,
+                },
+                {
+                    type: 'checkbox',
+                    label: 'Subscription?',
+                    name: 'subscription',
+                    isChecked: software.isSubscription,
+                },
+            ]
+        } only %}
+    </div>
+{% endblock %}

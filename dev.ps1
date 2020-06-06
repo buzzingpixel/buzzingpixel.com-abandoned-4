@@ -8,15 +8,13 @@ param(
 
 $Env:COMPOSE_CONVERT_WINDOWS_PATHS = 'true'
 
-$composerDockerImage = "composer:1.9.3"
-$cypressDockerImage = "cypress/included:3.5.0"
 $nodeDockerImage = "node:12.12.0"
 $composeFiles = "-f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.dev.sync.yml"
 
 $tasks = @{}
 
 function defineTasks {
-    $files = @( Get-ChildItem -Path $PSScriptRoot\dev_includes\powershell\*.ps1 -ErrorAction SilentlyContinue )
+    $files = @( Get-ChildItem -Path $PSScriptRoot\dev_scripts\powershell\*.ps1 -ErrorAction SilentlyContinue )
 
     Foreach ($import in $files) {
         Try {

@@ -1,0 +1,600 @@
+<div
+    class="{{ breakToSpace(
+        '
+        relative
+        bg-jade
+        dark:bg-aqua-deep
+        border-t-4
+        border-t-meteor
+        border-b
+        border-b-aqua-haze
+        dark:border-b-jade
+        z-50
+        '
+    ) }}"
+    data-name="MainNav"
+    x-init="RunWhenReady('CartQuantity', data);"
+    x-data="{{ breakToSpace('{
+        data: {
+            mobileMenuIsActive: false,
+            cartTotalQuantity: 0
+        }
+    }') }}"
+    xmlns:x-transition="http://www.w3.org/1999/xhtml"
+>
+    <div
+        class="{{breakToSpace(
+            '
+            flex
+            justify-between
+            items-center
+            px-4
+            py-3
+            sm:px-6
+            md:justify-start
+            md:space-x-10
+            '
+        ) }}"
+    >
+        <div data-name="MainNav__Logo">
+            <a
+                href="/"
+                class="{{ breakToSpace(
+                    '
+                    block
+                    w-32
+                    text-gray-100
+                    hover:text-white
+                    transition
+                    duration-150
+                    ease-in-out
+                    '
+                ) }}"
+            >
+                {% include 'Http/_Infrastructure/Svg/BzpxlLogoWide.svg' only %}
+            </a>
+        </div>
+        <div
+            class="-mr-2 -my-2 md:hidden"
+            data-name="MainNav__MobileMenuActivator"
+        >
+            <button
+                type="button"
+                class="{{ breakToSpace(
+                    '
+                    inline-flex
+                    items-center
+                    justify-center
+                    p-2
+                    rounded-md
+                    text-gray-100
+                    hover:text-white
+                    hover:bg-deep-sea
+                    focus:outline-none
+                    focus:deep-sea
+                    focus:text-white
+                    transition
+                    duration-150
+                    ease-in-out
+                    relative
+                    '
+                ) }}"
+                @click="data.mobileMenuIsActive = true"
+            >
+                <span
+                    class="{{ breakToSpace(
+                        '
+                        inline-flex
+                        items-center
+                        px-2.5
+                        py-0.5
+                        rounded-full
+                        text-xs
+                        font-medium
+                        leading-4
+                        bg-gold-sand
+                        dark:bg-rich-gold
+                        text-yellow-800
+                        dark:text-white
+                        absolute
+                        top-0
+                        right-0
+                        -mr-1
+                        -mt-1
+                        hidden
+                        shadow
+                        '
+                    ) }}"
+                    x-text="data.cartTotalQuantity"
+                    :class="{'hidden': data.cartTotalQuantity < 1}"
+                ></span>
+                <svg
+                    class="h-6 w-6"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        <div
+            class="{{ breakToSpace(
+                '
+                hidden
+                md:flex-1
+                md:flex
+                md:items-center
+                md:justify-between
+                md:space-x-12
+                '
+            ) }}"
+        >
+            <nav
+                class="flex space-x-10"
+                data-name="MainNav__DesktopNav"
+                x-data="{activeMenuItem: ''}"
+                @click.away="activeMenuItem = 'false'"
+            >
+                {% for level1 in MainMenu.menu %}
+                    {% set id = uniqid() %}
+                    {% set hasSubItems = level1.subItems is defined and level1.subItems is iterable %}
+                    {% if hasSubItems %}
+                        <div class="relative">
+                            <button
+                                type="button"
+                                class="{{ breakToSpace(
+                                    '
+                                    group
+                                    text-gray-100
+                                    hover:text-white
+                                    inline-flex
+                                    items-center
+                                    space-x-2
+                                    text-base
+                                    leading-6
+                                    font-medium
+                                    focus:outline-none
+                                    focus:text-white
+                                    transition
+                                    ease-in-out
+                                    duration-150
+                                    '
+                                ) }}"
+                                :class="{'text-white': activeMenuItem === '{{ id }}'}"
+                                @click="activeMenuItem = activeMenuItem === '{{ id }}' ? '' : '{{ id }}'"
+                            >
+                                <span>{{ level1.content|smartypants|widont }}</span>
+                                <svg
+                                    class="{{ breakToSpace(
+                                        '
+                                        text-gray-100
+                                        h-5
+                                        w-5
+                                        group-hover:text-white
+                                        group-focus:text-white
+                                        transition
+                                        ease-in-out
+                                        duration-150
+                                        '
+                                    ) }}"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div
+                                class="absolute left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-xs sm:px-0"
+                                x-show="activeMenuItem === '{{ id }}'"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 translate-y-1"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 translate-y-0"
+                                x-transition:leave-end="opacity-0 translate-y-1"
+                                style="display: none;"
+                            >
+                                <div class="rounded-lg shadow-lg">
+                                    <div class="rounded-lg shadow-xs overflow-hidden">
+                                        <div class="{{ breakToSpace(
+                                            '
+                                            z-20
+                                            relative
+                                            grid
+                                            gap-6
+                                            bg-white
+                                            dark:bg-mine-shaft
+                                            px-5
+                                            py-6
+                                            sm:gap-8
+                                            sm:p-8
+                                            '
+                                        ) }}">
+                                            {% for level2 in level1.subItems %}
+                                                <a
+                                                    href="{{ level2.href }}"
+                                                    class="{{ breakToSpace(
+                                                        '
+                                                        -m-3
+                                                        p-3
+                                                        block
+                                                        space-y-1
+                                                        rounded-md
+                                                        hover:bg-champagne
+                                                        dark:hover:bg-gold-sand
+                                                        text-gray-900
+                                                        dark:text-gray-200
+                                                        dark:hover:text-gray-800
+                                                        transition
+                                                        ease-in-out
+                                                        duration-150
+                                                        '
+                                                    ) }}"
+                                                >
+                                                    <p class="{{ breakToSpace(
+                                                        '
+                                                        text-base
+                                                        leading-6
+                                                        font-medium
+                                                        '
+                                                    ) }}">
+                                                        {{ level2.content|smartypants|widont }}
+                                                    </p>
+                                                    {#<p class="text-sm leading-5 text-gray-500">
+                                                        Learn about tips, product updates and company culture.
+                                                    </p>#}
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a
+                            href="{{ level1.href }}"
+                            class="{{ breakToSpace(
+                                '
+                                text-base
+                                leading-6
+                                font-medium
+                                text-gray-100
+                                hover:text-white
+                                focus:outline-none
+                                focus:text-white
+                                transition
+                                ease-in-out
+                                duration-150
+                                '
+                            ) }}"
+                        >
+                            {{ level1.content|smartypants|widont }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </nav>
+            <div class="flex items-center space-x-4">
+                {% set iconClasses = breakToSpace(
+                    '
+                    block
+                    flex-shrink-0
+                    flex
+                    items-center
+                    justify-center
+                    h-12
+                    w-12
+                    rounded-md
+                    text-gray-100
+                    hover:text-white
+                    transition
+                    ease-in-out
+                    duration-200
+                    relative
+                    '
+                ) %}
+                <a
+                    href="/account"
+                    class="{{ iconClasses }}"
+                >
+                    {% include 'Http/_Infrastructure/Svg/Account.svg' with {
+                        class: 'w-8',
+                    } only %}
+                </a>
+                <a
+                    href="/cart"
+                    class="{{ iconClasses }}"
+                >
+                    <span
+                        class="{{ breakToSpace(
+                            '
+                            inline-flex
+                            items-center
+                            px-2.5
+                            py-0.5
+                            rounded-full
+                            text-xs
+                            font-medium
+                            leading-4
+                            bg-gold-sand
+                            dark:bg-rich-gold
+                            text-yellow-800
+                            dark:text-white
+                            absolute
+                            top-0
+                            right-0
+                            -mr-1
+                            -mt-1
+                            hidden
+                            shadow
+                            '
+                        ) }}"
+                        x-text="data.cartTotalQuantity"
+                        :class="{'hidden': data.cartTotalQuantity < 1}"
+                    ></span>
+                    {% include 'Http/_Infrastructure/Svg/Cart.svg' with {
+                        class: 'w-8',
+                    } only %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="{{ breakToSpace(
+            '
+            absolute
+            top-0
+            inset-x-0
+            p-2
+            transition
+            transform
+            origin-top-right
+            md:hidden
+            '
+        ) }}"
+        x-show="data.mobileMenuIsActive"
+        x-transition:enter="duration-200 ease-out"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="duration-100 ease-in"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        style="display: none;"
+    >
+        <div class="rounded-lg shadow-lg">
+            <div class="{{ breakToSpace(
+                '
+                rounded-lg
+                shadow-xs
+                bg-white
+                dark:bg-mine-shaft
+                divide-y-2
+                divide-gray-50
+                '
+            ) }}">
+                <div class="pt-5 pb-6 px-5 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <a
+                            href="/"
+                            class="{{ breakToSpace(
+                                '
+                                block
+                                w-32
+                                text-gray-700
+                                hover:text-gray-900
+                                dark:text-gray-300
+                                dark:hover:text-white
+                                transition
+                                duration-150
+                                ease-in-out
+                                '
+                            ) }}"
+                        >
+                            {% include 'Http/_Infrastructure/Svg/BzpxlLogoWide.svg' only %}
+                        </a>
+                        <div class="-mr-2">
+                            <button
+                                type="button"
+                                class="{{ breakToSpace(
+                                    '
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    p-2
+                                    rounded-md
+                                    text-gray-400
+                                    hover:text-gray-500
+                                    hover:bg-gray-100
+                                    dark:hover:bg-gray-900
+                                    focus:outline-none
+                                    focus:bg-gray-100
+                                    focus:text-gray-500
+                                    transition
+                                    duration-150
+                                    ease-in-out
+                                    '
+                                ) }}"
+                                @click="data.mobileMenuIsActive = false"
+                            >
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="py-6 px-5 space-y-6">
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-center space-x-4">
+                                {% set iconClasses = breakToSpace(
+                                    '
+                                    block
+                                    flex-shrink-0
+                                    flex
+                                    items-center
+                                    justify-center
+                                    h-10
+                                    w-10
+                                    rounded-md
+                                    bg-caribbean-green
+                                    hover:bg-jade
+                                    text-white
+                                    transition
+                                    ease-in-out
+                                    duration-200
+                                    relative
+                                    '
+                                ) %}
+                                <a
+                                    href="/account"
+                                    class="{{ iconClasses }}"
+                                >
+                                    {% include 'Http/_Infrastructure/Svg/Account.svg' with {
+                                        class: 'w-5',
+                                    } only %}
+                                </a>
+                                <a
+                                    href="/cart"
+                                    class="{{ iconClasses }}"
+                                >
+                                    <span
+                                        class="{{ breakToSpace(
+                                            '
+                                            inline-flex
+                                            items-center
+                                            px-2.5
+                                            py-0.5
+                                            rounded-full
+                                            text-xs
+                                            font-medium
+                                            leading-4
+                                            bg-gold-sand
+                                            dark:bg-rich-gold
+                                            text-yellow-800
+                                            dark:text-white
+                                            absolute
+                                            top-0
+                                            right-0
+                                            -mr-3
+                                            -mt-2
+                                            hidden
+                                            shadow
+                                            '
+                                        ) }}"
+                                        x-text="data.cartTotalQuantity"
+                                        :class="{'hidden': data.cartTotalQuantity < 1}"
+                                    ></span>
+                                    {% include 'Http/_Infrastructure/Svg/Cart.svg' with {
+                                        class: 'w-5',
+                                    } only %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <nav
+                            class="grid gap-6"
+                            data-name="MainNav__DesktopNav"
+                        >
+                            {% for level1 in MainMenu.menu %}
+                                {% set hasSubItems = level1.subItems is defined and level1.subItems is iterable %}
+                                {% if hasSubItems %}
+                                    <div
+                                        class="{{ breakToSpace(
+                                            '
+                                            -m-3 p-3 flex
+                                            items-center
+                                            space-x-4
+                                            rounded-lg
+                                            transition
+                                            ease-in-out
+                                            duration-150
+                                            '
+                                        ) }}"
+                                    >
+                                        <div class="{{ breakToSpace(
+                                            '
+                                            text-base
+                                            leading-6
+                                            font-bold
+                                            text-gray-900
+                                            dark:text-gray-200
+                                            '
+                                        ) }}">
+                                            {{ level1.content|smartypants|widont }}
+                                        </div>
+                                    </div>
+                                    {% for level2 in level1.subItems %}
+                                        <a
+                                            href="{{ level2.href }}"
+                                            class="{{ breakToSpace(
+                                                '
+                                                -m-3
+                                                p-3
+                                                flex
+                                                items-center
+                                                space-x-4
+                                                rounded-lg
+                                                hover:bg-champagne
+                                                dark:hover:bg-gold-sand
+                                                text-gray-900
+                                                dark:text-gray-200
+                                                dark:hover:text-gray-800
+                                                transition
+                                                ease-in-out
+                                                duration-150
+                                                pl-10
+                                                '
+                                            ) }}"
+                                        >
+                                            <div class="{{ breakToSpace(
+                                                '
+                                                text-base
+                                                leading-6
+                                                font-medium
+                                                '
+                                            ) }}">
+                                                {{ level2.content|smartypants|widont }}
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                {% else %}
+                                    <a
+                                        href="{{ level1.href }}"
+                                        class="{{ breakToSpace(
+                                            '
+                                            -m-3 p-3
+                                            flex
+                                            items-center
+                                            space-x-4
+                                            rounded-lg
+                                            hover:bg-gray-50
+                                            dark:hover:bg-gold-sand
+                                            text-gray-900
+                                            dark:text-gray-200
+                                            dark:hover:text-gray-800
+                                            transition
+                                            ease-in-out
+                                            duration-150
+                                            '
+                                        ) }}"
+                                    >
+                                        <div class="{{ breakToSpace(
+                                            '
+                                            text-base
+                                            leading-6
+                                            font-medium
+                                            '
+                                        ) }}">
+                                            {{ level1.content|smartypants|widont }}
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

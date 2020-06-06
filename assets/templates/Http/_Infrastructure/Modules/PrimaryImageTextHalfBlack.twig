@@ -1,0 +1,42 @@
+{# @var \App\Content\Modules\Payloads\PrimaryImageTextHalfBlack payload #}
+
+{# @var \App\Content\Modules\Payloads\ImagePayload image #}
+{% set image = payload.getImage() %}
+
+<section class="PrimaryImageTextHalfBlack">
+    <div class="PrimaryImageTextHalfBlack__Inner">
+        {% if payload.getHeadline() %}
+            <h2 class="PrimaryImageTextHalfBlack__Heading mb-5 px-4 sm:px-6 lg:px-9 lg:mt-11 text-2xl sm:text-3xl md:text-4xl sm:mt-9 text-center font-bold">
+                {{ payload.getHeadline()|smartypants }}
+            </h2>
+        {% endif %}
+        <div class="PrimaryImageTextHalfBlack__ImageContainer px-4 sm:px-6 lg:px-9 relative">
+            <span class="bg-mine-shaft bottom-0 left-0 block h-50p absolute w-full z-1"></span>
+            <div class="PrimaryImageTextHalfBlack__Image shadow-common my-0 mx-auto max-w-88rem relative z-2">
+                <picture>
+                    {# @var \App\Content\Modules\Payloads\ImageSourcePayload[] sources #}
+                    {% set sources = image.getSources() %}
+                    {% for source in sources %}
+                        <source
+                            srcset="{{ source.getOneX() }} 1x{% if source.getTwoX() %}, {{ source.getTwoX() }} 2x{% endif %}"
+                            media="{{ source.getMediaQuery() }}"
+                        >
+                    {% endfor %}
+                    <img
+                        src="{{ image.getOneX() }}"
+                        {% if image.getTwoX() %}
+                            srcset="{{ image.getOneX() }} 1x, {{ image.getTwoX() }} 2x"
+                        {% endif %}
+                        alt="{{ image.getAlt() }}"
+                        class="PrimaryImageTextHalfBlack__ImageTag w-full"
+                    >
+                </picture>
+            </div>
+        </div>
+        <div class="PrimaryImageTextHalfBlack__Content bg-mine-shaft">
+            <div class="PrimaryImageTextHalfBlack__ContentInner px-4 sm:px-6 lg:px-9 py-8 sm:py-9 lg:pt-11 lg:text-xl my-0 mx-auto max-w-5xl text-spring-wood">
+                {{ payload.getContent()|smartypants|widont }}
+            </div>
+        </div>
+    </div>
+</section>

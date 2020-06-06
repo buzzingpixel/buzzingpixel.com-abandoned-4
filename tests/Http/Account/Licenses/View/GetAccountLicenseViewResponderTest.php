@@ -27,7 +27,9 @@ class GetAccountLicenseViewResponderTest extends TestCase
         $twigEnv->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/LicenseView.twig'),
+                self::equalTo(
+                    'Http/Account/LicenseView.twig'
+                ),
                 self::equalTo(
                     [
                         'metaPayload' => new MetaPayload(
@@ -39,7 +41,6 @@ class GetAccountLicenseViewResponderTest extends TestCase
                                 'href' => '/account/licenses',
                                 'content' => 'All Licenses',
                             ],
-                            ['content' => 'License'],
                         ],
                         'license' => $license,
                     ]

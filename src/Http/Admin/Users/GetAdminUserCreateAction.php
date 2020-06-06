@@ -24,7 +24,7 @@ class GetAdminUserCreateAction
     public function __invoke() : ResponseInterface
     {
         return ($this->responder)(
-            'Admin/UserCreate.twig',
+            'Http/Admin/UserCreate.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Create New User | Admin']
@@ -35,7 +35,6 @@ class GetAdminUserCreateAction
                         'href' => '/admin/users',
                         'content' => 'Users Admin',
                     ],
-                    ['content' => 'Create New User'],
                 ],
             ],
         );

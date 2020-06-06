@@ -1,0 +1,61 @@
+{% set action = action ?? '' %}
+{% set title = title ?? '' %}
+{% set subtitle = subtitle ?? '' %}
+{% set inputs = inputs ?? [] %}
+{% set cancelButton = cancelButton ?? false %}
+
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
+
+<div class="bg-white dark:bg-blue-smoke shadow overflow-hidden sm:rounded-lg">
+    {% include 'Http/_Infrastructure/Components/Forms/Includes/Message.twig' only %}
+    <div class="px-4 py-5 border-b border-gray-200 dark:border-gray-400 sm:px-6">
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            {% if action %}
+            action="{{ action }}"
+            {% endif %}
+        >
+            {{ Inputs.hiddenInputs() }}
+            {% if title or subtitle %}
+                <div>
+                    {% if title %}
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                            {{ title|smartypants|widont }}
+                        </h3>
+                    {% endif %}
+                    {% if subtitle %}
+                        <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">
+                            {{ subtitle|smartypants|widont }}
+                        </p>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
+                {% for params in inputs %}
+                    {% switch params.type %}
+                        {% case 'textarea' %}
+                            {{ Inputs.simpleStackedTextarea(params) }}
+                        {% default %}
+                            {{ Inputs.simpleStackedText(params) }}
+                    {% endswitch %}
+                {% endfor %}
+            </div>
+            <div class="mt-8 pt-5">
+                <div class="flex justify-end">
+                    {% if cancelButton %}
+                        <span class="inline-flex rounded-md shadow-sm">
+                            {{ Buttons.neutralLink(cancelButton) }}
+                        </span>
+                    {% endif %}
+                    <span class="ml-3 inline-flex rounded-md shadow-sm">
+                        {{ Buttons.actionButton({
+                            content: 'Save',
+                        }) }}
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

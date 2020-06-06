@@ -25,7 +25,7 @@ class PostAdminSoftwareVersionEditResponder
     public function __invoke(
         Payload $payload,
         string $id,
-        string $softwareSlug
+        string $softwareId
     ) : ResponseInterface {
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             $this->flashMessages->addMessage(
@@ -54,7 +54,7 @@ class PostAdminSoftwareVersionEditResponder
         return $this->responseFactory->createResponse(303)
             ->withHeader(
                 'Location',
-                '/admin/software/view/' . $softwareSlug
+                '/admin/software/view/' . $softwareId
             );
     }
 }

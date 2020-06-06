@@ -30,8 +30,8 @@ class GetAdminSoftwareEditAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $software = $this->softwareApi->fetchSoftwareBySlug(
-            (string) $request->getAttribute('slug')
+        $software = $this->softwareApi->fetchSoftwareById(
+            (string) $request->getAttribute('id')
         );
 
         if ($software === null) {
@@ -39,7 +39,7 @@ class GetAdminSoftwareEditAction
         }
 
         return ($this->responder)(
-            'Admin/SoftwareEdit.twig',
+            'Http/Admin/SoftwareEdit.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Edit ' . $software->name . ' | Admin']
@@ -50,9 +50,12 @@ class GetAdminSoftwareEditAction
                         'href' => '/admin/software',
                         'content' => 'Software Admin',
                     ],
-                    ['content' => 'Edit Software'],
+                    [
+                        'href' => '/admin/software/view/' . $software->id,
+                        'content' => $software->name,
+                    ],
                 ],
-                'softwareModel' => $software,
+                'software' => $software,
             ],
         );
     }

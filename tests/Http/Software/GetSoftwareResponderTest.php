@@ -33,12 +33,15 @@ class GetSoftwareResponderTest extends TestCase
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('SoftwarePage.twig'),
+                self::equalTo(
+                    'Http/Software/SoftwarePage.twig'
+                ),
                 self::equalTo([
                     'metaPayload' => $metaPayload,
                     'modulePayload' => $modulePayload,
                     'softwareInfoPayload' => $softwareInfoPayload,
                     'uriPath' => '/foo/var',
+                    'activeNavHref' => '/foo/var',
                 ])
             )
             ->willReturn('TwigRenderReturnContent');

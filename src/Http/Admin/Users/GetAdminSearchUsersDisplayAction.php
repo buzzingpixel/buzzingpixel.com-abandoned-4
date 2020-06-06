@@ -60,14 +60,21 @@ class GetAdminSearchUsersDisplayAction
             ->withBase($uriSegments->getPathSansPagination())
             ->withCurrentPage($uriSegments->getPageNum())
             ->withPerPage($limit)
-            ->withTotalResults($this->userApi->fetchTotalUsers());
+            ->withTotalResults($this->userApi->fetchTotalUsers())
+            ->withQueryStringFromArray(['q' => $query]);
 
         return ($this->responder)(
-            'Admin/Users.twig',
+            'Http/Admin/Users.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'User Search | Admin']
                 ),
+                'breadcrumbs' => [
+                    [
+                        'href' => '/admin/users',
+                        'content' => 'Users Admin',
+                    ],
+                ],
                 'activeTab' => 'users',
                 'userModels' => $users,
                 'pagination' => $pagination,

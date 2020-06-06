@@ -1,0 +1,118 @@
+{# @var \App\Licenses\Models\LicenseModel license #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{% set authorizedDomains %}
+    {% if license.authorizedDomains|length > 0 %}
+        <ul class="border border-gray-200 dark:border-gray-400 rounded-md max-w-lg">
+            {% for domain in license.authorizedDomains %}
+                <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5 dark:text-gray-100{% if not loop.first %} border-t border-gray-200 dark:border-gray-400{% endif %}">
+                    <div class="w-0 flex-1 flex items-center">
+                        <span class="ml-2 flex-1 w-0">
+                          {{ domain }}
+                        </span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <a
+        href="/account/licenses/authorized-domains/{{ license.id }}"
+        class="text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline block{% if license.authorizedDomains|length > 0 %} mt-2 ml-2{% endif %}"
+    >
+        Edit&nbsp;Domains&nbsp;&rarr;
+    </a>
+{% endset %}
+
+{% set downloads %}
+    {# TODO: Make downloads available #}
+    <ul class="border border-gray-200 dark:border-gray-400 rounded-md max-w-lg">
+        <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm dark:text-gray-100 leading-5">
+            <div class="w-0 flex-1 flex items-center">
+                <svg class="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
+                </svg>
+                <span class="ml-2 flex-1 w-0">
+                  {{ license.itemTitle|smartypants|widont }} 1.0.1
+                </span>
+            </div>
+            <div class="ml-4 flex-shrink-0">
+                <a
+                    href="#"
+                    class="font-medium text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline transition duration-150 ease-in-out"
+                >
+                    Download
+                </a>
+            </div>
+        </li>
+        <li class="border-t border-gray-200 dark:border-gray-400 pl-3 pr-4 py-3 flex items-center justify-between text-sm dark:text-gray-100 leading-5">
+            <div class="w-0 flex-1 flex items-center">
+                <svg class="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
+                </svg>
+                <span class="ml-2 flex-1 w-0">
+                  {{ license.itemTitle|smartypants|widont }} 1.0.0
+                </span>
+            </div>
+            <div class="ml-4 flex-shrink-0">
+                <a
+                    href="#"
+                    class="font-medium text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline transition duration-150 ease-in-out"
+                >
+                    Download
+                </a>
+            </div>
+        </li>
+    </ul>
+{% endset %}
+
+{% set notes %}
+    <div class="border border-gray-200 dark:border-gray-400 rounded-md max-w-lg p-3 text-sm leading-5 rich-text-style">
+        {{ license.notes|escape|markdownParse }}
+    </div>
+    <a
+        href="/account/licenses/notes/{{ license.id }}"
+        class="text-meteor hover:text-rich-gold dark:text-champagne dark:hover:text-gold-sand underline block mt-2 ml-2"
+    >
+        Edit&nbsp;Notes&nbsp;&rarr;
+    </a>
+{% endset %}
+
+{% block accountContent %}
+    {% include 'Http/_Infrastructure/Components/LeftAlignedStripedCard.twig' with {
+        title: license.itemTitle,
+        subtitle: license.id,
+        items: [
+            {
+                title: 'Authorized Domains',
+                content: authorizedDomains,
+            },
+            {
+                title: 'Current Version',
+                content: license.version,
+            },
+            {
+                title: 'Latest Available Version',
+                content: license.lastAvailableVersion,
+            },
+            {
+                title: 'Downloads',
+                content: downloads,
+            },
+            {
+                title: 'Is Active',
+                content: license.isDisabled ? 'No' : 'Yes',
+            },
+            {
+                title: 'Expires',
+                content: license.expires
+                    .setTimezone(user.timezone)
+                    .format('Y/m/d'),
+            },
+            {
+                title: 'Notes',
+                content: notes,
+            },
+        ]
+    } only %}
+{% endblock %}

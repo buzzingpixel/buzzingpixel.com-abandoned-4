@@ -42,8 +42,8 @@ class PostAdminSoftwareAddVersionAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $software = $this->softwareApi->fetchSoftwareBySlug(
-            (string) $request->getAttribute('slug')
+        $software = $this->softwareApi->fetchSoftwareById(
+            (string) $request->getAttribute('id')
         );
 
         if ($software === null) {
@@ -98,7 +98,7 @@ class PostAdminSoftwareAddVersionAction
                         'inputValues' => $inputValues,
                     ],
                 ),
-                $software->slug,
+                $software->id,
             );
         }
 
@@ -139,13 +139,13 @@ class PostAdminSoftwareAddVersionAction
                     Payload::STATUS_NOT_UPDATED,
                     ['message' => 'An unknown error occurred'],
                 ),
-                $software->slug,
+                $software->id,
             );
         }
 
         return ($this->responder)(
             $payload,
-            $software->slug
+            $software->id
         );
     }
 }

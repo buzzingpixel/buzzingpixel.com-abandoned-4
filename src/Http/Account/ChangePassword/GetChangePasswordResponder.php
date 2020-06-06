@@ -20,7 +20,7 @@ class GetChangePasswordResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/ChangePassword.twig',
+            'Http/Account/ChangePassword.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Change Your Password']

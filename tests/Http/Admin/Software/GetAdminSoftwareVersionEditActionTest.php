@@ -33,7 +33,7 @@ class GetAdminSoftwareVersionEditActionTest extends TestCase
 
         $softwareApi->expects(self::once())
             ->method('fetchSoftwareVersionById')
-            ->with(self::equalTo('foo-slug'))
+            ->with(self::equalTo('foo-id'))
             ->willReturn(null);
 
         $service = new GetAdminSoftwareVersionEditAction(
@@ -48,7 +48,7 @@ class GetAdminSoftwareVersionEditActionTest extends TestCase
         $request->expects(self::once())
             ->method('getAttribute')
             ->with(self::equalTo('id'))
-            ->willReturn('foo-slug');
+            ->willReturn('foo-id');
 
         $exception = null;
 
@@ -120,11 +120,13 @@ class GetAdminSoftwareVersionEditActionTest extends TestCase
 
         $software->slug = 'foo-slug';
 
+        $software->id = 'foo-id';
+
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
             ->method('fetchSoftwareVersionById')
-            ->with(self::equalTo('foo-slug'))
+            ->with(self::equalTo('foo-id'))
             ->willReturn($softwareVersion);
 
         $service = new GetAdminSoftwareVersionEditAction(
@@ -139,14 +141,14 @@ class GetAdminSoftwareVersionEditActionTest extends TestCase
         $request->expects(self::once())
             ->method('getAttribute')
             ->with(self::equalTo('id'))
-            ->willReturn('foo-slug');
+            ->willReturn('foo-id');
 
         $returnResponse = $service($request);
 
         self::assertSame($response, $returnResponse);
 
         self::assertSame(
-            'Admin/SoftwareVersionEdit.twig',
+            'Http/Admin/SoftwareVersionEdit.twig',
             $holder->template
         );
 
@@ -170,7 +172,7 @@ class GetAdminSoftwareVersionEditActionTest extends TestCase
 
         $breadCrumbs = $holder->context['breadcrumbs'];
 
-        self::assertCount(3, $breadCrumbs);
+        self::assertCount(2, $breadCrumbs);
 
         self::assertSame(
             [
@@ -179,11 +181,9 @@ class GetAdminSoftwareVersionEditActionTest extends TestCase
                     'content' => 'Software Admin',
                 ],
                 [
-                    'href' => '/admin/software/view/' .
-                        $software->slug,
+                    'href' => '/admin/software/view/' . $software->id,
                     'content' => $software->name,
                 ],
-                ['content' => 'Edit Version'],
             ],
             $holder->context['breadcrumbs'],
         );

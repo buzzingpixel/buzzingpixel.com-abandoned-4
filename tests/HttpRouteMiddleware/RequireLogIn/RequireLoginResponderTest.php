@@ -20,12 +20,14 @@ class RequireLoginResponderTest extends TestCase
     {
         $metaPayload = new MetaPayload();
 
-        $twigEnvironment = $this->createMock(TwigEnvironment::class);
+        $twigEnvironment = $this->createMock(
+            TwigEnvironment::class
+        );
 
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('LogIn.twig'),
+                self::equalTo('Http/LogIn.twig'),
                 self::equalTo(
                     [
                         'metaPayload' => $metaPayload,

@@ -20,7 +20,7 @@ class GetEditNotesResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/LicenseEditNotes.twig',
+            'Http/Account/LicenseEditNotes.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Edit Notes on License']
@@ -35,7 +35,6 @@ class GetEditNotesResponder extends StandardResponderConstructor
                         'href' => '/account/licenses/view/' . $license->id,
                         'content' => 'License',
                     ],
-                    ['content' => 'Edit Notes'],
                 ],
                 'license' => $license,
             ]

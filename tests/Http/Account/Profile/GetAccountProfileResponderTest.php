@@ -27,7 +27,7 @@ class GetAccountProfileResponderTest extends TestCase
         $twigEnv->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/ProfileView.twig'),
+                self::equalTo('Http/Account/ProfileView.twig'),
                 self::equalTo(
                     [
                         'metaPayload' => new MetaPayload(

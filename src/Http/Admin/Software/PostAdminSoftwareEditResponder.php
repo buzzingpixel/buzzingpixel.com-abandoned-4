@@ -24,7 +24,7 @@ class PostAdminSoftwareEditResponder
 
     public function __invoke(
         Payload $payload,
-        string $slug
+        string $id
     ) : ResponseInterface {
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             $this->flashMessages->addMessage(
@@ -38,7 +38,7 @@ class PostAdminSoftwareEditResponder
             return $this->responseFactory->createResponse(303)
                 ->withHeader(
                     'Location',
-                    '/admin/software/edit/' . $slug
+                    '/admin/software/edit/' . $id
                 );
         }
 
@@ -53,7 +53,7 @@ class PostAdminSoftwareEditResponder
         return $this->responseFactory->createResponse(303)
             ->withHeader(
                 'Location',
-                '/admin/software/view/' . $slug
+                '/admin/software/view/' . $id
             );
     }
 }

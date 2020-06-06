@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Config\Factories;
 
+use App\HttpResponse\Twig\Extensions\BreakToSpace;
 use App\HttpResponse\Twig\Extensions\Countries;
 use App\HttpResponse\Twig\Extensions\FetchLoggedInUser;
 use App\HttpResponse\Twig\Extensions\PhpFunctions;
+use App\HttpResponse\Twig\Extensions\ReadJson;
 use App\HttpResponse\Twig\Extensions\RequireVariables;
 use App\HttpResponse\Twig\Extensions\Slugify;
 use App\HttpResponse\Twig\Extensions\TemplateExists;
@@ -44,7 +46,7 @@ class TwigEnvironmentFactory
 
         $loader = $di->get(FilesystemLoader::class);
 
-        $loader->addPath($projectPath . '/assetsSource/templates');
+        $loader->addPath($projectPath . '/assets/templates');
 
         $twig = new TwigEnvironment(
             $loader,
@@ -81,6 +83,8 @@ class TwigEnvironmentFactory
 
         $twig->addExtension($di->get(MarkdownTwigExtension::class));
 
+        $twigMessages = $di->get(TwigMessages::class);
+
         $twig->addExtension($di->get(TwigMessages::class));
 
         $twig->addExtension($di->get(FetchLoggedInUser::class));
@@ -89,6 +93,10 @@ class TwigEnvironmentFactory
 
         $twig->addExtension($di->get(TimeZoneList::class));
 
+        $twig->addExtension($di->get(ReadJson::class));
+
+        $twig->addExtension($di->get(BreakToSpace::class));
+
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
         $twig->addGlobal('MainMenu', $di->get(MainMenu::class));
@@ -96,6 +104,10 @@ class TwigEnvironmentFactory
         $twig->addGlobal('Footer', $di->get(Footer::class));
 
         $twig->addGlobal('csrf', $di->get(Csrf::class));
+
+        $postMessage = $twigMessages->getMessages('PostMessage');
+
+        $twig->addGlobal('PostMessage', $postMessage[0] ?? []);
 
         return $twig;
     }

@@ -24,7 +24,7 @@ class PostAdminSoftwareAddVersionResponder
 
     public function __invoke(
         Payload $payload,
-        string $softwareSlug
+        string $softwareId
     ) : ResponseInterface {
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             $this->flashMessages->addMessage(
@@ -38,7 +38,7 @@ class PostAdminSoftwareAddVersionResponder
             return $this->responseFactory->createResponse(303)
                 ->withHeader(
                     'Location',
-                    '/admin/software/' . $softwareSlug . '/add-version'
+                    '/admin/software/' . $softwareId . '/add-version'
                 );
         }
 
@@ -53,7 +53,7 @@ class PostAdminSoftwareAddVersionResponder
         return $this->responseFactory->createResponse(303)
             ->withHeader(
                 'Location',
-                '/admin/software/view/' . $softwareSlug
+                '/admin/software/view/' . $softwareId
             );
     }
 }

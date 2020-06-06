@@ -160,6 +160,9 @@ class CartModel
     {
         $user = $this->user;
 
+        // TODO: Determine if user has cards
+        return false;
+
         if ($user === null) {
             return false;
         }

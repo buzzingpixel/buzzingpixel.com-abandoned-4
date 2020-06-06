@@ -9,9 +9,15 @@
          colors="true"
          printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
          verbose="true">
+
+    <extensions>
+        <extension class="Tests\BypassFinalListener" />
+    </extensions>
+
     <testsuites>
         <testsuite name="BuzzingPixel.com">
             <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
+
 </phpunit>

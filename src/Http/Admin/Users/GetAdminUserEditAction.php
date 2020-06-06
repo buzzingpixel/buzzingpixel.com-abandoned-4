@@ -40,7 +40,7 @@ class GetAdminUserEditAction
         }
 
         return ($this->responder)(
-            'Admin/UserEdit.twig',
+            'Http/Admin/UserEdit.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Edit ' . $user->emailAddress . ' | Admin']
@@ -51,7 +51,6 @@ class GetAdminUserEditAction
                         'href' => '/admin/users',
                         'content' => 'User Admin',
                     ],
-                    ['content' => 'Edit User'],
                 ],
                 'user' => $user,
             ],

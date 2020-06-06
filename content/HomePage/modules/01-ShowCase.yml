@@ -1,14 +1,15 @@
 type: ShowCase
-preHeadline: Take Your Images to the Next Level
 headline: Ansel
 subHeadline: For Craft CMS and ExpressionEngine
+content: The field type that takes your images to the next level
 ctas:
   - content: Ansel for EE
     href: /software/ansel-ee
   - content: Ansel for Craft
     href: /software/ansel-craft
 showCaseImage:
-  1x: /content-images/ansel-craft-screen-shot/ansel-craft-screen-shot.jpg
+#  1x: /content-images/ansel-craft-screen-shot/ansel-craft-screen-shot.jpg
+  1x: /content-images/eyes-background-image/eyes.jpg
 #  2x: TODO
   alt: Ansel for Craft CMS and ExpressionEngine
 #  sources:

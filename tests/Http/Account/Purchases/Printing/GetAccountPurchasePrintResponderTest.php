@@ -26,7 +26,9 @@ class GetAccountPurchasePrintResponderTest extends TestCase
         $twigEnv->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/PurchasePrintView.twig'),
+                self::equalTo(
+                    'Http/Account/PurchasePrintView.twig'
+                ),
                 self::equalTo(
                     ['order' => $order]
                 )

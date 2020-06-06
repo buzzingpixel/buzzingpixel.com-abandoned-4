@@ -1,0 +1,295 @@
+{# @var \Slim\Csrf\Guard csrf #}
+
+{% macro hiddenInputs(params) %}
+    {% if not params %}
+        {% set params = {} %}
+    {% endif %}
+    {% set params = {
+        redirectTo: '',
+    }|merge(params) %}
+    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+    {% if params.redirectTo %}
+        <input type="hidden" name="redirect_to" value="{{ params.redirectTo }}">
+    {% endif %}
+    <label for="a_password" style="display:none !important">
+        <input
+            id="a_password"
+            type="text"
+            name="a_password"
+            style="display:none !important"
+            tabindex="-1"
+            autocomplete="off"
+        >
+    </label>
+{% endmacro %}
+
+{% macro simpleStackedWrapper(params, input) %}
+    {% set params = {
+        label: '',
+        small: '',
+        name: '',
+    }|merge(params) %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    <div class="sm:col-span-6">
+        <label
+            for="{{ params.name }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+        >
+            {{ params.label|smartypants|widont }}
+        </label>
+        {% if params.small %}
+            <p class="text-sm text-gray-500 dark:text-gray-300">
+                {{ params.small|smartypants|widont }}
+            </p>
+        {% endif %}
+        <div class="mt-1 rounded-md shadow-sm">
+            {{ input }}
+        </div>
+        {% if errorMessage %}
+            <div class="mt-2 text-red">
+                {{ errorMessage|smartypants|widont }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro simpleStackedText(params) %}
+    {% set params = {
+        name: '',
+        value: '',
+        type: 'text',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <div class="rounded-md shadow-sm">
+            <input
+                type="{{ params.type }}"
+                name="{{ params.name }}"
+                id="{{ params.name }}"
+                class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+                value="{{ value }}"
+            >
+        </div>
+    {% endset %}
+
+    {{ _self.simpleStackedWrapper(params, input) }}
+{% endmacro %}
+
+{% macro simpleStackedTextarea(params) %}
+    {% set params = {
+        name: '',
+        rows: 6,
+        value: '',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <textarea
+            name="{{ params.name }}"
+            id="{{ params.name }}"
+            rows="{{ params.rows }}"
+            class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+        >{{ value }}</textarea>
+    {% endset %}
+
+    {{ _self.simpleStackedWrapper(params, input) }}
+{% endmacro %}
+
+{% macro labelsOnLeftWrapper(params, input) %}
+    {% set params = {
+        label: '',
+        small: '',
+        name: '',
+    }|merge(params) %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    <div class="mt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <label
+            for="{{ params.name }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 sm:mt-px sm:pt-2"
+        >
+            {{ params.label|smartypants|widont }}
+            {% if params.small %}
+                <small class="block">
+                    {{ params.small|smartypants|widont }}
+                </small>
+            {% endif %}
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <div>
+                {{ input }}
+            </div>
+            {% if errorMessage %}
+                <div class="mt-2 text-red">
+                    {{ errorMessage|smartypants|widont }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro labelsOnLeftText(params) %}
+    {% set params = {
+        name: '',
+        value: '',
+        type: 'text',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <div class="rounded-md shadow-sm">
+            <input
+                type="{{ params.type }}"
+                name="{{ params.name }}"
+                id="{{ params.name }}"
+                class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+                value="{{ value }}"
+            >
+        </div>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
+{% endmacro %}
+
+{% macro labelsOnLeftSelect(params) %}
+    {% set params = {
+        name: '',
+        value: '',
+        options: [],
+        emptyOption: '',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <select
+            name="{{ params.name }}"
+            id="{{ params.name }}"
+            class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+            ref="select"
+        >
+            {% if params.emptyOption %}
+                <option
+                    value=""
+                    {% if value == '' %}
+                    selected
+                    {% endif %}
+                >
+                    {{ params.emptyOption|raw }}
+                </option>
+            {% endif %}
+            {% for key,optionContent in params.options %}
+                <option
+                    value="{{ key }}"
+                    {% if value == key %}
+                    selected
+                    {% endif %}
+                >
+                    {{ optionContent }}
+                </option>
+            {% endfor %}
+        </select>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
+{% endmacro %}
+
+{% macro labelsOnLeftCheckbox(params) %}
+    {% set params = {
+        label: '',
+        name: '',
+        isChecked: false,
+    }|merge(params) %}
+
+    {% set isChecked = params.isChecked %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set isChecked = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set input %}
+        <div class="relative flex items-start mt-2">
+            <div class="absolute flex items-center h-5">
+                <input
+                    id="{{ params.name }}"
+                    name="{{ params.name }}"
+                    type="checkbox"
+                    class="form-checkbox h-4 w-4 text-jade transition duration-150 ease-in-out dark:bg-gray-600"
+                    value="true"
+                    {% if isChecked %}
+                    checked
+                    {% endif %}
+                >
+            </div>
+            <div class="pl-7 text-sm leading-5">
+                <label for="{{ params.name }}" class="font-medium text-gray-700 dark:text-gray-100">
+                    {{ params.label|smartypants|widont }}
+                </label>
+            </div>
+        </div>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
+{% endmacro %}
+
+{% macro labelsOnLeftDateChooser(params) %}
+    {% set params = {
+        name: '',
+        value: '',
+    }|merge(params) %}
+
+    {% set value = params.value %}
+
+    {% if PostMessage['result']['inputValues'][params.name] is defined %}
+        {% set value = PostMessage['result']['inputValues'][params.name] %}
+    {% endif %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set input %}
+        <div class="rounded-md shadow-sm">
+            <input
+                type="text"
+                name="{{ params.name }}"
+                id="{{ params.name }}"
+                class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+                value="{{ value }}"
+                ref="flatpickr"
+            >
+        </div>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
+{% endmacro %}

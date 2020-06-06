@@ -1,4 +1,7 @@
 type: CtaCards
+preHeadline: CMS Add-ons
+headline: Choose the add-on that's right for you!
+content: BuzzingPixel CMS add-ons work to make life easier for content managers and developers alike!
 primary:
   heading: Ansel
   content: |
@@ -18,7 +21,7 @@ primary:
 left:
   heading: Treasury
   content: |
-    Ansel puts the power in your hands. Image constraints, width, height, aspect ratio, and more so anyone can edit images in entries with confidence; all while using the manipulation tools to bring present your images best!
+    Treasury stores files locally, on Amazon S3, or any FTP/SFTP location and comes with a full developer API so that developers can take advantage of public methods for uploading and manipulating files.
   bullets:
     - Store files on S3 or any (S)FTP location
     - Simple, easy to use field type

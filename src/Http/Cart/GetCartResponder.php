@@ -20,7 +20,7 @@ class GetCartResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Cart.twig',
+            'Http/Cart.twig',
             [
                 'metaPayload' => new MetaPayload(['metaTitle' => 'Your Cart']),
                 'cart' => $cart,

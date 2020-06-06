@@ -1,0 +1,52 @@
+{% set title = title ?? '' %}
+{% set subtitle = subtitle ?? '' %}
+{% set actionButton = actionButton ?? false %}
+{% set items = items ?? [] %}
+
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
+
+{% set alternator = [
+    'bg-white dark:bg-blue-smoke',
+    'bg-gray-50 dark:bg-nandor-light',
+] %}
+
+<div class="bg-white dark:bg-blue-smoke shadow overflow-hidden sm:rounded-lg">
+    {% if title or subtitle %}
+        {% set tmpAlternator = alternator %}
+        {% set alternator = [
+            tmpAlternator[1],
+            tmpAlternator[0],
+        ] %}
+            <div class="px-4 py-5 border-b border-gray-200 dark:border-gray-400 sm:px-6">
+                {% if actionButton %}
+                <div class="flex items-center justify-between flex-wrap sm:flex-no-wrap">
+                {% endif %}
+                    <div>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                            {{ title|smartypants|widont }}
+                        </h3>
+                        <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-300">
+                            {{ subtitle|smartypants|widont }}
+                        </p>
+                    </div>
+                {% if actionButton %}
+                    {{ Buttons.actionLink(actionButton) }}
+                </div>
+                {% endif %}
+            </div>
+    {% endif %}
+    <div>
+        <dl>
+            {% for item in items %}
+                <div class="{{ alternator[loop.index is odd ? 0 : 1] }} px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-300">
+                        {{ item.title|smartypants|widont }}
+                    </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ item.content|smartypants|widont }}
+                    </dd>
+                </div>
+            {% endfor %}
+        </dl>
+    </div>
+</div>

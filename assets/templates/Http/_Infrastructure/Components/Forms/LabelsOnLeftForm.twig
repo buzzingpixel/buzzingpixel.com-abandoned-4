@@ -1,0 +1,83 @@
+{% set action = action ?? '' %}
+{% set showUpperButtons = showUpperButtons ?? true %}
+{% set title = title ?? '' %}
+{% set subtitle = subtitle ?? '' %}
+{% set cancelButton = cancelButton ?? false %}
+
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Buttons.twig' as Buttons %}
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
+
+<div class="bg-white dark:bg-blue-smoke shadow sm:rounded-lg max-w-4xl">
+    {% include 'Http/_Infrastructure/Components/Forms/Includes/Message.twig' only %}
+    <div class="px-4 py-5 sm:px-6">
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            {% if action %}
+            action="{{ action }}"
+            {% endif %}
+        >
+            <div>
+                {{ Inputs.hiddenInputs() }}
+                {% if title or subtitle or showUpperButtons %}
+                    <div>
+                        {% if showUpperButtons %}
+                            <span class="float-right flex justify-end">
+                                {% if cancelButton %}
+                                    <span class="inline-flex rounded-md shadow-sm">
+                                        {{ Buttons.neutralLink(cancelButton) }}
+                                    </span>
+                                {% endif %}
+                                <span class="ml-3 rounded-md shadow-sm">
+                                    {{ Buttons.actionButton({
+                                        content: 'Save',
+                                    }) }}
+                                </span>
+                            </span>
+                        {% endif %}
+                        {% if title %}
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                                {{ title|smartypants|widont }}
+                            </h3>
+                        {% endif %}
+                        {% if subtitle %}
+                            <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">
+                                {{ subtitle|smartypants|widont }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="mt-8 border-t border-gray-200 pt-4 sm:mt-5 sm:pt-0">
+                    <div class="-mt-6">
+                        {% for params in inputs %}
+                            {% switch params.type %}
+                                {% case 'select' %}
+                                    {{ Inputs.labelsOnLeftSelect(params) }}
+                                {% case 'checkbox' %}
+                                    {{ Inputs.labelsOnLeftCheckbox(params) }}
+                                {% case 'dateChooser' %}
+                                    {{ Inputs.labelsOnLeftDateChooser(params) }}
+                                {% default %}
+                                    {{ Inputs.labelsOnLeftText(params) }}
+                            {% endswitch %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-5">
+                <div class="flex justify-end">
+                    {% if cancelButton %}
+                        <span class="inline-flex rounded-md shadow-sm">
+                            {{ Buttons.neutralLink(cancelButton) }}
+                        </span>
+                    {% endif %}
+                    <span class="ml-3 inline-flex rounded-md shadow-sm">
+                        {{ Buttons.actionButton({
+                            content: 'Save',
+                        }) }}
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
