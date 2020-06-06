@@ -28,7 +28,7 @@ class GetHomeResponderTest extends TestCase
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('StandardPage.twig'),
+                self::equalTo('Http/StandardPage.twig'),
                 self::equalTo([
                     'metaPayload' => $metaPayload,
                     'modulePayload' => $modulePayload,

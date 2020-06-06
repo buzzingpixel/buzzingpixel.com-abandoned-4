@@ -20,7 +20,7 @@ class GetAccountProfileResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/ProfileView.twig',
+            'Http/Account/ProfileView.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Edit Your Profile']

@@ -29,8 +29,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn(null);
 
         $responder = $this->createMock(
@@ -57,8 +57,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $exception = null;
 
@@ -90,17 +90,19 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $holder->payload = null;
 
-        $holder->softwareSlug = null;
+        $holder->softwareId = null;
 
         $software = new SoftwareModel();
 
         $software->slug = 'foo-slug';
 
+        $software->id = 'foo-id';
+
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $response = $this->createMock(
@@ -116,14 +118,14 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $slug
+                    string $id
                 ) use (
                     $holder,
                     $response
                 ) {
                     $holder->payload = $payload;
 
-                    $holder->softwareSlug = $slug;
+                    $holder->softwareId = $id;
 
                     return $response;
                 }
@@ -151,8 +153,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $request->expects(self::once())
             ->method('getParsedBody')
@@ -196,8 +198,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
         );
 
         self::assertSame(
-            $software->slug,
-            $holder->softwareSlug
+            $software->id,
+            $holder->softwareId
         );
     }
 
@@ -210,17 +212,19 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $holder->payload = null;
 
-        $holder->softwareSlug = null;
+        $holder->softwareId = null;
 
         $software = new SoftwareModel();
 
         $software->slug = 'foo-slug';
 
+        $software->id = 'foo-id';
+
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $response = $this->createMock(
@@ -236,14 +240,14 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $slug
+                    string $id
                 ) use (
                     $holder,
                     $response
                 ) {
                     $holder->payload = $payload;
 
-                    $holder->softwareSlug = $slug;
+                    $holder->softwareId = $id;
 
                     return $response;
                 }
@@ -276,8 +280,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $request->expects(self::once())
             ->method('getParsedBody')
@@ -321,8 +325,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
         );
 
         self::assertSame(
-            $software->slug,
-            $holder->softwareSlug
+            $software->id,
+            $holder->softwareId
         );
     }
 
@@ -335,17 +339,19 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $holder->payload = null;
 
-        $holder->softwareSlug = null;
+        $holder->softwareId = null;
 
         $software = new SoftwareModel();
 
         $software->slug = 'foo-slug';
 
+        $software->slug = 'foo-id';
+
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $response = $this->createMock(
@@ -361,14 +367,14 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
             ->willReturnCallback(
                 static function (
                     Payload $payload,
-                    string $slug
+                    string $id
                 ) use (
                     $holder,
                     $response
                 ) {
                     $holder->payload = $payload;
 
-                    $holder->softwareSlug = $slug;
+                    $holder->softwareId = $id;
 
                     return $response;
                 }
@@ -401,8 +407,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $request->expects(self::once())
             ->method('getParsedBody')
@@ -441,8 +447,8 @@ class PostAdminSoftwareAddVersionActionTest extends TestCase
         );
 
         self::assertSame(
-            $software->slug,
-            $holder->softwareSlug
+            $software->id,
+            $holder->softwareId
         );
     }
 }

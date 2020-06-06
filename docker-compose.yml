@@ -4,49 +4,58 @@ services:
   web:
     env_file: .env
     build:
-      context: ./docker/web
+      context: ./
+      dockerfile: ./docker/web/Dockerfile
     container_name: buzzingpixel-web
+    ports:
+      - 26087:26087
     environment:
       HOSTNAME: buzzingpixel-web
-    volumes:
-      - .:/opt/project:delegated
-      - ./docker/web/nginx.conf:/etc/nginx/conf.d/nginx.conf
     networks:
-      common-buzzingpixel-network:
+      default:
         aliases:
           - buzzingpixel.localtest.me
+          - buzzingpixel.com
+          - www.buzzingpixel.app
 
   php:
     env_file: .env
     build:
-      context: ./docker/php
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
     container_name: buzzingpixel-php
     environment:
       HOSTNAME: buzzingpixel-php
       COMPOSER_HOME: /composer-home-volume
     volumes:
-      - .:/opt/project:delegated
       - composer-home-volume:/composer-home-volume
     networks:
-      common-buzzingpixel-network:
+      default:
+        aliases:
+          - buzzingpixel-php
 
   db:
     env_file: .env
     build:
-      context: ./docker/db
+      context: ./
+      dockerfile: ./docker/db/Dockerfile
     container_name: buzzingpixel-db
     environment:
       HOSTNAME: buzzingpixel-db
     volumes:
       - db-volume:/var/lib/postgresql/data
-      - .:/opt/project:delegated
+    ports:
+      - 18974:5432
     networks:
-      common-buzzingpixel-network:
+      default:
+        aliases:
+          - buzzingpixel-db
 
 volumes:
   composer-home-volume:
   db-volume:
-  yarn-cache-volume:
 
 networks:
-  common-buzzingpixel-network:
+  default:
+    external:
+      name: proxy

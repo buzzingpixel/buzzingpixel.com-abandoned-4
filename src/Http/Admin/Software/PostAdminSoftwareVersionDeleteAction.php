@@ -65,7 +65,7 @@ class PostAdminSoftwareVersionDeleteAction
         return $this->responseFactory->createResponse(303)
             ->withHeader(
                 'Location',
-                '/admin/software/view/' . $software->slug
+                '/admin/software/view/' . $software->id
             );
     }
 }

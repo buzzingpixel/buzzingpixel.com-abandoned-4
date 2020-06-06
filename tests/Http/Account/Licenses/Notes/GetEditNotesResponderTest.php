@@ -28,7 +28,7 @@ class GetEditNotesResponderTest extends TestCase
             ->method('render')
             ->with(
                 self::equalTo(
-                    'Account/LicenseEditNotes.twig'
+                    'Http/Account/LicenseEditNotes.twig'
                 ),
                 self::equalTo(
                     [
@@ -45,7 +45,6 @@ class GetEditNotesResponderTest extends TestCase
                                 'href' => '/account/licenses/view/' . $license->id,
                                 'content' => 'License',
                             ],
-                            ['content' => 'Edit Notes'],
                         ],
                         'license' => $license,
                     ]

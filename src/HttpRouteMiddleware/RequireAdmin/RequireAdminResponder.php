@@ -19,7 +19,7 @@ class RequireAdminResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Unauthorized.twig',
+            'Http/Unauthorized.twig',
             ['metaPayload' => $metaPayload]
         ));
 

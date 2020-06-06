@@ -1,0 +1,36 @@
+{# @var \App\Content\Software\SoftwareInfoPayload softwareInfoPayload #}
+
+{% extends 'Http/_Infrastructure/_SubnavPage.twig' %}
+
+{% set pageTitle = softwareInfoPayload.title %}
+
+{% set pageTitleSmall = softwareInfoPayload.subTitle %}
+
+{% set nav = [{
+    href: uriPath,
+    content: 'Features',
+}] %}
+
+{% if softwareInfoPayload.getHasChangelog() %}
+    {% set nav = nav|merge([{
+        href: uriPath ~ '/changelog',
+        content: 'Changelog',
+    }]) %}
+{% endif %}
+
+{% if softwareInfoPayload.getHasDocumentation() %}
+    {% set nav = nav|merge([{
+        href: uriPath ~ '/documentation',
+        content: 'Documentation',
+    }]) %}
+{% endif %}
+
+{% set actionButtons = softwareInfoPayload.getActionButtons() %}
+
+{% block subnavContent %}
+    {% block softwareContent %}
+        <div class="p-10">
+            <div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg h-96"></div>
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -94,7 +94,7 @@ class PostAdminUserEditResponderTest extends TestCase
         self::assertCount(1, $locationHeader);
 
         self::assertSame(
-            '/admin/users',
+            '/admin/users/view/bar-id',
             $locationHeader[0]
         );
     }

@@ -1,0 +1,274 @@
+{% set pageTitle = pageTitle ?? '' %}
+{% set pageTitleSmall = pageTitleSmall ?? '' %}
+{% set activeNavHref = activeNavHref ?? '' %}
+{% set nav = nav ?? '' %}
+{% set actionButtons = actionButtons ?? [] %}
+
+{% extends 'Http/_Infrastructure/_Layout.twig' %}
+
+{% block content %}
+    <nav
+        class="bg-nandor-light"
+        x-data="{{ breakToSpace('{
+            data: {
+                mobileMenuIsActive: false
+            }
+        }') }}"
+    >
+        <div class="px-4 sm:px-6">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    {% if pageTitle %}
+                        <span
+                            class="py-2 text-2xl font-normal leading-5 text-white lg:hidden"
+                        >
+                            <span class="inline-block align-middle">
+                                {{ pageTitle|smartypants|widont }}
+                            </span>
+                            {% if pageTitleSmall%}
+                                <small class="text-sm font-thin inline-block align-middle">
+                                    {{ pageTitleSmall|smartypants|widont }}
+                                </small>
+                            {% endif %}
+                        </span>
+                    {% endif %}
+                    <div class="hidden lg:block">
+                        <div class="flex">
+                            {% if pageTitle %}
+                                <h2
+                                    class="pr-3 py-2 text-2xl font-normal leading-5 text-white"
+                                >
+                                    <span class="inline-block align-middle">
+                                        {{ pageTitle|smartypants|widont }}
+                                    </span>
+                                    {% if pageTitleSmall%}
+                                        <small class="text-sm font-thin inline-block align-middle">
+                                            {{ pageTitleSmall|smartypants|widont }}
+                                        </small>
+                                    {% endif %}
+                                </h2>
+                            {% endif %}
+                            {% for item in nav %}
+                                {% set navClasses = [
+                                    'px-3',
+                                    'py-2',
+                                    'rounded-md',
+                                    'text-sm',
+                                    'font-medium',
+                                    'leading-5',
+                                    'focus:outline-none',
+                                    'transition',
+                                    'duration-150 ease-in-out',
+                                ] %}
+                                {% if pageTitle or not loop.first %}
+                                    {% set navClasses = navClasses|merge([
+                                        'ml-1'
+                                    ]) %}
+                                {% endif %}
+                                {% if activeNavHref == item.href %}
+                                    {% set navClasses = navClasses|merge([
+                                        'bg-mine-shaft',
+                                        'text-white',
+                                        'focus:bg-cod-gray',
+                                    ]) %}
+                                {% else %}
+                                    {% set navClasses = navClasses|merge([
+                                        'text-gray-300',
+                                        'hover:text-white',
+                                        'hover:bg-nandor',
+                                        'focus:text-white',
+                                        'focus:bg-mine-shaft',
+                                    ]) %}
+                                {% endif %}
+                                <a
+                                    href="{{ item.href }}"
+                                    class="{{ navClasses|join(' ') }}"
+                                >
+                                    {{ item.content|smartypants|widont }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 lg:block">
+                    <div class="flex items-center">
+                        {% for button in actionButtons %}
+                            {% set buttonClasses = [
+                                'inline-flex',
+                                'justify-center',
+                                'py-2',
+                                'px-4',
+                                'border',
+                                'border-transparent',
+                                'text-sm',
+                                'leading-5',
+                                'font-medium',
+                                'rounded-md',
+                                'text-gray-900',
+                                'focus:outline-none',
+                                'transition',
+                                'duration-150',
+                                'ease-in-out',
+                            ] %}
+                            {% if not loop.first %}
+                                {% set buttonClasses = buttonClasses|merge([
+                                    'ml-2',
+                                ]) %}
+                            {% endif %}
+                            {% if loop.last %}
+                                {% set buttonClasses = buttonClasses|merge([
+                                    'bg-aqua-island',
+                                    'hover:bg-caribbean-green',
+                                    'focus:bg-jade',
+                                ]) %}
+                            {% else %}
+                                {% set buttonClasses = buttonClasses|merge([
+                                    'bg-champagne',
+                                    'hover:bg-gold-sand',
+                                    'focus:bg-whiskey',
+                                ]) %}
+                            {% endif %}
+                            <a
+                                href="{{ button.href }}"
+                                class="{{ buttonClasses|join(' ') }}"
+                            >
+                                {{ button.content|smartypants|widont }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="-mr-2 flex lg:hidden">
+                    {# Mobile menu button #}
+                    <button
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white hover:bg-nandor focus:outline-none focus:bg-nandor focus:text-white transition duration-150 ease-in-out"
+                        aria-label="Main menu"
+                        aria-expanded="false"
+                        @click="data.mobileMenuIsActive = !data.mobileMenuIsActive"
+                    >
+                        {# Icon when menu is closed. #}
+                        <svg
+                            class="block h-6 w-6"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            x-show="!data.mobileMenuIsActive"
+                            style="display: block;"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        {# Icon when menu is open. #}
+                        <svg
+                            class="h-6 w-6"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            x-show="data.mobileMenuIsActive"
+                            style="display: none;"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {# Mobile menu #}
+        <div
+            class="lg:hidden"
+            x-show="data.mobileMenuIsActive"
+            style="display: none;"
+        >
+            <div class="px-2 pt-2 pb-3">
+                {% for item in nav %}
+                    {% set navClasses = [
+                        'block',
+                        'px-3',
+                        'py-2',
+                        'rounded-md',
+                        'text-base',
+                        'font-medium',
+                        'text-white',
+                        'transition',
+                        'duration-150',
+                        'ease-in-out',
+                    ] %}
+                    {% if activeNavHref == item.href %}
+                        {% set navClasses = navClasses|merge([
+                            'bg-mine-shaft',
+                        ]) %}
+                    {% else %}
+                        {% set navClasses = navClasses|merge([
+                            'mt-1',
+                            'hover:bg-nandor',
+                            'focus:outline-none',
+                            'focus:text-white',
+                            'focus:bg-mine-shaft',
+                        ]) %}
+                    {% endif %}
+                    <a
+                        href="{{ item.href }}"
+                        class="{{ navClasses|join(' ') }}"
+                    >
+                        {{ item.content|smartypants|widont }}
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="pt-4 pb-3 border-t border-gray-700">
+                <div class="px-2 text-center">
+                    {% for button in actionButtons %}
+                        {% set buttonClasses = [
+                            'block',
+                            'sm:mx-1',
+                            'text-center',
+                            'py-2',
+                            'px-4',
+                            'border',
+                            'border-transparent',
+                            'text-sm',
+                            'leading-5',
+                            'font-medium',
+                            'rounded-md',
+                            'text-gray-900',
+                            'focus:outline-none',
+                            'transition',
+                            'duration-150',
+                            'ease-in-out',
+                            'sm:inline-block',
+                        ] %}
+                        {% if not loop.first %}
+                            {% set buttonClasses = buttonClasses|merge([
+                                'mt-2',
+                                'sm:mt-0',
+                            ]) %}
+                        {% endif %}
+                        {% if loop.last %}
+                            {% set buttonClasses = buttonClasses|merge([
+                                'bg-aqua-island',
+                                'hover:bg-caribbean-green',
+                                'focus:bg-jade',
+                            ]) %}
+                        {% else %}
+                            {% set buttonClasses = buttonClasses|merge([
+                                'bg-champagne',
+                                'hover:bg-gold-sand',
+                                'focus:bg-whiskey',
+                            ]) %}
+                        {% endif %}
+                        <a
+                            href="{{ button.href }}"
+                            class="{{ buttonClasses|join(' ') }}"
+                        >
+                            {{ button.content|smartypants|widont }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% block subnavContent %}
+        <div class="p-10">
+            <div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg h-96"></div>
+        </div>
+    {% endblock %}
+{% endblock %}
+

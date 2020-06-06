@@ -1,5 +1,5 @@
 type: TextColumns
-backgroundColor: SpringWood
+backgroundColor: spring-wood
 columns:
   - headline: Users Rejoice
     content: |

@@ -45,22 +45,20 @@ class PostAdminSoftwareEditAction
             'subscription' => ($postData['subscription'] ?? '') === 'true',
         ];
 
-        $slugAttribute = (string) $request->getAttribute('slug');
+        $idAttribute = (string) $request->getAttribute('id');
 
-        $software = $this->softwareApi->fetchSoftwareBySlug(
-            $slugAttribute
+        $software = $this->softwareApi->fetchSoftwareById(
+            $idAttribute
         );
 
         if ($software === null) {
             throw new HttpBadRequestException(
                 $request,
-                'Software for specified Slug ' .
-                    $slugAttribute .
+                'Software for specified ID ' .
+                    $idAttribute .
                     ' could not be found',
             );
         }
-
-        $originalSlug = $software->slug;
 
         $inputMessages = [];
 
@@ -90,7 +88,7 @@ class PostAdminSoftwareEditAction
                         'inputValues' => $inputValues,
                     ],
                 ),
-                $originalSlug,
+                $software->id,
             );
         }
 
@@ -109,13 +107,13 @@ class PostAdminSoftwareEditAction
                     Payload::STATUS_NOT_UPDATED,
                     ['message' => 'An unknown error occurred'],
                 ),
-                $originalSlug,
+                $software->id,
             );
         }
 
         return ($this->responder)(
             $payload,
-            $software->slug
+            $software->id
         );
     }
 }

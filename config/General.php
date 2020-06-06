@@ -62,18 +62,8 @@ class General extends SimpleModel
     public static string $twitterHandle = 'buzzingpixel';
 
     /** @var string[] */
-    public static array $stylesheets = [
-        'https://fonts.googleapis.com/css?family=Arvo:400,400i,700,700i|Noto+Sans+SC:100,300,400,500,700,900',
-        // Deployment process will change the filename to something like style.min.1553365271.css
-        '/assets/css/style.min.css',
-    ];
+    public static array $stylesheets = ['https://rsms.me/inter/inter.css'];
 
-    /** @var array<string, array<string, string>|string> */
-    public static array $jsFiles = [
-        'vue' => 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js',
-        'main' => [
-            'src' => '/assets/js/main.js?v=',
-            'type' => 'module',
-        ],
-    ];
+    /** @var string[] */
+    public static array $jsFiles = ['https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js'];
 }

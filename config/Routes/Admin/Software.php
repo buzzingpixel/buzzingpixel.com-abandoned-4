@@ -39,17 +39,17 @@ return static function (RouteCollectorProxy $r) : void {
         );
 
         $r->get(
-            '/view/{slug}',
+            '/view/{id}',
             GetAdminSoftwareViewAction::class
         );
 
         $r->get(
-            '/edit/{slug}',
+            '/edit/{id}',
             GetAdminSoftwareEditAction::class
         );
 
         $r->post(
-            '/edit/{slug}',
+            '/edit/{id}',
             PostAdminSoftwareEditAction::class
         );
 
@@ -74,12 +74,12 @@ return static function (RouteCollectorProxy $r) : void {
         );
 
         $r->get(
-            '/{slug}/add-version',
+            '/{id}/add-version',
             GetAdminSoftwareAddVersionAction::class
         );
 
         $r->post(
-            '/{slug}/add-version',
+            '/{id}/add-version',
             PostAdminSoftwareAddVersionAction::class
         );
     });

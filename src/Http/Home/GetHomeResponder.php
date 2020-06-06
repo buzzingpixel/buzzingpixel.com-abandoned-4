@@ -22,7 +22,7 @@ class GetHomeResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'StandardPage.twig',
+            'Http/StandardPage.twig',
             [
                 'metaPayload' => $metaPayload,
                 'modulePayload' => $modulePayload,

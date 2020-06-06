@@ -30,19 +30,19 @@ class GetAdminSoftwareViewAction
      */
     public function __invoke(ServerRequestInterface $request) : ResponseInterface
     {
-        $softwareModel = $this->softwareApi->fetchSoftwareBySlug(
-            (string) $request->getAttribute('slug')
+        $software = $this->softwareApi->fetchSoftwareById(
+            (string) $request->getAttribute('id')
         );
 
-        if ($softwareModel === null) {
+        if ($software === null) {
             throw new HttpNotFoundException($request);
         }
 
         return ($this->responder)(
-            'Admin/SoftwareView.twig',
+            'Http/Admin/SoftwareView.twig',
             [
                 'metaPayload' => new MetaPayload(
-                    ['metaTitle' => $softwareModel->name . ' | Admin']
+                    ['metaTitle' => $software->name . ' | Admin']
                 ),
                 'activeTab' => 'software',
                 'breadcrumbs' => [
@@ -50,9 +50,8 @@ class GetAdminSoftwareViewAction
                         'href' => '/admin/software',
                         'content' => 'Software Admin',
                     ],
-                    ['content' => 'View Software'],
                 ],
-                'softwareModel' => $softwareModel,
+                'software' => $software,
             ],
         );
     }

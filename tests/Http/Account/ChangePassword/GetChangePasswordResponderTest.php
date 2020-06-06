@@ -27,7 +27,7 @@ class GetChangePasswordResponderTest extends TestCase
         $twigEnv->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('Account/ChangePassword.twig'),
+                self::equalTo('Http/Account/ChangePassword.twig'),
                 self::equalTo(
                     [
                         'metaPayload' => new MetaPayload(

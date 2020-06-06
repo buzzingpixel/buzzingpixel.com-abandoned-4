@@ -1,0 +1,79 @@
+{# @var \App\Users\Models\UserModel user #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{% block accountContent %}
+    <div class="max-w-4xl">
+        {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+            title: 'Edit Your Profile',
+            subtitle: user.emailAddress,
+            inputs: [
+                {
+                    type: 'select',
+                    label: 'Timezone',
+                    name: 'timezone',
+                    value: user.timezone.name,
+                    options: timeZoneList(),
+                    emptyOption: 'Choose timezone&hellip;',
+                },
+                {
+                    type: 'text',
+                    label: 'First Name',
+                    name: 'first_name',
+                    value: user.firstName,
+                },
+                {
+                    type: 'text',
+                    label: 'Last Name',
+                    name: 'last_name',
+                    value: user.lastName,
+                },
+                {
+                    type: 'text',
+                    label: 'Display Name',
+                    small: 'Used in public support requests to keep your real name non-public. Your first and last name will be used if left blank.',
+                    name: 'display_name',
+                    value: user.displayName,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Name',
+                    name: 'billing_name',
+                    value: user.billingName,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Company',
+                    name: 'billing_company',
+                    value: user.billingCompany,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Phone',
+                    name: 'billing_phone',
+                    value: user.billingPhone,
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Address',
+                    name: 'billing_address',
+                    value: user.billingAddress,
+                },
+                {
+                    type: 'select',
+                    label: 'Billing Country',
+                    name: 'billing_country',
+                    value: user.billingCountry,
+                    options: countriesSelectArray(),
+                    emptyOption: 'Choose country&hellip;',
+                },
+                {
+                    type: 'text',
+                    label: 'Billing Postal Code',
+                    name: 'billing_postal_code',
+                    value: user.billingPostalCode,
+                },
+            ]
+        } only %}
+    </div>
+{% endblock %}

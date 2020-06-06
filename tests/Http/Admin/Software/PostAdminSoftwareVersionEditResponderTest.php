@@ -42,7 +42,7 @@ class PostAdminSoftwareVersionEditResponderTest extends TestCase
         $response = $responder(
             $payload,
             'foo-id',
-            'foo-slug',
+            'foo-software-id',
         );
 
         self::assertSame(
@@ -89,7 +89,7 @@ class PostAdminSoftwareVersionEditResponderTest extends TestCase
         $response = $responder(
             $payload,
             'foo-id',
-            'foo-slug',
+            'foo-software-id',
         );
 
         self::assertSame(
@@ -102,7 +102,7 @@ class PostAdminSoftwareVersionEditResponderTest extends TestCase
         self::assertCount(1, $locationHeader);
 
         self::assertSame(
-            '/admin/software/view/foo-slug',
+            '/admin/software/view/foo-software-id',
             $locationHeader[0]
         );
     }

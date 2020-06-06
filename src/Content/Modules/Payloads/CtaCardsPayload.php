@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace App\Content\Modules\Payloads;
 
+use App\Content\PropertyTraits\Content;
+use App\Content\PropertyTraits\Headline;
+use App\Content\PropertyTraits\PreHeadline;
 use App\Payload\SpecificPayload;
 use function assert;
 
 class CtaCardsPayload extends SpecificPayload
 {
+    use PreHeadline;
+    use Headline;
+    use Content;
+
     private ?CtaCardItemPayload $primary = null;
 
     protected function setPrimary(CtaCardItemPayload $primary) : void

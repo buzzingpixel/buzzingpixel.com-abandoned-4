@@ -1,0 +1,91 @@
+{# @var \App\Users\Models\UserModel user #}
+
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel loggedInUser #}
+{% set loggedInUser = fetchLoggedInUser() %}
+
+{% set contentClass = 'max-w-4xl' %}
+
+{# TODO: Maybe someday implement this #}
+{#{% set actionForm = {
+    action: "/admin/users/delete/#{user.id}",
+    content: 'Delete',
+    confirmAction: 'delete'
+} %}#}
+
+{% set createdAt %}
+    {{ user.createdAt
+        .setTimezone(loggedInUser.timezone)
+        .format('Y-m-d h:i a')
+    }} ({{ loggedInUser.timezone.getName() }})
+{% endset %}
+
+{% block adminContent %}
+    {% include 'Http/_Infrastructure/Components/LeftAlignedStripedCard.twig' with {
+        title: user.fullName,
+        subtitle: user.emailAddress,
+        actionButton: {
+            href: "/admin/users/edit/#{user.id}",
+            content: 'Edit',
+        },
+        items: [
+            {
+                title: 'Admin?',
+                content: user.isAdmin ? 'Yes' : 'No',
+            },
+            {
+                title: 'First Name',
+                content: user.firstName,
+            },
+            {
+                title: 'Last Name',
+                content: user.lastName,
+            },
+            {
+                title: 'Display Name',
+                content: user.displayName,
+            },
+            {
+                title: 'Billing Name',
+                content: user.billingName,
+            },
+            {
+                title: 'Billing Company',
+                content: user.billingCompany,
+            },
+            {
+                title: 'Billing Phone',
+                content: user.billingPhone,
+            },
+            {
+                title: 'Billing Address',
+                content: user.billingAddress,
+            },
+            {
+                title: 'Billing City',
+                content: user.billingCity,
+            },
+            {
+                title: 'Billing State',
+                content: user.billingStateAbbr,
+            },
+            {
+                title: 'Billing Postal Code',
+                content: user.billingPostalCode,
+            },
+            {
+                title: 'Billing Country',
+                content: user.billingCountry,
+            },
+            {
+                title: 'Created At',
+                content: createdAt,
+            },
+            {
+                title: 'User Timezone',
+                content: user.timezone.getName(),
+            },
+        ]
+    } only %}
+{% endblock %}

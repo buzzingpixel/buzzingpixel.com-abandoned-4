@@ -120,7 +120,7 @@ class GetAdminUsersDisplayActionTest extends TestCase
                     $users
                 ) {
                     self::assertSame(
-                        'Admin/Users.twig',
+                        'Http/Admin/Users.twig',
                         $template,
                     );
 

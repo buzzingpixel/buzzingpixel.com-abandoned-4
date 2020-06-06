@@ -51,6 +51,9 @@ class PostAdminUserEditResponder
         );
 
         return $this->responseFactory->createResponse(303)
-            ->withHeader('Location', '/admin/users');
+            ->withHeader(
+                'Location',
+                '/admin/users/view/' . $userId
+            );
     }
 }

@@ -11,10 +11,14 @@ use App\Queue\QueueApi;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 use function assert;
 
 class GetAdminQueueActionTest extends TestCase
 {
+    /**
+     * @throws Throwable
+     */
     public function test() : void
     {
         $queueApi = $this->createMock(QueueApi::class);
@@ -39,7 +43,7 @@ class GetAdminQueueActionTest extends TestCase
         $responder->expects(self::once())
             ->method('__invoke')
             ->with(
-                self::equalTo('Admin/Queue.twig'),
+                self::equalTo('Http/Admin/Queue.twig'),
                 self::equalTo([
                     'metaPayload' => new MetaPayload(
                         ['metaTitle' => 'Queue | Admin']

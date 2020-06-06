@@ -95,6 +95,8 @@ class PostAdminSoftwareVersionDeleteActionTest extends TestCase
 
         $software->slug = 'foo-software-slug';
 
+        $software->id = 'foo-software-id';
+
         $software->addVersion($softwareVersion);
 
         $softwareApi = $this->createMock(SoftwareApi::class);
@@ -133,7 +135,7 @@ class PostAdminSoftwareVersionDeleteActionTest extends TestCase
         self::assertCount(1, $headers['Location']);
 
         self::assertSame(
-            '/admin/software/view/foo-software-slug',
+            '/admin/software/view/foo-software-id',
             $headers['Location'][0]
         );
     }

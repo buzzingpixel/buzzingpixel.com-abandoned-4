@@ -73,13 +73,15 @@ class GetChangelogItemResponderTest extends TestCase
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('SoftwareChangelogItemPage.twig'),
+                self::equalTo(
+                    'Http/Software/ChangelogItem.twig'
+                ),
                 self::equalTo([
                     'metaPayload' => $this->metaPayload,
                     'release' => $this->release,
                     'softwareInfoPayload' => $this->softwareInfoPayload,
                     'uriPath' => $this->uriPath,
-                    'activeHref' => $this->uriPath . '/changelog',
+                    'activeNavHref' => $this->uriPath . '/changelog',
                 ])
             )
             ->willReturn('TwigRenderOutput');

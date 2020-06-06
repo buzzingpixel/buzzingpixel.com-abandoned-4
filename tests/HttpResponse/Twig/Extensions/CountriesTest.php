@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\HttpResponse\Twig\Extensions;
 
 use App\HttpResponse\Twig\Extensions\Countries;
-use DG\BypassFinals;
 use League\ISO3166\ISO3166;
 use PHPUnit\Framework\TestCase;
 use function assert;
@@ -15,7 +14,6 @@ class CountriesTest extends TestCase
 {
     public function testGetFunctions() : void
     {
-        BypassFinals::enable();
         $ISO3166 = $this->createMock(ISO3166::class);
 
         $ISO3166->expects(self::never())
@@ -49,7 +47,6 @@ class CountriesTest extends TestCase
 
     public function testCountries() : void
     {
-        BypassFinals::enable();
         $ISO3166 = $this->createMock(ISO3166::class);
 
         $ISO3166->expects(self::once())

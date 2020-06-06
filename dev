@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-composerDockerImage="composer:1.9.3";
-cypressDockerImage="cypress/included:3.5.0";
-nodeDockerImage="node:12.12.0";
-
 # Reset
 Reset="\033[0m"; # Text Reset
 
@@ -34,13 +30,14 @@ secondArg=${2};
 
 isMacOs=false;
 composeFiles="-f docker-compose.yml -f docker-compose.dev.yml";
+nodeDockerImage="node:13.8.0";
 
 if [[ "$(uname)" = "Darwin" ]] || [[ "$(uname)" = "darwin" ]]; then
     isMacOs=true;
     composeFiles="-f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.dev.sync.yml";
 fi
 
-for f in dev_includes/bash/*; do
+for f in dev_scripts/bash/*; do
     chmod +x ${f};
     source ${f};
 done

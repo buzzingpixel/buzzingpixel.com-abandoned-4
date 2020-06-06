@@ -8,6 +8,7 @@ use App\Content\Documentation\DocumentationPagePayload;
 use App\Content\Documentation\DocumentationVersionPayload;
 use App\Content\Documentation\DocumentationVersionsPayload;
 use App\Content\Meta\MetaPayload;
+use App\Content\Software\SoftwareInfoPayload;
 use App\Http\Software\GetDocumentationPageResponder;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -27,6 +28,8 @@ class GetDocumentationPageResponderTest extends TestCase
     private $activeVersion;
     /** @var DocumentationVersionsPayload&MockObject */
     private $versions;
+    /** @var SoftwareInfoPayload&MockObject */
+    private $softwareInfoPayload;
 
     private string $activePageSlug = '';
 
@@ -44,7 +47,8 @@ class GetDocumentationPageResponderTest extends TestCase
             $this->metaPayload,
             $this->activePage,
             $this->activeVersion,
-            $this->versions
+            $this->versions,
+            $this->softwareInfoPayload
         );
 
         self::assertSame(200, $response->getStatusCode());
@@ -69,7 +73,8 @@ class GetDocumentationPageResponderTest extends TestCase
             $this->metaPayload,
             $this->activePage,
             $this->activeVersion,
-            $this->versions
+            $this->versions,
+            $this->softwareInfoPayload
         );
 
         self::assertSame(200, $response->getStatusCode());
@@ -90,6 +95,8 @@ class GetDocumentationPageResponderTest extends TestCase
 
         $this->versions = $this->mockVersions();
 
+        $this->softwareInfoPayload = $this->mockSoftwareInfoPayload();
+
         $this->responder = new GetDocumentationPageResponder(
             TestConfig::$di->get(ResponseFactory::class),
             $this->mockTwigEnvironment(),
@@ -108,14 +115,15 @@ class GetDocumentationPageResponderTest extends TestCase
         $twigEnvironment->expects(self::once())
             ->method('render')
             ->with(
-                self::equalTo('DocumentationPage.twig'),
+                self::equalTo('Http/Software/DocumentationPage.twig'),
                 self::equalTo([
                     'uriPath' => 'software/ansel-craft/documentation',
-                    'activeHref' => 'software/ansel-craft/documentation/documentation',
+                    'activeNavHref' => 'software/ansel-craft/documentation/documentation',
                     'metaPayload' => $this->metaPayload,
                     'activePage' => $this->activePage,
                     'activeVersion' => $this->activeVersion,
                     'versions' => $this->versions,
+                    'softwareInfoPayload' => $this->softwareInfoPayload,
                 ])
             )
             ->willReturn('TwigRenderOutput');
@@ -162,5 +170,13 @@ class GetDocumentationPageResponderTest extends TestCase
         return $this->createMock(
             DocumentationVersionsPayload::class
         );
+    }
+
+    /**
+     * @return SoftwareInfoPayload&MockObject
+     */
+    private function mockSoftwareInfoPayload()
+    {
+        return $this->createMock(SoftwareInfoPayload::class);
     }
 }

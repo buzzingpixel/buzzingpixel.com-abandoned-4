@@ -1,0 +1,28 @@
+{# @var string activeTab #}
+
+{% extends 'Http/_Infrastructure/_SidebarLayout.twig' %}
+
+{% set nav = [
+    {
+        href: '/admin/software',
+        content: 'Software',
+        isActive: activeTab == 'software',
+        isFirst: true,
+    },
+    {
+        href: '/admin/users',
+        content: 'Users',
+        isActive: activeTab == 'users',
+    },
+    {
+        href: '/admin/queue',
+        content: 'Queue',
+        isActive: activeTab == 'queue',
+    },
+] %}
+
+{% block sidebarLayoutContent %}
+    {% block adminContent %}
+        <div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg h-96"></div>
+    {% endblock %}
+{% endblock %}

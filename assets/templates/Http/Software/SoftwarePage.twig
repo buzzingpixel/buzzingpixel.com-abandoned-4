@@ -1,0 +1,13 @@
+{# @var \App\Content\Meta\MetaPayload metaPayload #}
+{# @var \App\Content\Modules\ModulePayload modulePayload #}
+{# @var \App\Content\Software\SoftwareInfoPayload softwareInfoPayload #}
+{# @var string uriPath #}
+
+{% extends 'Http/Software/_SoftwareLayout.twig' %}
+
+{% block softwareContent %}
+    {% include 'Http/_Infrastructure/Modules/_Includer.twig' with {
+        modulePayload: modulePayload
+    } only %}
+{% endblock %}
+

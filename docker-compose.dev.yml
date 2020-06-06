@@ -2,15 +2,18 @@ version: '3.7'
 
 services:
   web:
-    ports:
-      - 26087:443
+    build:
+      target: dev
+    volumes:
+      - .:/opt/project:delegated
 
   php:
+    build:
+      target: dev
     volumes:
+      - .:/opt/project:delegated
       - ./docker/php/xdebug-linux.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
   db:
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 18974:5432
+    volumes:
+      - .:/opt/project:delegated

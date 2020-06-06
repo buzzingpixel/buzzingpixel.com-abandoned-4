@@ -19,7 +19,7 @@ class GetMessageAction extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'MessageOnly.twig',
+            'Http/MessageOnly.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Password Reset']

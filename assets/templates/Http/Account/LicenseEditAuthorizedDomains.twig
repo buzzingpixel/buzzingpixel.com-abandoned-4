@@ -1,0 +1,23 @@
+{# @var \App\Licenses\Models\LicenseModel license #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{% block accountContent %}
+    <div class="max-w-3xl">
+        {% include 'Http/_Infrastructure/Components/Forms/SimpleStackedForm.twig' with {
+            title: license.itemTitle,
+            subtitle: license.id,
+            cancelButton: {
+                content: 'Cancel',
+                href: '/account/licenses/view/' ~ license.id,
+            },
+            inputs: [{
+                type: 'textarea',
+                label: 'Authorized Domains',
+                small: 'One per line',
+                name: 'authorized_domains',
+                value: license.authorizedDomains|join('\n'),
+            }]
+        } %}
+    </div>
+{% endblock %}

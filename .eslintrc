@@ -1,22 +1,20 @@
 {
     "extends": [
-        "airbnb-base",
-        "plugin:vue/recommended"
+        "airbnb-base"
     ],
     "env": {
         "browser": true,
         "es6": true
     },
     "globals": {
-        "Vue": true,
-        "VueRouter": true,
         "axios": true
     },
     "parserOptions": {
         "parser": "babel-eslint"
     },
     "rules": {
-        "import/extensions": ["error", "never", { "js": "always" }],
+        "no-param-reassign": 0,
+        "import/extensions": ["error", "never", { "js": "always", "mjs": "always" }],
         "indent": ["error", 4, {
             "SwitchCase": 1,
             "VariableDeclarator": 1,

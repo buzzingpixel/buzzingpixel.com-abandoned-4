@@ -31,8 +31,8 @@ class GetAdminSoftwareEditActionTest extends TestCase
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn(null);
 
         $service = new GetAdminSoftwareEditAction(
@@ -46,8 +46,8 @@ class GetAdminSoftwareEditActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $exception = null;
 
@@ -111,13 +111,15 @@ class GetAdminSoftwareEditActionTest extends TestCase
 
         $software->name = 'Foo Name';
 
-        $software->slug = 'foo-slug';
+        $software->slug = 'foo-id';
+
+        $software->id = 'bar-id';
 
         $softwareApi = $this->createMock(SoftwareApi::class);
 
         $softwareApi->expects(self::once())
-            ->method('fetchSoftwareBySlug')
-            ->with(self::equalTo('foo-slug'))
+            ->method('fetchSoftwareById')
+            ->with(self::equalTo('foo-id'))
             ->willReturn($software);
 
         $service = new GetAdminSoftwareEditAction(
@@ -131,15 +133,15 @@ class GetAdminSoftwareEditActionTest extends TestCase
 
         $request->expects(self::once())
             ->method('getAttribute')
-            ->with(self::equalTo('slug'))
-            ->willReturn('foo-slug');
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-id');
 
         $returnResponse = $service($request);
 
         self::assertSame($response, $returnResponse);
 
         self::assertSame(
-            'Admin/SoftwareEdit.twig',
+            'Http/Admin/SoftwareEdit.twig',
             $holder->template
         );
 
@@ -169,14 +171,17 @@ class GetAdminSoftwareEditActionTest extends TestCase
                     'href' => '/admin/software',
                     'content' => 'Software Admin',
                 ],
-                ['content' => 'Edit Software'],
+                [
+                    'href' => '/admin/software/view/bar-id',
+                    'content' => 'Foo Name',
+                ],
             ],
             $holder->context['breadcrumbs'],
         );
 
         self::assertSame(
             $software,
-            $holder->context['softwareModel'],
+            $holder->context['software'],
         );
     }
 }

@@ -1,0 +1,30 @@
+{# @var \App\Content\Changelog\Release release #}
+{# @var \App\Content\Software\SoftwareInfoPayload softwareInfoPayload #}
+{# @var string uriPath #}
+{# @var string activeNavHref #}
+
+{% extends 'Http/Software/_SoftwareLayout.twig' %}
+
+{% block softwareContent %}
+    <div class="max-w-screen-lg mx-auto">
+        <div class="p-6 md:p-10 lg:p-16">
+            <div class="mb-8">
+                {% include 'Http/_Infrastructure/Includes/BreadCrumbs.twig' with {
+                    breadcrumbs: [
+                        {
+                            href: uriPath,
+                            content: softwareInfoPayload.title,
+                        },
+                        {
+                            href: uriPath ~ '/changelog',
+                            content: 'Changelog List',
+                        },
+                    ],
+                } only %}
+            </div>
+            {% include('Http/Software/_ChangelogItem.twig') with {
+                release: release,
+            } only %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{# @var string activeTab #}
+
+{% extends 'Http/_Infrastructure/_SidebarLayout.twig' %}
+
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
+{% set nav = [
+    {
+        href: '/account/licenses',
+        content: 'Licenses',
+        isActive: activeTab == 'licenses',
+        isFirst: true,
+    },
+    {
+        href: '/account/purchases',
+        content: 'Purchases',
+        isActive: activeTab == 'purchases',
+    },
+    {
+        href: '/account/profile',
+        content: 'Profile',
+        isActive: activeTab == 'profile',
+    },
+    {
+        href: '/account/change-password',
+        content: 'Change Password',
+        isActive: activeTab == 'change-password',
+    }
+] %}
+
+{% if user.isAdmin %}
+    {% set nav = nav|merge([{
+        href: '/admin',
+        content: 'Admin &rarr;',
+    }]) %}
+{% endif %}
+
+{% set nav = nav|merge([{
+    href: '/account/log-out',
+    content: 'Log Out &rarr;',
+}]) %}
+
+{% block sidebarLayoutContent %}
+    {% block accountContent %}
+        <div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg h-96"></div>
+    {% endblock %}
+{% endblock %}

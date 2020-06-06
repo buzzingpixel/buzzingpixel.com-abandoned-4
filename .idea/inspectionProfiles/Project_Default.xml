@@ -5,6 +5,33 @@
     <inspection_tool class="CssReplaceWithShorthandSafely" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="DuplicatedCode" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="16">
+            <item index="0" class="java.lang.String" itemvalue="x-data" />
+            <item index="1" class="java.lang.String" itemvalue="@click" />
+            <item index="2" class="java.lang.String" itemvalue=":class" />
+            <item index="3" class="java.lang.String" itemvalue="@click.away" />
+            <item index="4" class="java.lang.String" itemvalue="x-show" />
+            <item index="5" class="java.lang.String" itemvalue="x-transition:enter" />
+            <item index="6" class="java.lang.String" itemvalue="x-transition:enter-start" />
+            <item index="7" class="java.lang.String" itemvalue="x-transition:enter-end" />
+            <item index="8" class="java.lang.String" itemvalue="x-transition:leave" />
+            <item index="9" class="java.lang.String" itemvalue="x-transition:leave-start" />
+            <item index="10" class="java.lang.String" itemvalue="x-transition:leave-end" />
+            <item index="11" class="java.lang.String" itemvalue="x-text" />
+            <item index="12" class="java.lang.String" itemvalue="x-init" />
+            <item index="13" class="java.lang.String" itemvalue=":aria-selected" />
+            <item index="14" class="java.lang.String" itemvalue=":aria-hidden" />
+            <item index="15" class="java.lang.String" itemvalue="ref" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="JSUnresolvedVariable" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="NodeModulesDependencies" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpCSFixerValidationInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false">
       <option name="ALLOW_RISKY_RULES" value="true" />
     </inspection_tool>

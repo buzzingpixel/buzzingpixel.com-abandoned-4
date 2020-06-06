@@ -59,7 +59,7 @@ class GetAdminUsersDisplayAction
             ->withTotalResults($this->userApi->fetchTotalUsers());
 
         return ($this->responder)(
-            'Admin/Users.twig',
+            'Http/Admin/Users.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'Users | Admin']

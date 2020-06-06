@@ -1,0 +1,16 @@
+{# @var \App\Software\Models\SoftwareModel[] softwareModels #}
+
+{% extends 'Http/Admin/_AdminLayout.twig' %}
+
+{% set contentClass = 'max-w-xl' %}
+
+{% set actionButton = {
+    href: '/admin/software/create',
+    content: 'New',
+} %}
+
+{% block adminContent %}
+    {% include 'Http/_Infrastructure/Components/WideLists.twig' with {
+        groups: groups,
+    } only %}
+{% endblock %}

@@ -20,7 +20,7 @@ class GetAccountLicenseViewResponder extends StandardResponderConstructor
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(
-            'Account/LicenseView.twig',
+            'Http/Account/LicenseView.twig',
             [
                 'metaPayload' => new MetaPayload(
                     ['metaTitle' => 'License']
@@ -31,7 +31,6 @@ class GetAccountLicenseViewResponder extends StandardResponderConstructor
                         'href' => '/account/licenses',
                         'content' => 'All Licenses',
                     ],
-                    ['content' => 'License'],
                 ],
                 'license' => $license,
             ]

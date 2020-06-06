@@ -45,6 +45,9 @@ trait ExtractCtaCards
             [];
 
         return new CtaCardsPayload([
+            'preHeadline' => (string) ($parsedYaml['preHeadline'] ?? ''),
+            'headline' => (string) ($parsedYaml['headline'] ?? ''),
+            'content' => (string) ($parsedYaml['content'] ?? ''),
             'primary' => $this->mapCtaCardInnerYamlToItemPayload($primary),
             'left' => $this->mapCtaCardInnerYamlToItemPayload($left),
             'right' => $this->mapCtaCardInnerYamlToItemPayload($right),
