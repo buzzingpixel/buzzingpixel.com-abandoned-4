@@ -92,7 +92,11 @@
     {# Get content #}
     {% include 'Http/_Infrastructure/GlobalIncludes/MainNav.twig' only %}
     <main class="bg-aqua-haze dark:bg-mine-shaft">
-        {{ block('content') ?? '' }}
+        {% block content %}
+            <div class="p-10">
+                <div class="border-4 border-dashed border-gray-200 dark:border-blue-smoke rounded-lg h-96"></div>
+            </div>
+        {% endblock %}
     </main>
     {% include 'Http/_Infrastructure/GlobalIncludes/Footer.twig' only %}
 
