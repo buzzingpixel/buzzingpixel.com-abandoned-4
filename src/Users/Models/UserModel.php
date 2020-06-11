@@ -11,9 +11,6 @@ use function trim;
 
 class UserModel
 {
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         $this->timezone = new DateTimeZone('US/Central');

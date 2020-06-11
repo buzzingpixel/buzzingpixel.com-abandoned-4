@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Users;
 
 use App\Payload\Payload;
+use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
@@ -22,6 +23,7 @@ use App\Users\Services\PostalCodeService;
 use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
+use App\Users\Services\SaveUserCard;
 use App\Users\Services\UpdateStripeCustomer;
 use App\Users\Services\ValidateUserPassword;
 use Psr\Container\ContainerInterface;
@@ -260,5 +262,15 @@ class UserApi
         assert($service instanceof UpdateStripeCustomer);
 
         $service($user);
+    }
+
+    public function saveUserCard(UserCardModel $userCard) : Payload
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(SaveUserCard::class);
+
+        assert($service instanceof SaveUserCard);
+
+        return $service($userCard);
     }
 }

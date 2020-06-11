@@ -6,13 +6,15 @@ namespace App\Users\Models;
 
 use DateTimeImmutable;
 
-class UserCardsModel
+class UserCardModel
 {
+    public string $id = '';
+
     public UserModel $user;
 
     public string $stripeId;
 
-    public string $nickname;
+    public string $nickname = '';
 
     public string $lastFour;
 

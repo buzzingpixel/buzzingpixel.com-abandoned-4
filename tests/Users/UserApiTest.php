@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Users;
 
 use App\Payload\Payload;
+use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
 use App\Users\Services\FetchLoggedInUser;
@@ -22,6 +23,7 @@ use App\Users\Services\PostalCodeService;
 use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
+use App\Users\Services\SaveUserCard;
 use App\Users\Services\UpdateStripeCustomer;
 use App\Users\Services\ValidateUserPassword;
 use App\Users\UserApi;
@@ -657,6 +659,39 @@ class UserApiTest extends TestCase
 
         $api->updateStripeCustomer(
             $user
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testSaveUserCard() : void
+    {
+        $userCard = new UserCardModel();
+
+        $service = $this->createMock(
+            SaveUserCard::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($userCard),
+            );
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(SaveUserCard::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        $api->saveUserCard(
+            $userCard
         );
     }
 }

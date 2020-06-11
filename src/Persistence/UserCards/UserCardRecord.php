@@ -10,6 +10,8 @@ use App\Persistence\Record;
 
 class UserCardRecord extends Record
 {
+    protected static string $tableName = 'user_cards';
+
     public string $user_id = '';
 
     public string $stripe_id = '';
