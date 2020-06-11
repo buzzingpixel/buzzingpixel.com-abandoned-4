@@ -99,4 +99,18 @@ class UserModelTest extends TestCase
             $model->asArray(false)
         );
     }
+
+    public function testGetFullName() : void
+    {
+        $model = new UserModel();
+
+        $model->firstName = 'foo-first';
+
+        $model->lastName = 'foo-last';
+
+        self::assertSame(
+            'foo-first foo-last',
+            $model->getFullName(),
+        );
+    }
 }

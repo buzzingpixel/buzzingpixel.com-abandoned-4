@@ -14,6 +14,7 @@ use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
+use App\Users\Services\FetchUserCards;
 use App\Users\Services\FetchUsersByLimitOffset;
 use App\Users\Services\FetchUsersBySearch;
 use App\Users\Services\GeneratePasswordResetToken;
@@ -692,6 +693,37 @@ class UserApiTest extends TestCase
 
         $api->saveUserCard(
             $userCard
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testFetchUserCards() : void
+    {
+        $user = new UserModel();
+
+        $service = $this->createMock(
+            FetchUserCards::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($user));
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(FetchUserCards::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        $api->fetchUserCards(
+            $user
         );
     }
 }

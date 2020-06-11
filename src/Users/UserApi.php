@@ -14,6 +14,7 @@ use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
+use App\Users\Services\FetchUserCards;
 use App\Users\Services\FetchUsersByLimitOffset;
 use App\Users\Services\FetchUsersBySearch;
 use App\Users\Services\GeneratePasswordResetToken;
@@ -272,5 +273,18 @@ class UserApi
         assert($service instanceof SaveUserCard);
 
         return $service($userCard);
+    }
+
+    /**
+     * @return UserCardModel[]
+     */
+    public function fetchUserCards(UserModel $user) : array
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchUserCards::class);
+
+        assert($service instanceof FetchUserCards);
+
+        return $service($user);
     }
 }
