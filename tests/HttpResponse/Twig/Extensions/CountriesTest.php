@@ -23,26 +23,49 @@ class CountriesTest extends TestCase
 
         $return = $ext->getFunctions();
 
-        $twigFunc = $return[0];
+        self::assertCount(2, $return);
+
+        $twigFunc1 = $return[0];
 
         self::assertSame(
             'countries',
-            $twigFunc->getName()
+            $twigFunc1->getName()
         );
 
-        $callable = $twigFunc->getCallable();
+        $callable1 = $twigFunc1->getCallable();
 
-        assert(is_array($callable));
+        assert(is_array($callable1));
 
-        self::assertCount(2, $callable);
+        self::assertCount(2, $callable1);
 
-        self::assertSame($ext, $callable[0]);
+        self::assertSame($ext, $callable1[0]);
 
-        self::assertSame('countries', $callable[1]);
+        self::assertSame('countries', $callable1[1]);
 
-        self::assertFalse($twigFunc->needsEnvironment());
+        self::assertFalse($twigFunc1->needsEnvironment());
 
-        self::assertFalse($twigFunc->needsContext());
+        self::assertFalse($twigFunc1->needsContext());
+
+        $twigFunc2 = $return[1];
+
+        self::assertSame(
+            'countriesSelectArray',
+            $twigFunc2->getName()
+        );
+
+        $callable2 = $twigFunc2->getCallable();
+
+        assert(is_array($callable2));
+
+        self::assertCount(2, $callable2);
+
+        self::assertSame($ext, $callable2[0]);
+
+        self::assertSame('countriesSelectArray', $callable2[1]);
+
+        self::assertFalse($twigFunc2->needsEnvironment());
+
+        self::assertFalse($twigFunc2->needsContext());
     }
 
     public function testCountries() : void
@@ -58,6 +81,34 @@ class CountriesTest extends TestCase
         self::assertSame(
             ['test'],
             $ext->countries()
+        );
+    }
+
+    public function testCountriesSelect() : void
+    {
+        $ISO3166 = $this->createMock(ISO3166::class);
+
+        $ISO3166->expects(self::once())
+            ->method('all')
+            ->willReturn([
+                [
+                    'alpha2' => 'foo-alpha-2-1',
+                    'name' => 'foo-name-1',
+                ],
+                [
+                    'alpha2' => 'foo-alpha-2-2',
+                    'name' => 'foo-name-2',
+                ],
+            ]);
+
+        $ext = new Countries($ISO3166);
+
+        self::assertSame(
+            [
+                'foo-alpha-2-1' => 'foo-name-1',
+                'foo-alpha-2-2' => 'foo-name-2',
+            ],
+            $ext->countriesSelectArray(),
         );
     }
 }

@@ -147,11 +147,114 @@
     </div>
 {% endmacro %}
 
+{% macro labelsOnLeftCreditCardExpiration(params) %}
+    {% set params = {
+        expirationDate: false,
+        name: 'expiration_date',
+    }|merge(params) %}
+
+    {% set months = [
+        {
+            name: 'January',
+            digit: '01',
+        },
+        {
+            name: 'February',
+            digit: '02',
+        },
+        {
+            name: 'March',
+            digit: '03',
+        },
+        {
+            name: 'April',
+            digit: '04',
+        },
+        {
+            name: 'May',
+            digit: '05',
+        },
+        {
+            name: 'June',
+            digit: '06',
+        },
+        {
+            name: 'July',
+            digit: '07',
+        },
+        {
+            name: 'August',
+            digit: '08',
+        },
+        {
+            name: 'September',
+            digit: '09',
+        },
+        {
+            name: 'October',
+            digit: '10',
+        },
+        {
+            name: 'November',
+            digit: '11',
+        },
+        {
+            name: 'December',
+            digit: '12',
+        },
+    ] %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages']['expiration_date'] ?? '' %}
+
+    {% set input %}
+        <div class="flex">
+            <select
+                name="{{ params.name }}[month]"
+                id="{{ params.name }}"
+                class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+            >
+                <option value="">Select Month...</option>
+                {% for month in months %}
+                    <option
+                        value="{{ month.digit }}"
+                        {% if params.expirationDate.format('m') == month.digit %}
+                        selected
+                        {% endif %}
+                    >
+                        {{ month.name }} ({{ month.digit }})
+                    </option>
+                {% endfor %}
+            </select>
+            <span class="w-6"></span>
+            <select
+                name="{{ params.name }}[year]"
+                id="{{ params.name }}"
+                class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+            >
+                <option value="">Select Year...</option>
+                {% for year in expirationYears() %}
+                    <option
+                        value="{{ year }}"
+                        {% if params.expirationDate.format('Y') == year %}
+                        selected
+                        {% endif %}
+                    >
+                        {{ year }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
+{% endmacro %}
+
 {% macro labelsOnLeftText(params) %}
     {% set params = {
         name: '',
         value: '',
         type: 'text',
+        readonly: false,
     }|merge(params) %}
 
     {% set value = params.value %}

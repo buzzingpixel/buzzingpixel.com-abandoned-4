@@ -6,6 +6,7 @@ namespace Config\Factories;
 
 use App\HttpResponse\Twig\Extensions\BreakToSpace;
 use App\HttpResponse\Twig\Extensions\Countries;
+use App\HttpResponse\Twig\Extensions\ExpirationYears;
 use App\HttpResponse\Twig\Extensions\FetchLoggedInUser;
 use App\HttpResponse\Twig\Extensions\PhpFunctions;
 use App\HttpResponse\Twig\Extensions\ReadJson;
@@ -96,6 +97,8 @@ class TwigEnvironmentFactory
         $twig->addExtension($di->get(ReadJson::class));
 
         $twig->addExtension($di->get(BreakToSpace::class));
+
+        $twig->addExtension($di->get(ExpirationYears::class));
 
         $twig->addGlobal('GeneralConfig', $di->get(General::class));
 
