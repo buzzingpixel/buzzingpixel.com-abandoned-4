@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Account\Cards\GetAccountCardsAction;
 use App\Http\Account\ChangePassword\GetChangePasswordAction;
 use App\Http\Account\ChangePassword\PostChangePasswordAction;
 use App\Http\Account\GetAccountAction;
@@ -14,6 +13,7 @@ use App\Http\Account\Licenses\Notes\PostEditNotesAction;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
+use App\Http\Account\PaymentMethods\GetAccountPaymentMethodsAction;
 use App\Http\Account\Profile\GetAccountProfileAction;
 use App\Http\Account\Profile\PostAccountProfileEditAction;
 use App\Http\Account\Purchases\GetAccountPurchasesAction;
@@ -126,6 +126,11 @@ return static function (App $app) : void {
         );
 
         $r->get(
+            '/payment-methods',
+            GetAccountPaymentMethodsAction::class
+        );
+
+        $r->get(
             '/change-password',
             GetChangePasswordAction::class
         );
@@ -133,11 +138,6 @@ return static function (App $app) : void {
         $r->post(
             '/change-password',
             PostChangePasswordAction::class
-        );
-
-        $r->get(
-            '/cards',
-            GetAccountCardsAction::class
         );
     })->add(RequireLogInAction::class);
 };

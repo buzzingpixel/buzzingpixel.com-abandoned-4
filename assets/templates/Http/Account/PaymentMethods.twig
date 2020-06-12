@@ -1,0 +1,33 @@
+{# @var \App\Users\Models\UserCardModel[] userCards #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{% set contentClass = 'max-w-3xl' %}
+
+{% set items = [] %}
+
+{% for card in userCards %}
+    {% set items = items|merge([{
+        href: '/account/payment-methods/' ~ card.id,
+        title: card.nickname ?: card.lastFour,
+        subtitle: card.nickname ? card.lastFour : '',
+        column2: [
+            card.provider,
+            card.isDefault ? 'Default Method' : '',
+        ],
+    }]) %}
+{% endfor %}
+
+{% block accountContent %}
+    {% include 'Http/_Infrastructure/Components/WideLists.twig' with {
+        groups: [{
+            title: 'Payment Methods',
+            actionButton: {
+                href: '/account/payment-methods/create',
+                content: 'New Payment Method',
+            },
+            items: items,
+        }],
+        noItemsContent: "You don't have any payment methods yet.",
+    } only %}
+{% endblock %}
