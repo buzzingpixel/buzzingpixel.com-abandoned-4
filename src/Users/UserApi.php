@@ -14,6 +14,7 @@ use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
+use App\Users\Services\FetchUserCardById;
 use App\Users\Services\FetchUserCards;
 use App\Users\Services\FetchUsersByLimitOffset;
 use App\Users\Services\FetchUsersBySearch;
@@ -286,5 +287,17 @@ class UserApi
         assert($service instanceof FetchUserCards);
 
         return $service($user);
+    }
+
+    public function fetchUserCardById(
+        UserModel $user,
+        string $id
+    ) : ?UserCardModel {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchUserCardById::class);
+
+        assert($service instanceof FetchUserCardById);
+
+        return $service($user, $id);
     }
 }

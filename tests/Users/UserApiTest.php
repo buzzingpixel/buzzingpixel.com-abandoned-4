@@ -14,6 +14,7 @@ use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
+use App\Users\Services\FetchUserCardById;
 use App\Users\Services\FetchUserCards;
 use App\Users\Services\FetchUsersByLimitOffset;
 use App\Users\Services\FetchUsersBySearch;
@@ -670,15 +671,16 @@ class UserApiTest extends TestCase
     {
         $userCard = new UserCardModel();
 
+        $payload = new Payload(Payload::STATUS_UPDATED);
+
         $service = $this->createMock(
             SaveUserCard::class
         );
 
         $service->expects(self::once())
             ->method('__invoke')
-            ->with(
-                self::equalTo($userCard),
-            );
+            ->with(self::equalTo($userCard))
+            ->willReturn($payload);
 
         $di = $this->createMock(ContainerInterface::class);
 
@@ -691,8 +693,9 @@ class UserApiTest extends TestCase
 
         $api = new UserApi($di);
 
-        $api->saveUserCard(
-            $userCard
+        self::assertSame(
+            $payload,
+            $api->saveUserCard($userCard),
         );
     }
 
@@ -703,13 +706,16 @@ class UserApiTest extends TestCase
     {
         $user = new UserModel();
 
+        $userCardModel = new UserCardModel();
+
         $service = $this->createMock(
             FetchUserCards::class
         );
 
         $service->expects(self::once())
             ->method('__invoke')
-            ->with(self::equalTo($user));
+            ->with(self::equalTo($user))
+            ->willReturn([$userCardModel]);
 
         $di = $this->createMock(ContainerInterface::class);
 
@@ -722,8 +728,49 @@ class UserApiTest extends TestCase
 
         $api = new UserApi($di);
 
-        $api->fetchUserCards(
-            $user
+        self::assertSame(
+            [$userCardModel],
+            $api->fetchUserCards($user),
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testFetchUserCardById() : void
+    {
+        $user = new UserModel();
+
+        $id = 'foo-id';
+
+        $userCardModel = new UserCardModel();
+
+        $service = $this->createMock(
+            FetchUserCardById::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+                self::equalTo($id),
+            )
+            ->willReturn($userCardModel);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(FetchUserCardById::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        self::assertSame(
+            $userCardModel,
+            $api->fetchUserCardById($user, $id),
         );
     }
 }
