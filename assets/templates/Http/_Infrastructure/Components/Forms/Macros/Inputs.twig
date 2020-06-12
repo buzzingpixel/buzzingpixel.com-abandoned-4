@@ -61,6 +61,7 @@
         name: '',
         value: '',
         type: 'text',
+        readonly: false,
     }|merge(params) %}
 
     {% set value = params.value %}
@@ -79,6 +80,9 @@
                 id="{{ params.name }}"
                 class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
                 value="{{ value }}"
+                {% if params.readonly %}
+                readonly
+                {% endif %}
             >
         </div>
     {% endset %}
@@ -273,6 +277,9 @@
                 id="{{ params.name }}"
                 class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
                 value="{{ value }}"
+                {% if params.readonly %}
+                readonly
+                {% endif %}
             >
         </div>
     {% endset %}
