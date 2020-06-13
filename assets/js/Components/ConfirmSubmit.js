@@ -2,7 +2,9 @@ export default class {
     constructor (el) {
         this.actionName = el.dataset.confirmAction || 'delete';
 
-        el.addEventListener('submit', this.checkSubmit);
+        el.addEventListener('submit', (e) => {
+            this.checkSubmit(e);
+        });
     }
 
     checkSubmit (e) {
