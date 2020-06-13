@@ -170,6 +170,9 @@
       <path value="$PROJECT_DIR$/vendor/html2text/html2text" />
       <path value="$PROJECT_DIR$/vendor/rollbar/rollbar" />
       <path value="$PROJECT_DIR$/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/fig/event-dispatcher-util" />
+      <path value="$PROJECT_DIR$/vendor/crell/tukio" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

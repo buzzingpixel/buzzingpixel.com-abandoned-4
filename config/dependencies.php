@@ -15,9 +15,13 @@ use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use buzzingpixel\cookieapi\PhpFunctions;
 use Config\Factories\TwigEnvironmentFactory;
 use Config\Logging\Logger;
+use Crell\Tukio\Dispatcher;
+use Crell\Tukio\OrderedListenerProvider;
 use Monolog\Handler\RollbarHandler;
 use Monolog\Handler\StreamHandler as MonologStreamHandler;
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -62,6 +66,10 @@ return [
 
         return $guard;
     },
+    EventDispatcherInterface::class => autowire(Dispatcher::class)->constructorParameter(
+        'logger',
+        get(LoggerInterface::class),
+    ),
     ExtractMetaFromPath::class => autowire(ExtractMetaFromPath::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
@@ -74,6 +82,7 @@ return [
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),
+    ListenerProviderInterface::class => get(OrderedListenerProvider::class),
     LoggerInterface::class => static function () {
         $logLevel = getenv('LOG_LEVEL') ?: 'DEBUG';
 
@@ -119,6 +128,9 @@ return [
         $conf->fromName = (string) getenv('WEBMASTER_NAME');
 
         return $conf;
+    },
+    OrderedListenerProvider::class => static function (ContainerInterface $di) {
+        return new OrderedListenerProvider($di);
     },
     ParseChangelogFromMarkdownFile::class => autowire(ParseChangelogFromMarkdownFile::class)->constructorParameter(
         'pathToContentDirectory',

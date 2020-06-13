@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Error\HttpErrorAction;
+use Config\RegisterEventListeners;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
@@ -16,6 +17,9 @@ session_start();
 $bootstrap = require dirname(__DIR__) . '/config/bootstrap.php';
 $container = $bootstrap();
 assert($container instanceof ContainerInterface);
+
+// Register event listeners
+$container->get(RegisterEventListeners::class)();
 
 // Create application
 AppFactory::setContainer($container);

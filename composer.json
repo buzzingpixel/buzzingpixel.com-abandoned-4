@@ -27,6 +27,7 @@
         "buzzingpixel/twig-widont": "^1.0",
         "cebe/markdown": "^1.2",
         "cocur/slugify": "^3.2",
+        "crell/tukio": "^1.1",
         "guzzlehttp/guzzle": "^6.5",
         "html2text/html2text": "^4.2",
         "kanellov/slim-twig-flash": "^0.2.0",
