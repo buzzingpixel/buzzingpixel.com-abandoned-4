@@ -1,48 +1,36 @@
-{# @var \App\Users\Models\UserCardModel userCard #}
-
 {% extends 'Http/Account/_AccountLayout.twig' %}
 
 {% set contentClass = 'max-w-3xl' %}
 
-{% set actionForm = {
-    action: "/account/payment-methods/#{userCard.id}/delete",
-    content: 'Delete',
-    confirmAction: 'delete',
-    isDangerousAction: true,
-} %}
-
 {% block accountContent %}
-    {#{
-        type: 'text',
-        readonly: true,
-        label: 'Card',
-        value: userCard.provider ~ ': **** **** **** ' ~ userCard.lastFour,
-    },#}
     {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
         cancelButton: {
             content: 'Cancel',
             href: '/account/payment-methods',
         },
-        title: 'Edit Payment Method',
-        subtitle: userCard.provider ~ ': **** **** **** ' ~ userCard.lastFour,
+        title: 'Create Payment Method',
+        subtitle: '',
         inputs: [
+            {
+                type: 'text',
+                label: 'Card Number',
+            },
             {
                 type: 'creditCardExpiration',
                 label: 'Expiration',
-                expirationDate: userCard.expiration,
             },
             {
                 type: 'checkbox',
                 label: 'Default?',
-                name: 'default',
-                isChecked: userCard.isDefault,
+                small: 'You must have one default card. If this is your only card, it will be set as default.',
+                name: 'for_sale',
             },
             {
                 type: 'text',
                 label: 'Nickname',
                 name: 'nickname',
-                value: userCard.nickname,
             },
         ]
     } only %}
 {% endblock %}
+

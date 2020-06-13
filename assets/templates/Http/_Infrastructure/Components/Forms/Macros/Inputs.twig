@@ -221,7 +221,7 @@
                 {% for month in months %}
                     <option
                         value="{{ month.digit }}"
-                        {% if params.expirationDate.format('m') == month.digit %}
+                        {% if params.expirationDate and params.expirationDate.format('m') == month.digit %}
                         selected
                         {% endif %}
                     >
@@ -239,7 +239,7 @@
                 {% for year in expirationYears() %}
                     <option
                         value="{{ year }}"
-                        {% if params.expirationDate.format('Y') == year %}
+                        {% if params.expirationDate and params.expirationDate.format('Y') == year %}
                         selected
                         {% endif %}
                     >
