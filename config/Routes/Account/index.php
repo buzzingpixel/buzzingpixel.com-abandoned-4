@@ -13,6 +13,7 @@ use App\Http\Account\Licenses\Notes\PostEditNotesAction;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
+use App\Http\Account\PaymentMethods\GetAccountPaymentMethodAction;
 use App\Http\Account\PaymentMethods\GetAccountPaymentMethodsAction;
 use App\Http\Account\Profile\GetAccountProfileAction;
 use App\Http\Account\Profile\PostAccountProfileEditAction;
@@ -128,6 +129,11 @@ return static function (App $app) : void {
         $r->get(
             '/payment-methods',
             GetAccountPaymentMethodsAction::class
+        );
+
+        $r->get(
+            '/payment-methods/{id}',
+            GetAccountPaymentMethodAction::class
         );
 
         $r->get(

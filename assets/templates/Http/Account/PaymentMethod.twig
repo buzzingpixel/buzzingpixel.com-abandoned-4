@@ -1,0 +1,48 @@
+{# @var \App\Users\Models\UserCardModel userCard #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{% set contentClass = 'max-w-3xl' %}
+
+{% set actionForm = {
+    action: "/account/payment-methods/#{userCard.id}/delete",
+    content: 'Delete',
+    confirmAction: 'delete',
+    isDangerousAction: true,
+} %}
+
+{% block accountContent %}
+    {#{
+        type: 'text',
+        readonly: true,
+        label: 'Card',
+        value: userCard.provider ~ ': **** **** **** ' ~ userCard.lastFour,
+    },#}
+    {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+        cancelButton: {
+            content: 'Cancel',
+            href: '/account/payment-methods',
+        },
+        title: 'Edit Payment Method',
+        subtitle: userCard.provider ~ ': **** **** **** ' ~ userCard.lastFour,
+        inputs: [
+            {
+                type: 'creditCardExpiration',
+                label: 'Expiration',
+                expirationDate: userCard.expiration,
+            },
+            {
+                type: 'checkbox',
+                label: 'Default?',
+                name: 'for_sale',
+                isChecked: userCard.isDefault,
+            },
+            {
+                type: 'text',
+                label: 'Nick Name',
+                name: 'nickname',
+                value: userCard.nickname,
+            },
+        ]
+    } only %}
+{% endblock %}
