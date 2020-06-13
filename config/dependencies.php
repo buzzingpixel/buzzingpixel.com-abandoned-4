@@ -10,6 +10,8 @@ use App\Content\Software\ExtractSoftwareInfoFromPath;
 use App\Email\Adapters\MandrillSendMailAdapter;
 use App\Email\Configuration\MandrillConfig;
 use App\Email\Interfaces\SendMailAdapter;
+use App\Users\Models\LoggedInUser;
+use App\Users\UserApi;
 use buzzingpixel\cookieapi\CookieApi;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use buzzingpixel\cookieapi\PhpFunctions;
@@ -83,6 +85,11 @@ return [
         dirname(__DIR__) . '/content'
     ),
     ListenerProviderInterface::class => get(OrderedListenerProvider::class),
+    LoggedInUser::class => static function (ContainerInterface $di) {
+        return new LoggedInUser(
+            $di->get(UserApi::class)->fetchLoggedInUser()
+        );
+    },
     LoggerInterface::class => static function () {
         $logLevel = getenv('LOG_LEVEL') ?: 'DEBUG';
 
