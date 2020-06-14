@@ -258,6 +258,7 @@
         name: '',
         value: '',
         type: 'text',
+        ref: '',
         readonly: false,
     }|merge(params) %}
 
@@ -277,6 +278,9 @@
                 id="{{ params.name }}"
                 class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
                 value="{{ value }}"
+                {% if params.ref %}
+                ref="{{ params.ref|raw }}"
+                {% endif %}
                 {% if params.readonly %}
                 readonly
                 {% endif %}

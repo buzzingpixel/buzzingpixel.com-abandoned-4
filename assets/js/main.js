@@ -2,6 +2,7 @@
 
 import CartQuantity from './Components/CartQuantity.js';
 import ConfirmSubmit from './Components/ConfirmSubmit.js';
+import CreditCardInputFormatting from './Components/CreditCardInputFormatting.js';
 import Flatpickr from './Components/Flatpickr.js';
 import LeftFixedScroll from './Components/LeftFixedScroll.js';
 import PreventEmptySubmit from './Components/PreventEmptySubmit.js';
@@ -21,6 +22,12 @@ forms.forEach((el) => {
 const flatpickrEls = document.querySelectorAll('[ref="flatpickr"]');
 if (flatpickrEls.length > 0) {
     new Flatpickr(flatpickrEls);
+}
+
+// Credit card input formatting
+const creditCardInputs = document.querySelectorAll('[ref="creditCardInput"]');
+if (creditCardInputs.length > 0) {
+    new CreditCardInputFormatting(creditCardInputs);
 }
 
 // Prevent empty submit
