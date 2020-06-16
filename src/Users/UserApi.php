@@ -26,10 +26,8 @@ use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
 use App\Users\Services\SaveUserCard;
-use App\Users\Services\UpdateStripeCustomer;
 use App\Users\Services\ValidateUserPassword;
 use Psr\Container\ContainerInterface;
-use Stripe\Exception\ApiErrorException;
 use Throwable;
 use function assert;
 
@@ -251,19 +249,6 @@ class UserApi
         assert($service instanceof PostalCodeService);
 
         $service->fillModelFromPostalCode($model);
-    }
-
-    /**
-     * @throws ApiErrorException
-     */
-    public function updateStripeCustomer(UserModel $user) : void
-    {
-        /** @psalm-suppress MixedAssignment */
-        $service = $this->di->get(UpdateStripeCustomer::class);
-
-        assert($service instanceof UpdateStripeCustomer);
-
-        $service($user);
     }
 
     public function saveUserCard(UserCardModel $userCard) : Payload
