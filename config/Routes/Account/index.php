@@ -14,6 +14,7 @@ use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
 use App\Http\Account\PaymentMethods\Create\GetCreatePaymentMethodAction;
+use App\Http\Account\PaymentMethods\Create\PostCreatePaymentMethodAction;
 use App\Http\Account\PaymentMethods\GetAccountPaymentMethodAction;
 use App\Http\Account\PaymentMethods\GetAccountPaymentMethodsAction;
 use App\Http\Account\Profile\GetAccountProfileAction;
@@ -135,6 +136,11 @@ return static function (App $app) : void {
         $r->get(
             '/payment-methods/create',
             GetCreatePaymentMethodAction::class,
+        );
+
+        $r->post(
+            '/payment-methods/create',
+            PostCreatePaymentMethodAction::class,
         );
 
         $r->get(

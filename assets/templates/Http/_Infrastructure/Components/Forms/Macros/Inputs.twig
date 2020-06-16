@@ -50,7 +50,11 @@
         </div>
         {% if errorMessage %}
             <div class="mt-2 text-red">
-                {{ errorMessage|smartypants|widont }}
+                {% if errorMessage is iterable %}
+                    {{ errorMessage|join('<br>')|smartypants|widont }}
+                {% else %}
+                    {{ errorMessage|smartypants|widont }}
+                {% endif %}
             </div>
         {% endif %}
     </div>
@@ -144,7 +148,11 @@
             </div>
             {% if errorMessage %}
                 <div class="mt-2 text-red">
-                    {{ errorMessage|smartypants|widont }}
+                    {% if errorMessage is iterable %}
+                        {{ errorMessage|join('<br>')|smartypants|widont }}
+                    {% else %}
+                        {{ errorMessage|smartypants|widont }}
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
@@ -208,7 +216,7 @@
         },
     ] %}
 
-    {% set errorMessage = PostMessage['result']['inputMessages']['expiration_date'] ?? '' %}
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
 
     {% set input %}
         <div class="flex">
