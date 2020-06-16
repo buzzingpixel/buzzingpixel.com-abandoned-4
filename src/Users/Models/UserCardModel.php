@@ -12,13 +12,15 @@ class UserCardModel
 
     public UserModel $user;
 
+    public string $newCardNumber = '';
+
     public string $stripeId;
 
     public string $nickname = '';
 
-    public string $lastFour;
+    public string $lastFour = '';
 
-    public string $provider;
+    public string $provider = '';
 
     public bool $isDefault = false;
 

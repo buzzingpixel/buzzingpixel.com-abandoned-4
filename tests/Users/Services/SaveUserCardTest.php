@@ -9,6 +9,8 @@ use App\Persistence\SaveExistingRecord;
 use App\Persistence\SaveNewRecord;
 use App\Persistence\UserCards\UserCardRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
+use App\Users\Events\SaveUserCardAfterSave;
+use App\Users\Events\SaveUserCardBeforeSave;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\SaveUserCard;
@@ -17,6 +19,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\TestConfig;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -25,6 +28,18 @@ class SaveUserCardTest extends TestCase
 {
     public function testWhenExceptionThrown() : void
     {
+        $model = new UserCardModel();
+
+        $model->user = new UserModel();
+
+        $model->stripeId = 'asdf-stripe';
+
+        $model->lastFour = 'asdf';
+
+        $model->provider = 'asdf';
+
+        $model->expiration = new DateTimeImmutable();
+
         $saveNewRecord = $this->createMock(
             SaveNewRecord::class
         );
@@ -42,6 +57,25 @@ class SaveUserCardTest extends TestCase
         $saveExistingRecord->expects(self::never())
             ->method(self::anything());
 
+        $eventDispatcher = $this->createMock(
+            EventDispatcherInterface::class
+        );
+
+        $eventDispatcher->expects(self::once())
+            ->method('dispatch')
+            ->willReturnCallback(
+                static function (
+                    SaveUserCardBeforeSave $beforeSave
+                ) use (
+                    $model
+                ) : void {
+                    self::assertSame(
+                        $model,
+                        $beforeSave->userCardModel
+                    );
+                }
+            );
+
         $service = new SaveUserCard(
             $saveNewRecord,
             $saveExistingRecord,
@@ -51,19 +85,8 @@ class SaveUserCardTest extends TestCase
             TestConfig::$di->get(
                 TransformUserCardModelToRecord::class
             ),
+            $eventDispatcher
         );
-
-        $model = new UserCardModel();
-
-        $model->user = new UserModel();
-
-        $model->stripeId = 'asdf-stripe';
-
-        $model->lastFour = 'asdf';
-
-        $model->provider = 'asdf';
-
-        $model->expiration = new DateTimeImmutable();
 
         $payload = $service($model);
 
@@ -87,6 +110,22 @@ class SaveUserCardTest extends TestCase
         $user->id = 'foo-bar-id';
 
         $returnPayload = new Payload(Payload::STATUS_CREATED);
+
+        $model = new UserCardModel();
+
+        $model->user = $user;
+
+        $model->stripeId = 'foo-stripe-id';
+
+        $model->nickname = 'foo-nickname';
+
+        $model->lastFour = '4321';
+
+        $model->provider = 'visa';
+
+        $model->expiration = $expiration;
+
+        $model->isDefault = true;
 
         $saveNewRecord = $this->createMock(
             SaveNewRecord::class
@@ -148,6 +187,46 @@ class SaveUserCardTest extends TestCase
         $saveExistingRecord->expects(self::never())
             ->method(self::anything());
 
+        $eventDispatcher = $this->createMock(
+            EventDispatcherInterface::class
+        );
+
+        $eventDispatcher->expects(self::at(0))
+            ->method('dispatch')
+            ->willReturnCallback(
+                static function (
+                    SaveUserCardBeforeSave $beforeSave
+                ) use (
+                    $model
+                ) : void {
+                    self::assertSame(
+                        $model,
+                        $beforeSave->userCardModel
+                    );
+                }
+            );
+
+        $eventDispatcher->expects(self::at(1))
+            ->method('dispatch')
+            ->willReturnCallback(
+                static function (
+                    SaveUserCardAfterSave $afterSave
+                ) use (
+                    $model,
+                    $returnPayload
+                ) : void {
+                    self::assertSame(
+                        $model,
+                        $afterSave->userCardModel
+                    );
+
+                    self::assertSame(
+                        $returnPayload,
+                        $afterSave->payload
+                    );
+                }
+            );
+
         $service = new SaveUserCard(
             $saveNewRecord,
             $saveExistingRecord,
@@ -157,23 +236,8 @@ class SaveUserCardTest extends TestCase
             TestConfig::$di->get(
                 TransformUserCardModelToRecord::class
             ),
+            $eventDispatcher
         );
-
-        $model = new UserCardModel();
-
-        $model->user = $user;
-
-        $model->stripeId = 'foo-stripe-id';
-
-        $model->nickname = 'foo-nickname';
-
-        $model->lastFour = '4321';
-
-        $model->provider = 'visa';
-
-        $model->expiration = $expiration;
-
-        $model->isDefault = true;
 
         self::assertSame(
             $returnPayload,
@@ -190,6 +254,20 @@ class SaveUserCardTest extends TestCase
         $user->id = 'bar-id';
 
         $returnPayload = new Payload(Payload::STATUS_CREATED);
+
+        $model = new UserCardModel();
+
+        $model->id = 'foo-record-id';
+
+        $model->user = $user;
+
+        $model->stripeId = 'foo-stripe-id';
+
+        $model->lastFour = '4321';
+
+        $model->provider = 'visa';
+
+        $model->expiration = $expiration;
 
         $saveNewRecord = $this->createMock(
             SaveNewRecord::class
@@ -254,6 +332,46 @@ class SaveUserCardTest extends TestCase
                 }
             );
 
+        $eventDispatcher = $this->createMock(
+            EventDispatcherInterface::class
+        );
+
+        $eventDispatcher->expects(self::at(0))
+            ->method('dispatch')
+            ->willReturnCallback(
+                static function (
+                    SaveUserCardBeforeSave $beforeSave
+                ) use (
+                    $model
+                ) : void {
+                    self::assertSame(
+                        $model,
+                        $beforeSave->userCardModel
+                    );
+                }
+            );
+
+        $eventDispatcher->expects(self::at(1))
+            ->method('dispatch')
+            ->willReturnCallback(
+                static function (
+                    SaveUserCardAfterSave $afterSave
+                ) use (
+                    $model,
+                    $returnPayload
+                ) : void {
+                    self::assertSame(
+                        $model,
+                        $afterSave->userCardModel
+                    );
+
+                    self::assertSame(
+                        $returnPayload,
+                        $afterSave->payload
+                    );
+                }
+            );
+
         $service = new SaveUserCard(
             $saveNewRecord,
             $saveExisting,
@@ -263,21 +381,8 @@ class SaveUserCardTest extends TestCase
             TestConfig::$di->get(
                 TransformUserCardModelToRecord::class
             ),
+            $eventDispatcher,
         );
-
-        $model = new UserCardModel();
-
-        $model->id = 'foo-record-id';
-
-        $model->user = $user;
-
-        $model->stripeId = 'foo-stripe-id';
-
-        $model->lastFour = '4321';
-
-        $model->provider = 'visa';
-
-        $model->expiration = $expiration;
 
         self::assertSame(
             $returnPayload,
