@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Config;
 
 use App\Stripe\EventListeners\OnBeforeSaveUser;
+use App\Stripe\EventListeners\OnBeforeSaveUserCard;
 use Crell\Tukio\OrderedListenerProvider;
 
 class RegisterEventListeners
@@ -29,6 +30,11 @@ class RegisterEventListeners
         $this->provider->addSubscriber(
             OnBeforeSaveUser::class,
             OnBeforeSaveUser::class,
+        );
+
+        $this->provider->addSubscriber(
+            OnBeforeSaveUserCard::class,
+            OnBeforeSaveUserCard::class,
         );
     }
 }

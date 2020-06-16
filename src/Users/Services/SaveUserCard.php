@@ -73,9 +73,18 @@ class SaveUserCard
         }
 
         if ($userCard->id !== '') {
-            return ($this->saveExistingRecord)(
+            $payload = ($this->saveExistingRecord)(
                 ($this->modelToRecord)($userCard)
             );
+
+            $afterSaveEvent = new SaveUserCardAfterSave(
+                $userCard,
+                $payload,
+            );
+
+            $this->eventDispatcher->dispatch($afterSaveEvent);
+
+            return $payload;
         }
 
         /** @noinspection PhpUnhandledExceptionInspection */

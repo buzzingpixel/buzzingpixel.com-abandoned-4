@@ -143,6 +143,9 @@ parameters:
         -
             message: '#Undefined variable: \$this#'
             path: %currentWorkingDirectory%/config/Routes/Admin/Queue.php
+        -
+            message: '#Access to an undefined property Stripe\\StripeObject::\$brand\.#'
+            path: %currentWorkingDirectory%/src/Stripe/EventListeners/OnBeforeSaveUserCard.php
     excludes_analyse:
         - %currentWorkingDirectory%/config/dumper.php
         - %currentWorkingDirectory%/config/Abstractions/SimpleModel.php

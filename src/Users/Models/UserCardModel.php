@@ -14,7 +14,7 @@ class UserCardModel
 
     public string $newCardNumber = '';
 
-    public string $stripeId;
+    public string $stripeId = '';
 
     public string $nickname = '';
 
