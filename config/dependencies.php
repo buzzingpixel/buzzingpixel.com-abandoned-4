@@ -31,6 +31,8 @@ use Rollbar\Rollbar;
 use Slim\Csrf\Guard as CsrfGuard;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Factory\ResponseFactory;
+use Stripe\Stripe as StripeApi;
+use Stripe\StripeClient;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -188,6 +190,24 @@ return [
     },
     ResponseFactoryInterface::class => autowire(ResponseFactory::class),
     SendMailAdapter::class => autowire(MandrillSendMailAdapter::class),
+    StripeClient::class => static function () {
+        StripeApi::setApiKey(
+            (string) getenv('STRIPE_SECRET_KEY')
+        );
+
+        StripeApi::setApiVersion('2020-03-02');
+
+        StripeApi::setAppInfo(
+            'BuzzingPixel.com',
+            null,
+            'https://www.buzzingpixel.com'
+        );
+
+        return new StripeClient([
+            'api_key' => (string) getenv('STRIPE_SECRET_KEY'),
+            'stripe_version' => '2020-03-02',
+        ]);
+    },
     TwigEnvironment::class => static function (ContainerInterface $di) {
         return (new TwigEnvironmentFactory())($di);
     },
