@@ -19,6 +19,7 @@
     "require": {
         "php": "^7.4",
         "ext-PDO": "^7.3",
+        "awurth/slim-validation": "^3.3",
         "buzzingpixel/cookie-api": "^2.0",
         "buzzingpixel/twig-getenv": "^1.0",
         "buzzingpixel/twig-markdown": "^1.0",
@@ -44,7 +45,7 @@
         "slim/flash": "^0.4.0",
         "slim/psr7": "^0.6.0",
         "slim/slim": "^4.3",
-        "stripe/stripe-php": "^7.29",
+        "stripe/stripe-php": "^7.37",
         "symfony/console": "^4.3",
         "symfony/yaml": "^4.3",
         "twig/twig": "^2.12"
