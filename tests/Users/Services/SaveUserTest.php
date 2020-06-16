@@ -9,6 +9,8 @@ use App\Persistence\SaveExistingRecord;
 use App\Persistence\SaveNewRecord;
 use App\Persistence\Users\UserRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
+use App\Users\Events\SaveUserAfterSave;
+use App\Users\Events\SaveUserBeforeSave;
 use App\Users\Models\UserModel;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
@@ -19,6 +21,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\TestConfig;
 use Throwable;
 use function assert;
@@ -37,6 +40,9 @@ class SaveUserTest extends TestCase
     private string $expectFetchUserId                = '';
     private bool $fetchUserByIdReturnsUser           = false;
     private bool $expectExistingRecordCall           = false;
+    private bool $expectDispatcherCalls              = false;
+    /** @var mixed[] */
+    private array $dispatcherCalls = [];
 
     public function testWhenNoPasswordHashAndNoNewPassword() : void
     {
@@ -131,6 +137,7 @@ class SaveUserTest extends TestCase
         $this->expectFetchUserId                  = '';
         $this->fetchUserByIdReturnsUser           = false;
         $this->expectExistingRecordCall           = false;
+        $this->expectDispatcherCalls              = true;
 
         $this->internalSetup();
 
@@ -160,6 +167,30 @@ class SaveUserTest extends TestCase
             ['message' => 'User with email address foo@bar.baz already exists'],
             $payload->getResult()
         );
+
+        self::assertCount(2, $this->dispatcherCalls);
+
+        $call1 = $this->dispatcherCalls[0];
+
+        self::assertCount(1, $call1);
+
+        $beforeSave = $call1[0];
+
+        assert($beforeSave instanceof SaveUserBeforeSave);
+
+        self::assertSame($beforeSave->userModel, $userModel);
+
+        $call2 = $this->dispatcherCalls[1];
+
+        self::assertCount(1, $call2);
+
+        $afterSave = $call2[0];
+
+        assert($afterSave instanceof SaveUserAfterSave);
+
+        self::assertSame($afterSave->userModel, $userModel);
+
+        self::assertSame($payload, $afterSave->payload);
     }
 
     public function testSaveNewUser() : void
@@ -170,6 +201,7 @@ class SaveUserTest extends TestCase
         $this->expectFetchUserId                  = '';
         $this->fetchUserByIdReturnsUser           = false;
         $this->expectExistingRecordCall           = false;
+        $this->expectDispatcherCalls              = true;
 
         $this->internalSetup();
 
@@ -232,6 +264,30 @@ class SaveUserTest extends TestCase
         self::assertTrue(password_verify('FooBarBaz', $userRecord->password_hash));
 
         self::assertFalse(password_verify('BazBarFoo', $userRecord->password_hash));
+
+        self::assertCount(2, $this->dispatcherCalls);
+
+        $call1 = $this->dispatcherCalls[0];
+
+        self::assertCount(1, $call1);
+
+        $beforeSave = $call1[0];
+
+        assert($beforeSave instanceof SaveUserBeforeSave);
+
+        self::assertSame($beforeSave->userModel, $userModel);
+
+        $call2 = $this->dispatcherCalls[1];
+
+        self::assertCount(1, $call2);
+
+        $afterSave = $call2[0];
+
+        assert($afterSave instanceof SaveUserAfterSave);
+
+        self::assertSame($afterSave->userModel, $userModel);
+
+        self::assertSame($payload, $afterSave->payload);
     }
 
     /**
@@ -247,6 +303,7 @@ class SaveUserTest extends TestCase
         $this->expectFetchUserId                  = $testId;
         $this->fetchUserByIdReturnsUser           = false;
         $this->expectExistingRecordCall           = false;
+        $this->expectDispatcherCalls              = true;
 
         $this->internalSetup();
 
@@ -277,6 +334,30 @@ class SaveUserTest extends TestCase
             ['message' => 'User with id ' . $testId . ' not found'],
             $payload->getResult()
         );
+
+        self::assertCount(2, $this->dispatcherCalls);
+
+        $call1 = $this->dispatcherCalls[0];
+
+        self::assertCount(1, $call1);
+
+        $beforeSave = $call1[0];
+
+        assert($beforeSave instanceof SaveUserBeforeSave);
+
+        self::assertSame($beforeSave->userModel, $userModel);
+
+        $call2 = $this->dispatcherCalls[1];
+
+        self::assertCount(1, $call2);
+
+        $afterSave = $call2[0];
+
+        assert($afterSave instanceof SaveUserAfterSave);
+
+        self::assertSame($afterSave->userModel, $userModel);
+
+        self::assertSame($payload, $afterSave->payload);
     }
 
     /**
@@ -292,6 +373,7 @@ class SaveUserTest extends TestCase
         $this->expectFetchUserId                  = $testId;
         $this->fetchUserByIdReturnsUser           = true;
         $this->expectExistingRecordCall           = true;
+        $this->expectDispatcherCalls              = true;
 
         $this->internalSetup();
 
@@ -356,6 +438,30 @@ class SaveUserTest extends TestCase
         self::assertSame('ExistingFooBarPassHash', $userRecord->password_hash);
 
         self::assertSame($createdAt->format(DateTimeInterface::ATOM), $userRecord->created_at);
+
+        self::assertCount(2, $this->dispatcherCalls);
+
+        $call1 = $this->dispatcherCalls[0];
+
+        self::assertCount(1, $call1);
+
+        $beforeSave = $call1[0];
+
+        assert($beforeSave instanceof SaveUserBeforeSave);
+
+        self::assertSame($beforeSave->userModel, $userModel);
+
+        $call2 = $this->dispatcherCalls[1];
+
+        self::assertCount(1, $call2);
+
+        $afterSave = $call2[0];
+
+        assert($afterSave instanceof SaveUserAfterSave);
+
+        self::assertSame($afterSave->userModel, $userModel);
+
+        self::assertSame($payload, $afterSave->payload);
     }
 
     private function internalSetup() : void
@@ -370,7 +476,8 @@ class SaveUserTest extends TestCase
             ),
             TestConfig::$di->get(
                 UuidFactoryWithOrderedTimeCodec::class
-            )
+            ),
+            $this->mockEventDispatcher()
         );
     }
 
@@ -493,6 +600,30 @@ class SaveUserTest extends TestCase
                 $this->existingRecordCallArgs = func_get_args();
 
                 return new Payload(Payload::STATUS_UPDATED);
+            });
+
+        return $mock;
+    }
+
+    /**
+     * @return EventDispatcherInterface&MockObject
+     */
+    private function mockEventDispatcher() : EventDispatcherInterface
+    {
+        $mock = $this->createMock(
+            EventDispatcherInterface::class
+        );
+
+        if (! $this->expectDispatcherCalls) {
+            $mock->expects(self::never())
+                ->method(self::anything());
+
+            return $mock;
+        }
+
+        $mock->method('dispatch')
+            ->willReturnCallback(function () : void {
+                $this->dispatcherCalls[] = func_get_args();
             });
 
         return $mock;

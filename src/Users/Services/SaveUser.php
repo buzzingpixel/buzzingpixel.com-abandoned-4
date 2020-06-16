@@ -8,9 +8,12 @@ use App\Payload\Payload;
 use App\Persistence\SaveExistingRecord;
 use App\Persistence\SaveNewRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
+use App\Users\Events\SaveUserAfterSave;
+use App\Users\Events\SaveUserBeforeSave;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserModelToUserRecord;
 use App\Utilities\SimpleValidator;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Ramsey\Uuid\UuidFactoryInterface;
 use function count;
 use function mb_strlen;
@@ -27,6 +30,7 @@ class SaveUser
     private SaveExistingRecord $saveExistingRecord;
     private TransformUserModelToUserRecord $transformUserModelToUserRecord;
     private UuidFactoryInterface $uuidFactory;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
         FetchUserByEmailAddress $fetchUserByEmailAddress,
@@ -34,7 +38,8 @@ class SaveUser
         FetchUserById $fetchUserById,
         SaveExistingRecord $saveExistingRecord,
         TransformUserModelToUserRecord $transformUserModelToUserRecord,
-        UuidFactoryWithOrderedTimeCodec $uuidFactory
+        UuidFactoryWithOrderedTimeCodec $uuidFactory,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->fetchUserByEmailAddress        = $fetchUserByEmailAddress;
         $this->saveNewRecord                  = $saveNewRecord;
@@ -42,6 +47,7 @@ class SaveUser
         $this->saveExistingRecord             = $saveExistingRecord;
         $this->transformUserModelToUserRecord = $transformUserModelToUserRecord;
         $this->uuidFactory                    = $uuidFactory;
+        $this->eventDispatcher                = $eventDispatcher;
     }
 
     public function __invoke(UserModel $userModel) : Payload
@@ -73,11 +79,22 @@ class SaveUser
             );
         }
 
+        $this->eventDispatcher->dispatch(new SaveUserBeforeSave(
+            $userModel
+        ));
+
         if ($userModel->id === '') {
-            return $this->saveNewUser($userModel);
+            $payload = $this->saveNewUser($userModel);
+        } else {
+            $payload = $this->saveExistingUser($userModel);
         }
 
-        return $this->saveExistingUser($userModel);
+        $this->eventDispatcher->dispatch(new SaveUserAfterSave(
+            $userModel,
+            $payload,
+        ));
+
+        return $payload;
     }
 
     private function saveNewUser(UserModel $userModel) : Payload
