@@ -22,6 +22,41 @@ class CreateUserCardsTable extends AbstractMigration
             ->addColumn('last_four', 'string')
             ->addColumn('provider', 'string')
             ->addColumn(
+                'name_on_card',
+                'string',
+                ['default' => '']
+            )
+            ->addColumn(
+                'address',
+                'string',
+                ['default' => '']
+            )
+            ->addColumn(
+                'address2',
+                'string',
+                ['default' => '']
+            )
+            ->addColumn(
+                'city',
+                'string',
+                ['default' => '']
+            )
+            ->addColumn(
+                'state',
+                'string',
+                ['default' => '']
+            )
+            ->addColumn(
+                'postal_code',
+                'string',
+                ['default' => '']
+            )
+            ->addColumn(
+                'country',
+                'string',
+                ['default' => '']
+            )
+            ->addColumn(
                 'is_default',
                 'boolean',
                 ['default' => 0]
