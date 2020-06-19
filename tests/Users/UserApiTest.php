@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
+use App\Users\Services\DeleteUserCard;
 use App\Users\Services\FetchLoggedInUser;
 use App\Users\Services\FetchTotalUserResetTokens;
 use App\Users\Services\FetchTotalUsers;
@@ -737,6 +738,41 @@ class UserApiTest extends TestCase
         self::assertSame(
             $userCardModel,
             $api->fetchUserCardById($user, $id),
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testDeleteUserCard() : void
+    {
+        $payload = new Payload(Payload::STATUS_DELETED);
+
+        $card = new UserCardModel();
+
+        $service = $this->createMock(
+            DeleteUserCard::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($card))
+            ->willReturn($payload);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(DeleteUserCard::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        self::assertSame(
+            $payload,
+            $api->deleteUserCard($card),
         );
     }
 }

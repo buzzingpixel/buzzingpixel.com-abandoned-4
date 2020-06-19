@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
+use App\Users\Services\DeleteUserCard;
 use App\Users\Services\FetchLoggedInUser;
 use App\Users\Services\FetchTotalUserResetTokens;
 use App\Users\Services\FetchTotalUsers;
@@ -284,5 +285,15 @@ class UserApi
         assert($service instanceof FetchUserCardById);
 
         return $service($user, $id);
+    }
+
+    public function deleteUserCard(UserCardModel $card) : Payload
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(DeleteUserCard::class);
+
+        assert($service instanceof DeleteUserCard);
+
+        return $service($card);
     }
 }
