@@ -14,6 +14,11 @@ abstract class Record
 
     public string $id = '';
 
+    public static function tableName() : string
+    {
+        return static::$tableName;
+    }
+
     public function getTableName() : string
     {
         return static::$tableName;
