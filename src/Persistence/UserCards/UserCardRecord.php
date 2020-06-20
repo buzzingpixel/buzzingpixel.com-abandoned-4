@@ -22,6 +22,20 @@ class UserCardRecord extends Record
 
     public string $provider = '';
 
+    public string $name_on_card = '';
+
+    public string $address = '';
+
+    public string $address2 = '';
+
+    public string $city = '';
+
+    public string $state = '';
+
+    public string $postal_code = '';
+
+    public string $country = '';
+
     /** @var int|bool|string */
     public $is_default = '';
 

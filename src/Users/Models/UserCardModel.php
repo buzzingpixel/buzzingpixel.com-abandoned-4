@@ -14,6 +14,8 @@ class UserCardModel
 
     public string $newCardNumber = '';
 
+    public string $newCvc = '';
+
     public string $stripeId = '';
 
     public string $nickname = '';
@@ -21,6 +23,20 @@ class UserCardModel
     public string $lastFour = '';
 
     public string $provider = '';
+
+    public string $nameOnCard = '';
+
+    public string $address = '';
+
+    public string $address2 = '';
+
+    public string $city = '';
+
+    public string $state = '';
+
+    public string $postalCode = '';
+
+    public string $country = '';
 
     public bool $isDefault = false;
 
