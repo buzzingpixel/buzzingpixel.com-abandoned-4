@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Users\Services;
 
+use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use GuzzleHttp\Client;
 use Throwable;
@@ -104,5 +105,30 @@ class PostalCodeService
         $model->billingCity = (string) ($place['place name'] ?? '');
 
         $model->billingStateAbbr = (string) ($place['state abbreviation'] ?? '');
+    }
+
+    public function fillCardModelFromPostalCode(UserCardModel $model) : void
+    {
+        $postalCode = $model->postalCode;
+
+        $countryCode = $model->country;
+
+        if (! $this->validatePostalCode(
+            $postalCode,
+            $countryCode
+        )) {
+            return;
+        }
+
+        $json = $this->makeApiCall(
+            $postalCode,
+            $countryCode
+        );
+
+        $place =  (array) ($json['places'][0] ?? []);
+
+        $model->city = (string) ($place['place name'] ?? '');
+
+        $model->state = (string) ($place['state abbreviation'] ?? '');
     }
 }
