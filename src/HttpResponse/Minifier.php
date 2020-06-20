@@ -8,7 +8,7 @@ use Minify_HTML;
 
 class Minifier
 {
-    public function __invoke(string $html) : string
+    public function __invoke(string $html): string
     {
         $options = [
             'cssMinifier' => '\Minify_CSSmin::minify',

@@ -10,7 +10,9 @@ use App\Queue\Transformers\TransformQueueModelToRecord;
 use DateTimeZone;
 use Safe\DateTimeImmutable;
 use Throwable;
+
 use function get_class;
+
 use const PHP_EOL;
 
 class MarkStoppedDueToError
@@ -29,7 +31,7 @@ class MarkStoppedDueToError
     public function __invoke(
         QueueModel $model,
         ?Throwable $e = null
-    ) : void {
+    ): void {
         $msg = '';
 
         if ($e !== null) {

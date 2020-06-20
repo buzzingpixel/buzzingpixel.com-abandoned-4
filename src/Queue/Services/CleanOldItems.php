@@ -11,6 +11,7 @@ use App\Persistence\RecordQueryFactory;
 use DateTimeZone;
 use PDO;
 use Safe\DateTimeImmutable;
+
 use function array_fill;
 use function array_map;
 use function count;
@@ -29,7 +30,7 @@ class CleanOldItems
         $this->pdo                = $pdo;
     }
 
-    public function __invoke() : int
+    public function __invoke(): int
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $eightDaysAgo = new DateTimeImmutable(
@@ -58,7 +59,7 @@ class CleanOldItems
         }
 
         $ids = array_map(
-            static fn(QueueRecord $r) => $r->id,
+            static fn (QueueRecord $r) => $r->id,
             $records
         );
 

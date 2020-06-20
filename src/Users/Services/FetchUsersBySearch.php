@@ -8,6 +8,7 @@ use App\Persistence\RecordQueryFactory;
 use App\Persistence\Users\UserRecord;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserRecordToUserModel;
+
 use function array_map;
 
 class FetchUsersBySearch
@@ -28,7 +29,7 @@ class FetchUsersBySearch
      *
      * @psalm-suppress MixedReturnTypeCoercion
      */
-    public function __invoke(string $queryString, ?int $limit = null, int $offset = 0) : array
+    public function __invoke(string $queryString, ?int $limit = null, int $offset = 0): array
     {
         $userRecordDummy = new UserRecord();
 

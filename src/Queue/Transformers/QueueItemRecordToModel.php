@@ -10,6 +10,7 @@ use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use Safe\DateTimeImmutable;
 use Throwable;
+
 use function in_array;
 use function is_array;
 use function Safe\json_decode;
@@ -21,7 +22,7 @@ class QueueItemRecordToModel
     public function __invoke(
         QueueItemRecord $record,
         QueueModel $queueModel
-    ) : QueueItemModel {
+    ): QueueItemModel {
         $model = new QueueItemModel();
 
         $model->id = $record->id;

@@ -15,7 +15,7 @@ class ClearCart
         $this->cartApi = $cartApi;
     }
 
-    public function __invoke() : void
+    public function __invoke(): void
     {
         $cart = $this->cartApi->fetchCurrentUserCart();
 

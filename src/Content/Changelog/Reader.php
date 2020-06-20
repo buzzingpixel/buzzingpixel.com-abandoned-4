@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Content\Changelog;
 
 use MJErwin\ParseAChangelog\Reader as ErwinReader;
+
 use function array_slice;
 use function count;
 use function current;
@@ -26,7 +27,7 @@ class Reader extends ErwinReader
     /**
      * @return array<string, Release>
      */
-    public function getReleases() : array
+    public function getReleases(): array
     {
         if (count($this->releases) === 0) {
             $contentArrayCount = count($this->content);

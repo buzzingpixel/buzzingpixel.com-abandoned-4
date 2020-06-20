@@ -7,6 +7,7 @@ namespace App\Content\Modules\ExtractorMethods;
 use App\Content\Modules\Payloads\ImageCallOutPayload;
 use cebe\markdown\GithubMarkdown;
 use Throwable;
+
 use function array_map;
 use function is_array;
 
@@ -28,7 +29,7 @@ trait ExtractImageCallOut
      *
      * @throws Throwable
      */
-    protected function extractImageCallOut(array $parsedYaml) : ImageCallOutPayload
+    protected function extractImageCallOut(array $parsedYaml): ImageCallOutPayload
     {
         $ctas = isset($parsedYaml['ctas']) && is_array($parsedYaml['ctas']) ?
             $parsedYaml['ctas'] :

@@ -16,7 +16,7 @@ class GetChangelogRawResponder
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(string $content) : ResponseInterface
+    public function __invoke(string $content): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

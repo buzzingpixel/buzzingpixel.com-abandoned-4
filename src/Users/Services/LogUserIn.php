@@ -9,6 +9,7 @@ use App\Users\Models\UserModel;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use DateTimeZone;
 use Safe\DateTimeImmutable;
+
 use function Safe\strtotime;
 
 class LogUserIn
@@ -27,7 +28,7 @@ class LogUserIn
         $this->cookieApi            = $cookieApi;
     }
 
-    public function __invoke(UserModel $user, string $password) : Payload
+    public function __invoke(UserModel $user, string $password): Payload
     {
         $validPassword = ($this->validateUserPassword)(
             $user,

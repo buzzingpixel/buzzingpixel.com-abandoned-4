@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+
 use function assert;
 
 class GetAccountPaymentMethodAction
@@ -28,7 +29,7 @@ class GetAccountPaymentMethodAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $id = (string) $request->getAttribute('id');
 

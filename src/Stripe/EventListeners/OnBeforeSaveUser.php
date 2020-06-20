@@ -16,7 +16,7 @@ class OnBeforeSaveUser
         $this->updateStripeCustomer = $updateStripeCustomer;
     }
 
-    public function onBeforeSaveUser(SaveUserBeforeSave $beforeSave) : void
+    public function onBeforeSaveUser(SaveUserBeforeSave $beforeSave): void
     {
         ($this->updateStripeCustomer)($beforeSave->userModel);
     }

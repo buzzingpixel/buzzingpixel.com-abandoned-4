@@ -22,7 +22,7 @@ class PostChangePasswordResponder
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(Payload $payload) : ResponseInterface
+    public function __invoke(Payload $payload): ResponseInterface
     {
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             $this->flashMessages->addMessage(

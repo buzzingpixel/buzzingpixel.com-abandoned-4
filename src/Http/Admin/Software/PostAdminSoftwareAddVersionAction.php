@@ -16,6 +16,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Safe\DateTimeImmutable;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+
 use function assert;
 use function count;
 use function is_array;
@@ -40,7 +41,7 @@ class PostAdminSoftwareAddVersionAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $software = $this->softwareApi->fetchSoftwareById(
             (string) $request->getAttribute('id')

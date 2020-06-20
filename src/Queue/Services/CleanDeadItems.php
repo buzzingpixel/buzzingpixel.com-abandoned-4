@@ -11,6 +11,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use PDO;
 use Safe\DateTimeImmutable;
+
 use function array_fill;
 use function array_map;
 use function count;
@@ -32,7 +33,7 @@ class CleanDeadItems
     /**
      * Returns the number of dead items cleaned
      */
-    public function __invoke() : int
+    public function __invoke(): int
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $currentDate = new DateTimeImmutable(
@@ -61,7 +62,7 @@ class CleanDeadItems
         }
 
         $ids = array_map(
-            static fn(QueueRecord $r) => $r->id,
+            static fn (QueueRecord $r) => $r->id,
             $records
         );
 

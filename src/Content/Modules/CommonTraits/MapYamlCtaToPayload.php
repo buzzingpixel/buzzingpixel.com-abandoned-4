@@ -14,7 +14,7 @@ trait MapYamlCtaToPayload
      *
      * @throws Throwable
      */
-    protected function mapYamlCtaToPayload(array $yamlCta) : CtaPayload
+    protected function mapYamlCtaToPayload(array $yamlCta): CtaPayload
     {
         return new CtaPayload([
             'href' => (string) ($yamlCta['href'] ?? ''),

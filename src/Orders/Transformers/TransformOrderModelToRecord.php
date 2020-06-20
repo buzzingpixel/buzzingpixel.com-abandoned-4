@@ -12,7 +12,7 @@ use DateTimeInterface;
 
 class TransformOrderModelToRecord
 {
-    public function __invoke(OrderModel $model) : OrderRecord
+    public function __invoke(OrderModel $model): OrderRecord
     {
         $record = new OrderRecord();
 

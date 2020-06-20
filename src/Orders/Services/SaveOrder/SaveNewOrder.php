@@ -34,7 +34,7 @@ class SaveNewOrder
     /**
      * @throws Exception
      */
-    public function __invoke(OrderModel $model) : void
+    public function __invoke(OrderModel $model): void
     {
         $model->id = $this->uuidFactory->uuid1()->toString();
 

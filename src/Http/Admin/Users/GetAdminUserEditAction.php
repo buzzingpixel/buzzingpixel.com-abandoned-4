@@ -29,7 +29,7 @@ class GetAdminUserEditAction
      * @throws HttpNotFoundException
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $user = $this->userApi->fetchUserById(
             (string) $request->getAttribute('id')

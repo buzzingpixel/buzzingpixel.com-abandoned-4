@@ -7,6 +7,7 @@ namespace App\Schedule\Services;
 use App\Schedule\Models\ScheduleItemModel;
 use App\Utilities\SystemClock;
 use Throwable;
+
 use function is_numeric;
 
 class CheckIfModelShouldRun
@@ -22,7 +23,7 @@ class CheckIfModelShouldRun
         $this->systemClock       = $systemClock;
     }
 
-    public function check(ScheduleItemModel $model) : bool
+    public function check(ScheduleItemModel $model): bool
     {
         try {
             return $this->innerCheck($model);
@@ -31,7 +32,7 @@ class CheckIfModelShouldRun
         }
     }
 
-    private function innerCheck(ScheduleItemModel $model) : bool
+    private function innerCheck(ScheduleItemModel $model): bool
     {
         $currentTime = $this->systemClock->getCurrentTime();
 

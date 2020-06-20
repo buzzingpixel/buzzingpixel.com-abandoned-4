@@ -11,6 +11,7 @@ use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
+
 use function assert;
 use function count;
 use function is_array;
@@ -29,7 +30,7 @@ class PostAdminSoftwareCreateAction
         $this->softwareApi = $softwareApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $postData = $request->getParsedBody();
 

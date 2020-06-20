@@ -26,7 +26,7 @@ class FetchLoggedInUser extends AbstractExtension
         return [$this->getFunction()];
     }
 
-    private function getFunction() : TwigFunction
+    private function getFunction(): TwigFunction
     {
         return new TwigFunction(
             'fetchLoggedInUser',
@@ -34,7 +34,7 @@ class FetchLoggedInUser extends AbstractExtension
         );
     }
 
-    public function fetchLoggedInUser() : ?UserModel
+    public function fetchLoggedInUser(): ?UserModel
     {
         return $this->userApi->fetchLoggedInUser();
     }

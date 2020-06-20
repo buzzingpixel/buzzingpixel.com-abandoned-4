@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\HttpHelpers\Pagination;
 
 use LogicException;
+
 use function ceil;
 use function http_build_query;
 use function ltrim;
@@ -40,12 +41,12 @@ class Pagination
         $this->isInstantiated = true;
     }
 
-    public function pad() : int
+    public function pad(): int
     {
         return $this->pad;
     }
 
-    public function withPad(int $val) : Pagination
+    public function withPad(int $val): Pagination
     {
         $clone = clone $this;
 
@@ -54,12 +55,12 @@ class Pagination
         return $clone;
     }
 
-    public function currentPage() : int
+    public function currentPage(): int
     {
         return $this->currentPage;
     }
 
-    public function withCurrentPage(int $val) : Pagination
+    public function withCurrentPage(int $val): Pagination
     {
         $clone = clone $this;
 
@@ -68,12 +69,12 @@ class Pagination
         return $clone;
     }
 
-    public function perPage() : int
+    public function perPage(): int
     {
         return $this->perPage;
     }
 
-    public function withPerPage(int $val) : Pagination
+    public function withPerPage(int $val): Pagination
     {
         $clone = clone $this;
 
@@ -82,12 +83,12 @@ class Pagination
         return $clone;
     }
 
-    public function totalResults() : int
+    public function totalResults(): int
     {
         return $this->totalResults;
     }
 
-    public function withTotalResults(int $val) : Pagination
+    public function withTotalResults(int $val): Pagination
     {
         $clone = clone $this;
 
@@ -96,12 +97,12 @@ class Pagination
         return $clone;
     }
 
-    public function base() : string
+    public function base(): string
     {
         return $this->base;
     }
 
-    public function withBase(string $val) : Pagination
+    public function withBase(string $val): Pagination
     {
         $clone = clone $this;
 
@@ -110,12 +111,12 @@ class Pagination
         return $clone;
     }
 
-    public function queryString() : string
+    public function queryString(): string
     {
         return $this->queryString;
     }
 
-    public function withQueryString(string $val) : Pagination
+    public function withQueryString(string $val): Pagination
     {
         $clone = clone $this;
 
@@ -127,7 +128,7 @@ class Pagination
     /**
      * @param string[] $val
      */
-    public function withQueryStringFromArray(array $val) : Pagination
+    public function withQueryStringFromArray(array $val): Pagination
     {
         $clone = clone $this;
 
@@ -136,12 +137,12 @@ class Pagination
         return $clone;
     }
 
-    public function totalPages() : int
+    public function totalPages(): int
     {
         return (int) ceil($this->totalResults() / $this->perPage());
     }
 
-    public function prevPage() : ?int
+    public function prevPage(): ?int
     {
         if ($this->currentPage() <= 1) {
             return null;
@@ -152,7 +153,7 @@ class Pagination
 
     private ?string $calcPrevPageLink = null;
 
-    public function prevPageLink() : ?string
+    public function prevPageLink(): ?string
     {
         if ($this->calcPrevPageLink === null) {
             if ($this->prevPage() === null) {
@@ -169,7 +170,7 @@ class Pagination
         return $this->calcPrevPageLink;
     }
 
-    public function nextPage() : ?int
+    public function nextPage(): ?int
     {
         if ($this->currentPage() >= $this->totalPages()) {
             return null;
@@ -178,7 +179,7 @@ class Pagination
         return $this->currentPage() + 1;
     }
 
-    public function nextPageLink() : ?string
+    public function nextPageLink(): ?string
     {
         if ($this->nextPage() === null) {
             return null;
@@ -189,7 +190,7 @@ class Pagination
         return $this->base() . '/page/' . $nextPage . $this->queryString();
     }
 
-    public function firstPageLink() : ?string
+    public function firstPageLink(): ?string
     {
         if ($this->currentPage() <= $this->pad() + 1) {
             return null;
@@ -200,7 +201,7 @@ class Pagination
         return $base . $this->queryString();
     }
 
-    public function lastPageLink() : ?string
+    public function lastPageLink(): ?string
     {
         if ($this->currentPage() + $this->pad() >= $this->totalPages()) {
             return null;
@@ -215,7 +216,7 @@ class Pagination
     /**
      * @return mixed[]
      */
-    public function pagesArray() : array
+    public function pagesArray(): array
     {
         if ($this->calcPagesArray !== null) {
             return $this->calcPagesArray;

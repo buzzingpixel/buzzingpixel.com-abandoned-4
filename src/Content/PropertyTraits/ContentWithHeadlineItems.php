@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Content\PropertyTraits;
 
 use App\Content\Modules\Payloads\ContentWithHeadingPayload;
+
 use function array_walk;
 
 trait ContentWithHeadlineItems
@@ -15,12 +16,12 @@ trait ContentWithHeadlineItems
     /**
      * @param ContentWithHeadingPayload[] $items
      */
-    protected function setItems(array $items) : void
+    protected function setItems(array $items): void
     {
         array_walk($items, [$this, 'setItem']);
     }
 
-    private function setItem(ContentWithHeadingPayload $item) : void
+    private function setItem(ContentWithHeadingPayload $item): void
     {
         $this->items[] = $item;
     }
@@ -28,7 +29,7 @@ trait ContentWithHeadlineItems
     /**
      * @return ContentWithHeadingPayload[]
      */
-    public function getItems() : array
+    public function getItems(): array
     {
         return $this->items;
     }

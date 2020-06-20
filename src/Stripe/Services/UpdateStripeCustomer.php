@@ -19,7 +19,7 @@ class UpdateStripeCustomer
         $this->stripe = $stripe;
     }
 
-    public function __invoke(UserModel $user) : void
+    public function __invoke(UserModel $user): void
     {
         try {
             if ($user->stripeId === '') {
@@ -50,7 +50,7 @@ class UpdateStripeCustomer
     /**
      * @throws ApiErrorException
      */
-    private function createStripeUser(UserModel $user) : void
+    private function createStripeUser(UserModel $user): void
     {
         $stripeCustomer = $this->stripe->customers->create([
             'email' => $user->emailAddress,
@@ -59,7 +59,7 @@ class UpdateStripeCustomer
         $user->stripeId = $stripeCustomer->id;
     }
 
-    private function retrieveStripeUser(UserModel $user) : ?Customer
+    private function retrieveStripeUser(UserModel $user): ?Customer
     {
         try {
             return $this->stripe->customers->retrieve($user->stripeId);

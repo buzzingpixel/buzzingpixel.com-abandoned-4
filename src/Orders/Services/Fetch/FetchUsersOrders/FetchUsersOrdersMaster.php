@@ -14,6 +14,7 @@ use App\Persistence\Orders\OrderItemRecord;
 use App\Persistence\Orders\OrderRecord;
 use App\Users\Models\UserModel;
 use Throwable;
+
 use function array_map;
 use function count;
 
@@ -44,7 +45,7 @@ class FetchUsersOrdersMaster
     /**
      * @return OrderModel[]
      */
-    public function __invoke(UserModel $user) : array
+    public function __invoke(UserModel $user): array
     {
         try {
             $orderRecords = ($this->fetchUserOrderRecords)($user);
@@ -54,7 +55,7 @@ class FetchUsersOrdersMaster
             }
 
             $orderIds = array_map(
-                static fn(OrderRecord $record) => $record->id,
+                static fn (OrderRecord $record) => $record->id,
                 $orderRecords
             );
 
@@ -77,11 +78,11 @@ class FetchUsersOrdersMaster
                     $itemRecords,
                     $licenses,
                     $user
-                ) : OrderModel {
+                ): OrderModel {
                     $itemModels = array_map(
                         function (OrderItemRecord $item) use (
                             $licenses
-                        ) : OrderItemModel {
+                        ): OrderItemModel {
                             return ($this->transformItem)(
                                 $item,
                                 $licenses[$item->license_id] ?? null,

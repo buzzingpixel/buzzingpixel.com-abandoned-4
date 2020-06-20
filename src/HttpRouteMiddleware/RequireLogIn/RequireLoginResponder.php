@@ -17,7 +17,7 @@ class RequireLoginResponder extends StandardResponderConstructor
     public function __invoke(
         MetaPayload $metaPayload,
         string $redirectTo
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

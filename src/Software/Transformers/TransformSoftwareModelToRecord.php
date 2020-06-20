@@ -11,7 +11,7 @@ use App\Software\Models\SoftwareModel;
 
 class TransformSoftwareModelToRecord
 {
-    public function __invoke(SoftwareModel $model) : SoftwareRecord
+    public function __invoke(SoftwareModel $model): SoftwareRecord
     {
         $record = new SoftwareRecord();
 

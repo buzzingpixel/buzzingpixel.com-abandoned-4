@@ -15,7 +15,7 @@ class GetAccountLicenseViewResponder extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke(LicenseModel $license) : ResponseInterface
+    public function __invoke(LicenseModel $license): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

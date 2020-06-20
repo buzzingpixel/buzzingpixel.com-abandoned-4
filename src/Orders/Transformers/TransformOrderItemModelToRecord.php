@@ -11,7 +11,7 @@ use App\Persistence\Orders\OrderItemRecord;
 
 class TransformOrderItemModelToRecord
 {
-    public function __invoke(OrderItemModel $model) : OrderItemRecord
+    public function __invoke(OrderItemModel $model): OrderItemRecord
     {
         $record = new OrderItemRecord();
 

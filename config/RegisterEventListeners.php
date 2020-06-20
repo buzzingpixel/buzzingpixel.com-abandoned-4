@@ -18,7 +18,7 @@ class RegisterEventListeners
         $this->provider = $provider;
     }
 
-    public function __invoke() : void
+    public function __invoke(): void
     {
         // Method names in subscriber classes must start with `on`. The event
         // will be derived from reflection to see what event it's subscribing to

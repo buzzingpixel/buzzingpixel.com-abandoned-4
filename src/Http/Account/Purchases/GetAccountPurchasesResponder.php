@@ -13,6 +13,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
+
 use function array_map;
 use function assert;
 use function number_format;
@@ -38,7 +39,7 @@ class GetAccountPurchasesResponder
      *
      * @throws Throwable
      */
-    public function __invoke(array $orders) : ResponseInterface
+    public function __invoke(array $orders): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 
@@ -49,7 +50,7 @@ class GetAccountPurchasesResponder
         $purchases = array_map(
             static function (OrderModel $order) use ($user) {
                 $orderItems = array_map(
-                    static function (OrderItemModel $orderItem) : string {
+                    static function (OrderItemModel $orderItem): string {
                         return $orderItem->itemTitle;
                     },
                     $order->items

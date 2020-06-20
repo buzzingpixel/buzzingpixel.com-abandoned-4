@@ -11,6 +11,7 @@ use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
+
 use function assert;
 use function count;
 use function is_array;
@@ -28,7 +29,7 @@ class PostAccountProfileEditAction
         $this->userApi   = $userApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $user = $this->userApi->fetchLoggedInUser();
 

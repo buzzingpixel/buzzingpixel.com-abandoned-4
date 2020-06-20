@@ -29,7 +29,7 @@ class MarkItemAsStarted
     /**
      * @throws Throwable
      */
-    public function __invoke(QueueModel $model) : void
+    public function __invoke(QueueModel $model): void
     {
         $model->hasStarted = true;
 

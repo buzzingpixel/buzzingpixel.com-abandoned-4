@@ -10,6 +10,7 @@ use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserCardRecordToModel;
 use Throwable;
+
 use function assert;
 
 class FetchUserCardById
@@ -28,7 +29,7 @@ class FetchUserCardById
     public function __invoke(
         UserModel $user,
         string $id
-    ) : ?UserCardModel {
+    ): ?UserCardModel {
         try {
             return $this->innerRun($user, $id);
         } catch (Throwable $e) {
@@ -39,7 +40,7 @@ class FetchUserCardById
     private function innerRun(
         UserModel $user,
         string $id
-    ) : ?UserCardModel {
+    ): ?UserCardModel {
         $record = ($this->recordQueryFactory)(
             new UserCardRecord()
         )

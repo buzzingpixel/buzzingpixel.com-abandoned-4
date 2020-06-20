@@ -8,6 +8,7 @@ use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
+
 use function assert;
 use function is_array;
 
@@ -27,7 +28,7 @@ class PostRequestPasswordResetAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $post = $request->getParsedBody();
 

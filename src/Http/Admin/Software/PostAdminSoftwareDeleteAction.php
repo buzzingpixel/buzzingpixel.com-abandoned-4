@@ -27,7 +27,7 @@ class PostAdminSoftwareDeleteAction
         $this->softwareApi     = $softwareApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $software = $this->softwareApi->fetchSoftwareById(
             $slug = (string) $request->getAttribute('id')

@@ -20,7 +20,7 @@ class FetchUserOrderRecords
     /**
      * @return OrderRecord[]
      */
-    public function __invoke(UserModel $user) : array
+    public function __invoke(UserModel $user): array
     {
         /** @var OrderRecord[] $result */
         $result = ($this->recordQueryFactory)(

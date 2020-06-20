@@ -6,6 +6,7 @@ namespace App\Content\Changelog;
 
 use App\Payload\SpecificPayload;
 use ReflectionException;
+
 use function array_slice;
 use function array_walk;
 
@@ -17,12 +18,12 @@ class ChangelogPayload extends SpecificPayload
     /**
      * @param Release[] $releases
      */
-    protected function setReleases(array $releases) : void
+    protected function setReleases(array $releases): void
     {
         array_walk($releases, [$this, 'addRelease']);
     }
 
-    protected function addRelease(Release $release) : void
+    protected function addRelease(Release $release): void
     {
         $this->releases[] = $release;
     }
@@ -30,7 +31,7 @@ class ChangelogPayload extends SpecificPayload
     /**
      * @return Release[]
      */
-    public function getReleases() : array
+    public function getReleases(): array
     {
         return $this->releases;
     }
@@ -38,7 +39,7 @@ class ChangelogPayload extends SpecificPayload
     /**
      * @throws ReflectionException
      */
-    public function withReleaseSlice(int $length, int $offset = 0) : ChangelogPayload
+    public function withReleaseSlice(int $length, int $offset = 0): ChangelogPayload
     {
         return new ChangelogPayload([
             'releases' => array_slice(

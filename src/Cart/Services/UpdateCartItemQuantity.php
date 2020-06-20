@@ -6,6 +6,7 @@ namespace App\Cart\Services;
 
 use App\Cart\CartApi;
 use App\Software\Models\SoftwareModel;
+
 use function assert;
 
 class UpdateCartItemQuantity
@@ -17,7 +18,7 @@ class UpdateCartItemQuantity
         $this->cartApi = $cartApi;
     }
 
-    public function __invoke(int $quantity, SoftwareModel $software) : void
+    public function __invoke(int $quantity, SoftwareModel $software): void
     {
         $cart = $this->cartApi->fetchCurrentUserCart();
 

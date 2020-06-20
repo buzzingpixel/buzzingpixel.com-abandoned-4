@@ -33,9 +33,9 @@ use Config\NoOp;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
-return static function (App $app) : void {
+return static function (App $app): void {
     // No auth required
-    $app->group('/account', function (RouteCollectorProxy $r) : void {
+    $app->group('/account', function (RouteCollectorProxy $r): void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
@@ -70,7 +70,7 @@ return static function (App $app) : void {
     });
 
     // Auth required
-    $app->group('/account', function (RouteCollectorProxy $r) : void {
+    $app->group('/account', function (RouteCollectorProxy $r): void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();

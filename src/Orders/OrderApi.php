@@ -12,6 +12,7 @@ use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
 use Psr\Container\ContainerInterface;
+
 use function assert;
 
 class OrderApi
@@ -23,7 +24,7 @@ class OrderApi
         $this->di = $di;
     }
 
-    public function saveOrder(OrderModel $orderModel) : Payload
+    public function saveOrder(OrderModel $orderModel): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveOrderMaster::class);
@@ -36,7 +37,7 @@ class OrderApi
     /**
      * @return OrderModel[]
      */
-    public function fetchUsersOrders(UserModel $user) : array
+    public function fetchUsersOrders(UserModel $user): array
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUsersOrdersMaster::class);
@@ -49,7 +50,7 @@ class OrderApi
     /**
      * @return OrderModel[]
      */
-    public function fetchCurrentUserOrders() : array
+    public function fetchCurrentUserOrders(): array
     {
         /** @psalm-suppress MixedAssignment */
         $userApi = $this->di->get(UserApi::class);
@@ -67,7 +68,7 @@ class OrderApi
     public function fetchUserOrderById(
         UserModel $user,
         string $id
-    ) : ?OrderModel {
+    ): ?OrderModel {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserOrderById::class);
 
@@ -76,7 +77,7 @@ class OrderApi
         return $service($user, $id);
     }
 
-    public function fetchCurrentUserOrderById(string $id) : ?OrderModel
+    public function fetchCurrentUserOrderById(string $id): ?OrderModel
     {
         /** @psalm-suppress MixedAssignment */
         $userApi = $this->di->get(UserApi::class);

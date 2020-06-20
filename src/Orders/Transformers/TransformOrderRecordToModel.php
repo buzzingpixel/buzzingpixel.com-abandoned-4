@@ -11,6 +11,7 @@ use App\Persistence\Orders\OrderRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
 use Safe\DateTimeImmutable;
+
 use function assert;
 use function in_array;
 
@@ -33,7 +34,7 @@ class TransformOrderRecordToModel
         OrderRecord $record,
         array $items = [],
         ?UserModel $user = null
-    ) : OrderModel {
+    ): OrderModel {
         $model = new OrderModel();
 
         $model->id = $record->id;

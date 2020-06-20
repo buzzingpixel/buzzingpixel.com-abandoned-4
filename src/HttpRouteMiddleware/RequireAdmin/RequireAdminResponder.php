@@ -14,7 +14,7 @@ class RequireAdminResponder extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke(MetaPayload $metaPayload) : ResponseInterface
+    public function __invoke(MetaPayload $metaPayload): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

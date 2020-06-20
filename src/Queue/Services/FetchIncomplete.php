@@ -24,7 +24,7 @@ class FetchIncomplete
     /**
      * @return QueueModel[]
      */
-    public function __invoke() : array
+    public function __invoke(): array
     {
         /** @var QueueRecord[] $records */
         $records = ($this->recordQueryFactory)(

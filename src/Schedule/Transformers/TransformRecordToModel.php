@@ -10,6 +10,7 @@ use App\Schedule\Frequency;
 use App\Schedule\Models\ScheduleItemModel;
 use Safe\DateTimeImmutable;
 use Throwable;
+
 use function constant;
 use function in_array;
 
@@ -17,7 +18,7 @@ use function in_array;
 
 class TransformRecordToModel
 {
-    public function __invoke(ScheduleTrackingRecord $record) : ScheduleItemModel
+    public function __invoke(ScheduleTrackingRecord $record): ScheduleItemModel
     {
         $lastRunStartAt = null;
 

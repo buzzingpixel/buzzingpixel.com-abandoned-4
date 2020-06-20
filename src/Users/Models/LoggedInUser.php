@@ -17,7 +17,7 @@ class LoggedInUser
         $this->model = $model;
     }
 
-    public function model() : UserModel
+    public function model(): UserModel
     {
         return $this->model;
     }

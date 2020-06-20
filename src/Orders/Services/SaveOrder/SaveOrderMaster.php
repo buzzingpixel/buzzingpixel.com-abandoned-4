@@ -8,6 +8,7 @@ use App\Orders\Models\OrderModel;
 use App\Payload\Payload;
 use App\Persistence\DatabaseTransactionManager;
 use Throwable;
+
 use function array_walk;
 
 class SaveOrderMaster
@@ -29,7 +30,7 @@ class SaveOrderMaster
         $this->saveOrderItemMaster = $saveOrderItemMaster;
     }
 
-    public function __invoke(OrderModel $order) : Payload
+    public function __invoke(OrderModel $order): Payload
     {
         try {
             $this->transactionManager->beginTransaction();

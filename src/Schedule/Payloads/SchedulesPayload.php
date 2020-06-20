@@ -15,7 +15,7 @@ class SchedulesPayload extends SpecificPayload
     /**
      * @param ScheduleItemModel[] $schedules
      */
-    protected function setSchedules(array $schedules) : void
+    protected function setSchedules(array $schedules): void
     {
         $this->schedules = $schedules;
     }
@@ -23,7 +23,7 @@ class SchedulesPayload extends SpecificPayload
     /**
      * @return ScheduleItemModel[]
      */
-    public function getSchedules() : array
+    public function getSchedules(): array
     {
         return $this->schedules;
     }

@@ -22,7 +22,7 @@ class GetCartAction
     /**
      * @throws Throwable
      */
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         return ($this->responder)($this->cartApi->fetchCurrentUserCart());
     }

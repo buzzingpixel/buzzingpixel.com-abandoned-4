@@ -9,6 +9,7 @@ use App\Utilities\SystemClock;
 use DateTimeZone;
 use PDO;
 use Throwable;
+
 use function Safe\strtotime;
 
 class SessionGarbageCollection
@@ -25,7 +26,7 @@ class SessionGarbageCollection
     /**
      * @throws Throwable
      */
-    public function __invoke() : void
+    public function __invoke(): void
     {
         $datetime = $this->systemClock->getCurrentTime()
             ->setTimestamp(

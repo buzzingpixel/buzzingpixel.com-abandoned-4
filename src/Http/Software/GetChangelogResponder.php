@@ -24,7 +24,7 @@ class GetChangelogResponder extends StandardResponderConstructor
         Pagination $pagination,
         SoftwareInfoPayload $softwareInfoPayload,
         string $uriPath
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

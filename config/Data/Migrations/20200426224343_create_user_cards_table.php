@@ -9,7 +9,7 @@ use Phinx\Migration\AbstractMigration;
 
 class CreateUserCardsTable extends AbstractMigration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->table('user_cards', [
             'id' => false,

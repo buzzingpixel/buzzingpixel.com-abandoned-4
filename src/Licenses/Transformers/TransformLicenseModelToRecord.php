@@ -7,13 +7,14 @@ namespace App\Licenses\Transformers;
 use App\Licenses\Models\LicenseModel;
 use App\Persistence\Licenses\LicenseRecord;
 use DateTimeInterface;
+
 use function Safe\json_encode;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class TransformLicenseModelToRecord
 {
-    public function __invoke(LicenseModel $model) : LicenseRecord
+    public function __invoke(LicenseModel $model): LicenseRecord
     {
         $record = new LicenseRecord();
 

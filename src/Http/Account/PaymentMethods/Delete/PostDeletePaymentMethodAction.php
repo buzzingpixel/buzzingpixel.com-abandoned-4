@@ -30,7 +30,7 @@ class PostDeletePaymentMethodAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $id = (string) $request->getAttribute('id');
 

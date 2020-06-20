@@ -6,6 +6,7 @@ namespace App\HttpResponse\Twig\Extensions;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+
 use function array_map;
 
 class PhpFunctions extends AbstractExtension
@@ -24,10 +25,10 @@ class PhpFunctions extends AbstractExtension
     /**
      * @return TwigFunction[]
      */
-    public function getFunctions() : array
+    public function getFunctions(): array
     {
         return array_map(
-            static function ($phpFunction) : TwigFunction {
+            static function ($phpFunction): TwigFunction {
                 /**
                  * @psalm-suppress InvalidArgument
                  * @phpstan-ignore-next-line

@@ -11,7 +11,7 @@ class ValidationFactory
     /**
      * @param string[] $defaultMessages
      */
-    public function __invoke(array $defaultMessages = []) : Validator
+    public function __invoke(array $defaultMessages = []): Validator
     {
         return new Validator(
             false,

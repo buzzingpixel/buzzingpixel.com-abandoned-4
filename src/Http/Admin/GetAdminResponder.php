@@ -18,7 +18,7 @@ class GetAdminResponder extends StandardResponderConstructor
     public function __invoke(
         string $template,
         array $context = []
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

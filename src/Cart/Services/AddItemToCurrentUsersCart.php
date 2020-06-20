@@ -7,6 +7,7 @@ namespace App\Cart\Services;
 use App\Cart\CartApi;
 use App\Cart\Models\CartItemModel;
 use App\Software\Models\SoftwareModel;
+
 use function assert;
 
 class AddItemToCurrentUsersCart
@@ -18,7 +19,7 @@ class AddItemToCurrentUsersCart
         $this->cartApi = $cartApi;
     }
 
-    public function __invoke(SoftwareModel $software) : void
+    public function __invoke(SoftwareModel $software): void
     {
         $cart = $this->cartApi->fetchCurrentUserCart();
 

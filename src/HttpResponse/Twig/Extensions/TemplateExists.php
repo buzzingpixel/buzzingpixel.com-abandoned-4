@@ -25,7 +25,7 @@ class TemplateExists extends AbstractExtension
         return [$this->getFunction()];
     }
 
-    private function getFunction() : TwigFunction
+    private function getFunction(): TwigFunction
     {
         return new TwigFunction(
             'templateExists',
@@ -33,7 +33,7 @@ class TemplateExists extends AbstractExtension
         );
     }
 
-    public function templateExists(string $templatePath) : bool
+    public function templateExists(string $templatePath): bool
     {
         return $this->loader->exists($templatePath);
     }

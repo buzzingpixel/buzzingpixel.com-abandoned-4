@@ -14,6 +14,7 @@ use App\Users\Models\UserCardModel;
 use App\Users\Transformers\TransformUserCardModelToRecord;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Throwable;
+
 use function mb_substr;
 
 class SaveUserCard
@@ -38,7 +39,7 @@ class SaveUserCard
         $this->eventDispatcher    = $eventDispatcher;
     }
 
-    public function __invoke(UserCardModel $userCard) : Payload
+    public function __invoke(UserCardModel $userCard): Payload
     {
         try {
             return $this->innerRun($userCard);
@@ -50,7 +51,7 @@ class SaveUserCard
         }
     }
 
-    public function innerRun(UserCardModel $userCard) : Payload
+    public function innerRun(UserCardModel $userCard): Payload
     {
         $beforeSaveEvent = new SaveUserCardBeforeSave(
             $userCard

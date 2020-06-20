@@ -22,7 +22,7 @@ class Error500Responder
         $this->logger          = $logger;
     }
 
-    public function __invoke(Throwable $exception) : ResponseInterface
+    public function __invoke(Throwable $exception): ResponseInterface
     {
         $this->logger->error(
             'An exception was thrown',

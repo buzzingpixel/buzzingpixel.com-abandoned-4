@@ -7,6 +7,7 @@ namespace App\HttpResponse\Twig\Extensions;
 use LogicException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+
 use function get_class;
 use function gettype;
 use function is_string;
@@ -21,7 +22,7 @@ class RequireVariables extends AbstractExtension
         return [$this->getFunction()];
     }
 
-    private function getFunction() : TwigFunction
+    private function getFunction(): TwigFunction
     {
         return new TwigFunction(
             'requireVariables',
@@ -36,7 +37,7 @@ class RequireVariables extends AbstractExtension
      *
      * @throws LogicException
      */
-    public function requireVars(array $context, array $required) : void
+    public function requireVars(array $context, array $required): void
     {
         foreach ($required as $var => $type) {
             if (! isset($context[$var])) {
@@ -101,7 +102,7 @@ class RequireVariables extends AbstractExtension
     /**
      * @throws LogicException
      */
-    private function throwRequirementException(string $var, ?string $type) : void
+    private function throwRequirementException(string $var, ?string $type): void
     {
         $message = 'Variable "' . $var . '" is required';
 

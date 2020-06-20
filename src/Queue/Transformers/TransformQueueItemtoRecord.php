@@ -7,13 +7,14 @@ namespace App\Queue\Transformers;
 use App\Persistence\Queue\QueueItemRecord;
 use App\Queue\Models\QueueItemModel;
 use DateTimeInterface;
+
 use function Safe\json_encode;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class TransformQueueItemtoRecord
 {
-    public function __invoke(QueueItemModel $model) : QueueItemRecord
+    public function __invoke(QueueItemModel $model): QueueItemRecord
     {
         $record = new QueueItemRecord();
 

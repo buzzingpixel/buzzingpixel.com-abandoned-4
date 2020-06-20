@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Content\Changelog;
 
 use Throwable;
+
 use function filter_var;
+
 use const FILTER_VALIDATE_URL;
 
 class ParseChangelogFromMarkdownFile
@@ -20,7 +22,7 @@ class ParseChangelogFromMarkdownFile
     /**
      * @throws Throwable
      */
-    public function __invoke(string $location) : ChangelogPayload
+    public function __invoke(string $location): ChangelogPayload
     {
         if (filter_var($location, FILTER_VALIDATE_URL) === false) {
             $location = $this->pathToContentDirectory . '/' . $location;
@@ -36,7 +38,7 @@ class ParseChangelogFromMarkdownFile
     /**
      * @throws Throwable
      */
-    private function readFromLocation(string $location) : ChangelogPayload
+    private function readFromLocation(string $location): ChangelogPayload
     {
         $reader = new Reader($location);
 

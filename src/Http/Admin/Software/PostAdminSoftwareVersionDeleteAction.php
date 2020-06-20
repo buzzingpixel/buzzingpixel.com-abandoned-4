@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Flash\Messages as FlashMessages;
+
 use function assert;
 
 class PostAdminSoftwareVersionDeleteAction
@@ -29,7 +30,7 @@ class PostAdminSoftwareVersionDeleteAction
         $this->softwareApi     = $softwareApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $softwareVersion = $this->softwareApi->fetchSoftwareVersionById(
             (string) $request->getAttribute('id')

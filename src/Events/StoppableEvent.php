@@ -10,12 +10,12 @@ abstract class StoppableEvent implements StoppableEventInterface
 {
     private bool $isPropagationStopped = false;
 
-    public function stopPropagation(bool $stop = true) : void
+    public function stopPropagation(bool $stop = true): void
     {
         $this->isPropagationStopped = $stop;
     }
 
-    public function isPropagationStopped() : bool
+    public function isPropagationStopped(): bool
     {
         return $this->isPropagationStopped;
     }

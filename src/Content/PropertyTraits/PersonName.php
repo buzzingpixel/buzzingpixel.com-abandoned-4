@@ -8,12 +8,12 @@ trait PersonName
 {
     private string $personName = '';
 
-    protected function setPersonName(string $personName) : void
+    protected function setPersonName(string $personName): void
     {
         $this->personName = $personName;
     }
 
-    public function getPersonName() : string
+    public function getPersonName(): string
     {
         return $this->personName;
     }

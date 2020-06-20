@@ -20,14 +20,14 @@ class CleanDeadItemsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('queue:clean-dead-items');
 
         $this->setDescription('Cleans dead queue items');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=yellow>Cleaning dead items...</>');
 

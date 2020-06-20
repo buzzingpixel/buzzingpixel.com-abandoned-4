@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use LogicException;
 use PDO;
 use PDOStatement;
+
 use function assert;
 use function count;
 use function get_class;
@@ -48,7 +49,7 @@ class RecordQuery
         string $col,
         $val,
         string $operator = '='
-    ) : RecordQuery {
+    ): RecordQuery {
         $clone = clone $this;
 
         /** @psalm-suppress MixedArrayAssignment */
@@ -70,7 +71,7 @@ class RecordQuery
         string $col,
         $val,
         string $operator = '='
-    ) : RecordQuery {
+    ): RecordQuery {
         $clone = clone $this;
 
         if (count($clone->where) > 0) {
@@ -93,14 +94,16 @@ class RecordQuery
     public function withOrder(
         string $column,
         string $direction = 'desc'
-    ) : RecordQuery {
+    ): RecordQuery {
         $direction = (string) mb_strtoupper($direction);
 
-        if (! in_array(
-            $direction,
-            ['ASC', 'DESC'],
-            true
-        )) {
+        if (
+            ! in_array(
+                $direction,
+                ['ASC', 'DESC'],
+                true
+            )
+        ) {
             throw new InvalidArgumentException(
                 'Direction must be asc or desc',
             );
@@ -117,7 +120,7 @@ class RecordQuery
 
     private ?int $limit = null;
 
-    public function withLimit(?int $limit) : RecordQuery
+    public function withLimit(?int $limit): RecordQuery
     {
         $clone        = clone $this;
         $clone->limit = $limit;
@@ -127,7 +130,7 @@ class RecordQuery
 
     private int $offset = 0;
 
-    public function withOffset(int $offset) : RecordQuery
+    public function withOffset(int $offset): RecordQuery
     {
         $clone         = clone $this;
         $clone->offset = $offset;
@@ -135,7 +138,7 @@ class RecordQuery
         return $clone;
     }
 
-    public function one() : ?Record
+    public function one(): ?Record
     {
         $statement = $this->executeStatement();
 
@@ -156,7 +159,7 @@ class RecordQuery
     /**
      * @return Record[]
      */
-    public function all() : array
+    public function all(): array
     {
         $statement = $this->executeStatement();
 
@@ -172,7 +175,7 @@ class RecordQuery
     /**
      * @return array<string, mixed>
      */
-    public function getSqlAndBind() : array
+    public function getSqlAndBind(): array
     {
         $sql = 'SELECT * FROM ' . $this->recordClass->getTableName();
 
@@ -227,7 +230,8 @@ class RecordQuery
                     $sql .= ' AND ';
                 }
 
-                if ($groupVal['val'] === null ||
+                if (
+                    $groupVal['val'] === null ||
                     $groupVal['val'] === 'null' ||
                     $groupVal['val'] === 'NULL'
                 ) {
@@ -286,7 +290,7 @@ class RecordQuery
         ];
     }
 
-    private function executeStatement() : PDOStatement
+    private function executeStatement(): PDOStatement
     {
         $sqlAndBind = $this->getSqlAndBind();
 

@@ -14,7 +14,7 @@ class GetAccountPurchasePrintResponder extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke(OrderModel $order) : ResponseInterface
+    public function __invoke(OrderModel $order): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

@@ -27,7 +27,7 @@ class GetAccountPurchasePrintAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $order = $this->orderApi->fetchCurrentUserOrderById(
             (string) $request->getAttribute('id')

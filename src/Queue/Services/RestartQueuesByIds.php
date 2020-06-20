@@ -8,6 +8,7 @@ use App\Persistence\DatabaseTransactionManager;
 use App\Persistence\Queue\QueueRecord;
 use App\Persistence\RecordQueryFactory;
 use App\Persistence\SaveExistingRecord;
+
 use function array_walk;
 use function count;
 
@@ -32,7 +33,7 @@ class RestartQueuesByIds
     /**
      * @param string[] $ids
      */
-    public function __invoke(array $ids) : void
+    public function __invoke(array $ids): void
     {
         if (count($ids) < 1) {
             return;
@@ -51,7 +52,7 @@ class RestartQueuesByIds
 
         array_walk(
             $records,
-            function (QueueRecord $record) : void {
+            function (QueueRecord $record): void {
                 $record->has_started           = '1';
                 $record->is_running            = '0';
                 $record->is_finished           = '0';

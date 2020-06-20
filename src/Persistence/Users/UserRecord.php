@@ -53,7 +53,7 @@ class UserRecord extends Record
     /**
      * @return array<string, string>
      */
-    public function getSearchableFields() : array
+    public function getSearchableFields(): array
     {
         return [
             'email_address' => 'email_address',

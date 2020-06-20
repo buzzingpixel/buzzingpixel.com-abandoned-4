@@ -7,6 +7,7 @@ namespace App\Content\Modules\ExtractorMethods;
 use App\Content\Modules\Payloads\PrimaryImageTextHalfBlack;
 use cebe\markdown\GithubMarkdown;
 use Throwable;
+
 use function is_array;
 
 /**
@@ -24,7 +25,7 @@ trait ExtractPrimaryImageTextHalfBlack
      *
      * @throws Throwable
      */
-    protected function extractPrimaryImageTextHalfBlack(array $parsedYaml) : PrimaryImageTextHalfBlack
+    protected function extractPrimaryImageTextHalfBlack(array $parsedYaml): PrimaryImageTextHalfBlack
     {
         /** @var array<string, mixed> $image */
         $image = isset($parsedYaml['image']) && is_array($parsedYaml['image']) ?

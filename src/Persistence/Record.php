@@ -6,6 +6,7 @@ namespace App\Persistence;
 
 use ReflectionClass;
 use ReflectionProperty;
+
 use function array_map;
 
 abstract class Record
@@ -14,12 +15,12 @@ abstract class Record
 
     public string $id = '';
 
-    public static function tableName() : string
+    public static function tableName(): string
     {
         return static::$tableName;
     }
 
-    public function getTableName() : string
+    public function getTableName(): string
     {
         return static::$tableName;
     }
@@ -29,7 +30,7 @@ abstract class Record
      *
      * @noinspection PhpDocMissingThrowsInspection
      */
-    public function getFields(bool $prefixNamesForBind = false) : array
+    public function getFields(bool $prefixNamesForBind = false): array
     {
         $prefixNamesWith = $prefixNamesForBind ? ':' : '';
 
@@ -53,7 +54,7 @@ abstract class Record
     /**
      * @return array<string, mixed>
      */
-    public function getBindValues() : array
+    public function getBindValues(): array
     {
         $bindValues = [];
 

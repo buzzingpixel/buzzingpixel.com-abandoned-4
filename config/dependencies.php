@@ -37,18 +37,19 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Twig\Environment as TwigEnvironment;
+
 use function DI\autowire;
 use function DI\get;
 
 return [
-    CliQuestionService::class => static function (ContainerInterface $di) : CliQuestionService {
+    CliQuestionService::class => static function (ContainerInterface $di): CliQuestionService {
         return new CliQuestionService(
             $di->get(QuestionHelper::class),
             $di->get(ArgvInput::class),
             $di->get(ConsoleOutput::class)
         );
     },
-    CookieApi::class => static function () : CookieApi {
+    CookieApi::class => static function (): CookieApi {
         return new CookieApi(
             $_COOKIE,
             (string) getenv('ENCRYPTION_KEY'),
@@ -56,11 +57,11 @@ return [
         );
     },
     CookieApiInterface::class => get(CookieApi::class),
-    CsrfGuard::class => static function (ContainerInterface $di) : CsrfGuard {
+    CsrfGuard::class => static function (ContainerInterface $di): CsrfGuard {
         $responseFactory = $di->get(ResponseFactoryInterface::class);
         $guard           = new CsrfGuard($responseFactory);
         $guard->setFailureHandler(
-            static function (ServerRequestInterface $request) : void {
+            static function (ServerRequestInterface $request): void {
                 throw new HttpBadRequestException(
                     $request,
                     'Invalid CSRF Token'
@@ -87,12 +88,12 @@ return [
         dirname(__DIR__) . '/content'
     ),
     ListenerProviderInterface::class => get(OrderedListenerProvider::class),
-    LoggedInUser::class => static function (ContainerInterface $di) : LoggedInUser {
+    LoggedInUser::class => static function (ContainerInterface $di): LoggedInUser {
         return new LoggedInUser(
             $di->get(UserApi::class)->fetchLoggedInUser()
         );
     },
-    LoggerInterface::class => static function () : LoggerInterface {
+    LoggerInterface::class => static function (): LoggerInterface {
         /** @phpstan-ignore-next-line */
         $logLevel = getenv('LOG_LEVEL') ?: 'DEBUG';
 
@@ -128,10 +129,10 @@ return [
 
         return $logger;
     },
-    Mandrill::class => static function () : Mandrill {
+    Mandrill::class => static function (): Mandrill {
         return new Mandrill(getenv('MANDRILL_API_KEY'));
     },
-    MandrillConfig::class => static function () : MandrillConfig {
+    MandrillConfig::class => static function (): MandrillConfig {
         $conf = new MandrillConfig();
 
         $conf->fromEmail = (string) getenv('WEBMASTER_EMAIL_ADDRESS');
@@ -140,14 +141,14 @@ return [
 
         return $conf;
     },
-    OrderedListenerProvider::class => static function (ContainerInterface $di) : OrderedListenerProvider {
+    OrderedListenerProvider::class => static function (ContainerInterface $di): OrderedListenerProvider {
         return new OrderedListenerProvider($di);
     },
     ParseChangelogFromMarkdownFile::class => autowire(ParseChangelogFromMarkdownFile::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),
-    PDO::class => static function () : PDO {
+    PDO::class => static function (): PDO {
         try {
             /** @phpstan-ignore-next-line */
             $dbHost = getenv('DB_HOST') ?: 'db';
@@ -197,7 +198,7 @@ return [
     },
     ResponseFactoryInterface::class => autowire(ResponseFactory::class),
     SendMailAdapter::class => autowire(MandrillSendMailAdapter::class),
-    StripeClient::class => static function () : StripeClient {
+    StripeClient::class => static function (): StripeClient {
         StripeApi::setApiKey(
             (string) getenv('STRIPE_SECRET_KEY')
         );
@@ -215,7 +216,7 @@ return [
             'stripe_version' => '2020-03-02',
         ]);
     },
-    TwigEnvironment::class => static function (ContainerInterface $di) : TwigEnvironment {
+    TwigEnvironment::class => static function (ContainerInterface $di): TwigEnvironment {
         return (new TwigEnvironmentFactory())($di);
     },
 ];

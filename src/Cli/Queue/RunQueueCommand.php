@@ -24,14 +24,14 @@ class RunQueueCommand extends Command
         parent::__construct();
     }
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('queue:run');
 
         $this->setDescription('Runs the next available item in the queue');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->logger->info('Queue command is running next item in queue');
 

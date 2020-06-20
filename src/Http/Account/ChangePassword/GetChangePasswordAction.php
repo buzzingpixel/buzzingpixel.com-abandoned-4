@@ -8,6 +8,7 @@ use App\Users\Models\UserModel;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+
 use function assert;
 
 class GetChangePasswordAction
@@ -26,7 +27,7 @@ class GetChangePasswordAction
     /**
      * @throws Throwable
      */
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         $user = $this->userApi->fetchLoggedInUser();
 

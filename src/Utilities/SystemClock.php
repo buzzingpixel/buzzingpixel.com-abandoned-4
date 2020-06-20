@@ -8,7 +8,7 @@ use Safe\DateTimeImmutable;
 
 class SystemClock
 {
-    public function getCurrentTime() : DateTimeImmutable
+    public function getCurrentTime(): DateTimeImmutable
     {
         return new DateTimeImmutable();
     }

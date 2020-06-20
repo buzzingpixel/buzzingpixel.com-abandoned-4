@@ -30,6 +30,7 @@ use App\Users\Services\SaveUserCard;
 use App\Users\Services\ValidateUserPassword;
 use Psr\Container\ContainerInterface;
 use Throwable;
+
 use function assert;
 
 class UserApi
@@ -41,7 +42,7 @@ class UserApi
         $this->di = $di;
     }
 
-    public function saveUser(UserModel $userModel) : Payload
+    public function saveUser(UserModel $userModel): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveUser::class);
@@ -51,7 +52,7 @@ class UserApi
         return $service($userModel);
     }
 
-    public function fetchUserByEmailAddress(string $emailAddress) : ?UserModel
+    public function fetchUserByEmailAddress(string $emailAddress): ?UserModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserByEmailAddress::class);
@@ -61,7 +62,7 @@ class UserApi
         return $service($emailAddress);
     }
 
-    public function fetchUserById(string $id) : ?UserModel
+    public function fetchUserById(string $id): ?UserModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserById::class);
@@ -78,7 +79,7 @@ class UserApi
         UserModel $user,
         string $password,
         bool $rehashPasswordIfNeeded = true
-    ) : bool {
+    ): bool {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(ValidateUserPassword::class);
 
@@ -91,7 +92,7 @@ class UserApi
         );
     }
 
-    public function logUserIn(UserModel $user, string $password) : Payload
+    public function logUserIn(UserModel $user, string $password): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(LogUserIn::class);
@@ -101,7 +102,7 @@ class UserApi
         return $service($user, $password);
     }
 
-    public function deleteUser(UserModel $user) : Payload
+    public function deleteUser(UserModel $user): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteUser::class);
@@ -111,7 +112,7 @@ class UserApi
         return $service($user);
     }
 
-    public function fetchLoggedInUser() : ?UserModel
+    public function fetchLoggedInUser(): ?UserModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchLoggedInUser::class);
@@ -121,7 +122,7 @@ class UserApi
         return $service();
     }
 
-    public function generatePasswordResetToken(UserModel $user) : Payload
+    public function generatePasswordResetToken(UserModel $user): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(GeneratePasswordResetToken::class);
@@ -134,7 +135,7 @@ class UserApi
     /**
      * @throws Throwable
      */
-    public function requestPasswordResetEmail(UserModel $user) : void
+    public function requestPasswordResetEmail(UserModel $user): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(RequestPasswordResetEmail::class);
@@ -144,7 +145,7 @@ class UserApi
         $service($user);
     }
 
-    public function fetchTotalUserResetTokens(UserModel $user) : int
+    public function fetchTotalUserResetTokens(UserModel $user): int
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchTotalUserResetTokens::class);
@@ -154,7 +155,7 @@ class UserApi
         return $service($user);
     }
 
-    public function fetchUserByResetToken(string $token) : ?UserModel
+    public function fetchUserByResetToken(string $token): ?UserModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserByResetToken::class);
@@ -164,7 +165,7 @@ class UserApi
         return $service($token);
     }
 
-    public function logCurrentUserOut() : Payload
+    public function logCurrentUserOut(): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(LogCurrentUserOut::class);
@@ -177,7 +178,7 @@ class UserApi
     public function resetPasswordByToken(
         string $token,
         string $newPassword
-    ) : Payload {
+    ): Payload {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(ResetPasswordByToken::class);
 
@@ -186,7 +187,7 @@ class UserApi
         return $service($token, $newPassword);
     }
 
-    public function fetchTotalUsers() : int
+    public function fetchTotalUsers(): int
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchTotalUsers::class);
@@ -202,7 +203,7 @@ class UserApi
     public function fetchUsersByLimitOffset(
         ?int $limit = null,
         int $offset = 0
-    ) : array {
+    ): array {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUsersByLimitOffset::class);
 
@@ -218,7 +219,7 @@ class UserApi
         string $query,
         ?int $limit = null,
         int $offset = 0
-    ) : array {
+    ): array {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUsersBySearch::class);
 
@@ -230,7 +231,7 @@ class UserApi
     public function validatePostalCode(
         string $postalCode,
         string $alpha2Country
-    ) : bool {
+    ): bool {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(PostalCodeService::class);
 
@@ -242,7 +243,7 @@ class UserApi
         );
     }
 
-    public function fillModelFromPostalCode(UserModel $model) : void
+    public function fillModelFromPostalCode(UserModel $model): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(PostalCodeService::class);
@@ -252,7 +253,7 @@ class UserApi
         $service->fillModelFromPostalCode($model);
     }
 
-    public function fillCardModelFromPostalCode(UserCardModel $model) : void
+    public function fillCardModelFromPostalCode(UserCardModel $model): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(PostalCodeService::class);
@@ -262,7 +263,7 @@ class UserApi
         $service->fillCardModelFromPostalCode($model);
     }
 
-    public function saveUserCard(UserCardModel $userCard) : Payload
+    public function saveUserCard(UserCardModel $userCard): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveUserCard::class);
@@ -275,7 +276,7 @@ class UserApi
     /**
      * @return UserCardModel[]
      */
-    public function fetchUserCards(UserModel $user) : array
+    public function fetchUserCards(UserModel $user): array
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserCards::class);
@@ -288,7 +289,7 @@ class UserApi
     public function fetchUserCardById(
         UserModel $user,
         string $id
-    ) : ?UserCardModel {
+    ): ?UserCardModel {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchUserCardById::class);
 
@@ -297,7 +298,7 @@ class UserApi
         return $service($user, $id);
     }
 
-    public function deleteUserCard(UserCardModel $card) : Payload
+    public function deleteUserCard(UserCardModel $card): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteUserCard::class);

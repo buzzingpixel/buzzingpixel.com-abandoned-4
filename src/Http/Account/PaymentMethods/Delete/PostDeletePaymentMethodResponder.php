@@ -22,7 +22,7 @@ class PostDeletePaymentMethodResponder
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(Payload $payload) : ResponseInterface
+    public function __invoke(Payload $payload): ResponseInterface
     {
         if ($payload->getStatus() !== Payload::STATUS_DELETED) {
             $this->flashMessages->addMessage(

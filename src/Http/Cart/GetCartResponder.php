@@ -15,7 +15,7 @@ class GetCartResponder extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke(CartModel $cart) : ResponseInterface
+    public function __invoke(CartModel $cart): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

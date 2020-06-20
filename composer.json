@@ -54,7 +54,7 @@
         "buzzingpixel/twig-dumper": "^1.0",
         "codedungeon/phpunit-result-printer": "^0.27.0",
         "dg/bypass-finals": "^1.1",
-        "doctrine/coding-standard": "^7.0",
+        "doctrine/coding-standard": "^8.0",
         "filp/whoops": "^2.5",
         "friendsofphp/php-cs-fixer": "^2.14",
         "phpstan/phpstan": "^0.12.29",

@@ -28,7 +28,7 @@ $twigDumper = $dumper = new ServerDumper('tcp://127.0.0.1:9912', $fallbackDumper
 $varStore            = new stdClass();
 $varStore->hasDumped = false;
 
-VarDumper::setHandler(static function ($var) use ($cloner, $dumper, $twigDumper, $varStore) : void {
+VarDumper::setHandler(static function ($var) use ($cloner, $dumper, $twigDumper, $varStore): void {
     if (PHP_SAPI !== 'cli' && ! $varStore->hasDumped) {
         echo '<head><title>Symfony Dumper</title></head><body>';
         $varStore->hasDumped = true;
@@ -42,7 +42,7 @@ VarDumper::setHandler(static function ($var) use ($cloner, $dumper, $twigDumper,
 
     $checkForTwigDumperArray = explode(DIRECTORY_SEPARATOR, $checkForTwigDumperFile);
 
-    $isTwigDumper = $checkForTwigDumperArray[count($checkForTwigDumperArray) -1] === 'TwigDumper.php';
+    $isTwigDumper = $checkForTwigDumperArray[count($checkForTwigDumperArray) - 1] === 'TwigDumper.php';
 
     if ($isTwigDumper) {
         echo '<div></div>';

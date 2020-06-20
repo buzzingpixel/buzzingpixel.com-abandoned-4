@@ -8,6 +8,7 @@ use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use GuzzleHttp\Client;
 use Throwable;
+
 use function assert;
 use function is_array;
 use function mb_strtoupper;
@@ -33,7 +34,7 @@ class PostalCodeService
     private function makeApiCall(
         string $postalCode,
         string $alpha2Country
-    ) : array {
+    ): array {
         $codeUpper = (string) mb_strtoupper($alpha2Country);
 
         $key = $postalCode . '-' . $codeUpper;
@@ -68,7 +69,7 @@ class PostalCodeService
     public function validatePostalCode(
         string $postalCode,
         string $alpha2Country
-    ) : bool {
+    ): bool {
         $codeUpper = (string) mb_strtoupper($alpha2Country);
 
         $json = $this->makeApiCall(
@@ -82,16 +83,18 @@ class PostalCodeService
         return $jsonCountry === $codeUpper;
     }
 
-    public function fillModelFromPostalCode(UserModel $model) : void
+    public function fillModelFromPostalCode(UserModel $model): void
     {
         $postalCode = $model->billingPostalCode;
 
         $countryCode = $model->billingCountry;
 
-        if (! $this->validatePostalCode(
-            $postalCode,
-            $countryCode
-        )) {
+        if (
+            ! $this->validatePostalCode(
+                $postalCode,
+                $countryCode
+            )
+        ) {
             return;
         }
 
@@ -107,16 +110,18 @@ class PostalCodeService
         $model->billingStateAbbr = (string) ($place['state abbreviation'] ?? '');
     }
 
-    public function fillCardModelFromPostalCode(UserCardModel $model) : void
+    public function fillCardModelFromPostalCode(UserCardModel $model): void
     {
         $postalCode = $model->postalCode;
 
         $countryCode = $model->country;
 
-        if (! $this->validatePostalCode(
-            $postalCode,
-            $countryCode
-        )) {
+        if (
+            ! $this->validatePostalCode(
+                $postalCode,
+                $countryCode
+            )
+        ) {
             return;
         }
 

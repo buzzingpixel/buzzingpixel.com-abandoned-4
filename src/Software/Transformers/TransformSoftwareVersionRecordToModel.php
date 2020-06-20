@@ -15,7 +15,7 @@ class TransformSoftwareVersionRecordToModel
 {
     public function __invoke(
         SoftwareVersionRecord $record
-    ) : SoftwareVersionModel {
+    ): SoftwareVersionModel {
         $model = new SoftwareVersionModel();
 
         $model->id = $record->id;

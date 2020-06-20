@@ -12,6 +12,7 @@ use App\Users\UserApi;
 use Safe\DateTimeImmutable;
 use Safe\Exceptions\DatetimeException;
 use Safe\Exceptions\JsonException;
+
 use function assert;
 use function Safe\json_decode;
 
@@ -32,7 +33,7 @@ class TransformLicenseRecordToModel
     public function __invoke(
         LicenseRecord $record,
         ?UserModel $ownerUser = null
-    ) : LicenseModel {
+    ): LicenseModel {
         $model = new LicenseModel();
 
         $model->id = $record->id;

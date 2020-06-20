@@ -10,6 +10,7 @@ use App\Persistence\RecordQueryFactory;
 use App\Queue\Models\QueueModel;
 use App\Queue\Transformers\QueueItemRecordToModel;
 use App\Queue\Transformers\QueueRecordToModel;
+
 use function array_map;
 use function array_walk;
 use function assert;
@@ -42,10 +43,10 @@ class FetchHelper
      *
      * @return QueueModel[]
      */
-    public function processRecords(array $records) : array
+    public function processRecords(array $records): array
     {
         $recordIds = array_map(
-            static fn(QueueRecord $r) => $r->id,
+            static fn (QueueRecord $r) => $r->id,
             $records,
         );
 
@@ -77,7 +78,7 @@ class FetchHelper
 
     protected function mapQueueRecordToModel(
         QueueRecord $queueRecord
-    ) : QueueModel {
+    ): QueueModel {
         $queueModel = ($this->queueRecordToModel)($queueRecord);
 
         $itemRecords = $this->mappedItemRecords[$queueModel->id] ?? [];
@@ -85,7 +86,7 @@ class FetchHelper
         /** @psalm-suppress PossiblyInvalidArgument */
         array_walk(
             $itemRecords,
-            fn(QueueItemRecord $itemRecord) => ($this->queueItemRecordToModel)(
+            fn (QueueItemRecord $itemRecord) => ($this->queueItemRecordToModel)(
                 $itemRecord,
                 $queueModel
             ),

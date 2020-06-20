@@ -15,7 +15,7 @@ class GetChangePasswordResponder extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke(UserModel $user) : ResponseInterface
+    public function __invoke(UserModel $user): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

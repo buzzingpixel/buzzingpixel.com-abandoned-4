@@ -14,6 +14,7 @@ use App\Queue\Transformers\TransformQueueItemtoRecord;
 use App\Queue\Transformers\TransformQueueModelToRecord;
 use Exception;
 use Throwable;
+
 use function array_walk;
 
 class AddToQueue
@@ -38,7 +39,7 @@ class AddToQueue
         $this->queueItemToRecord  = $queueItemToRecord;
     }
 
-    public function __invoke(QueueModel $queueModel) : Payload
+    public function __invoke(QueueModel $queueModel): Payload
     {
         try {
             $this->transactionManager->beginTransaction();
@@ -73,7 +74,7 @@ class AddToQueue
         }
     }
 
-    protected function saveItem(QueueItemModel $queueItem, int $index) : void
+    protected function saveItem(QueueItemModel $queueItem, int $index): void
     {
         $count = $index + 1;
 

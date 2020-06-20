@@ -14,7 +14,7 @@ class GetMessageAction extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

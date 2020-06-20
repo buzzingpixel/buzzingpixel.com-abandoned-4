@@ -30,7 +30,7 @@ class SaveExistingOrder
     /**
      * @throws Exception
      */
-    public function __invoke(OrderModel $model) : void
+    public function __invoke(OrderModel $model): void
     {
         $record = ($this->transformer)($model);
 

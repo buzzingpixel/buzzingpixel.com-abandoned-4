@@ -10,6 +10,7 @@ use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareModel;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
+
 use function array_map;
 use function count;
 
@@ -34,7 +35,7 @@ class FetchAllSoftware
     /**
      * @return SoftwareModel[]
      */
-    public function __invoke() : array
+    public function __invoke(): array
     {
         /** @var SoftwareRecord[] $records */
         $records = ($this->recordQueryFactory)(
@@ -48,7 +49,7 @@ class FetchAllSoftware
         }
 
         $softwareIds = array_map(
-            static fn(SoftwareRecord $record) => $record->id,
+            static fn (SoftwareRecord $record) => $record->id,
             $records
         );
 
@@ -75,7 +76,7 @@ class FetchAllSoftware
         return array_map(
             function (SoftwareRecord $record) use (
                 $versionModelsKeyed
-            ) : SoftwareModel {
+            ): SoftwareModel {
                 return ($this->softwareRecordToModel)(
                     $record,
                     $versionModelsKeyed[$record->id] ?? []

@@ -30,6 +30,7 @@ use Throwable;
 use Twig\Environment as TwigEnvironment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
+
 use function class_exists;
 use function dirname;
 use function getenv;
@@ -39,7 +40,7 @@ class TwigEnvironmentFactory
     /**
      * @throws Throwable
      */
-    public function __invoke(ContainerInterface $di) : TwigEnvironment
+    public function __invoke(ContainerInterface $di): TwigEnvironment
     {
         $debug = getenv('DEV_MODE') === 'true';
 

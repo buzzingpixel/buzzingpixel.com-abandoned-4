@@ -9,6 +9,7 @@ use App\Persistence\UserCards\UserCardRecord;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use Safe\DateTimeImmutable;
+
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -18,7 +19,7 @@ class TransformUserCardRecordToModel
     public function __invoke(
         UserCardRecord $record,
         UserModel $user
-    ) : UserCardModel {
+    ): UserCardModel {
         $model = new UserCardModel();
 
         $model->id = $record->id;

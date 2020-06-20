@@ -25,7 +25,7 @@ class TransformCartRecordToModel
     /**
      * @param CartItemModel[] $items
      */
-    public function __invoke(CartRecord $record, array $items) : CartModel
+    public function __invoke(CartRecord $record, array $items): CartModel
     {
         $user = null;
 

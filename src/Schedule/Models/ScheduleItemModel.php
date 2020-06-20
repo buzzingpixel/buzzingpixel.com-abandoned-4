@@ -6,6 +6,7 @@ namespace App\Schedule\Models;
 
 use RuntimeException;
 use Safe\DateTimeImmutable;
+
 use function gettype;
 use function in_array;
 
@@ -21,7 +22,7 @@ class ScheduleItemModel
     /**
      * @param float|int|string $runEvery
      */
-    public function checkRunEveryValue($runEvery) : void
+    public function checkRunEveryValue($runEvery): void
     {
         $type = gettype($runEvery);
 

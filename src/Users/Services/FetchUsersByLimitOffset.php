@@ -8,6 +8,7 @@ use App\Persistence\RecordQueryFactory;
 use App\Persistence\Users\UserRecord;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserRecordToUserModel;
+
 use function array_map;
 
 class FetchUsersByLimitOffset
@@ -28,7 +29,7 @@ class FetchUsersByLimitOffset
      *
      * @psalm-suppress MixedReturnTypeCoercion
      */
-    public function __invoke(?int $limit = null, int $offset = 0) : array
+    public function __invoke(?int $limit = null, int $offset = 0): array
     {
         $records = ($this->recordQueryFactory)(
             new UserRecord()

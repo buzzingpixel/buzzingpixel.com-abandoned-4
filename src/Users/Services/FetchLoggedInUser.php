@@ -13,6 +13,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use PDO;
 use Safe\DateTimeImmutable;
+
 use function assert;
 use function is_bool;
 use function time;
@@ -38,7 +39,7 @@ class FetchLoggedInUser
         $this->fetchUserById      = $fetchUserById;
     }
 
-    public function __invoke() : ?UserModel
+    public function __invoke(): ?UserModel
     {
         $cookie = $this->cookieApi->retrieveCookie('user_session_token');
 

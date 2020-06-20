@@ -9,7 +9,7 @@ use Phinx\Migration\AbstractMigration;
 
 class CreateUserPasswordResetTokensTable extends AbstractMigration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->table('user_password_reset_tokens', [
             'id' => false,

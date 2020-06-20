@@ -9,6 +9,7 @@ use Config\General;
 use DirectoryIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
 use function array_map;
 use function array_values;
 use function assert;
@@ -16,6 +17,7 @@ use function end;
 use function explode;
 use function implode;
 use function Safe\ksort;
+
 use const SORT_NATURAL;
 
 class CollectDocumentationVersionPayloadFromPath
@@ -37,7 +39,7 @@ class CollectDocumentationVersionPayloadFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : DocumentationVersionPayload
+    public function __invoke(string $contentPath): DocumentationVersionPayload
     {
         $pathArray = [
             $this->generalConfig->pathToContentDirectory(),
@@ -86,7 +88,7 @@ class CollectDocumentationVersionPayloadFromPath
             'pages' => array_values(array_map(
                 function (string $pagePath) use (
                     $contentPath
-                ) : DocumentationPagePayload {
+                ): DocumentationPagePayload {
                     return ($this->collectDocumentationPagePayloadFromPath)(
                         $contentPath . '/' . $pagePath
                     );

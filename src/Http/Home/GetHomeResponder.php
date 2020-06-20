@@ -18,7 +18,7 @@ class GetHomeResponder extends StandardResponderConstructor
     public function __invoke(
         MetaPayload $metaPayload,
         ModulePayload $modulePayload
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

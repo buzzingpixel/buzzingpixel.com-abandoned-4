@@ -12,6 +12,7 @@ use App\Utilities\SimpleValidator;
 use Html2Text\Html2Text;
 use Mandrill;
 use Throwable;
+
 use function assert;
 use function count;
 use function is_array;
@@ -29,7 +30,7 @@ class MandrillSendMailAdapter implements SendMailAdapter
         $this->mandrillConfig = $mandrillConfig;
     }
 
-    public function __invoke(EmailModel $emailModel) : Payload
+    public function __invoke(EmailModel $emailModel): Payload
     {
         try {
             return $this->innerRun($emailModel);
@@ -41,7 +42,7 @@ class MandrillSendMailAdapter implements SendMailAdapter
         }
     }
 
-    private function innerRun(EmailModel $emailModel) : Payload
+    private function innerRun(EmailModel $emailModel): Payload
     {
         $errors = [];
 
@@ -49,7 +50,8 @@ class MandrillSendMailAdapter implements SendMailAdapter
             $errors[] = 'Plain text or HTML must be provided';
         }
 
-        if ($emailModel->fromEmail !== '' &&
+        if (
+            $emailModel->fromEmail !== '' &&
             ! SimpleValidator::email($emailModel->fromEmail)
         ) {
             $errors[] = 'From email address must be valid';

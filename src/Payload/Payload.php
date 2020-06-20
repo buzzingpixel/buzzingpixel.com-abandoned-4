@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Payload;
 
 use LogicException;
+
 use function defined;
 
 class Payload
@@ -51,7 +52,7 @@ class Payload
         $this->isInitialized = true;
     }
 
-    public function getStatus() : string
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -59,7 +60,7 @@ class Payload
     /**
      * @return mixed[]
      */
-    public function getResult() : array
+    public function getResult(): array
     {
         return $this->result;
     }

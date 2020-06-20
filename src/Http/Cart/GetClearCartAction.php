@@ -21,7 +21,7 @@ class GetClearCartAction
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         $this->cartApi->clearCart();
 

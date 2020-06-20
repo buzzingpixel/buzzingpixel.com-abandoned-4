@@ -27,7 +27,7 @@ class GetAccountLicenseViewAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $license = $this->licenseApi->fetchCurrentUserLicenseById(
             (string) $request->getAttribute('id')

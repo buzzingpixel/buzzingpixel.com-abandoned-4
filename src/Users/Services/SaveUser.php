@@ -15,9 +15,11 @@ use App\Users\Transformers\TransformUserModelToUserRecord;
 use App\Utilities\SimpleValidator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Ramsey\Uuid\UuidFactoryInterface;
+
 use function count;
 use function mb_strlen;
 use function password_hash;
+
 use const PASSWORD_DEFAULT;
 
 class SaveUser
@@ -50,7 +52,7 @@ class SaveUser
         $this->eventDispatcher                = $eventDispatcher;
     }
 
-    public function __invoke(UserModel $userModel) : Payload
+    public function __invoke(UserModel $userModel): Payload
     {
         $errors = [];
 
@@ -97,7 +99,7 @@ class SaveUser
         return $payload;
     }
 
-    private function saveNewUser(UserModel $userModel) : Payload
+    private function saveNewUser(UserModel $userModel): Payload
     {
         $email = $userModel->emailAddress;
 
@@ -117,7 +119,7 @@ class SaveUser
         return ($this->saveNewRecord)($userRecord);
     }
 
-    private function saveExistingUser(UserModel $userModel) : Payload
+    private function saveExistingUser(UserModel $userModel): Payload
     {
         $existingUser = ($this->fetchUserById)($userModel->id);
 

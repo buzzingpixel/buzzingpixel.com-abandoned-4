@@ -138,7 +138,7 @@ class TimeZoneList
      *
      * @noinspection PhpDocMissingThrowsInspection
      */
-    public static function getList() : array
+    public static function getList(): array
     {
         $return = [];
 

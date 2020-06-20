@@ -7,6 +7,7 @@ namespace App\Content\Modules\CommonTraits;
 use App\Content\Modules\Payloads\ImagePayload;
 use App\Content\Modules\Payloads\ImageSourcePayload;
 use Throwable;
+
 use function array_map;
 use function is_array;
 use function is_string;
@@ -18,7 +19,7 @@ trait MapYamlImageToPayload
      *
      * @throws Throwable
      */
-    protected function mapYamlImageToPayload(array $yamlImage) : ImagePayload
+    protected function mapYamlImageToPayload(array $yamlImage): ImagePayload
     {
         $imageSources = isset($yamlImage['sources']) && is_array($yamlImage['sources']) ?
             $yamlImage['sources'] :
@@ -47,7 +48,7 @@ trait MapYamlImageToPayload
      *
      * @throws Throwable
      */
-    private function mapYamlImageSourceToPayload(array $source) : ImageSourcePayload
+    private function mapYamlImageSourceToPayload(array $source): ImageSourcePayload
     {
         return new ImageSourcePayload([
             'oneX' => (string) ($source['1x'] ?? ''),

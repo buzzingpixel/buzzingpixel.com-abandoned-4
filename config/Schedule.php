@@ -8,6 +8,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
 use RegexIterator;
+
 use function array_slice;
 use function basename;
 use function count;
@@ -23,7 +24,7 @@ class Schedule
     /**
      * @return string[]
      */
-    public function getScheduleClasses() : array
+    public function getScheduleClasses(): array
     {
         if (count(self::$scheduleClasses) > 0) {
             return self::$scheduleClasses;

@@ -28,7 +28,7 @@ class GeneratePasswordResetToken
         $this->saveNewRecord = $saveNewRecord;
     }
 
-    public function __invoke(UserModel $user) : Payload
+    public function __invoke(UserModel $user): Payload
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $currentDate = new DateTimeImmutable(

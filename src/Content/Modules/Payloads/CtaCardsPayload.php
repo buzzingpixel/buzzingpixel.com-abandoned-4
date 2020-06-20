@@ -8,6 +8,7 @@ use App\Content\PropertyTraits\Content;
 use App\Content\PropertyTraits\Headline;
 use App\Content\PropertyTraits\PreHeadline;
 use App\Payload\SpecificPayload;
+
 use function assert;
 
 class CtaCardsPayload extends SpecificPayload
@@ -18,12 +19,12 @@ class CtaCardsPayload extends SpecificPayload
 
     private ?CtaCardItemPayload $primary = null;
 
-    protected function setPrimary(CtaCardItemPayload $primary) : void
+    protected function setPrimary(CtaCardItemPayload $primary): void
     {
         $this->primary = $primary;
     }
 
-    public function getPrimary() : CtaCardItemPayload
+    public function getPrimary(): CtaCardItemPayload
     {
         $isInstance = $this->primary instanceof CtaCardItemPayload;
 
@@ -39,12 +40,12 @@ class CtaCardsPayload extends SpecificPayload
 
     private ?CtaCardItemPayload $left = null;
 
-    protected function setLeft(CtaCardItemPayload $left) : void
+    protected function setLeft(CtaCardItemPayload $left): void
     {
         $this->left = $left;
     }
 
-    public function getLeft() : CtaCardItemPayload
+    public function getLeft(): CtaCardItemPayload
     {
         $isInstance = $this->left instanceof CtaCardItemPayload;
 
@@ -60,12 +61,12 @@ class CtaCardsPayload extends SpecificPayload
 
     private ?CtaCardItemPayload $right = null;
 
-    protected function setRight(CtaCardItemPayload $right) : void
+    protected function setRight(CtaCardItemPayload $right): void
     {
         $this->right = $right;
     }
 
-    public function getRight() : CtaCardItemPayload
+    public function getRight(): CtaCardItemPayload
     {
         $isInstance = $this->right instanceof CtaCardItemPayload;
 

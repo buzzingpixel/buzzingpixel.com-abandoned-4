@@ -8,6 +8,7 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+
 use function assert;
 use function is_string;
 
@@ -31,7 +32,7 @@ class CliQuestionService
         string $question,
         bool $required = true,
         bool $hidden = false
-    ) : string {
+    ): string {
         $questionEntity = new Question($question);
 
         if ($hidden) {

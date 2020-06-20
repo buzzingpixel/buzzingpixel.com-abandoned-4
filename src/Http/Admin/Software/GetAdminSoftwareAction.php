@@ -10,6 +10,7 @@ use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+
 use function array_map;
 
 class GetAdminSoftwareAction
@@ -28,10 +29,10 @@ class GetAdminSoftwareAction
     /**
      * @throws Throwable
      */
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         $software = array_map(
-            static function (SoftwareModel $software) : array {
+            static function (SoftwareModel $software): array {
                 return [
                     'href' => '/admin/software/view/' . $software->id,
                     'title' => $software->name,

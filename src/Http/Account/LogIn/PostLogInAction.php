@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+
 use function assert;
 use function is_array;
 
@@ -24,7 +25,7 @@ class PostLogInAction
         $this->userApi   = $userApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $postData = $request->getParsedBody();
 

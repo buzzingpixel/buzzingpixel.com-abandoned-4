@@ -19,7 +19,7 @@ class TransformCartItemRecordToModel
         $this->fetchSoftwareBySlug = $fetchSoftwareBySlug;
     }
 
-    public function __invoke(CartItemRecord $record) : CartItemModel
+    public function __invoke(CartItemRecord $record): CartItemModel
     {
         $cartModel = new CartItemModel();
 

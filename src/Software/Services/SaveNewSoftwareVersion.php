@@ -34,7 +34,7 @@ class SaveNewSoftwareVersion
     /**
      * @throws Exception
      */
-    public function __invoke(SoftwareVersionModel $model) : void
+    public function __invoke(SoftwareVersionModel $model): void
     {
         $model->id = $this->uuidFactory->uuid1()->toString();
 

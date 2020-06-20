@@ -8,12 +8,12 @@ trait BackgroundColor
 {
     private string $backgroundColor = '';
 
-    protected function setBackgroundColor(string $backgroundColor) : void
+    protected function setBackgroundColor(string $backgroundColor): void
     {
         $this->backgroundColor = $backgroundColor;
     }
 
-    public function getBackgroundColor() : string
+    public function getBackgroundColor(): string
     {
         return $this->backgroundColor;
     }

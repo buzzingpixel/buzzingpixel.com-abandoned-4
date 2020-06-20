@@ -9,7 +9,7 @@ use Phinx\Migration\AbstractMigration;
 
 class CreateScheduleTrackingTable extends AbstractMigration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->table('schedule_tracking', [
             'id' => false,

@@ -9,6 +9,7 @@ use App\Http\StandardResponderConstructor;
 use App\Licenses\Models\LicenseModel;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+
 use function array_values;
 use function count;
 
@@ -23,14 +24,14 @@ class GetAccountLicensesResponder extends StandardResponderConstructor
      */
     public function __invoke(
         array $licenses
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $groups = [];
 
+        /** @var LicenseModel[] $group */
         foreach (array_values($licenses) as $key => $group) {
             foreach ($group as $license) {
-                /** @var LicenseModel[] $group */
                 if (! isset($groups[$key]['title'])) {
                     $groups[$key]['title'] = $license->itemTitle;
                 }

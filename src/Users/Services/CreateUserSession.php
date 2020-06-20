@@ -28,7 +28,7 @@ class CreateUserSession
         $this->saveNewRecord = $saveNewRecord;
     }
 
-    public function __invoke(UserModel $user) : Payload
+    public function __invoke(UserModel $user): Payload
     {
         if ($user->id === '') {
             return new Payload(

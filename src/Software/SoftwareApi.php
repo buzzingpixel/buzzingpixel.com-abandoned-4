@@ -15,6 +15,7 @@ use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Services\FetchSoftwareVersionById;
 use App\Software\Services\SaveSoftwareMaster;
 use Psr\Container\ContainerInterface;
+
 use function assert;
 
 class SoftwareApi
@@ -26,7 +27,7 @@ class SoftwareApi
         $this->di = $di;
     }
 
-    public function saveSoftware(SoftwareModel $model) : Payload
+    public function saveSoftware(SoftwareModel $model): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveSoftwareMaster::class);
@@ -36,7 +37,7 @@ class SoftwareApi
         return $service($model);
     }
 
-    public function fetchSoftwareById(string $id) : ?SoftwareModel
+    public function fetchSoftwareById(string $id): ?SoftwareModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareById::class);
@@ -46,7 +47,7 @@ class SoftwareApi
         return $service($id);
     }
 
-    public function fetchSoftwareBySlug(string $slug) : ?SoftwareModel
+    public function fetchSoftwareBySlug(string $slug): ?SoftwareModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareBySlug::class);
@@ -59,7 +60,7 @@ class SoftwareApi
     /**
      * @return SoftwareModel[]
      */
-    public function fetchAllSoftware() : array
+    public function fetchAllSoftware(): array
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchAllSoftware::class);
@@ -69,7 +70,7 @@ class SoftwareApi
         return $service();
     }
 
-    public function fetchSoftwareVersionById(string $id) : ?SoftwareVersionModel
+    public function fetchSoftwareVersionById(string $id): ?SoftwareVersionModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchSoftwareVersionById::class);
@@ -79,7 +80,7 @@ class SoftwareApi
         return $service($id);
     }
 
-    public function deleteSoftware(SoftwareModel $model) : void
+    public function deleteSoftware(SoftwareModel $model): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteSoftware::class);
@@ -89,7 +90,7 @@ class SoftwareApi
         $service($model);
     }
 
-    public function deleteSoftwareVersion(SoftwareVersionModel $model) : void
+    public function deleteSoftwareVersion(SoftwareVersionModel $model): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteSoftwareVersion::class);

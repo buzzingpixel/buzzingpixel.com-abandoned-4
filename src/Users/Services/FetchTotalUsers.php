@@ -16,7 +16,7 @@ class FetchTotalUsers
         $this->pdo = $pdo;
     }
 
-    public function __invoke() : int
+    public function __invoke(): int
     {
         try {
             return $this->run();
@@ -25,7 +25,7 @@ class FetchTotalUsers
         }
     }
 
-    private function run() : int
+    private function run(): int
     {
         $query = $this->pdo->prepare('SELECT COUNT(*) from users');
 

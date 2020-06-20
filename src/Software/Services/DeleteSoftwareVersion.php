@@ -17,7 +17,7 @@ class DeleteSoftwareVersion
         $this->pdo = $pdo;
     }
 
-    public function __invoke(SoftwareVersionModel $model) : void
+    public function __invoke(SoftwareVersionModel $model): void
     {
         $table = (new SoftwareVersionRecord())->getTableName();
 

@@ -8,6 +8,7 @@ use App\Persistence\DatabaseTransactionManager;
 use App\Persistence\Queue\QueueItemRecord;
 use App\Persistence\Queue\QueueRecord;
 use PDO;
+
 use function array_fill;
 use function count;
 use function implode;
@@ -28,7 +29,7 @@ class DeleteQueuesByIds
     /**
      * @param string[] $ids
      */
-    public function __invoke(array $ids) : void
+    public function __invoke(array $ids): void
     {
         if (count($ids) < 1) {
             return;

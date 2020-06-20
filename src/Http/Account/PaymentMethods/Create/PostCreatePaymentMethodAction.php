@@ -33,7 +33,7 @@ class PostCreatePaymentMethodAction
         $this->userApi           = $userApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $post = (array) $request->getParsedBody();
 
@@ -91,7 +91,8 @@ class PostCreatePaymentMethodAction
         if (! $validator->isValid() || ! $validPostalCode) {
             $errors = $validator->getErrors();
 
-            if (isset($errors['expiration_month']) ||
+            if (
+                isset($errors['expiration_month']) ||
                 isset($errors['expiration_year'])
             ) {
                 $errors['expiration_date'] = 'Valid expiration required';

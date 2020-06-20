@@ -7,6 +7,7 @@ namespace App\Content\Modules\ExtractorMethods;
 use App\Content\Modules\Payloads\QuoteBlockPayload;
 use App\Content\Modules\Payloads\QuoteBlocksPayload;
 use Throwable;
+
 use function array_map;
 use function is_array;
 
@@ -21,7 +22,7 @@ trait ExtractQuoteBlocks
      *
      * @throws Throwable
      */
-    public function extractQuoteBlocks(array $parsedYaml) : QuoteBlocksPayload
+    public function extractQuoteBlocks(array $parsedYaml): QuoteBlocksPayload
     {
         $blocks = isset($parsedYaml['blocks']) && is_array($parsedYaml['blocks']) ?
             $parsedYaml['blocks'] :
@@ -40,7 +41,7 @@ trait ExtractQuoteBlocks
      *
      * @throws Throwable
      */
-    private function mapYamlQuoteBlockToPayload(array $block) : QuoteBlockPayload
+    private function mapYamlQuoteBlockToPayload(array $block): QuoteBlockPayload
     {
         /** @var array<string, mixed> $image */
         $image = isset($block['image']) && is_array($block['image']) ?

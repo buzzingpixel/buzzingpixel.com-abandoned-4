@@ -10,6 +10,7 @@ use App\Users\UserApi;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
 use function array_walk;
 
 class UserPromoteCommand extends Command
@@ -31,7 +32,7 @@ class UserPromoteCommand extends Command
         parent::__construct();
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $user = $this->userApi->fetchUserByEmailAddress(
             $this->cliQuestionService->ask(
@@ -58,7 +59,7 @@ class UserPromoteCommand extends Command
         return $this->success($output);
     }
 
-    protected function success(OutputInterface $output) : int
+    protected function success(OutputInterface $output): int
     {
         $output->writeln(
             '<fg=green>User was promoted to admin</>'
@@ -67,7 +68,7 @@ class UserPromoteCommand extends Command
         return 0;
     }
 
-    protected function error(OutputInterface $output, Payload $payload) : int
+    protected function error(OutputInterface $output, Payload $payload): int
     {
         $output->writeln(
             '<fg=red>An error occurred</>'
@@ -82,7 +83,7 @@ class UserPromoteCommand extends Command
                 string $key
             ) use (
                 $output
-            ) : void {
+            ): void {
                 $output->writeln(
                     '<fg=red>' . $key . ': ' . $message . '</>'
                 );

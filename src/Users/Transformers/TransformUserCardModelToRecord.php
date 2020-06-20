@@ -12,7 +12,7 @@ use DateTimeInterface;
 
 class TransformUserCardModelToRecord
 {
-    public function __invoke(UserCardModel $model) : UserCardRecord
+    public function __invoke(UserCardModel $model): UserCardRecord
     {
         $record = new UserCardRecord();
 

@@ -13,12 +13,12 @@ class TimeZoneList extends AbstractExtension
     /**
      * @inheritDoc
      */
-    public function getFunctions() : array
+    public function getFunctions(): array
     {
         return [$this->getFunction()];
     }
 
-    public function getFunction() : TwigFunction
+    public function getFunction(): TwigFunction
     {
         return new TwigFunction(
             'timeZoneList',
@@ -29,7 +29,7 @@ class TimeZoneList extends AbstractExtension
     /**
      * @return string[]
      */
-    public function getList() : array
+    public function getList(): array
     {
         return TimeZoneListUtility::getList();
     }

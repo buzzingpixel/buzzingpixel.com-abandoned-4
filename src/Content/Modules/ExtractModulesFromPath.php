@@ -21,6 +21,7 @@ use IteratorIterator;
 use RegexIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
 use function array_map;
 use function array_values;
 use function assert;
@@ -28,6 +29,7 @@ use function is_array;
 use function iterator_to_array;
 use function Safe\ksort;
 use function ucfirst;
+
 use const SORT_NATURAL;
 
 class ExtractModulesFromPath
@@ -58,7 +60,7 @@ class ExtractModulesFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : ModulePayload
+    public function __invoke(string $contentPath): ModulePayload
     {
         $modulesPath = $this->pathToContentDirectory . '/' . $contentPath . '/modules';
 

@@ -23,6 +23,7 @@ use App\Queue\Services\RestartQueuesByIds;
 use App\Queue\Services\RunItem;
 use Psr\Container\ContainerInterface;
 use Throwable;
+
 use function assert;
 
 class QueueApi
@@ -34,7 +35,7 @@ class QueueApi
         $this->di = $di;
     }
 
-    public function addToQueue(QueueModel $queueModel) : Payload
+    public function addToQueue(QueueModel $queueModel): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(AddToQueue::class);
@@ -44,7 +45,7 @@ class QueueApi
         return $service($queueModel);
     }
 
-    public function fetchNextQueueItem() : ?QueueItemModel
+    public function fetchNextQueueItem(): ?QueueItemModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchNextQueueItem::class);
@@ -57,7 +58,7 @@ class QueueApi
     /**
      * @throws Throwable
      */
-    public function markAsStarted(QueueModel $queueModel) : void
+    public function markAsStarted(QueueModel $queueModel): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(MarkItemAsStarted::class);
@@ -67,7 +68,7 @@ class QueueApi
         $service($queueModel);
     }
 
-    public function runItem(QueueItemModel $item) : void
+    public function runItem(QueueItemModel $item): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(RunItem::class);
@@ -77,7 +78,7 @@ class QueueApi
         $service($item);
     }
 
-    public function postRun(QueueItemModel $item) : void
+    public function postRun(QueueItemModel $item): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(PostRun::class);
@@ -90,7 +91,7 @@ class QueueApi
     public function markStoppedDueToError(
         QueueModel $queueModel,
         ?Throwable $exception = null
-    ) : void {
+    ): void {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(MarkStoppedDueToError::class);
 
@@ -102,7 +103,7 @@ class QueueApi
     /**
      * @return QueueModel[]
      */
-    public function fetchStalledItems() : array
+    public function fetchStalledItems(): array
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchStalledItems::class);
@@ -115,7 +116,7 @@ class QueueApi
     /**
      * @return QueueModel[]
      */
-    public function fetchIncomplete() : array
+    public function fetchIncomplete(): array
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchIncomplete::class);
@@ -128,7 +129,7 @@ class QueueApi
     /**
      * @param string[] $ids
      */
-    public function restartQueuesByIds(array $ids) : void
+    public function restartQueuesByIds(array $ids): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(RestartQueuesByIds::class);
@@ -138,7 +139,7 @@ class QueueApi
         $service($ids);
     }
 
-    public function restartAllStalledItems() : void
+    public function restartAllStalledItems(): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(RestartAllStalledItems::class);
@@ -151,7 +152,7 @@ class QueueApi
     /**
      * @param string[] $ids
      */
-    public function deleteQueuesByIds(array $ids) : void
+    public function deleteQueuesByIds(array $ids): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(DeleteQueuesByIds::class);
@@ -161,7 +162,7 @@ class QueueApi
         $service($ids);
     }
 
-    public function clearAllStalledItems() : void
+    public function clearAllStalledItems(): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(ClearAllStalledItems::class);
@@ -174,7 +175,7 @@ class QueueApi
     /**
      * Returns the number of dead items cleaned
      */
-    public function cleanDeadItems() : int
+    public function cleanDeadItems(): int
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(CleanDeadItems::class);
@@ -187,7 +188,7 @@ class QueueApi
     /**
      * Returns the number of dead items cleaned
      */
-    public function cleanOldItems() : int
+    public function cleanOldItems(): int
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(CleanOldItems::class);

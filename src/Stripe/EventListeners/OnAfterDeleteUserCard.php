@@ -21,7 +21,7 @@ class OnAfterDeleteUserCard
 
     public function onAfterDeleteUserCard(
         DeleteUserCardAfterDelete $afterDelete
-    ) : void {
+    ): void {
         try {
             $this->innerRun($afterDelete);
         } catch (Throwable $e) {
@@ -32,7 +32,7 @@ class OnAfterDeleteUserCard
     /**
      * @throws Throwable
      */
-    private function innerRun(DeleteUserCardAfterDelete $afterDelete) : void
+    private function innerRun(DeleteUserCardAfterDelete $afterDelete): void
     {
         try {
             // If we can't get the card, it doesn't exist on Stripe, and since

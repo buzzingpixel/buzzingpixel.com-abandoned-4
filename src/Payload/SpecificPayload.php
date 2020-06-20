@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use LogicException;
 use ReflectionClass;
 use ReflectionException;
+
 use function assert;
 use function is_string;
 use function mb_strpos;
@@ -69,14 +70,14 @@ abstract class SpecificPayload
 
     protected string $shortName = '';
 
-    public function getShortName() : string
+    public function getShortName(): string
     {
         return $this->shortName;
     }
 
     protected string $name = '';
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }

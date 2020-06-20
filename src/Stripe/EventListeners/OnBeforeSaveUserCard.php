@@ -8,6 +8,7 @@ use App\Stripe\Services\UpdateStripeCustomer;
 use App\Users\Events\SaveUserCardBeforeSave;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
+
 use function ucwords;
 
 class OnBeforeSaveUserCard
@@ -25,7 +26,7 @@ class OnBeforeSaveUserCard
 
     public function onBeforeSaveUserCard(
         SaveUserCardBeforeSave $beforeSave
-    ) : void {
+    ): void {
         try {
             ($this->updateStripeCustomer)(
                 $beforeSave->userCardModel->user

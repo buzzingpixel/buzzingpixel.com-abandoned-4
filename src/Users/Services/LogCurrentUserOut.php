@@ -21,7 +21,7 @@ class LogCurrentUserOut
         $this->pdo       = $pdo;
     }
 
-    public function __invoke() : Payload
+    public function __invoke(): Payload
     {
         $cookie = $this->cookieApi->retrieveCookie('user_session_token');
 

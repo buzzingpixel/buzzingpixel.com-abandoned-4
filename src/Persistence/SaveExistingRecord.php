@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use Exception;
 use PDO;
 use Throwable;
+
 use function implode;
 
 class SaveExistingRecord
@@ -19,7 +20,7 @@ class SaveExistingRecord
         $this->pdo = $pdo;
     }
 
-    public function __invoke(Record $record) : Payload
+    public function __invoke(Record $record): Payload
     {
         if (! $record->id) {
             return new Payload(

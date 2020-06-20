@@ -8,12 +8,12 @@ trait PreHeadline
 {
     private string $preHeadline = '';
 
-    protected function setPreHeadline(string $preHeadline) : void
+    protected function setPreHeadline(string $preHeadline): void
     {
         $this->preHeadline = $preHeadline;
     }
 
-    public function getPreHeadline() : string
+    public function getPreHeadline(): string
     {
         return $this->preHeadline;
     }

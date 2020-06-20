@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use Exception;
 use PDO;
 use Throwable;
+
 use function implode;
 
 class SaveNewRecord
@@ -19,7 +20,7 @@ class SaveNewRecord
         $this->pdo = $pdo;
     }
 
-    public function __invoke(Record $record) : Payload
+    public function __invoke(Record $record): Payload
     {
         $into = implode(', ', $record->getFields());
 

@@ -21,7 +21,7 @@ class ExpirationYears extends AbstractExtension
     /**
      * @inheritDoc
      */
-    public function getFunctions() : array
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -34,7 +34,7 @@ class ExpirationYears extends AbstractExtension
     /**
      * @return int[]
      */
-    public function expirationYears() : array
+    public function expirationYears(): array
     {
         $user = $this->userApi->fetchLoggedInUser();
 

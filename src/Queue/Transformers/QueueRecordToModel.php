@@ -9,13 +9,14 @@ use App\Persistence\Queue\QueueRecord;
 use App\Queue\Models\QueueModel;
 use Safe\DateTimeImmutable;
 use Throwable;
+
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class QueueRecordToModel
 {
-    public function __invoke(QueueRecord $record) : QueueModel
+    public function __invoke(QueueRecord $record): QueueModel
     {
         $model = new QueueModel();
 

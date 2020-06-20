@@ -10,24 +10,24 @@ class DocumentationPagePayload extends SpecificPayload
 {
     private string $title = '';
 
-    protected function setTitle(string $title) : void
+    protected function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     private string $slug = '';
 
-    protected function setSlug(string $slug) : void
+    protected function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
 
-    public function getSlug() : string
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -38,7 +38,7 @@ class DocumentationPagePayload extends SpecificPayload
     /**
      * @param DocumentationPageSectionPayload[] $sections
      */
-    protected function setSections(array $sections) : void
+    protected function setSections(array $sections): void
     {
         $this->sections = $sections;
     }
@@ -46,7 +46,7 @@ class DocumentationPagePayload extends SpecificPayload
     /**
      * @return DocumentationPageSectionPayload[]
      */
-    public function getSections() : array
+    public function getSections(): array
     {
         return $this->sections;
     }

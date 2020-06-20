@@ -18,7 +18,7 @@ class DeleteUser
         $this->pdo = $pdo;
     }
 
-    public function __invoke(UserModel $user) : Payload
+    public function __invoke(UserModel $user): Payload
     {
         try {
             $this->pdo->beginTransaction();
@@ -42,7 +42,7 @@ class DeleteUser
         }
     }
 
-    private function deleteUser(UserModel $user) : void
+    private function deleteUser(UserModel $user): void
     {
         $statement = $this->pdo->prepare(
             'DELETE FROM users WHERE id=:id'
@@ -51,7 +51,7 @@ class DeleteUser
         $statement->execute([':id' => $user->id]);
     }
 
-    private function deleteUserSessions(UserModel $user) : void
+    private function deleteUserSessions(UserModel $user): void
     {
         $statement = $this->pdo->prepare(
             'DELETE FROM user_sessions WHERE user_id=:user_id'
@@ -60,7 +60,7 @@ class DeleteUser
         $statement->execute([':user_id' => $user->id]);
     }
 
-    private function deletePasswordResetTokens(UserModel $user) : void
+    private function deletePasswordResetTokens(UserModel $user): void
     {
         $statement = $this->pdo->prepare(
             'DELETE FROM user_password_reset_tokens WHERE user_id=:user_id'

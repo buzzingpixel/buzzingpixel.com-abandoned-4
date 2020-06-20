@@ -25,7 +25,7 @@ class PostAdminSoftwareEditResponder
     public function __invoke(
         Payload $payload,
         string $id
-    ) : ResponseInterface {
+    ): ResponseInterface {
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             $this->flashMessages->addMessage(
                 'PostMessage',

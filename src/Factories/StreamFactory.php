@@ -7,6 +7,7 @@ namespace App\Factories;
 use Psr\Http\Message\StreamInterface;
 use Safe\Exceptions\FilesystemException;
 use Slim\Psr7\Stream;
+
 use function Safe\fopen;
 
 class StreamFactory
@@ -14,7 +15,7 @@ class StreamFactory
     /**
      * @throws FilesystemException
      */
-    public function make() : StreamInterface
+    public function make(): StreamInterface
     {
         return new Stream(fopen('php://temp', 'r+'));
     }

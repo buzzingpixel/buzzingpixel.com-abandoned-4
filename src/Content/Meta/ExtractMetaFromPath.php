@@ -6,6 +6,7 @@ namespace App\Content\Meta;
 
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
 use function assert;
 use function is_array;
 
@@ -21,7 +22,7 @@ class ExtractMetaFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : MetaPayload
+    public function __invoke(string $contentPath): MetaPayload
     {
         $fullPath = $this->pathToContentDirectory . '/' . $contentPath . '/meta.yml';
 

@@ -10,6 +10,7 @@ use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use Exception;
 use Psr\Http\Message\UploadedFileInterface;
+
 use function assert;
 
 /**
@@ -35,7 +36,7 @@ class SaveSoftwareVersionMaster
     /**
      * @throws Exception
      */
-    public function __invoke(SoftwareVersionModel $model) : void
+    public function __invoke(SoftwareVersionModel $model): void
     {
         $this->processNewDownloadFile(
             $model->newDownloadFile,
@@ -52,7 +53,7 @@ class SaveSoftwareVersionMaster
     private function processNewDownloadFile(
         ?UploadedFileInterface $downloadFile,
         SoftwareVersionModel $model
-    ) : void {
+    ): void {
         if ($downloadFile === null) {
             return;
         }

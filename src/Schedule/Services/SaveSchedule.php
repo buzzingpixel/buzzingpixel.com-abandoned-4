@@ -33,7 +33,7 @@ class SaveSchedule
         $this->uuidFactory            = $uuidFactory;
     }
 
-    public function __invoke(ScheduleItemModel $model) : Payload
+    public function __invoke(ScheduleItemModel $model): Payload
     {
         if ($model->class === '') {
             return new Payload(
@@ -64,7 +64,7 @@ class SaveSchedule
     private function saveNewRecord(
         ScheduleTrackingRecord $record,
         ScheduleItemModel $model
-    ) : Payload {
+    ): Payload {
         $uid = $this->uuidFactory->uuid1()->toString();
 
         $record->id = $uid;

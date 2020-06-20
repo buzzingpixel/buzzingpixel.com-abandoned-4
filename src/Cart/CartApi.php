@@ -13,6 +13,7 @@ use App\Cart\Services\UpdateCartItemQuantity;
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
 use Psr\Container\ContainerInterface;
+
 use function assert;
 
 class CartApi
@@ -24,7 +25,7 @@ class CartApi
         $this->di = $di;
     }
 
-    public function fetchCurrentUserCart() : CartModel
+    public function fetchCurrentUserCart(): CartModel
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(FetchCurrentUserCart::class);
@@ -34,7 +35,7 @@ class CartApi
         return $service();
     }
 
-    public function saveCart(CartModel $cart) : Payload
+    public function saveCart(CartModel $cart): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SaveCart::class);
@@ -44,7 +45,7 @@ class CartApi
         return $service($cart);
     }
 
-    public function addItemToCurrentUsersCart(SoftwareModel $software) : void
+    public function addItemToCurrentUsersCart(SoftwareModel $software): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(AddItemToCurrentUsersCart::class);
@@ -57,7 +58,7 @@ class CartApi
     public function updateCartItemQuantity(
         int $quantity,
         SoftwareModel $software
-    ) : void {
+    ): void {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(UpdateCartItemQuantity::class);
 
@@ -66,7 +67,7 @@ class CartApi
         $service($quantity, $software);
     }
 
-    public function clearCart() : void
+    public function clearCart(): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(ClearCart::class);

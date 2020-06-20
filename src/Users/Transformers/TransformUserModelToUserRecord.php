@@ -12,7 +12,7 @@ use DateTimeInterface;
 
 class TransformUserModelToUserRecord
 {
-    public function __invoke(UserModel $model) : UserRecord
+    public function __invoke(UserModel $model): UserRecord
     {
         $record = new UserRecord();
 

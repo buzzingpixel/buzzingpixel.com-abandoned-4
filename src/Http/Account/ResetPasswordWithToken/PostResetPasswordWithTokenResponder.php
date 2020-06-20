@@ -22,7 +22,7 @@ class PostResetPasswordWithTokenResponder
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(Payload $payload, string $token = '') : ResponseInterface
+    public function __invoke(Payload $payload, string $token = ''): ResponseInterface
     {
         if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             $this->flashMessages->addMessage(

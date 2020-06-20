@@ -8,6 +8,7 @@ use App\Payload\Payload;
 use App\Persistence\DatabaseTransactionManager;
 use App\Software\Models\SoftwareModel;
 use Throwable;
+
 use function array_walk;
 
 class SaveSoftwareMaster
@@ -29,7 +30,7 @@ class SaveSoftwareMaster
         $this->saveSoftwareVersionMaster = $saveSoftwareVersionMaster;
     }
 
-    public function __invoke(SoftwareModel $model) : Payload
+    public function __invoke(SoftwareModel $model): Payload
     {
         try {
             $this->transactionManager->beginTransaction();

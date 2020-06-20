@@ -27,7 +27,7 @@ class DeleteUserCard
         $this->pdo             = $pdo;
     }
 
-    public function __invoke(UserCardModel $userCardModel) : Payload
+    public function __invoke(UserCardModel $userCardModel): Payload
     {
         try {
             $this->innerRun($userCardModel);
@@ -43,7 +43,7 @@ class DeleteUserCard
     /**
      * @throws Throwable
      */
-    private function innerRun(UserCardModel $userCardModel) : void
+    private function innerRun(UserCardModel $userCardModel): void
     {
         $this->pdo->beginTransaction();
 
@@ -63,9 +63,11 @@ class DeleteUserCard
             ' WHERE id=:id'
         );
 
-        if (! $statement->execute(
-            [':id' => $userCardModel->id]
-        )) {
+        if (
+            ! $statement->execute(
+                [':id' => $userCardModel->id]
+            )
+        ) {
             throw new Exception();
         }
 

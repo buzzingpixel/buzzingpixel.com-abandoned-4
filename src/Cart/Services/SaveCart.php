@@ -19,6 +19,7 @@ use Exception;
 use PDO;
 use Safe\DateTimeImmutable;
 use Throwable;
+
 use function array_walk;
 use function count;
 
@@ -53,7 +54,7 @@ class SaveCart
         $this->saveExistingRecord             = $saveExistingRecord;
     }
 
-    public function __invoke(CartModel $cart) : Payload
+    public function __invoke(CartModel $cart): Payload
     {
         try {
             $this->pdo->beginTransaction();
@@ -71,7 +72,7 @@ class SaveCart
     /**
      * @throws Throwable
      */
-    private function innerRun(CartModel $cart) : Payload
+    private function innerRun(CartModel $cart): Payload
     {
         $this->totalQuantity = 0;
 
@@ -139,7 +140,7 @@ class SaveCart
         throw new Exception('Unknown error saving version');
     }
 
-    protected function deleteItem(CartItemModel $item) : void
+    protected function deleteItem(CartItemModel $item): void
     {
         $statement = $this->pdo->prepare(
             'DELETE FROM ' . (new CartItemRecord())->getTableName() .
@@ -152,7 +153,7 @@ class SaveCart
     /**
      * @throws Throwable
      */
-    protected function saveItem(CartItemModel $item) : void
+    protected function saveItem(CartItemModel $item): void
     {
         $this->totalQuantity += $item->quantity;
 

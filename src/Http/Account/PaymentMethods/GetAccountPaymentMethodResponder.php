@@ -15,7 +15,7 @@ class GetAccountPaymentMethodResponder extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke(UserCardModel $userCard) : ResponseInterface
+    public function __invoke(UserCardModel $userCard): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

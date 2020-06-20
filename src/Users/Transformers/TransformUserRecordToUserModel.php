@@ -9,13 +9,14 @@ use App\Persistence\Users\UserRecord;
 use App\Users\Models\UserModel;
 use DateTimeZone;
 use Safe\DateTimeImmutable;
+
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class TransformUserRecordToUserModel
 {
-    public function __invoke(UserRecord $record) : UserModel
+    public function __invoke(UserRecord $record): UserModel
     {
         $model = new UserModel();
 

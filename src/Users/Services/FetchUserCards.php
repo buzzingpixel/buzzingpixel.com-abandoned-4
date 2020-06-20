@@ -9,6 +9,7 @@ use App\Persistence\UserCards\UserCardRecord;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserCardRecordToModel;
+
 use function array_map;
 
 class FetchUserCards
@@ -27,7 +28,7 @@ class FetchUserCards
     /**
      * @return UserCardModel[]
      */
-    public function __invoke(UserModel $user) : array
+    public function __invoke(UserModel $user): array
     {
         /** @var UserCardRecord[] $records */
         $records = ($this->recordQueryFactory)(
@@ -39,7 +40,7 @@ class FetchUserCards
             ->all();
 
         return array_map(
-            fn(UserCardRecord $record) => ($this->recordToModel)(
+            fn (UserCardRecord $record) => ($this->recordToModel)(
                 $record,
                 $user
             ),

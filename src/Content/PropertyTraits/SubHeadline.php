@@ -8,12 +8,12 @@ trait SubHeadline
 {
     private string $subHeadline = '';
 
-    protected function setSubHeadline(string $subHeadline) : void
+    protected function setSubHeadline(string $subHeadline): void
     {
         $this->subHeadline = $subHeadline;
     }
 
-    public function getSubHeadline() : string
+    public function getSubHeadline(): string
     {
         return $this->subHeadline;
     }

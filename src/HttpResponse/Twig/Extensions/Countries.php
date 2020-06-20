@@ -22,7 +22,7 @@ class Countries extends AbstractExtension
     /**
      * @inheritDoc
      */
-    public function getFunctions() : array
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -39,7 +39,7 @@ class Countries extends AbstractExtension
     /**
      * @return mixed[]
      */
-    public function countries() : array
+    public function countries(): array
     {
         return $this->ISO3166->all();
     }
@@ -47,7 +47,7 @@ class Countries extends AbstractExtension
     /**
      * @return mixed[]
      */
-    public function countriesSelectArray() : array
+    public function countriesSelectArray(): array
     {
         $array = [];
 

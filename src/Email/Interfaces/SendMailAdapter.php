@@ -12,5 +12,5 @@ interface SendMailAdapter
     /**
      * Sends an email
      */
-    public function __invoke(EmailModel $emailModel) : Payload;
+    public function __invoke(EmailModel $emailModel): Payload;
 }

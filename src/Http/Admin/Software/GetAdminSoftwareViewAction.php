@@ -28,7 +28,7 @@ class GetAdminSoftwareViewAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $software = $this->softwareApi->fetchSoftwareById(
             (string) $request->getAttribute('id')

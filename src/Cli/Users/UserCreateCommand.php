@@ -11,6 +11,7 @@ use App\Users\UserApi;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
 use function array_walk;
 
 class UserCreateCommand extends Command
@@ -32,7 +33,7 @@ class UserCreateCommand extends Command
         parent::__construct();
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $emailAddress = $this->cliQuestionService->ask(
             '<fg=cyan>Email address: </>'
@@ -57,7 +58,7 @@ class UserCreateCommand extends Command
         return $this->success($output, $payload);
     }
 
-    protected function success(OutputInterface $output, Payload $payload) : int
+    protected function success(OutputInterface $output, Payload $payload): int
     {
         /** @var array<string, string> $result */
         $result = $payload->getResult();
@@ -69,7 +70,7 @@ class UserCreateCommand extends Command
         return 0;
     }
 
-    protected function error(OutputInterface $output, Payload $payload) : int
+    protected function error(OutputInterface $output, Payload $payload): int
     {
         $output->writeln(
             '<fg=red>An error occurred</>'
@@ -84,7 +85,7 @@ class UserCreateCommand extends Command
                 string $key
             ) use (
                 $output
-            ) : void {
+            ): void {
                 $output->writeln(
                     '<fg=red>' . $key . ': ' . $message . '</>'
                 );

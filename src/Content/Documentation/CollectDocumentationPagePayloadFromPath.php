@@ -11,11 +11,13 @@ use IteratorIterator;
 use RegexIterator;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
 use function array_map;
 use function array_values;
 use function implode;
 use function iterator_to_array;
 use function Safe\ksort;
+
 use const SORT_NATURAL;
 
 class CollectDocumentationPagePayloadFromPath
@@ -37,7 +39,7 @@ class CollectDocumentationPagePayloadFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : DocumentationPagePayload
+    public function __invoke(string $contentPath): DocumentationPagePayload
     {
         $pathArray = [
             $this->generalConfig->pathToContentDirectory(),
@@ -84,7 +86,7 @@ class CollectDocumentationPagePayloadFromPath
             'sections' => array_values(array_map(
                 function (string $fileName) use (
                     $contentPath
-                ) : DocumentationPageSectionPayload {
+                ): DocumentationPageSectionPayload {
                     return ($this->collectDocumentationPageSectionFromPath)(
                         $contentPath . '/' . $fileName
                     );

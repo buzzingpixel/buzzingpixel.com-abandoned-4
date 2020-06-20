@@ -7,6 +7,7 @@ namespace App\Software\Transformers;
 use App\Persistence\Software\SoftwareRecord;
 use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
+
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -19,7 +20,7 @@ class TransformSoftwareRecordToModel
     public function __invoke(
         SoftwareRecord $record,
         array $versions = []
-    ) : SoftwareModel {
+    ): SoftwareModel {
         $model = new SoftwareModel();
 
         $model->id = $record->id;

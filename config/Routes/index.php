@@ -6,7 +6,7 @@ use App\Http\Home\GetHomeAction;
 use App\Http\Tinker\GetTinkerAction;
 use Slim\App;
 
-return static function (App $app) : void {
+return static function (App $app): void {
     // Match all integers except 0 or 1
     // {page:(?!(?:0|1)$)\d+}
 
