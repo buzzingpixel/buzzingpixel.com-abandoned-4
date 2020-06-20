@@ -52,6 +52,7 @@ class CollectDocumentationVersionsFromPath
         $directory = new DirectoryIterator($fullDirectoryPath);
 
         foreach ($directory as $fileInfo) {
+            /** @psalm-suppress RedundantCondition */
             assert($fileInfo instanceof DirectoryIterator);
 
             if ($fileInfo->isDot() || ! $fileInfo->isDir()) {

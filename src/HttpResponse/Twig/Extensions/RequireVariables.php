@@ -9,6 +9,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use function get_class;
 use function gettype;
+use function is_string;
 
 class RequireVariables extends AbstractExtension
 {
@@ -82,8 +83,14 @@ class RequireVariables extends AbstractExtension
                 // @codeCoverageIgnoreEnd
             }
 
-            /** @phpstan-ignore-next-line */
-            $this->throwRequirementException($var, $type ?: null);
+            /**
+             * @psalm-suppress DocblockTypeContradiction
+             */
+            $this->throwRequirementException(
+                $var,
+                /** @phpstan-ignore-next-line */
+                is_string($type) ? $type : null
+            );
         }
 
         // @codeCoverageIgnoreStart
