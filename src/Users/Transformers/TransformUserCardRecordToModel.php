@@ -34,6 +34,20 @@ class TransformUserCardRecordToModel
 
         $model->provider = $record->provider;
 
+        $model->nameOnCard = $record->name_on_card;
+
+        $model->address = $record->address;
+
+        $model->address2 = $record->address2;
+
+        $model->city = $record->city;
+
+        $model->state = $record->state;
+
+        $model->postalCode = $record->postal_code;
+
+        $model->country = $record->country;
+
         $model->isDefault = in_array(
             $record->is_default,
             ['1', 1, true],

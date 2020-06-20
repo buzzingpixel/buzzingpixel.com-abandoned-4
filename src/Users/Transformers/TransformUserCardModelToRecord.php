@@ -28,6 +28,20 @@ class TransformUserCardModelToRecord
 
         $record->provider = $model->provider;
 
+        $record->name_on_card = $model->nameOnCard;
+
+        $record->address = $model->address;
+
+        $record->address2 = $model->address2;
+
+        $record->city = $model->city;
+
+        $record->state = $model->state;
+
+        $record->postal_code = $model->postalCode;
+
+        $record->country = $model->country;
+
         $record->is_default = $model->isDefault ? '1' : '0';
 
         $record->expiration = $model->expiration->format(
