@@ -80,6 +80,39 @@ class OnBeforeSaveUserCardTest extends TestCase
         self::assertTrue($beforeSave->isValid);
     }
 
+    public function testWhenNoCvc() : void
+    {
+        $user = new UserModel();
+
+        $user->stripeId = 'fooUserStripeId';
+
+        $card = new UserCardModel();
+
+        $card->user = $user;
+
+        $card->newCardNumber = 'fooNewCardNumber';
+
+        $beforeSave = new SaveUserCardBeforeSave($card);
+
+        $stripe = $this->createMock(StripeClient::class);
+
+        $stripe->expects(self::never())
+            ->method(self::anything());
+
+        $updateStripeCustomer = $this->createMock(
+            UpdateStripeCustomer::class
+        );
+
+        $onBeforeSaveUserCard = new OnBeforeSaveUserCard(
+            $stripe,
+            $updateStripeCustomer,
+        );
+
+        $onBeforeSaveUserCard->onBeforeSaveUserCard($beforeSave);
+
+        self::assertFalse($beforeSave->isValid);
+    }
+
     public function testWhenNewCardNumber() : void
     {
         $expiration = DateTimeImmutable::createFromFormat(
@@ -93,6 +126,8 @@ class OnBeforeSaveUserCardTest extends TestCase
 
         $user->stripeId = 'fooUserStripeId';
 
+        $user->emailAddress = 'fooEmailAddress';
+
         $card = new UserCardModel();
 
         $card->user = $user;
@@ -100,6 +135,22 @@ class OnBeforeSaveUserCardTest extends TestCase
         $card->stripeId = 'fooStripeId';
 
         $card->newCardNumber = 'fooNewCardNumber';
+
+        $card->newCvc = 'fooCvc';
+
+        $card->address = 'fooAddress';
+
+        $card->address2 = 'fooAddress2';
+
+        $card->city = 'fooCity';
+
+        $card->state = 'fooState';
+
+        $card->postalCode = 'fooPostalCode';
+
+        $card->country = 'fooCountry';
+
+        $card->nameOnCard = 'fooNameOnCard';
 
         $card->expiration = $expiration;
 
@@ -125,6 +176,19 @@ class OnBeforeSaveUserCardTest extends TestCase
                     'number' => $card->newCardNumber,
                     'exp_month' => $card->expiration->format('n'),
                     'exp_year' => $card->expiration->format('Y'),
+                    'cvc' => $card->newCvc,
+                ],
+                'billing_details' => [
+                    'address' => [
+                        'line1' => $card->address,
+                        'line2' => $card->address2,
+                        'city' => $card->city,
+                        'state' => $card->state,
+                        'postal_code' => $card->postalCode,
+                        'country' => $card->country,
+                    ],
+                    'email' => $card->user->emailAddress,
+                    'name' => $card->nameOnCard,
                 ],
             ]))
             ->willReturn($paymentMethod);
@@ -180,6 +244,8 @@ class OnBeforeSaveUserCardTest extends TestCase
 
         $user->stripeId = 'fooUserStripeId';
 
+        $user->emailAddress = 'fooEmailAddress';
+
         $card = new UserCardModel();
 
         $card->user = $user;
@@ -187,6 +253,22 @@ class OnBeforeSaveUserCardTest extends TestCase
         $card->stripeId = 'fooStripeId';
 
         $card->newCardNumber = 'fooNewCardNumber';
+
+        $card->newCvc = 'fooCvc';
+
+        $card->address = 'fooAddress';
+
+        $card->address2 = 'fooAddress2';
+
+        $card->city = 'fooCity';
+
+        $card->state = 'fooState';
+
+        $card->postalCode = 'fooPostalCode';
+
+        $card->country = 'fooCountry';
+
+        $card->nameOnCard = 'fooNameOnCard';
 
         $card->expiration = $expiration;
 
@@ -208,6 +290,19 @@ class OnBeforeSaveUserCardTest extends TestCase
                     'number' => $card->newCardNumber,
                     'exp_month' => $card->expiration->format('n'),
                     'exp_year' => $card->expiration->format('Y'),
+                    'cvc' => $card->newCvc,
+                ],
+                'billing_details' => [
+                    'address' => [
+                        'line1' => $card->address,
+                        'line2' => $card->address2,
+                        'city' => $card->city,
+                        'state' => $card->state,
+                        'postal_code' => $card->postalCode,
+                        'country' => $card->country,
+                    ],
+                    'email' => $card->user->emailAddress,
+                    'name' => $card->nameOnCard,
                 ],
             ]))
             ->willThrowException($apiErrorException);
