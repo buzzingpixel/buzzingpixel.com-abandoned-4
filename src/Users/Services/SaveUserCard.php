@@ -45,7 +45,7 @@ class SaveUserCard
         } catch (Throwable $e) {
             return new Payload(
                 Payload::STATUS_ERROR,
-                ['message' => 'An unknown error occurred']
+                ['message' => 'An unknown error occurred'],
             );
         }
     }
@@ -61,7 +61,7 @@ class SaveUserCard
         if (! $beforeSaveEvent->isValid) {
             return new Payload(
                 Payload::STATUS_NOT_VALID,
-                ['message' => 'The provided card is not valid']
+                ['message' => 'The provided card is not valid'],
             );
         }
 

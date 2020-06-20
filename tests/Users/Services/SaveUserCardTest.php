@@ -21,6 +21,7 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\TestConfig;
+use Throwable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -101,6 +102,93 @@ class SaveUserCardTest extends TestCase
         );
     }
 
+    public function testInvalidBeforeSaveEvent() : void
+    {
+        $expiration = new DateTimeImmutable();
+
+        $user = new UserModel();
+
+        $user->id = 'foo-bar-id';
+
+        $model = new UserCardModel();
+
+        $model->user = $user;
+
+        $model->stripeId = 'foo-stripe-id';
+
+        $model->nickname = 'foo-nickname';
+
+        $model->lastFour = '4321';
+
+        $model->provider = 'visa';
+
+        $model->expiration = $expiration;
+
+        $model->isDefault = true;
+
+        $saveNewRecord = $this->createMock(
+            SaveNewRecord::class
+        );
+
+        $saveNewRecord->expects(self::never())
+            ->method(self::anything());
+
+        $saveExistingRecord = $this->createMock(
+            SaveExistingRecord::class
+        );
+
+        $saveExistingRecord->expects(self::never())
+            ->method(self::anything());
+
+        $eventDispatcher = $this->createMock(
+            EventDispatcherInterface::class
+        );
+
+        $eventDispatcher->expects(self::at(0))
+            ->method('dispatch')
+            ->willReturnCallback(
+                static function (
+                    SaveUserCardBeforeSave $beforeSave
+                ) use (
+                    $model
+                ) : void {
+                    self::assertSame(
+                        $model,
+                        $beforeSave->userCardModel
+                    );
+
+                    $beforeSave->isValid = false;
+                }
+            );
+
+        $service = new SaveUserCard(
+            $saveNewRecord,
+            $saveExistingRecord,
+            TestConfig::$di->get(
+                UuidFactoryWithOrderedTimeCodec::class
+            ),
+            TestConfig::$di->get(
+                TransformUserCardModelToRecord::class
+            ),
+            $eventDispatcher
+        );
+
+        $payload = $service($model);
+
+        self::assertSame(
+            Payload::STATUS_NOT_VALID,
+            $payload->getStatus(),
+        );
+
+        self::assertSame(
+            ['message' => 'The provided card is not valid'],
+            $payload->getResult(),
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
     public function testSaveNew() : void
     {
         $expiration = new DateTimeImmutable();
@@ -114,6 +202,8 @@ class SaveUserCardTest extends TestCase
         $model = new UserCardModel();
 
         $model->user = $user;
+
+        $model->newCardNumber = '1234 567890';
 
         $model->stripeId = 'foo-stripe-id';
 
@@ -157,7 +247,7 @@ class SaveUserCardTest extends TestCase
                     );
 
                     self::assertSame(
-                        '4321',
+                        '7890',
                         $record->last_four,
                     );
 
@@ -242,6 +332,11 @@ class SaveUserCardTest extends TestCase
         self::assertSame(
             $returnPayload,
             $service($model),
+        );
+
+        self::assertSame(
+            '7890',
+            $model->lastFour
         );
     }
 
