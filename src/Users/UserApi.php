@@ -252,6 +252,16 @@ class UserApi
         $service->fillModelFromPostalCode($model);
     }
 
+    public function fillCardModelFromPostalCode(UserCardModel $model) : void
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(PostalCodeService::class);
+
+        assert($service instanceof PostalCodeService);
+
+        $service->fillCardModelFromPostalCode($model);
+    }
+
     public function saveUserCard(UserCardModel $userCard) : Payload
     {
         /** @psalm-suppress MixedAssignment */

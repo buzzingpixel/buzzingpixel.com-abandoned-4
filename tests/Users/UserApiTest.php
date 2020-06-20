@@ -282,6 +282,32 @@ class UserApiTest extends TestCase
         );
     }
 
+    public function testFillCardModelFromPostalCode() : void
+    {
+        $card = new UserCardModel();
+
+        $service = $this->createMock(
+            PostalCodeService::class
+        );
+
+        $service->expects(self::once())
+            ->method('fillCardModelFromPostalCode')
+            ->with(self::equalTo($card));
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(PostalCodeService::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        $api->fillCardModelFromPostalCode($card);
+    }
+
     protected function setUp() : void
     {
         $this->callArgs = [];
