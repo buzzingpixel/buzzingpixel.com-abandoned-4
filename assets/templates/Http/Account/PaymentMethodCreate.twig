@@ -2,6 +2,9 @@
 
 {% set contentClass = 'max-w-3xl' %}
 
+{# @var \App\Users\Models\UserModel user #}
+{% set user = fetchLoggedInUser() %}
+
 {% block accountContent %}
     {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
         cancelButton: {
@@ -22,9 +25,50 @@
                 label: 'Expiration',
             },
             {
+                type: 'text',
+                label: 'Card Verification Code (CVC)',
+                small: 'On most cards, this is a 3 or 4 digit code on the back of the card on the signature strip',
+                name: 'cvc',
+            },
+            {
+                type: 'text',
+                label: 'Name On Card',
+                name: 'name_on_card',
+            },
+            {
+                type: 'stacked',
+                label: 'Address',
+                inputs: [
+                    {
+                        type: 'text',
+                        label: 'Line 1',
+                        name: 'address',
+                        value: user.billingAddress,
+                    },
+                    {
+                        type: 'text',
+                        label: 'Line 2',
+                        name: 'address2',
+                    },
+                ],
+            },
+            {
+                type: 'select',
+                label: 'Country',
+                name: 'country',
+                value: user.billingCountry,
+                options: countriesSelectArray(),
+                emptyOption: 'Choose country&hellip;',
+            },
+            {
+                type: 'text',
+                label: 'Postal Code',
+                name: 'postal_code',
+                value: user.billingPostalCode,
+            },
+            {
                 type: 'checkbox',
                 label: 'Default?',
-                small: 'You must have one default card. If this is your only card, it will be set as default.',
                 name: 'default',
             },
             {
