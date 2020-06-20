@@ -31,7 +31,7 @@ class GetAdminSoftwareAction
     public function __invoke() : ResponseInterface
     {
         $software = array_map(
-            static function (SoftwareModel $software) {
+            static function (SoftwareModel $software) : array {
                 return [
                     'href' => '/admin/software/view/' . $software->id,
                     'title' => $software->name,

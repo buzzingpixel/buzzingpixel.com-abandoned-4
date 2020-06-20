@@ -7,8 +7,8 @@ namespace Tests\HttpResponse\Twig\Extensions;
 use App\HttpResponse\Twig\Extensions\ExpirationYears;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use function assert;
 use function is_array;
 

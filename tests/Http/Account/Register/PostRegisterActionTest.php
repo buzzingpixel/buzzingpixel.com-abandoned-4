@@ -143,7 +143,7 @@ class PostRegisterActionTest extends TestCase
 
         $this->saveUser->method('__invoke')
             ->willReturnCallback(
-                function () {
+                function () : Payload {
                     $this->saveUserCallArgs = func_get_args();
 
                     return new Payload(

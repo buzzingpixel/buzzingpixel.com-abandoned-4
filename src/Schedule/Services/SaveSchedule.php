@@ -75,7 +75,7 @@ class SaveSchedule
             throw new Exception();
         }
 
-        $model->id;
+        $model->id = $record->id;
 
         return $payload;
     }

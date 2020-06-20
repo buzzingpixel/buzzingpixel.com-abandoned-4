@@ -17,9 +17,9 @@ use App\Persistence\Orders\OrderRecord;
 use App\Persistence\RecordQuery;
 use App\Persistence\RecordQueryFactory;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Tests\TestConfig;
 use function assert;
 

@@ -150,7 +150,7 @@ class UserCreateCommandTest extends TestCase
         $mock = $this->createMock(UserApi::class);
 
         $mock->method('saveUser')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : ?Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;

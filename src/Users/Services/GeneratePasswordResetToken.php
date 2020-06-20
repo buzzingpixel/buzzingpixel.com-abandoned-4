@@ -9,9 +9,9 @@ use App\Persistence\SaveNewRecord;
 use App\Persistence\Users\UserPasswordResetTokenRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 

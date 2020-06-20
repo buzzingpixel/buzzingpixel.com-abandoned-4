@@ -13,11 +13,11 @@ use App\Queue\Models\QueueModel;
 use App\Queue\Services\PostRun;
 use App\Queue\Transformers\TransformQueueItemtoRecord;
 use App\Queue\Transformers\TransformQueueModelToRecord;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use function assert;
 
 class PostRunTest extends TestCase

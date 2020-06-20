@@ -39,6 +39,7 @@ class RequireVariables extends AbstractExtension
     {
         foreach ($required as $var => $type) {
             if (! isset($context[$var])) {
+                /** @phpstan-ignore-next-line */
                 $this->throwRequirementException($var, $type ?: null);
             }
 
@@ -81,6 +82,7 @@ class RequireVariables extends AbstractExtension
                 // @codeCoverageIgnoreEnd
             }
 
+            /** @phpstan-ignore-next-line */
             $this->throwRequirementException($var, $type ?: null);
         }
 

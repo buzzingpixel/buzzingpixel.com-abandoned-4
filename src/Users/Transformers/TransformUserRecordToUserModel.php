@@ -7,9 +7,8 @@ namespace App\Users\Transformers;
 use App\Persistence\Constants;
 use App\Persistence\Users\UserRecord;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeZone;
-use function assert;
+use Safe\DateTimeImmutable;
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -68,8 +67,6 @@ class TransformUserRecordToUserModel
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record->created_at
         );
-
-        assert($createdAt instanceof DateTimeImmutable);
 
         $model->createdAt = $createdAt;
 

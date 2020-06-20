@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Users\Models;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
 use function trim;
 
 class UserModel

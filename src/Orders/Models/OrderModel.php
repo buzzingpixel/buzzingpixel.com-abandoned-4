@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Orders\Models;
 
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeZone;
 use RuntimeException;
+use Safe\DateTimeImmutable;
 use function assert;
 use function is_array;
 

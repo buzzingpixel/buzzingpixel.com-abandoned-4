@@ -71,7 +71,7 @@ class SaveFileToSecureStorageTest extends TestCase
         $generalConfig = $this->createMock(General::class);
 
         $generalConfig->method('__call')->willReturnCallback(
-            static function (string $method) {
+            static function (string $method) : string {
                 if ($method === 'pathToSecureStorageDirectory') {
                     return '/foo/path';
                 }
@@ -117,7 +117,7 @@ class SaveFileToSecureStorageTest extends TestCase
         $generalConfig = $this->createMock(General::class);
 
         $generalConfig->method('__call')->willReturnCallback(
-            static function (string $method) {
+            static function (string $method) : string {
                 if ($method === 'pathToSecureStorageDirectory') {
                     return '/foo/path';
                 }

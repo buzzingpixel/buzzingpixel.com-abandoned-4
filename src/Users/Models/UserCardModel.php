@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Users\Models;
 
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 
 class UserCardModel
 {

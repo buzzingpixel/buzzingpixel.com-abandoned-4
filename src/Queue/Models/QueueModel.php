@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Queue\Models;
 
-use DateTimeImmutable;
 use DateTimeZone;
 use RuntimeException;
+use Safe\DateTimeImmutable;
 use function assert;
 use function is_array;
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Software\Models;
 
-use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\UploadedFileInterface;
+use Safe\DateTimeImmutable;
 
 class SoftwareVersionModel
 {

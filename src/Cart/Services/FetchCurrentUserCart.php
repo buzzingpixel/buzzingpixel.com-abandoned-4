@@ -9,8 +9,8 @@ use App\Cart\Models\CartModel;
 use App\Software\Models\SoftwareModel;
 use App\Users\UserApi;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
-use DateTimeImmutable;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
 use function assert;
 use function Safe\strtotime;
 

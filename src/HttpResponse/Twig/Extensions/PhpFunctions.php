@@ -27,8 +27,11 @@ class PhpFunctions extends AbstractExtension
     public function getFunctions() : array
     {
         return array_map(
-            static function ($phpFunction) {
-                /** @psalm-suppress InvalidArgument */
+            static function ($phpFunction) : TwigFunction {
+                /**
+                 * @psalm-suppress InvalidArgument
+                 * @phpstan-ignore-next-line
+                 */
                 return new TwigFunction($phpFunction, $phpFunction);
             },
             $this->functions

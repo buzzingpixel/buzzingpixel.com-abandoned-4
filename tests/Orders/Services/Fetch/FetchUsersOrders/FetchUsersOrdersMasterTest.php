@@ -16,9 +16,9 @@ use App\Persistence\Orders\OrderItemRecord;
 use App\Persistence\Orders\OrderRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 

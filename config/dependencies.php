@@ -41,14 +41,14 @@ use function DI\autowire;
 use function DI\get;
 
 return [
-    CliQuestionService::class => static function (ContainerInterface $di) {
+    CliQuestionService::class => static function (ContainerInterface $di) : CliQuestionService {
         return new CliQuestionService(
             $di->get(QuestionHelper::class),
             $di->get(ArgvInput::class),
             $di->get(ConsoleOutput::class)
         );
     },
-    CookieApi::class => static function () {
+    CookieApi::class => static function () : CookieApi {
         return new CookieApi(
             $_COOKIE,
             (string) getenv('ENCRYPTION_KEY'),
@@ -56,7 +56,7 @@ return [
         );
     },
     CookieApiInterface::class => get(CookieApi::class),
-    CsrfGuard::class => static function (ContainerInterface $di) {
+    CsrfGuard::class => static function (ContainerInterface $di) : CsrfGuard {
         $responseFactory = $di->get(ResponseFactoryInterface::class);
         $guard           = new CsrfGuard($responseFactory);
         $guard->setFailureHandler(
@@ -87,12 +87,13 @@ return [
         dirname(__DIR__) . '/content'
     ),
     ListenerProviderInterface::class => get(OrderedListenerProvider::class),
-    LoggedInUser::class => static function (ContainerInterface $di) {
+    LoggedInUser::class => static function (ContainerInterface $di) : LoggedInUser {
         return new LoggedInUser(
             $di->get(UserApi::class)->fetchLoggedInUser()
         );
     },
-    LoggerInterface::class => static function () {
+    LoggerInterface::class => static function () : LoggerInterface {
+        /** @phpstan-ignore-next-line */
         $logLevel = getenv('LOG_LEVEL') ?: 'DEBUG';
 
         $logger = new Logger('app');
@@ -114,6 +115,7 @@ return [
             Rollbar::init(
                 [
                     'access_token' => $rollBarAccessToken,
+                    /** @phpstan-ignore-next-line */
                     'environment' => getenv('ROLLBAR_ENVIRONMENT') ?:
                         'dev',
                 ]
@@ -126,10 +128,10 @@ return [
 
         return $logger;
     },
-    Mandrill::class => static function () {
+    Mandrill::class => static function () : Mandrill {
         return new Mandrill(getenv('MANDRILL_API_KEY'));
     },
-    MandrillConfig::class => static function () {
+    MandrillConfig::class => static function () : MandrillConfig {
         $conf = new MandrillConfig();
 
         $conf->fromEmail = (string) getenv('WEBMASTER_EMAIL_ADDRESS');
@@ -138,17 +140,20 @@ return [
 
         return $conf;
     },
-    OrderedListenerProvider::class => static function (ContainerInterface $di) {
+    OrderedListenerProvider::class => static function (ContainerInterface $di) : OrderedListenerProvider {
         return new OrderedListenerProvider($di);
     },
     ParseChangelogFromMarkdownFile::class => autowire(ParseChangelogFromMarkdownFile::class)->constructorParameter(
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),
-    PDO::class => static function () {
+    PDO::class => static function () : PDO {
         try {
+            /** @phpstan-ignore-next-line */
             $dbHost = getenv('DB_HOST') ?: 'db';
+            /** @phpstan-ignore-next-line */
             $dbPort = getenv('DB_PORT') ?: '5432';
+            /** @phpstan-ignore-next-line */
             $dbName = getenv('DB_NAME') ?: 'buzzingpixel';
 
             $dsn = [
@@ -168,7 +173,9 @@ return [
                 ]
             );
         } catch (Throwable $e) {
+            /** @phpstan-ignore-next-line */
             $dbHost = getenv('DB_HOST') ?: 'db';
+            /** @phpstan-ignore-next-line */
             $dbPort = getenv('DB_PORT') ?: '5432';
 
             $dsn = [
@@ -190,7 +197,7 @@ return [
     },
     ResponseFactoryInterface::class => autowire(ResponseFactory::class),
     SendMailAdapter::class => autowire(MandrillSendMailAdapter::class),
-    StripeClient::class => static function () {
+    StripeClient::class => static function () : StripeClient {
         StripeApi::setApiKey(
             (string) getenv('STRIPE_SECRET_KEY')
         );
@@ -208,7 +215,7 @@ return [
             'stripe_version' => '2020-03-02',
         ]);
     },
-    TwigEnvironment::class => static function (ContainerInterface $di) {
+    TwigEnvironment::class => static function (ContainerInterface $di) : TwigEnvironment {
         return (new TwigEnvironmentFactory())($di);
     },
 ];

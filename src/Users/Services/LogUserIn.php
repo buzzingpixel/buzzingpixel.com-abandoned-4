@@ -7,8 +7,8 @@ namespace App\Users\Services;
 use App\Payload\Payload;
 use App\Users\Models\UserModel;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
-use DateTimeImmutable;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
 use function Safe\strtotime;
 
 class LogUserIn

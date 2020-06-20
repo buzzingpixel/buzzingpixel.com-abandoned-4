@@ -75,7 +75,7 @@ class FetchAllSoftware
         return array_map(
             function (SoftwareRecord $record) use (
                 $versionModelsKeyed
-            ) {
+            ) : SoftwareModel {
                 return ($this->softwareRecordToModel)(
                     $record,
                     $versionModelsKeyed[$record->id] ?? []

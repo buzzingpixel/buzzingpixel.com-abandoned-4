@@ -7,11 +7,10 @@ namespace Tests\Licenses\Transformers;
 use App\Licenses\Models\LicenseModel;
 use App\Licenses\Transformers\TransformLicenseModelToRecord;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Throwable;
-use function assert;
 use function Safe\json_encode;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -49,8 +48,6 @@ class TransformLicenseModelToRecordTest extends TestCase
             DateTimeInterface::ATOM,
             '2010-02-11T01:26:03+00:00',
         );
-
-        assert($expires instanceof DateTimeImmutable);
 
         $model->expires = $expires;
 

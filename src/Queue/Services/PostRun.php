@@ -9,8 +9,8 @@ use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\Transformers\TransformQueueItemtoRecord;
 use App\Queue\Transformers\TransformQueueModelToRecord;
-use DateTimeImmutable;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
 use function count;
 
 class PostRun

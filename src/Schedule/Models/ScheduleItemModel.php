@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Schedule\Models;
 
-use DateTimeImmutable;
 use RuntimeException;
+use Safe\DateTimeImmutable;
 use function gettype;
 use function in_array;
 

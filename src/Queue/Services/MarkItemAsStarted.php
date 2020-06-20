@@ -8,9 +8,9 @@ use App\Payload\Payload;
 use App\Persistence\SaveExistingRecord;
 use App\Queue\Models\QueueModel;
 use App\Queue\Transformers\TransformQueueModelToRecord;
-use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
+use Safe\DateTimeImmutable;
 use Throwable;
 
 class MarkItemAsStarted

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Utilities;
 
-use DateTime;
 use DateTimeZone;
+use Safe\DateTime;
 
 class TimeZoneList
 {

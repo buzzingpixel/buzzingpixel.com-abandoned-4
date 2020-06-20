@@ -6,10 +6,10 @@ namespace App\Cart\Models;
 
 use App\Software\Models\SoftwareModel;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use RuntimeException;
+use Safe\DateTimeImmutable;
 use function assert;
 use function is_array;
 use function round;
@@ -163,6 +163,7 @@ class CartModel
         // TODO: Determine if user has cards
         return false;
 
+        /** @phpstan-ignore-next-line */
         if ($user === null) {
             return false;
         }

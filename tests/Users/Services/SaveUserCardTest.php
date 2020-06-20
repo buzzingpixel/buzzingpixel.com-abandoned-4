@@ -15,11 +15,11 @@ use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\SaveUserCard;
 use App\Users\Transformers\TransformUserCardModelToRecord;
-use DateTimeImmutable;
 use DateTimeInterface;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Safe\DateTimeImmutable;
 use Tests\TestConfig;
 use Throwable;
 

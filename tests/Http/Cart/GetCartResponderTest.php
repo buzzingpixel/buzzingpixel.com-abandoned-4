@@ -35,7 +35,7 @@ class GetCartResponderTest extends TestCase
                     array $context
                 ) use (
                     $cart
-                ) {
+                ) : string {
                     self::assertSame('Http/Cart.twig', $template);
 
                     self::assertCount(2, $context);

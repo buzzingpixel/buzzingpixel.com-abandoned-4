@@ -9,14 +9,13 @@ use App\Stripe\Services\UpdateStripeCustomer;
 use App\Users\Events\SaveUserCardBeforeSave;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Stripe\Card;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentMethod;
 use Stripe\Service\PaymentMethodService;
 use Stripe\StripeClient;
-use function assert;
 
 class OnBeforeSaveUserCardTest extends TestCase
 {
@@ -119,8 +118,6 @@ class OnBeforeSaveUserCardTest extends TestCase
             'Y-m-d',
             '2010-01-03',
         );
-
-        assert($expiration instanceof DateTimeImmutable);
 
         $user = new UserModel();
 
@@ -237,8 +234,6 @@ class OnBeforeSaveUserCardTest extends TestCase
             'Y-m-d',
             '2010-01-03',
         );
-
-        assert($expiration instanceof DateTimeImmutable);
 
         $user = new UserModel();
 

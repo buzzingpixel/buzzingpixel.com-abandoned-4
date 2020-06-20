@@ -49,7 +49,7 @@ class GetAccountPurchasesResponder
         $purchases = array_map(
             static function (OrderModel $order) use ($user) {
                 $orderItems = array_map(
-                    static function (OrderItemModel $orderItem) {
+                    static function (OrderItemModel $orderItem) : string {
                         return $orderItem->itemTitle;
                     },
                     $order->items

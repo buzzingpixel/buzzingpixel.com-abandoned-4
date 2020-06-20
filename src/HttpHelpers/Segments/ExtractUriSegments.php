@@ -15,9 +15,10 @@ class ExtractUriSegments
 {
     public function __invoke(UriInterface $uri) : UriSegments
     {
+        /** @phpstan-ignore-next-line */
         $segments = array_values(array_filter(
             explode('/', $uri->getPath()),
-            static function ($item) {
+            static function ($item) : string {
                 return $item;
             }
         ));

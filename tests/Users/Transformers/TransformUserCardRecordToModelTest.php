@@ -8,13 +8,17 @@ use App\Persistence\Constants;
 use App\Persistence\UserCards\UserCardRecord;
 use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserCardRecordToModel;
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
+use Throwable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class TransformUserCardRecordToModelTest extends TestCase
 {
+    /**
+     * @throws Throwable
+     */
     public function test() : void
     {
         $record = new UserCardRecord();

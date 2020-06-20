@@ -9,7 +9,8 @@ use App\Persistence\Constants;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
+use Safe\Exceptions\DatetimeException;
 use Safe\Exceptions\JsonException;
 use function assert;
 use function Safe\json_decode;
@@ -26,7 +27,7 @@ class TransformLicenseRecordToModel
     }
 
     /**
-     * @throws JsonException
+     * @throws JsonException|DatetimeException
      */
     public function __invoke(
         LicenseRecord $record,
@@ -70,8 +71,6 @@ class TransformLicenseRecordToModel
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record->expires
         );
-
-        assert($expires instanceof DateTimeImmutable);
 
         $model->expires = $expires;
 

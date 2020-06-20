@@ -1,6 +1,7 @@
 parameters:
     level: max
-    bootstrap: phpstan-bootstrap.php
+    bootstrapFiles:
+        - phpstan-bootstrap.php
     ignoreErrors:
         -
             message: '#Variable method call on \$this\(App\\Content\\Modules\\ExtractModulesFromPath\)\.#'
@@ -117,25 +118,16 @@ parameters:
             message: '#Strict comparison using === between null and null will always evaluate to true\.#'
             path: %currentWorkingDirectory%/tests/Users/Services/GeneratePasswordResetTokenTest.php
         -
-            message: '#Result of || is always true\.#'
-            path: %currentWorkingDirectory%/tests/Users/Services/GeneratePasswordResetTokenTest.php
-        -
             message: '#Access to an undefined property Mandrill::\$messages\.#'
             path: %currentWorkingDirectory%/src/Email/Adapters/MandrillSendMailAdapter.php
         -
             message: '#Access to an undefined property Mandrill&PHPUnit\\Framework\\MockObject\\MockObject::\$messages\.#'
             path: %currentWorkingDirectory%/tests/Email/Adapters/MandrillSendMailAdapterTest.php
         -
-            message: '#Parameter \#2 $time of static method DateTimeImmutable::createFromFormat\(\) expects string, string|null given\.#'
-            path: %currentWorkingDirectory%/src/Queue/Transformers/QueueRecordToModel.php
-        -
-            message: '#Parameter \#2 $time of static method DateTimeImmutable::createFromFormat\(\) expects string, string|null given\.#'
-            path: %currentWorkingDirectory%/src/Queue/Transformers/QueueItemRecordToModel.php
-        -
             message: '#Variable method call on mixed\.#'
             path: %currentWorkingDirectory%/src/Queue/Services/RunItem.php
         -
-            message: '#Parameter \#1 $input of function array_walk expects array, App\\Persistence\\Queue\\QueueItemRecord|array given\.#'
+            message: '#Parameter \#1 \$input of function array_walk expects array, App\\Persistence\\Queue\\QueueItemRecord\|array given\.#'
             path: %currentWorkingDirectory%/src/Queue/Services/FetchHelper.php
         -
             message: '#Using \$this outside a class\.#'

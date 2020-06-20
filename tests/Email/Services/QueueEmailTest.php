@@ -48,6 +48,7 @@ class QueueEmailTest extends TestCase
 
                 self::assertSame(
                     $emailModel,
+                    /** @phpstan-ignore-next-line */
                     $item->context['model'],
                 );
 

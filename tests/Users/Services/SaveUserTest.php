@@ -16,12 +16,12 @@ use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\SaveUser;
 use App\Users\Transformers\TransformUserModelToUserRecord;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Safe\DateTimeImmutable;
 use Tests\TestConfig;
 use Throwable;
 use function assert;
@@ -295,7 +295,9 @@ class SaveUserTest extends TestCase
      */
     public function testSaveExistingUserWhenIdDoesNotExist() : void
     {
-        $testId = TestConfig::$di->get(UuidFactoryWithOrderedTimeCodec::class)->uuid1()->toString();
+        $testId = TestConfig::$di->get(UuidFactoryWithOrderedTimeCodec::class)
+            ->uuid1()
+            ->toString();
 
         $this->expectFetchUserEmailAddress        = '';
         $this->fetchUserByEmailAddressReturnsUser = false;
@@ -534,7 +536,7 @@ class SaveUserTest extends TestCase
 
         $mock->expects(self::once())
             ->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->newRecordCallArgs = func_get_args();
 
                 return new Payload(Payload::STATUS_CREATED);
@@ -596,7 +598,7 @@ class SaveUserTest extends TestCase
 
         $mock->expects(self::once())
             ->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->existingRecordCallArgs = func_get_args();
 
                 return new Payload(Payload::STATUS_UPDATED);

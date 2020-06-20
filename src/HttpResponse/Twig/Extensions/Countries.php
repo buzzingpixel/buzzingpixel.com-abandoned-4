@@ -10,8 +10,10 @@ use Twig\TwigFunction;
 
 class Countries extends AbstractExtension
 {
+    /** @phpstan-ignore-next-line */
     private ISO3166 $ISO3166;
 
+    /** @phpstan-ignore-next-line */
     public function __construct(ISO3166 $ISO3166)
     {
         $this->ISO3166 = $ISO3166;

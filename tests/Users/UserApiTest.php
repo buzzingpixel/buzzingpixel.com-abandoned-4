@@ -386,7 +386,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(SaveUser::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -405,7 +405,7 @@ class UserApiTest extends TestCase
         );
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 $this->callArgs = func_get_args();
 
                 return $this->userModel;
@@ -422,7 +422,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(FetchUserById::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 $this->callArgs = func_get_args();
 
                 return $this->userModel;
@@ -439,7 +439,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(LogUserIn::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -456,7 +456,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(DeleteUser::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -473,7 +473,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(FetchLoggedInUser::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 return $this->userModel;
             });
 
@@ -490,7 +490,7 @@ class UserApiTest extends TestCase
         );
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -507,7 +507,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(FetchUserByResetToken::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 $this->callArgs = func_get_args();
 
                 return $this->userModel;
@@ -526,7 +526,7 @@ class UserApiTest extends TestCase
         );
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 return $this->payload;
             });
 
@@ -541,7 +541,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(ResetPasswordByToken::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;

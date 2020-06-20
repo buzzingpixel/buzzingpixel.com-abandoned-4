@@ -10,8 +10,8 @@ use App\Persistence\Constants;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Throwable;
 use function assert;
 

@@ -29,8 +29,8 @@ class GetAccountLicensesResponder extends StandardResponderConstructor
         $groups = [];
 
         foreach (array_values($licenses) as $key => $group) {
-            /** @var LicenseModel[] $group */
             foreach ($group as $license) {
+                /** @var LicenseModel[] $group */
                 if (! isset($groups[$key]['title'])) {
                     $groups[$key]['title'] = $license->itemTitle;
                 }

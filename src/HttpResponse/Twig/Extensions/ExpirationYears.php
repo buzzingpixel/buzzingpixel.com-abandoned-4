@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\HttpResponse\Twig\Extensions;
 
 use App\Users\UserApi;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

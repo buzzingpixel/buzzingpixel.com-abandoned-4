@@ -81,7 +81,9 @@ class CollectDocumentationVersionsFromPath
         return new DocumentationVersionsPayload([
             'softwareInfo' => ($this->extractSoftwareInfoFromPath)($contentPath),
             'versions' => array_map(
-                function (string $version) use ($contentPath) {
+                function (string $version) use (
+                    $contentPath
+                ) : DocumentationVersionPayload {
                     return ($this->collectDocumentationVersionPayloadFromPath)(
                         $contentPath . '/documentation/' . $version
                     );

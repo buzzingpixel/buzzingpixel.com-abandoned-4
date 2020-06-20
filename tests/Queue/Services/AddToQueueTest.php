@@ -15,10 +15,10 @@ use App\Queue\Models\QueueModel;
 use App\Queue\Services\AddToQueue;
 use App\Queue\Transformers\TransformQueueItemtoRecord;
 use App\Queue\Transformers\TransformQueueModelToRecord;
-use DateTimeImmutable;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Tests\TestConfig;
 use function assert;
 

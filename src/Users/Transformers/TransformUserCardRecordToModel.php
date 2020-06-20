@@ -8,8 +8,7 @@ use App\Persistence\Constants;
 use App\Persistence\UserCards\UserCardRecord;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
-use function assert;
+use Safe\DateTimeImmutable;
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -58,8 +57,6 @@ class TransformUserCardRecordToModel
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record->expiration
         );
-
-        assert($expiration instanceof DateTimeImmutable);
 
         $model->expiration = $expiration;
 

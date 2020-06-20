@@ -7,9 +7,8 @@ namespace App\Queue\Transformers;
 use App\Persistence\Constants;
 use App\Persistence\Queue\QueueRecord;
 use App\Queue\Models\QueueModel;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use Throwable;
-use function assert;
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -43,8 +42,6 @@ class QueueRecordToModel
             $record->assume_dead_after,
         );
 
-        assert($assumeDeadAfter instanceof DateTimeImmutable);
-
         $model->assumeDeadAfter = $assumeDeadAfter;
 
         $model->isFinished = in_array(
@@ -68,18 +65,14 @@ class QueueRecordToModel
             $record->added_at,
         );
 
-        assert($addedAt instanceof DateTimeImmutable);
-
         $model->addedAt = $addedAt;
 
         try {
             /** @psalm-suppress PossiblyNullArgument */
             $finishedAt = DateTimeImmutable::createFromFormat(
                 Constants::POSTGRES_OUTPUT_FORMAT,
-                $record->finished_at,
+                (string) $record->finished_at,
             );
-
-            assert($finishedAt instanceof DateTimeImmutable);
 
             $model->finishedAt = $finishedAt;
         } catch (Throwable $e) {

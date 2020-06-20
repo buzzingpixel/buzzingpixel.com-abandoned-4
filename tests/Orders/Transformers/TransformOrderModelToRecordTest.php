@@ -7,10 +7,9 @@ namespace Tests\Orders\Transformers;
 use App\Orders\Models\OrderModel;
 use App\Orders\Transformers\TransformOrderModelToRecord;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
-use function assert;
+use Safe\DateTimeImmutable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -70,8 +69,6 @@ class TransformOrderModelToRecordTest extends TestCase
             DateTimeInterface::ATOM,
             '2010-02-11T01:26:03+00:00',
         );
-
-        assert($date instanceof DateTimeImmutable);
 
         $model->date = $date;
 

@@ -83,7 +83,9 @@ class CollectDocumentationVersionPayloadFromPath
             'slug' => 'documentation' . ($version !== 'primary' ? '-' . $version : ''),
             'version' => $version,
             'pages' => array_values(array_map(
-                function (string $pagePath) use ($contentPath) {
+                function (string $pagePath) use (
+                    $contentPath
+                ) : DocumentationPagePayload {
                     return ($this->collectDocumentationPagePayloadFromPath)(
                         $contentPath . '/' . $pagePath
                     );

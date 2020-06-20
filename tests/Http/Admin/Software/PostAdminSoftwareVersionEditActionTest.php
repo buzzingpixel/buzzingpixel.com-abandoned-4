@@ -12,12 +12,12 @@ use App\Software\Models\SoftwareVersionModel;
 use App\Software\SoftwareApi;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use Safe\DateTimeImmutable;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
 use function assert;
@@ -198,8 +198,6 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
             '2010-01-02 3:00 PM'
         );
 
-        assert($dateTime instanceof DateTimeImmutable);
-
         $dateTime = $dateTime->setTimezone($timeZone);
 
         $response = $this->createMock(ResponseInterface::class);
@@ -357,8 +355,6 @@ class PostAdminSoftwareVersionEditActionTest extends TestCase
             'Y-m-d h:i A',
             '2010-01-02 3:00 PM'
         );
-
-        assert($dateTime instanceof DateTimeImmutable);
 
         $dateTime = $dateTime->setTimezone($timeZone);
 

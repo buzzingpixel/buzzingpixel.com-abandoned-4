@@ -9,10 +9,10 @@ use App\Persistence\SaveExistingRecord;
 use App\Persistence\Users\UserSessionRecord;
 use App\Users\Models\UserModel;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PDO;
+use Safe\DateTimeImmutable;
 use function assert;
 use function is_bool;
 use function time;
@@ -68,7 +68,6 @@ class FetchLoggedInUser
             Constants::POSTGRES_OUTPUT_FORMAT,
             $sessionRecord->last_touched_at
         );
-        assert($lastTouchedAt instanceof DateTimeImmutable);
 
         /**
          * We don't want to touch the session (write to the database) every time

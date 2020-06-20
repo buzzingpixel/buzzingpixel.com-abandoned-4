@@ -82,7 +82,9 @@ class CollectDocumentationPagePayloadFromPath
             ),
             'slug' => (string) ($infoYaml['slug'] ?? ''),
             'sections' => array_values(array_map(
-                function (string $fileName) use ($contentPath) {
+                function (string $fileName) use (
+                    $contentPath
+                ) : DocumentationPageSectionPayload {
                     return ($this->collectDocumentationPageSectionFromPath)(
                         $contentPath . '/' . $fileName
                     );
