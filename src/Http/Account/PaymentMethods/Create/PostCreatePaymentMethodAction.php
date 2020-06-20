@@ -9,11 +9,10 @@ use App\Payload\Payload;
 use App\Users\Models\LoggedInUser;
 use App\Users\Models\UserCardModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator as V;
-use function assert;
+use Safe\DateTimeImmutable;
 
 class PostCreatePaymentMethodAction
 {
@@ -42,6 +41,12 @@ class PostCreatePaymentMethodAction
             'card_number' => (string) ($post['card_number'] ?? ''),
             'expiration_month' => (string) ($post['expiration_date']['month'] ?? ''),
             'expiration_year' => (string) ($post['expiration_date']['year'] ?? ''),
+            'cvc' => (string) ($post['cvc'] ?? ''),
+            'name_on_card' => (string) ($post['name_on_card'] ?? ''),
+            'address' => (string) ($post['address'] ?? ''),
+            'address2' => (string) ($post['address2'] ?? ''),
+            'country' => (string) ($post['country'] ?? ''),
+            'postal_code' => (string) ($post['postal_code'] ?? ''),
             'default' => ($post['default'] ?? '') === 'true',
             'nickname' => (string) ($post['nickname'] ?? ''),
         ];
@@ -65,11 +70,25 @@ class PostCreatePaymentMethodAction
                     V::notEmpty(),
                     V::numeric(),
                 ),
+                'cvc' => V::notEmpty(),
+                'name_on_card' => V::notEmpty(),
+                'address' => V::notEmpty(),
+                'country' => V::notEmpty(),
+                'postal_code' => V::notEmpty(),
                 'nickname' => V::length(0, 255),
             ]
         );
 
-        if (! $validator->isValid()) {
+        $validPostalCode = true;
+
+        if ($data['postal_code'] !== '') {
+            $validPostalCode = $this->userApi->validatePostalCode(
+                $data['postal_code'],
+                $data['country']
+            );
+        }
+
+        if (! $validator->isValid() || ! $validPostalCode) {
             $errors = $validator->getErrors();
 
             if (isset($errors['expiration_month']) ||
@@ -78,12 +97,18 @@ class PostCreatePaymentMethodAction
                 $errors['expiration_date'] = 'Valid expiration required';
             }
 
+            if (! $validPostalCode) {
+                /** @phpstan-ignore-next-line */
+                $errors['postal_code'][] = 'Postal code is invalid';
+            }
+
             return ($this->responder)(
                 new Payload(
                     Payload::STATUS_NOT_VALID,
                     [
                         'message' => 'The data provided was invalid',
                         'inputMessages' => $errors,
+                        'inputValues' => $data,
                     ],
                 ),
             );
@@ -93,9 +118,21 @@ class PostCreatePaymentMethodAction
 
         $card->user = $this->user->model();
 
+        $card->newCardNumber = $data['card_number'];
+
+        $card->newCvc = $data['cvc'];
+
         $card->nickname = $data['nickname'];
 
-        $card->newCardNumber = $data['card_number'];
+        $card->nameOnCard = $data['name_on_card'];
+
+        $card->address = $data['address'];
+
+        $card->address2 = $data['address2'];
+
+        $card->country = $data['country'];
+
+        $card->postalCode = $data['postal_code'];
 
         $card->isDefault = $data['default'];
 
@@ -104,11 +141,24 @@ class PostCreatePaymentMethodAction
             $data['expiration_month'] . '-' . $data['expiration_year'] . '-02',
         );
 
-        assert($expiration instanceof DateTimeImmutable);
-
         $card->expiration = $expiration;
 
+        $this->userApi->fillCardModelFromPostalCode($card);
+
         $payload = $this->userApi->saveUserCard($card);
+
+        if ($payload->getStatus() !== Payload::STATUS_CREATED) {
+            $result = $payload->getResult();
+
+            $result['inputValues'] = $data;
+
+            return ($this->responder)(
+                new Payload(
+                    Payload::STATUS_NOT_VALID,
+                    $result,
+                ),
+            );
+        }
 
         return ($this->responder)($payload);
     }
