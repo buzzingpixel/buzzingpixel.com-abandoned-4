@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace App\Stripe\EventListeners;
 
+use App\Stripe\Services\SaveExistingCard;
+use App\Stripe\Services\SaveNewCard;
 use App\Stripe\Services\UpdateStripeCustomer;
 use App\Users\Events\SaveUserCardBeforeSave;
-use Stripe\Exception\ApiErrorException;
-use Stripe\StripeClient;
-
-use function ucwords;
+use Throwable;
 
 class OnBeforeSaveUserCard
 {
-    private StripeClient $stripe;
     private UpdateStripeCustomer $updateStripeCustomer;
+    private SaveNewCard $saveNewCard;
+    private SaveExistingCard $saveExistingCard;
 
     public function __construct(
-        StripeClient $stripe,
-        UpdateStripeCustomer $updateStripeCustomer
+        UpdateStripeCustomer $updateStripeCustomer,
+        SaveNewCard $saveNewCard,
+        SaveExistingCard $saveExistingCard
     ) {
-        $this->stripe               = $stripe;
         $this->updateStripeCustomer = $updateStripeCustomer;
+        $this->saveNewCard          = $saveNewCard;
+        $this->saveExistingCard     = $saveExistingCard;
     }
 
     public function onBeforeSaveUserCard(
@@ -34,55 +36,14 @@ class OnBeforeSaveUserCard
 
             $card = $beforeSave->userCardModel;
 
-            if ($card->newCardNumber === '' && $card->stripeId === '') {
-                $beforeSave->isValid = false;
+            if ($card->stripeId === '') {
+                ($this->saveNewCard)($card);
 
                 return;
             }
 
-            if ($card->newCardNumber === '') {
-                return;
-            }
-
-            if ($card->newCvc === '') {
-                $beforeSave->isValid = false;
-
-                return;
-            }
-
-            $responseCard = $this->stripe->paymentMethods->create([
-                'type' => 'card',
-                'card' => [
-                    'number' => $card->newCardNumber,
-                    'exp_month' => $card->expiration->format('n'),
-                    'exp_year' => $card->expiration->format('Y'),
-                    'cvc' => $card->newCvc,
-                ],
-                'billing_details' => [
-                    'address' => [
-                        'line1' => $card->address,
-                        'line2' => $card->address2,
-                        'city' => $card->city,
-                        'state' => $card->state,
-                        'postal_code' => $card->postalCode,
-                        'country' => $card->country,
-                    ],
-                    'email' => $card->user->emailAddress,
-                    'name' => $card->nameOnCard,
-                ],
-            ]);
-
-            $this->stripe->paymentMethods->attach(
-                $responseCard->id,
-                ['customer' => $card->user->stripeId]
-            );
-
-            $card->stripeId = $responseCard->id;
-
-            $responseCardCard = $responseCard->card;
-
-            $card->provider = ucwords((string) $responseCardCard->brand);
-        } catch (ApiErrorException $e) {
+            ($this->saveExistingCard)($card);
+        } catch (Throwable $e) {
             $beforeSave->isValid = false;
         }
     }

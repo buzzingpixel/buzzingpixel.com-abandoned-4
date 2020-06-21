@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Account\PaymentMethods\Create;
+namespace Tests\Http\Account\PaymentMethods\Update;
 
 use App\Factories\ValidationFactory;
-use App\Http\Account\PaymentMethods\Create\PostCreatePaymentMethodAction;
-use App\Http\Account\PaymentMethods\Create\PostCreatePaymentMethodResponder;
+use App\Http\Account\PaymentMethods\Update\PostUpdatePaymentMethodAction;
+use App\Http\Account\PaymentMethods\Update\PostUpdatePaymentMethodResponder;
 use App\Payload\Payload;
 use App\Users\Models\LoggedInUser;
 use App\Users\Models\UserCardModel;
@@ -15,10 +15,77 @@ use App\Users\UserApi;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpNotFoundException;
 use Tests\TestConfig;
+use Throwable;
 
-class PostCreatePaymentMethodActionTest extends TestCase
+use function assert;
+
+class PostUpdatePaymentMethodActionTest extends TestCase
 {
+    /**
+     * @throws Throwable
+     */
+    public function testWhenNoCard(): void
+    {
+        $user = new UserModel();
+
+        $loggedInUser = new LoggedInUser($user);
+
+        $responder = $this->createMock(
+            PostUpdatePaymentMethodResponder::class,
+        );
+
+        $responder->expects(self::never())
+            ->method(self::anything());
+
+        $userApi = $this->createMock(
+            UserApi::class
+        );
+
+        $userApi->method('fetchUserCardById')
+            ->with(
+                self::equalTo($user),
+                self::equalTo('foo-request-attr-id'),
+            )
+            ->willReturn(null);
+
+        $request = $this->createMock(
+            ServerRequestInterface::class,
+        );
+
+        $request->method('getAttribute')
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-request-attr-id');
+
+        $action = new PostUpdatePaymentMethodAction(
+            $loggedInUser,
+            $userApi,
+            TestConfig::$di->get(
+                ValidationFactory::class,
+            ),
+            $responder,
+        );
+
+        $exception = null;
+
+        try {
+            $exception = $action($request);
+        } catch (Throwable $e) {
+            $exception = $e;
+        }
+
+        assert($exception instanceof HttpNotFoundException);
+
+        self::assertSame(
+            $request,
+            $exception->getRequest(),
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
     public function testInvalid(): void
     {
         $response = $this->createMock(
@@ -27,10 +94,14 @@ class PostCreatePaymentMethodActionTest extends TestCase
 
         $user = new UserModel();
 
+        $card = new UserCardModel();
+
+        $card->user = $user;
+
         $loggedInUser = new LoggedInUser($user);
 
         $responder = $this->createMock(
-            PostCreatePaymentMethodResponder::class,
+            PostUpdatePaymentMethodResponder::class,
         );
 
         $responder->expects(self::once())
@@ -49,7 +120,6 @@ class PostCreatePaymentMethodActionTest extends TestCase
                         [
                             'message' => 'The data provided was invalid',
                             'inputMessages' => [
-                                'card_number' => ['Value must be a valid credit card number'],
                                 'expiration_month' => [
                                     'Value must not be empty',
                                     'Value must be numeric',
@@ -58,7 +128,6 @@ class PostCreatePaymentMethodActionTest extends TestCase
                                     'Value must not be empty',
                                     'Value must be numeric',
                                 ],
-                                'cvc' => ['Value must not be empty'],
                                 'name_on_card' => ['Value must not be empty'],
                                 'address' => ['Value must not be empty'],
                                 'country' => ['Value must not be empty'],
@@ -66,10 +135,8 @@ class PostCreatePaymentMethodActionTest extends TestCase
                                 'expiration_date' => 'Valid expiration required',
                             ],
                             'inputValues' => [
-                                'card_number' => '4242424242424243',
                                 'expiration_month' => '',
                                 'expiration_year' => '',
-                                'cvc' => '',
                                 'name_on_card' => '',
                                 'address' => '',
                                 'address2' => '',
@@ -89,125 +156,31 @@ class PostCreatePaymentMethodActionTest extends TestCase
             UserApi::class
         );
 
-        $userApi->expects(self::never())
-            ->method(self::anything());
-
-        $request = $this->createMock(
-            ServerRequestInterface::class,
-        );
-
-        $request->method('getParsedBody')
-            ->willReturn(['card_number' => '4242424242424243']);
-
-        $action = new PostCreatePaymentMethodAction(
-            $responder,
-            TestConfig::$di->get(
-                ValidationFactory::class,
-            ),
-            $loggedInUser,
-            $userApi,
-        );
-
-        self::assertSame(
-            $response,
-            $action($request),
-        );
-    }
-
-    public function testInvalidPostalCode(): void
-    {
-        $response = $this->createMock(
-            ResponseInterface::class,
-        );
-
-        $user = new UserModel();
-
-        $loggedInUser = new LoggedInUser($user);
-
-        $responder = $this->createMock(
-            PostCreatePaymentMethodResponder::class,
-        );
-
-        $responder->expects(self::once())
-            ->method('__invoke')
-            ->willReturnCallback(
-                static function (Payload $payload) use (
-                    $response
-                ): ResponseInterface {
-                    self::assertSame(
-                        Payload::STATUS_NOT_VALID,
-                        $payload->getStatus()
-                    );
-
-                    self::assertSame(
-                        $payload->getResult(),
-                        [
-                            'message' => 'The data provided was invalid',
-                            'inputMessages' => [
-                                'postal_code' => ['Postal code is invalid'],
-                            ],
-                            'inputValues' => [
-                                'card_number' => '4242424242424242',
-                                'expiration_month' => '05',
-                                'expiration_year' => '2030',
-                                'cvc' => '123',
-                                'name_on_card' => 'Timmothy Draper',
-                                'address' => '123 Some Street',
-                                'address2' => 'Suite 2',
-                                'country' => 'US',
-                                'postal_code' => '37174',
-                                'default' => true,
-                                'nickname' => 'foo-bar',
-                            ],
-                        ],
-                    );
-
-                    return $response;
-                }
-            );
-
-        $userApi = $this->createMock(
-            UserApi::class
-        );
-
-        $userApi->expects(self::never())
-            ->method('saveUserCard');
-
-        $userApi->method('validatePostalCode')
+        $userApi->method('fetchUserCardById')
             ->with(
-                self::equalTo('37174'),
-                self::equalTo('US'),
+                self::equalTo($user),
+                self::equalTo('foo-request-attr-id'),
             )
-            ->willReturn(false);
+            ->willReturn($card);
 
         $request = $this->createMock(
             ServerRequestInterface::class,
         );
 
-        $request->method('getParsedBody')
-            ->willReturn([
-                'card_number' => '4242424242424242',
-                'expiration_date' => [
-                    'month' => '05',
-                    'year' => '2030',
-                ],
-                'cvc' => '123',
-                'name_on_card' => 'Timmothy Draper',
-                'address' => '123 Some Street',
-                'address2' => 'Suite 2',
-                'country' => 'US',
-                'postal_code' => '37174',
-                'default' => 'true',
-                'nickname' => 'foo-bar',
-            ]);
+        $request->method('getAttribute')
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-request-attr-id');
 
-        $action = new PostCreatePaymentMethodAction(
-            $responder,
+        $request->method('getParsedBody')
+            ->willReturn([]);
+
+        $action = new PostUpdatePaymentMethodAction(
+            $loggedInUser,
+            $userApi,
             TestConfig::$di->get(
                 ValidationFactory::class,
             ),
-            $loggedInUser,
-            $userApi,
+            $responder,
         );
 
         self::assertSame(
@@ -216,7 +189,10 @@ class PostCreatePaymentMethodActionTest extends TestCase
         );
     }
 
-    public function testWhenNotCreated(): void
+    /**
+     * @throws Throwable
+     */
+    public function testWhenNotUpdated(): void
     {
         $masterPayload = new Payload(Payload::STATUS_ERROR);
 
@@ -226,10 +202,14 @@ class PostCreatePaymentMethodActionTest extends TestCase
 
         $user = new UserModel();
 
+        $card = new UserCardModel();
+
+        $card->user = $user;
+
         $loggedInUser = new LoggedInUser($user);
 
         $responder = $this->createMock(
-            PostCreatePaymentMethodResponder::class,
+            PostUpdatePaymentMethodResponder::class,
         );
 
         $responder->expects(self::once())
@@ -247,10 +227,8 @@ class PostCreatePaymentMethodActionTest extends TestCase
                         $payload->getResult(),
                         [
                             'inputValues' => [
-                                'card_number' => '4242424242424242',
                                 'expiration_month' => '05',
                                 'expiration_year' => '2030',
-                                'cvc' => '123',
                                 'name_on_card' => 'Timmothy Draper',
                                 'address' => '123 Some Street',
                                 'address2' => 'Suite 2',
@@ -269,6 +247,13 @@ class PostCreatePaymentMethodActionTest extends TestCase
         $userApi = $this->createMock(
             UserApi::class
         );
+
+        $userApi->method('fetchUserCardById')
+            ->with(
+                self::equalTo($user),
+                self::equalTo('foo-request-attr-id'),
+            )
+            ->willReturn($card);
 
         $userApi->method('validatePostalCode')
             ->with(
@@ -296,16 +281,6 @@ class PostCreatePaymentMethodActionTest extends TestCase
                     self::assertSame(
                         $user,
                         $card->user,
-                    );
-
-                    self::assertSame(
-                        '4242424242424242',
-                        $card->newCardNumber,
-                    );
-
-                    self::assertSame(
-                        '123',
-                        $card->newCvc,
                     );
 
                     self::assertSame(
@@ -372,14 +347,16 @@ class PostCreatePaymentMethodActionTest extends TestCase
             ServerRequestInterface::class,
         );
 
+        $request->method('getAttribute')
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-request-attr-id');
+
         $request->method('getParsedBody')
             ->willReturn([
-                'card_number' => '4242424242424242',
                 'expiration_date' => [
                     'month' => '05',
                     'year' => '2030',
                 ],
-                'cvc' => '123',
                 'name_on_card' => 'Timmothy Draper',
                 'address' => '123 Some Street',
                 'address2' => 'Suite 2',
@@ -389,13 +366,13 @@ class PostCreatePaymentMethodActionTest extends TestCase
                 'nickname' => 'foo-bar',
             ]);
 
-        $action = new PostCreatePaymentMethodAction(
-            $responder,
+        $action = new PostUpdatePaymentMethodAction(
+            $loggedInUser,
+            $userApi,
             TestConfig::$di->get(
                 ValidationFactory::class,
             ),
-            $loggedInUser,
-            $userApi,
+            $responder,
         );
 
         self::assertSame(
@@ -404,9 +381,12 @@ class PostCreatePaymentMethodActionTest extends TestCase
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function test(): void
     {
-        $masterPayload = new Payload(Payload::STATUS_CREATED);
+        $masterPayload = new Payload(Payload::STATUS_UPDATED);
 
         $response = $this->createMock(
             ResponseInterface::class,
@@ -414,10 +394,14 @@ class PostCreatePaymentMethodActionTest extends TestCase
 
         $user = new UserModel();
 
+        $card = new UserCardModel();
+
+        $card->user = $user;
+
         $loggedInUser = new LoggedInUser($user);
 
         $responder = $this->createMock(
-            PostCreatePaymentMethodResponder::class,
+            PostUpdatePaymentMethodResponder::class,
         );
 
         $responder->expects(self::once())
@@ -440,6 +424,13 @@ class PostCreatePaymentMethodActionTest extends TestCase
             UserApi::class
         );
 
+        $userApi->method('fetchUserCardById')
+            ->with(
+                self::equalTo($user),
+                self::equalTo('foo-request-attr-id'),
+            )
+            ->willReturn($card);
+
         $userApi->method('validatePostalCode')
             ->with(
                 self::equalTo('37174'),
@@ -466,16 +457,6 @@ class PostCreatePaymentMethodActionTest extends TestCase
                     self::assertSame(
                         $user,
                         $card->user,
-                    );
-
-                    self::assertSame(
-                        '4242424242424242',
-                        $card->newCardNumber,
-                    );
-
-                    self::assertSame(
-                        '123',
-                        $card->newCvc,
                     );
 
                     self::assertSame(
@@ -542,14 +523,16 @@ class PostCreatePaymentMethodActionTest extends TestCase
             ServerRequestInterface::class,
         );
 
+        $request->method('getAttribute')
+            ->with(self::equalTo('id'))
+            ->willReturn('foo-request-attr-id');
+
         $request->method('getParsedBody')
             ->willReturn([
-                'card_number' => '4242424242424242',
                 'expiration_date' => [
                     'month' => '05',
                     'year' => '2030',
                 ],
-                'cvc' => '123',
                 'name_on_card' => 'Timmothy Draper',
                 'address' => '123 Some Street',
                 'address2' => 'Suite 2',
@@ -559,13 +542,13 @@ class PostCreatePaymentMethodActionTest extends TestCase
                 'nickname' => 'foo-bar',
             ]);
 
-        $action = new PostCreatePaymentMethodAction(
-            $responder,
+        $action = new PostUpdatePaymentMethodAction(
+            $loggedInUser,
+            $userApi,
             TestConfig::$di->get(
                 ValidationFactory::class,
             ),
-            $loggedInUser,
-            $userApi,
+            $responder,
         );
 
         self::assertSame(

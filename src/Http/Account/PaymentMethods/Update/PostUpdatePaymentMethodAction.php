@@ -2,46 +2,59 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Account\PaymentMethods\Create;
+namespace App\Http\Account\PaymentMethods\Update;
 
 use App\Factories\ValidationFactory;
 use App\Payload\Payload;
 use App\Users\Models\LoggedInUser;
-use App\Users\Models\UserCardModel;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator as V;
 use Safe\DateTimeImmutable;
+use Slim\Exception\HttpNotFoundException;
+use Throwable;
 
-class PostCreatePaymentMethodAction
+class PostUpdatePaymentMethodAction
 {
-    private PostCreatePaymentMethodResponder $responder;
-    private ValidationFactory $validationFactory;
     private LoggedInUser $user;
     private UserApi $userApi;
+    private ValidationFactory $validationFactory;
+    private PostUpdatePaymentMethodResponder $responder;
 
     public function __construct(
-        PostCreatePaymentMethodResponder $responder,
-        ValidationFactory $validationFactory,
         LoggedInUser $user,
-        UserApi $userApi
+        UserApi $userApi,
+        ValidationFactory $validationFactory,
+        PostUpdatePaymentMethodResponder $responder
     ) {
-        $this->responder         = $responder;
-        $this->validationFactory = $validationFactory;
         $this->user              = $user;
         $this->userApi           = $userApi;
+        $this->validationFactory = $validationFactory;
+        $this->responder         = $responder;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
+        $id = (string) $request->getAttribute('id');
+
+        $card = $this->userApi->fetchUserCardById(
+            $this->user->model(),
+            $id
+        );
+
+        if ($card === null) {
+            throw new HttpNotFoundException($request);
+        }
+
         $post = (array) $request->getParsedBody();
 
         $data = [
-            'card_number' => (string) ($post['card_number'] ?? ''),
             'expiration_month' => (string) ($post['expiration_date']['month'] ?? ''),
             'expiration_year' => (string) ($post['expiration_date']['year'] ?? ''),
-            'cvc' => (string) ($post['cvc'] ?? ''),
             'name_on_card' => (string) ($post['name_on_card'] ?? ''),
             'address' => (string) ($post['address'] ?? ''),
             'address2' => (string) ($post['address2'] ?? ''),
@@ -61,7 +74,6 @@ class PostCreatePaymentMethodAction
         $validator->validate(
             $data,
             [
-                'card_number' => V::creditCard(),
                 'expiration_month' => V::allOf(
                     V::notEmpty(),
                     V::numeric(),
@@ -70,7 +82,6 @@ class PostCreatePaymentMethodAction
                     V::notEmpty(),
                     V::numeric(),
                 ),
-                'cvc' => V::notEmpty(),
                 'name_on_card' => V::notEmpty(),
                 'address' => V::notEmpty(),
                 'country' => V::notEmpty(),
@@ -112,16 +123,9 @@ class PostCreatePaymentMethodAction
                         'inputValues' => $data,
                     ],
                 ),
+                $id,
             );
         }
-
-        $card = new UserCardModel();
-
-        $card->user = $this->user->model();
-
-        $card->newCardNumber = $data['card_number'];
-
-        $card->newCvc = $data['cvc'];
 
         $card->nickname = $data['nickname'];
 
@@ -146,7 +150,7 @@ class PostCreatePaymentMethodAction
 
         $payload = $this->userApi->saveUserCard($card);
 
-        if ($payload->getStatus() !== Payload::STATUS_CREATED) {
+        if ($payload->getStatus() !== Payload::STATUS_UPDATED) {
             $result = $payload->getResult();
 
             $result['inputValues'] = $data;
@@ -156,9 +160,10 @@ class PostCreatePaymentMethodAction
                     Payload::STATUS_NOT_VALID,
                     $result,
                 ),
+                $id,
             );
         }
 
-        return ($this->responder)($payload);
+        return ($this->responder)($payload, $id);
     }
 }

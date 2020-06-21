@@ -2,19 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Account\PaymentMethods\Create;
+namespace Tests\Http\Account\PaymentMethods\Update;
 
-use App\Http\Account\PaymentMethods\Create\PostCreatePaymentMethodResponder;
+use App\Http\Account\PaymentMethods\Update\PostUpdatePaymentMethodResponder;
 use App\Payload\Payload;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Flash\Messages as FlashMessages;
 use Tests\TestConfig;
 
-class PostCreatePaymentMethodResponderTest extends TestCase
+class PostUpdatePaymentMethodResponderTest extends TestCase
 {
-    public function testWhenNotCreated(): void
+    public function testWhenNotUpdated(): void
     {
+        $id = 'foo-bar-id';
+
         $payload = new Payload(
             Payload::STATUS_ERROR,
             ['foo' => 'bar']
@@ -34,14 +36,14 @@ class PostCreatePaymentMethodResponderTest extends TestCase
                 ]),
             );
 
-        $responder = new PostCreatePaymentMethodResponder(
+        $responder = new PostUpdatePaymentMethodResponder(
             $flashMessages,
             TestConfig::$di->get(
                 ResponseFactoryInterface::class
             ),
         );
 
-        $response = $responder($payload);
+        $response = $responder($payload, $id);
 
         self::assertSame(303, $response->getStatusCode());
 
@@ -52,7 +54,7 @@ class PostCreatePaymentMethodResponderTest extends TestCase
         self::assertCount(1, $location);
 
         self::assertSame(
-            '/account/payment-methods/create',
+            '/account/payment-methods/' . $id,
             $location[0],
         );
     }
@@ -60,7 +62,7 @@ class PostCreatePaymentMethodResponderTest extends TestCase
     public function testWhenCreated(): void
     {
         $payload = new Payload(
-            Payload::STATUS_CREATED,
+            Payload::STATUS_UPDATED,
             ['foo' => 'bar']
         );
 
@@ -78,14 +80,14 @@ class PostCreatePaymentMethodResponderTest extends TestCase
                 ]),
             );
 
-        $responder = new PostCreatePaymentMethodResponder(
+        $responder = new PostUpdatePaymentMethodResponder(
             $flashMessages,
             TestConfig::$di->get(
                 ResponseFactoryInterface::class
             ),
         );
 
-        $response = $responder($payload);
+        $response = $responder($payload, 'foo');
 
         self::assertSame(303, $response->getStatusCode());
 

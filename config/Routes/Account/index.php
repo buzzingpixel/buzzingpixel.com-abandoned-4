@@ -18,6 +18,7 @@ use App\Http\Account\PaymentMethods\Create\PostCreatePaymentMethodAction;
 use App\Http\Account\PaymentMethods\Delete\PostDeletePaymentMethodAction;
 use App\Http\Account\PaymentMethods\GetAccountPaymentMethodAction;
 use App\Http\Account\PaymentMethods\GetAccountPaymentMethodsAction;
+use App\Http\Account\PaymentMethods\Update\PostUpdatePaymentMethodAction;
 use App\Http\Account\Profile\GetAccountProfileAction;
 use App\Http\Account\Profile\PostAccountProfileEditAction;
 use App\Http\Account\Purchases\GetAccountPurchasesAction;
@@ -147,6 +148,11 @@ return static function (App $app): void {
         $r->get(
             '/payment-methods/{id}',
             GetAccountPaymentMethodAction::class
+        );
+
+        $r->post(
+            '/payment-methods/{id}',
+            PostUpdatePaymentMethodAction::class
         );
 
         $r->post(

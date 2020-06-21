@@ -4,22 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Stripe\EventListeners;
 
+use _HumbugBox89320708a2e3\Nette\Neon\Exception;
 use App\Stripe\EventListeners\OnBeforeSaveUserCard;
+use App\Stripe\Services\SaveExistingCard;
+use App\Stripe\Services\SaveNewCard;
 use App\Stripe\Services\UpdateStripeCustomer;
 use App\Users\Events\SaveUserCardBeforeSave;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use PHPUnit\Framework\TestCase;
-use Safe\DateTimeImmutable;
-use Stripe\Card;
-use Stripe\Exception\ApiErrorException;
-use Stripe\PaymentMethod;
-use Stripe\Service\PaymentMethodService;
-use Stripe\StripeClient;
 
 class OnBeforeSaveUserCardTest extends TestCase
 {
-    public function testWhenNoCardNumberAndNoId() : void
+    public function testWhenThrows(): void
     {
         $user = new UserModel();
 
@@ -29,26 +26,41 @@ class OnBeforeSaveUserCardTest extends TestCase
 
         $beforeSave = new SaveUserCardBeforeSave($card);
 
-        $stripe = $this->createMock(StripeClient::class);
+        $updateStripeCustomer = $this->createMock(
+            UpdateStripeCustomer::class,
+        );
 
-        $stripe->expects(self::never())
+        $updateStripeCustomer->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($user))
+            ->willThrowException(new Exception());
+
+        $saveNewCard = $this->createMock(
+            SaveNewCard::class,
+        );
+
+        $saveNewCard->expects(self::never())
             ->method(self::anything());
 
-        $updateStripeCustomer = $this->createMock(
-            UpdateStripeCustomer::class
+        $saveExistingCard = $this->createMock(
+            SaveExistingCard::class,
         );
 
-        $onBeforeSaveUserCard = new OnBeforeSaveUserCard(
-            $stripe,
+        $saveExistingCard->expects(self::never())
+            ->method(self::anything());
+
+        $event = new OnBeforeSaveUserCard(
             $updateStripeCustomer,
+            $saveNewCard,
+            $saveExistingCard,
         );
 
-        $onBeforeSaveUserCard->onBeforeSaveUserCard($beforeSave);
+        $event->onBeforeSaveUserCard($beforeSave);
 
         self::assertFalse($beforeSave->isValid);
     }
 
-    public function testWhenNoCardNumber() : void
+    public function testSaveNew(): void
     {
         $user = new UserModel();
 
@@ -56,269 +68,85 @@ class OnBeforeSaveUserCardTest extends TestCase
 
         $card->user = $user;
 
-        $card->stripeId = 'fooStripeId';
-
         $beforeSave = new SaveUserCardBeforeSave($card);
 
-        $stripe = $this->createMock(StripeClient::class);
+        $updateStripeCustomer = $this->createMock(
+            UpdateStripeCustomer::class,
+        );
 
-        $stripe->expects(self::never())
+        $updateStripeCustomer->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($user));
+
+        $saveNewCard = $this->createMock(
+            SaveNewCard::class,
+        );
+
+        $saveNewCard->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($card));
+
+        $saveExistingCard = $this->createMock(
+            SaveExistingCard::class,
+        );
+
+        $saveExistingCard->expects(self::never())
             ->method(self::anything());
 
-        $updateStripeCustomer = $this->createMock(
-            UpdateStripeCustomer::class
-        );
-
-        $onBeforeSaveUserCard = new OnBeforeSaveUserCard(
-            $stripe,
+        $event = new OnBeforeSaveUserCard(
             $updateStripeCustomer,
+            $saveNewCard,
+            $saveExistingCard,
         );
 
-        $onBeforeSaveUserCard->onBeforeSaveUserCard($beforeSave);
+        $event->onBeforeSaveUserCard($beforeSave);
 
         self::assertTrue($beforeSave->isValid);
     }
 
-    public function testWhenNoCvc() : void
+    public function testSaveExisting(): void
     {
         $user = new UserModel();
 
-        $user->stripeId = 'fooUserStripeId';
-
         $card = new UserCardModel();
+
+        $card->stripeId = 'fooStripeId';
 
         $card->user = $user;
 
-        $card->newCardNumber = 'fooNewCardNumber';
-
         $beforeSave = new SaveUserCardBeforeSave($card);
 
-        $stripe = $this->createMock(StripeClient::class);
+        $updateStripeCustomer = $this->createMock(
+            UpdateStripeCustomer::class,
+        );
 
-        $stripe->expects(self::never())
+        $updateStripeCustomer->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($user));
+
+        $saveNewCard = $this->createMock(
+            SaveNewCard::class,
+        );
+
+        $saveNewCard->expects(self::never())
             ->method(self::anything());
 
-        $updateStripeCustomer = $this->createMock(
-            UpdateStripeCustomer::class
+        $saveExistingCard = $this->createMock(
+            SaveExistingCard::class,
         );
 
-        $onBeforeSaveUserCard = new OnBeforeSaveUserCard(
-            $stripe,
+        $saveExistingCard->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($card));
+
+        $event = new OnBeforeSaveUserCard(
             $updateStripeCustomer,
+            $saveNewCard,
+            $saveExistingCard,
         );
 
-        $onBeforeSaveUserCard->onBeforeSaveUserCard($beforeSave);
-
-        self::assertFalse($beforeSave->isValid);
-    }
-
-    public function testWhenNewCardNumber() : void
-    {
-        $expiration = DateTimeImmutable::createFromFormat(
-            'Y-m-d',
-            '2010-01-03',
-        );
-
-        $user = new UserModel();
-
-        $user->stripeId = 'fooUserStripeId';
-
-        $user->emailAddress = 'fooEmailAddress';
-
-        $card = new UserCardModel();
-
-        $card->user = $user;
-
-        $card->stripeId = 'fooStripeId';
-
-        $card->newCardNumber = 'fooNewCardNumber';
-
-        $card->newCvc = 'fooCvc';
-
-        $card->address = 'fooAddress';
-
-        $card->address2 = 'fooAddress2';
-
-        $card->city = 'fooCity';
-
-        $card->state = 'fooState';
-
-        $card->postalCode = 'fooPostalCode';
-
-        $card->country = 'fooCountry';
-
-        $card->nameOnCard = 'fooNameOnCard';
-
-        $card->expiration = $expiration;
-
-        $beforeSave = new SaveUserCardBeforeSave($card);
-
-        $stripeCard = new Card();
-
-        $stripeCard->brand = 'foo visa card';
-
-        $paymentMethod = new PaymentMethod('fooPaymentMethodId');
-
-        $paymentMethod->card = $stripeCard;
-
-        $paymentMethods = $this->createMock(
-            PaymentMethodService::class,
-        );
-
-        $paymentMethods->expects(self::at(0))
-            ->method('create')
-            ->with(self::equalTo([
-                'type' => 'card',
-                'card' => [
-                    'number' => $card->newCardNumber,
-                    'exp_month' => $card->expiration->format('n'),
-                    'exp_year' => $card->expiration->format('Y'),
-                    'cvc' => $card->newCvc,
-                ],
-                'billing_details' => [
-                    'address' => [
-                        'line1' => $card->address,
-                        'line2' => $card->address2,
-                        'city' => $card->city,
-                        'state' => $card->state,
-                        'postal_code' => $card->postalCode,
-                        'country' => $card->country,
-                    ],
-                    'email' => $card->user->emailAddress,
-                    'name' => $card->nameOnCard,
-                ],
-            ]))
-            ->willReturn($paymentMethod);
-
-        $paymentMethods->expects(self::at(1))
-            ->method('attach')
-            ->with(
-                'fooPaymentMethodId',
-                ['customer' => 'fooUserStripeId'],
-            )
-            ->willReturn($paymentMethod);
-
-        $stripe = $this->createMock(StripeClient::class);
-
-        $stripe->method('__get')
-            ->with(self::equalTo('paymentMethods'))
-            ->willReturn($paymentMethods);
-
-        $updateStripeCustomer = $this->createMock(
-            UpdateStripeCustomer::class
-        );
-
-        $onBeforeSaveUserCard = new OnBeforeSaveUserCard(
-            $stripe,
-            $updateStripeCustomer,
-        );
-
-        $onBeforeSaveUserCard->onBeforeSaveUserCard($beforeSave);
+        $event->onBeforeSaveUserCard($beforeSave);
 
         self::assertTrue($beforeSave->isValid);
-
-        self::assertSame(
-            'fooPaymentMethodId',
-            $card->stripeId,
-        );
-
-        self::assertSame(
-            'Foo Visa Card',
-            $card->provider,
-        );
-    }
-
-    public function testWhenApiErrorExceptionThrown() : void
-    {
-        $expiration = DateTimeImmutable::createFromFormat(
-            'Y-m-d',
-            '2010-01-03',
-        );
-
-        $user = new UserModel();
-
-        $user->stripeId = 'fooUserStripeId';
-
-        $user->emailAddress = 'fooEmailAddress';
-
-        $card = new UserCardModel();
-
-        $card->user = $user;
-
-        $card->stripeId = 'fooStripeId';
-
-        $card->newCardNumber = 'fooNewCardNumber';
-
-        $card->newCvc = 'fooCvc';
-
-        $card->address = 'fooAddress';
-
-        $card->address2 = 'fooAddress2';
-
-        $card->city = 'fooCity';
-
-        $card->state = 'fooState';
-
-        $card->postalCode = 'fooPostalCode';
-
-        $card->country = 'fooCountry';
-
-        $card->nameOnCard = 'fooNameOnCard';
-
-        $card->expiration = $expiration;
-
-        $beforeSave = new SaveUserCardBeforeSave($card);
-
-        $apiErrorException = $this->createMock(
-            ApiErrorException::class
-        );
-
-        $paymentMethods = $this->createMock(
-            PaymentMethodService::class,
-        );
-
-        $paymentMethods->expects(self::at(0))
-            ->method('create')
-            ->with(self::equalTo([
-                'type' => 'card',
-                'card' => [
-                    'number' => $card->newCardNumber,
-                    'exp_month' => $card->expiration->format('n'),
-                    'exp_year' => $card->expiration->format('Y'),
-                    'cvc' => $card->newCvc,
-                ],
-                'billing_details' => [
-                    'address' => [
-                        'line1' => $card->address,
-                        'line2' => $card->address2,
-                        'city' => $card->city,
-                        'state' => $card->state,
-                        'postal_code' => $card->postalCode,
-                        'country' => $card->country,
-                    ],
-                    'email' => $card->user->emailAddress,
-                    'name' => $card->nameOnCard,
-                ],
-            ]))
-            ->willThrowException($apiErrorException);
-
-        $stripe = $this->createMock(StripeClient::class);
-
-        $stripe->method('__get')
-            ->with(self::equalTo('paymentMethods'))
-            ->willReturn($paymentMethods);
-
-        $updateStripeCustomer = $this->createMock(
-            UpdateStripeCustomer::class
-        );
-
-        $onBeforeSaveUserCard = new OnBeforeSaveUserCard(
-            $stripe,
-            $updateStripeCustomer,
-        );
-
-        $onBeforeSaveUserCard->onBeforeSaveUserCard($beforeSave);
-
-        self::assertFalse($beforeSave->isValid);
     }
 }
