@@ -52,7 +52,7 @@ class TwigSlimFlashMessagesTest extends TestCase
         $this->extension = new TwigSlimFlashMessages($this->flash);
 
         $this->view = new Environment(
-            new FilesystemLoader(__DIR__ . '/templates')
+            new FilesystemLoader(__DIR__ . '/Templates')
         );
 
         $this->view->addExtension($this->extension);
