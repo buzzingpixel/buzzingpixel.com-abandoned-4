@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "039593cb2232fbba94b40d42d33c66f1",
+    "content-hash": "87dc142fa821d17a91cc3a4e88ab08fb",
     "packages": [
         {
             "name": "awurth/slim-validation",
@@ -207,21 +207,21 @@
         },
         {
             "name": "buzzingpixel/twig-getenv",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/buzzingpixel/twig-getenv.git",
-                "reference": "564fa5d46cb122135059d5719e6ee64a7740ae4f"
+                "reference": "d8c7ad274d31747c1959782face15402e9b0e281"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/buzzingpixel/twig-getenv/zipball/564fa5d46cb122135059d5719e6ee64a7740ae4f",
-                "reference": "564fa5d46cb122135059d5719e6ee64a7740ae4f",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-getenv/zipball/d8c7ad274d31747c1959782face15402e9b0e281",
+                "reference": "d8c7ad274d31747c1959782face15402e9b0e281",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
-                "twig/twig": "^2.5"
+                "twig/twig": "^2.5|^3.0"
             },
             "require-dev": {
                 "phpmd/phpmd": "^2.6",
@@ -239,7 +239,6 @@
                     "buzzingpixel\\twiggetenv\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "TJ Draper",
@@ -248,27 +247,31 @@
                 }
             ],
             "description": "A Twig getenv function",
-            "time": "2019-01-01T21:52:32+00:00"
+            "support": {
+                "source": "https://github.com/buzzingpixel/twig-getenv/tree/1.0.1",
+                "issues": "https://github.com/buzzingpixel/twig-getenv/issues"
+            },
+            "time": "2020-06-20T22:46:03+00:00"
         },
         {
             "name": "buzzingpixel/twig-markdown",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/buzzingpixel/twig-markdown.git",
-                "reference": "a266856e464c1c85b32f35c659a09a14a73e1d76"
+                "reference": "93243f883665b473b5350ce6134955e77da76ace"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/buzzingpixel/twig-markdown/zipball/a266856e464c1c85b32f35c659a09a14a73e1d76",
-                "reference": "a266856e464c1c85b32f35c659a09a14a73e1d76",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-markdown/zipball/93243f883665b473b5350ce6134955e77da76ace",
+                "reference": "93243f883665b473b5350ce6134955e77da76ace",
                 "shasum": ""
             },
             "require": {
                 "buzzingpixel/corbomite-di": "^1.2",
                 "cebe/markdown": "^1.2",
                 "php": ">=7.2",
-                "twig/twig": "^2.10"
+                "twig/twig": "^2.10|^3.0"
             },
             "require-dev": {
                 "codedungeon/phpunit-result-printer": "^0.26.2",
@@ -294,7 +297,11 @@
                     "BuzzingPixel\\TwigMarkdown\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "BuzzingPixelTests\\TwigMarkdown\\": "tests"
+                }
+            },
             "authors": [
                 {
                     "name": "TJ Draper",
@@ -303,7 +310,11 @@
                 }
             ],
             "description": "A Twig Markdown filter",
-            "time": "2019-05-18T20:04:03+00:00"
+            "support": {
+                "source": "https://github.com/buzzingpixel/twig-markdown/tree/1.0.1",
+                "issues": "https://github.com/buzzingpixel/twig-markdown/issues"
+            },
+            "time": "2020-06-20T23:19:57+00:00"
         },
         {
             "name": "buzzingpixel/twig-smartypants",
@@ -355,21 +366,21 @@
         },
         {
             "name": "buzzingpixel/twig-switch",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/buzzingpixel/twig-switch.git",
-                "reference": "b1b97f4f38655d13b4c1bb257db418a72ac06ae0"
+                "reference": "f8e45f0ca0b68c1614733e02d163b22668be914a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/buzzingpixel/twig-switch/zipball/b1b97f4f38655d13b4c1bb257db418a72ac06ae0",
-                "reference": "b1b97f4f38655d13b4c1bb257db418a72ac06ae0",
+                "url": "https://api.github.com/repos/buzzingpixel/twig-switch/zipball/f8e45f0ca0b68c1614733e02d163b22668be914a",
+                "reference": "f8e45f0ca0b68c1614733e02d163b22668be914a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
-                "twig/twig": "^2.5"
+                "twig/twig": "^2.7|^3.0"
             },
             "require-dev": {
                 "phpmd/phpmd": "^2.6",
@@ -387,7 +398,6 @@
                     "buzzingpixel\\twigswitch\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "TJ Draper",
@@ -396,7 +406,11 @@
                 }
             ],
             "description": "Provides a {% switch %} tag for Twig switch case statements",
-            "time": "2018-12-30T23:12:10+00:00"
+            "support": {
+                "source": "https://github.com/buzzingpixel/twig-switch/tree/1.0.2",
+                "issues": "https://github.com/buzzingpixel/twig-switch/issues"
+            },
+            "time": "2020-06-21T00:42:23+00:00"
         },
         {
             "name": "buzzingpixel/twig-widont",
@@ -1314,61 +1328,6 @@
                 "laravel"
             ],
             "time": "2019-09-09T11:59:51+00:00"
-        },
-        {
-            "name": "kanellov/slim-twig-flash",
-            "version": "0.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kanellov/slim-twig-flash.git",
-                "reference": "14a96919cfb116aa528b6ce9a611f544ac6d6a01"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kanellov/slim-twig-flash/zipball/14a96919cfb116aa528b6ce9a611f544ac6d6a01",
-                "reference": "14a96919cfb116aa528b6ce9a611f544ac6d6a01",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0",
-                "slim/flash": ">=0.1.0",
-                "twig/twig": ">=1.18"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "1.*",
-                "phpunit/phpcov": "2.*",
-                "phpunit/phpunit": "4.8.0",
-                "satooshi/php-coveralls": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Knlv\\Slim\\Views\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GNU GPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Vassilis Kanellopoulos",
-                    "email": "contact@kanellov.com",
-                    "homepage": "http://kanellov.com"
-                }
-            ],
-            "description": "A Twig extension to access Slim Flash messages in templates",
-            "keywords": [
-                "extension",
-                "flash",
-                "framework",
-                "message",
-                "provider",
-                "slim",
-                "twig",
-                "view"
-            ],
-            "time": "2016-12-29T22:07:19+00:00"
         },
         {
             "name": "league/iso3166",
@@ -4217,20 +4176,20 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.12.5",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "18772e0190734944277ee97a02a9a6c6555fcd94"
+                "reference": "3b88ccd180a6b61ebb517aea3b1a8906762a1dc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/18772e0190734944277ee97a02a9a6c6555fcd94",
-                "reference": "18772e0190734944277ee97a02a9a6c6555fcd94",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3b88ccd180a6b61ebb517aea3b1a8906762a1dc2",
+                "reference": "3b88ccd180a6b61ebb517aea3b1a8906762a1dc2",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0",
+                "php": "^7.2.5",
                 "symfony/polyfill-ctype": "^1.8",
                 "symfony/polyfill-mbstring": "^1.3"
             },
@@ -4241,13 +4200,10 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.12-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Twig_": "lib/"
-                },
                 "psr-4": {
                     "Twig\\": "src/"
                 }
@@ -4278,7 +4234,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2020-02-11T15:31:23+00:00"
+            "time": "2020-02-11T15:33:47+00:00"
         }
     ],
     "packages-dev": [

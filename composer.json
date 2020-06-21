@@ -14,6 +14,18 @@
         {
             "type": "vcs",
             "url": "https://github.com/mjerwin/parseachangelog.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/buzzingpixel/twig-getenv.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/buzzingpixel/twig-markdown.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/buzzingpixel/twig-switch.git"
         }
     ],
     "require": {
@@ -31,7 +43,6 @@
         "crell/tukio": "^1.1",
         "guzzlehttp/guzzle": "^6.5",
         "html2text/html2text": "^4.2",
-        "kanellov/slim-twig-flash": "^0.2.0",
         "league/iso3166": "^2.1",
         "mandrill/mandrill": "^1.0",
         "mjerwin/parseachangelog": "0.9.4",
@@ -43,12 +54,12 @@
         "rollbar/rollbar": "^2.0",
         "slim/csrf": "^1.0",
         "slim/flash": "^0.4.0",
-        "slim/psr7": "^1",
+        "slim/psr7": "^1.1",
         "slim/slim": "^4.3",
         "stripe/stripe-php": "^7.37",
-        "symfony/console": "^5",
+        "symfony/console": "^5.0",
         "symfony/yaml": "^4.3",
-        "twig/twig": "^2.12"
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "buzzingpixel/twig-dumper": "^1.0",

@@ -53,7 +53,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/html2text/html2text" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/httpauth" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/jeremeamia/superclosure" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/kanellov/slim-twig-flash" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/iso3166" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mandrill/mandrill" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/marcusschwarz/lesserphp" />

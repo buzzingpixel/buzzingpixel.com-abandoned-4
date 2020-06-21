@@ -143,7 +143,6 @@
       <path value="$PROJECT_DIR$/vendor/buzzingpixel/cookie-api" />
       <path value="$PROJECT_DIR$/vendor/slim/csrf" />
       <path value="$PROJECT_DIR$/vendor/slim/flash" />
-      <path value="$PROJECT_DIR$/vendor/kanellov/slim-twig-flash" />
       <path value="$PROJECT_DIR$/vendor/phpstan/extension-installer" />
       <path value="$PROJECT_DIR$/vendor/league/iso3166" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
