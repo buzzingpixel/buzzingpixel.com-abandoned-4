@@ -26,7 +26,7 @@ jobs:
         run: php -d memory_limit=4G vendor/vimeo/psalm/psalm
 
       - name: Run PHPStan Static Analysis
-        run: php -d memory_limit=4G vendor/phpstan/phpstan/bin/phpstan analyse config public/index.php src tests cli
+        run: php -d memory_limit=4G vendor/phpstan/phpstan/phpstan analyse config public/index.php src tests cli
 
       - name: Run PHPUnit Tests
         run: vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
