@@ -32,6 +32,50 @@
                 expirationDate: userCard.expiration,
             },
             {
+                type: 'text',
+                label: 'Card Verification Code (CVC)',
+                small: 'In order to update this card you must include the CVC number. On most cards, this is a 3 or 4 digit code on the back of the card on the signature strip',
+                name: 'cvc',
+            },
+            {
+                type: 'text',
+                label: 'Name On Card',
+                name: 'name_on_card',
+                value: userCard.nameOnCard,
+            },
+            {
+                type: 'stacked',
+                label: 'Address',
+                inputs: [
+                    {
+                        type: 'text',
+                        label: 'Line 1',
+                        name: 'address',
+                        value: userCard.address,
+                    },
+                    {
+                        type: 'text',
+                        label: 'Line 2',
+                        name: 'address2',
+                        value: userCard.address2,
+                    },
+                ],
+            },
+            {
+                type: 'select',
+                label: 'Country',
+                name: 'country',
+                value: userCard.country,
+                options: countriesSelectArray(),
+                emptyOption: 'Choose country&hellip;',
+            },
+            {
+                type: 'text',
+                label: 'Postal Code',
+                name: 'postal_code',
+                value: userCard.postalCode,
+            },
+            {
                 type: 'checkbox',
                 label: 'Default?',
                 name: 'default',
