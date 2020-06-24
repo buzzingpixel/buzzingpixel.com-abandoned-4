@@ -7,6 +7,7 @@ namespace Config;
 use App\Stripe\EventListeners\OnAfterDeleteUserCard;
 use App\Stripe\EventListeners\OnBeforeSaveUser;
 use App\Stripe\EventListeners\OnBeforeSaveUserCard;
+use App\Users\EventListeners\UserCardBeforeSaveSetDefault;
 use Crell\Tukio\OrderedListenerProvider;
 
 class RegisterEventListeners
@@ -41,6 +42,11 @@ class RegisterEventListeners
         $this->provider->addSubscriber(
             OnAfterDeleteUserCard::class,
             OnAfterDeleteUserCard::class,
+        );
+
+        $this->provider->addSubscriber(
+            UserCardBeforeSaveSetDefault::class,
+            UserCardBeforeSaveSetDefault::class,
         );
     }
 }
