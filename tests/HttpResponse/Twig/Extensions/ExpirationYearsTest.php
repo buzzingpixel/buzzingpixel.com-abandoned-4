@@ -9,12 +9,13 @@ use App\Users\Models\UserModel;
 use App\Users\UserApi;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
+
 use function assert;
 use function is_array;
 
 class ExpirationYearsTest extends TestCase
 {
-    public function testGetFunctions() : void
+    public function testGetFunctions(): void
     {
         $ext = new ExpirationYears(
             $this->createMock(UserApi::class),
@@ -46,7 +47,7 @@ class ExpirationYearsTest extends TestCase
         self::assertFalse($twigFunc->needsContext());
     }
 
-    public function testExpirationYears() : void
+    public function testExpirationYears(): void
     {
         $currentDate = new DateTimeImmutable();
 

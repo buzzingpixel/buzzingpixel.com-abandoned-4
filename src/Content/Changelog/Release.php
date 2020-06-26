@@ -22,6 +22,8 @@ class Release extends ErwinRelease
     ];
 
     /**
+     * TODO: Excluding this from code coverage for now.
+     *
      * @return array<array<string>>
      *
      * @psalm-suppress MixedReturnTypeCoercion
