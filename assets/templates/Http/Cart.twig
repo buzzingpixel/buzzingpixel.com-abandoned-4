@@ -1,4 +1,5 @@
 {# @var \App\Cart\Models\CartModel cart #}
+{# @var \App\Users\Models\UserCardModel[] cards #}
 
 {% extends 'Http/_Infrastructure/_Layout.twig' %}
 
@@ -121,8 +122,16 @@
                                             name="card"
                                             id="card"
                                             class="form-select checkout-card-select"
+                                            x-model="data.selectedPaymentMethod"
                                         >
                                             <option value="">Select Card...</option>
+                                            {% for card in cards %}
+                                                <option
+                                                    value="{{ card.id }}"
+                                                >
+                                                    {{ card.nickname }} (&hellip;{{ card.lastFour }}) ({{ card.provider|capitalize }}){% if card.isDefault %} (default){% endif %}
+                                                </option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div
@@ -143,7 +152,7 @@
                                         class="checkout-button"
                                         disabled
                                         x-bind:disabled="data.selectedPaymentMethod === ''"
-                                        x-bind:class="'checkout-button--is-active': data.selectedPaymentMethod !== ''"
+                                        x-bind:class="{'checkout-button--is-active': data.selectedPaymentMethod !== ''}"
                                     >
                                         Pay Now With Selected Card
                                     </button>
