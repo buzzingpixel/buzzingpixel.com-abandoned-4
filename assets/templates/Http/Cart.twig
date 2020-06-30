@@ -49,6 +49,7 @@
                     subTotal: '${{ cart.calculateSubTotal|number_format(2) }}',
                     tax: '${{ cart.calculateTax|number_format(2) }}',
                     total: '${{ cart.calculateTotal|number_format(2) }}',
+                    selectedPaymentMethod: '',
                 }
             }"
         >
@@ -100,19 +101,54 @@
                             >
                                 Log In To Pay
                             </a>
-                        {% elseif not cart.canPurchase %}
-                            <p class="text-sm m-4">
-                                {{ 'You need to have your profile completed and at least one payment source associated with your account in order to check out.'|smartypants|widont }}
-                            </p>
-                            <a
-                                href="/account/profile"
-                                class="block rounded-md shadow bg-white py-2 px-4 text-sm text-center leading-5 text-white font-medium bg-meteor hover:bg-pumpkin-skin focus:border-rich-gold focus:shadow-outline-rich-gold active:bg-rich-gold"
-                            >
-                                Go to profile
-                            </a>
                         {% else %}
-                            {# TODO: Display which card to use and a pay button #}
-                            TODO: Display which card to use and a pay button
+                            <form
+                                method="post"
+                                enctype="multipart/form-data"
+                            >
+                                <div class="mb-4">
+                                    <div
+                                        class="inline-block align-bottom"
+                                        style="width: calc(100% - 120px);"
+                                    >
+                                        <label
+                                            for="card"
+                                            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 mb-1 mx-1"
+                                        >
+                                            Pay with card:
+                                        </label>
+                                        <select
+                                            name="card"
+                                            id="card"
+                                            class="form-select checkout-card-select"
+                                        >
+                                            <option value="">Select Card...</option>
+                                        </select>
+                                    </div>
+                                    <div
+                                        class="inline-block align-bottom"
+                                        style="width: 110px; margin-left: 10px;"
+                                    >
+                                        <a
+                                            href="/account/payment-methods/create"
+                                            class="checkout-new-card-button"
+                                        >
+                                            New Card
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button
+                                        type="submit"
+                                        class="checkout-button"
+                                        disabled
+                                        x-bind:disabled="data.selectedPaymentMethod === ''"
+                                        x-bind:class="'checkout-button--is-active': data.selectedPaymentMethod !== ''"
+                                    >
+                                        Pay Now With Selected Card
+                                    </button>
+                                </div>
+                            </form>
                         {% endif %}
                     </div>
                 </div>

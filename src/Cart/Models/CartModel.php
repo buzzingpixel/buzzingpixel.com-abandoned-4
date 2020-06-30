@@ -156,26 +156,4 @@ class CartModel
             2
         );
     }
-
-    public function canPurchase(): bool
-    {
-        $user = $this->user;
-
-        // TODO: Determine if user has cards
-        return false;
-
-        /** @phpstan-ignore-next-line */
-        if ($user === null) {
-            return false;
-        }
-
-        return $user->firstName !== '' &&
-            $user->lastName !== '' &&
-            $user->billingName !== '' &&
-            $user->billingCountry !== '' &&
-            $user->billingAddress !== '' &&
-            $user->billingCity !== '' &&
-            $user->billingPostalCode !== '' &&
-            $user->billingStateAbbr !== '';
-    }
 }
