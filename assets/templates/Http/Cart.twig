@@ -6,18 +6,22 @@
     {
         key: 'Items in Cart',
         val: cart.totalQuantity,
+        xText: 'data.totalQuantity',
     },
     {
         key: 'Subtotal',
         val: '$' ~ cart.calculateSubTotal|number_format(2),
+        xText: 'data.subTotal',
     },
     {
         key: 'Tax',
         val: '$' ~ cart.calculateTax|number_format(2),
+        xText: 'data.tax',
     },
     {
         key: 'Total',
         val: '$' ~ cart.calculateTotal|number_format(2),
+        xText: 'data.total',
     },
 ] %}
 
@@ -29,7 +33,25 @@
             </div>
         </div>
     {% else %}
-        <div class="bg-gray-100 md:py-6 xl:py-10">
+        <div
+            class="bg-gray-100 md:py-6 xl:py-10"
+            {#x-init="RunWhenReady('CartAjax', data);"#}
+            x-data="{
+                data: {
+                    items: {
+                        {% for item in cart.items %}
+                            '{{ item.software.slug }}': {
+                                quantity: {{ item.quantity }},
+                            },
+                        {% endfor %}
+                    },
+                    totalQuantity: '{{ cart.totalQuantity }}',
+                    subTotal: '${{ cart.calculateSubTotal|number_format(2) }}',
+                    tax: '${{ cart.calculateTax|number_format(2) }}',
+                    total: '${{ cart.calculateTotal|number_format(2) }}',
+                }
+            }"
+        >
             <div
                 class="max-w-88rem mx-auto lg:flex lg:flex-row lg:flex-row-reverse"
                 data-name="Cart"
@@ -61,7 +83,10 @@
                                 <span class="block font-bold">
                                     {{ item.key|smartypants|widont }}
                                 </span>
-                                <span class="block absolute right-0 top-0 mt-4 mr-4">
+                                <span
+                                    class="block absolute right-0 top-0 mt-4 mr-4"
+                                    x-text="{{ item.xText }}"
+                                >
                                     {{ item.val|smartypants|widont }}
                                 </span>
                             </div>
@@ -131,6 +156,9 @@
                                                 type="text"
                                                 class="form-input inline-block w-14 rounded-md transition ease-in-out duration-150 text-sm leading-none py-1 px-2 sm:text-right"
                                                 value="{{ item.quantity }}"
+                                                {#x-model="items['{{ item.software.slug }}'].quantity"#}
+                                                @change="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data)"
+                                                @keyup="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data)"
                                             >
                                         </label>
                                     </span>
