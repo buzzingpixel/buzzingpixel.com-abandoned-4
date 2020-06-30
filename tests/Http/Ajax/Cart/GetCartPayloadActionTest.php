@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Ajax\User;
+namespace Tests\Http\Ajax\Cart;
 
 use App\Cart\CartApi;
 use App\Cart\Models\CartModel;
-use App\Http\Ajax\User\GetUserPayloadAction;
+use App\Http\Ajax\Cart\GetCartPayloadAction;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Tests\TestConfig;
 use Throwable;
 
-class GetUserPayloadActionTest extends TestCase
+class GetCartPayloadActionTest extends TestCase
 {
     /**
      * @throws Throwable
@@ -21,9 +21,16 @@ class GetUserPayloadActionTest extends TestCase
     {
         $cart = $this->createMock(CartModel::class);
 
-        $cart->expects(self::once())
-            ->method('asArray')
-            ->willReturn(['test-array']);
+        $cart->totalQuantity = 4;
+
+        $cart->method('calculateSubTotal')
+            ->willReturn(123.2);
+
+        $cart->method('calculateTax')
+            ->willReturn(45.0);
+
+        $cart->method('calculateTotal')
+            ->willReturn(34.567);
 
         $cartApi = $this->createMock(CartApi::class);
 
@@ -31,7 +38,7 @@ class GetUserPayloadActionTest extends TestCase
             ->method('fetchCurrentUserCart')
             ->willReturn($cart);
 
-        $action = new GetUserPayloadAction(
+        $action = new GetCartPayloadAction(
             $cartApi,
             TestConfig::$di->get(
                 ResponseFactoryInterface::class,
@@ -54,7 +61,7 @@ class GetUserPayloadActionTest extends TestCase
         );
 
         self::assertSame(
-            '{"cart":["test-array"]}',
+            '{"totalQuantity":4,"subTotal":"$123.20","tax":"$45.00","total":"$34.57"}',
             $response->getBody()->__toString(),
         );
     }

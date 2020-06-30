@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Ajax\Cart\GetCartPayloadAction;
 use App\Http\Ajax\User\GetUserPayloadAction;
 use Config\NoOp;
 use Slim\App;
@@ -16,6 +17,11 @@ return static function (App $app): void {
         $r->get(
             '/user/payload',
             GetUserPayloadAction::class
+        );
+
+        $r->get(
+            '/cart/payload',
+            GetCartPayloadAction::class,
         );
     });
 };
