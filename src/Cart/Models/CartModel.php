@@ -89,6 +89,8 @@ class CartModel
 
     /**
      * @return mixed[]
+     *
+     * @noinspection PhpDocMissingThrowsInspection
      */
     public function asArray(bool $excludeId = true): array
     {
@@ -110,6 +112,7 @@ class CartModel
 
         // TODO: generate items
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $array['createdAt'] = $this->createdAt->format(
             DateTimeInterface::ATOM
         );
@@ -132,16 +135,23 @@ class CartModel
         return round((float) $subTotal, 2);
     }
 
-    public function calculateTax(): float
+    public function calculateTax(string $stateAbbr = ''): float
     {
         $user = $this->user;
 
         if ($user === null) {
-            return 0.0;
+            if ($stateAbbr !== 'TN') {
+                return 0.0;
+            }
         }
 
-        // We only charge sales tax in TN
-        if ($user->billingStateAbbr !== 'TN') {
+        assert($user instanceof UserModel);
+
+        if ($stateAbbr === '') {
+            $stateAbbr = $user->billingStateAbbr;
+        }
+
+        if ($stateAbbr !== 'TN') {
             return 0.0;
         }
 
@@ -149,10 +159,11 @@ class CartModel
         return round($this->calculateSubTotal() * 0.07, 2);
     }
 
-    public function calculateTotal(): float
+    public function calculateTotal(string $stateAbbr = ''): float
     {
         return round(
-            $this->calculateSubTotal() + $this->calculateTax(),
+            $this->calculateSubTotal() +
+                $this->calculateTax($stateAbbr),
             2
         );
     }
