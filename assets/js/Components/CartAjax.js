@@ -54,7 +54,9 @@ const runDebounce = (modelData) => {
         window.dispatchEvent(window.cartUpdatedEvent);
 
         // noinspection JSUnresolvedVariable,ES6ModulesDependencies
-        window.axios.get('/ajax/cart/payload')
+        window.axios.get(
+            `/ajax/cart/payload?selected_payment_method=${modelData.selectedPaymentMethod}`,
+        )
             .then((obj) => {
                 modelData.totalQuantity = obj.data.totalQuantity;
                 modelData.subTotal = obj.data.subTotal;

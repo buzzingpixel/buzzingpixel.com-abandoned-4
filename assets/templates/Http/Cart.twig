@@ -116,15 +116,16 @@
                                             for="card"
                                             class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 mb-1 mx-1"
                                         >
-                                            Pay with card:
+                                            Payment Method:
                                         </label>
                                         <select
                                             name="card"
                                             id="card"
                                             class="form-select checkout-card-select"
-                                            x-model="data.selectedPaymentMethod"
+                                            {#x-model="data.selectedPaymentMethod"#}
+                                            @change="data.selectedPaymentMethod = $event.currentTarget.value; window.Methods.CartAjax(data);"
                                         >
-                                            <option value="">Select Card...</option>
+                                            <option value="">Select Payment Method...</option>
                                             {% for card in cards %}
                                                 <option
                                                     value="{{ card.id }}"
@@ -202,8 +203,8 @@
                                                 class="form-input inline-block w-14 rounded-md transition ease-in-out duration-150 text-sm leading-none py-1 px-2 sm:text-right"
                                                 value="{{ item.quantity }}"
                                                 {#x-model="items['{{ item.software.slug }}'].quantity"#}
-                                                @change="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data)"
-                                                @keyup="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data)"
+                                                @change="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data);"
+                                                @keyup="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data);"
                                             >
                                         </label>
                                     </span>

@@ -8,7 +8,6 @@ use App\Cart\CartApi;
 use App\Cart\Models\CartModel;
 use App\Http\Cart\GetCartAction;
 use App\Http\Cart\GetCartResponder;
-use App\Users\Models\LoggedInUser;
 use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
@@ -22,7 +21,49 @@ class GetCartActionTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function test(): void
+    public function testWhenNoUser(): void
+    {
+        $userApi = $this->createMock(UserApi::class);
+
+        $userApi->expects(self::once())
+            ->method('fetchLoggedInUser')
+            ->willReturn(null);
+
+        $cart = new CartModel();
+
+        $cartApi = $this->createMock(CartApi::class);
+
+        $cartApi->expects(self::once())
+            ->method('fetchCurrentUserCart')
+            ->willReturn($cart);
+
+        $response = TestConfig::$di->get(ResponseFactoryInterface::class)
+            ->createResponse();
+
+        $responder = $this->createMock(
+            GetCartResponder::class
+        );
+
+        $responder->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($cart),
+            )
+            ->willReturn($response);
+
+        $action = new GetCartAction(
+            $cartApi,
+            $userApi,
+            $responder
+        );
+
+        self::assertSame($response, $action());
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testWithUser(): void
     {
         $cards = [
             new UserCardModel(),
@@ -31,9 +72,11 @@ class GetCartActionTest extends TestCase
 
         $user = new UserModel();
 
-        $loggedInUser = new LoggedInUser($user);
-
         $userApi = $this->createMock(UserApi::class);
+
+        $userApi->expects(self::once())
+            ->method('fetchLoggedInUser')
+            ->willReturn($user);
 
         $userApi->expects(self::once())
             ->method('fetchUserCards')
@@ -65,7 +108,6 @@ class GetCartActionTest extends TestCase
 
         $action = new GetCartAction(
             $cartApi,
-            $loggedInUser,
             $userApi,
             $responder
         );

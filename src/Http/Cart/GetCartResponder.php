@@ -18,8 +18,10 @@ class GetCartResponder extends StandardResponderConstructor
      *
      * @throws Throwable
      */
-    public function __invoke(CartModel $cart, array $cards): ResponseInterface
-    {
+    public function __invoke(
+        CartModel $cart,
+        array $cards = []
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Cart;
 
 use App\Cart\CartApi;
-use App\Users\Models\LoggedInUser;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
@@ -13,18 +12,15 @@ use Throwable;
 class GetCartAction
 {
     private CartApi $cartApi;
-    private LoggedInUser $user;
     private UserApi $userApi;
     private GetCartResponder $responder;
 
     public function __construct(
         CartApi $cartApi,
-        LoggedInUser $user,
         UserApi $userApi,
         GetCartResponder $responder
     ) {
         $this->cartApi   = $cartApi;
-        $this->user      = $user;
         $this->userApi   = $userApi;
         $this->responder = $responder;
     }
@@ -34,9 +30,17 @@ class GetCartAction
      */
     public function __invoke(): ResponseInterface
     {
+        $user = $this->userApi->fetchLoggedInUser();
+
+        if ($user === null) {
+            return ($this->responder)(
+                $this->cartApi->fetchCurrentUserCart(),
+            );
+        }
+
         return ($this->responder)(
             $this->cartApi->fetchCurrentUserCart(),
-            $this->userApi->fetchUserCards($this->user->model()),
+            $this->userApi->fetchUserCards($user),
         );
     }
 }
