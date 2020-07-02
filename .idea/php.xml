@@ -183,6 +183,7 @@
       <path value="$PROJECT_DIR$/vendor/nette/bootstrap" />
       <path value="$PROJECT_DIR$/vendor/nette/php-generator" />
       <path value="$PROJECT_DIR$/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/vendor/league/pipeline" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

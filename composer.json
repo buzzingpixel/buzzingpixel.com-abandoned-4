@@ -44,6 +44,7 @@
         "guzzlehttp/guzzle": "^6.5",
         "html2text/html2text": "^4.2",
         "league/iso3166": "^2.1",
+        "league/pipeline": "^1.0",
         "mandrill/mandrill": "^1.0",
         "mjerwin/parseachangelog": "0.9.4",
         "monolog/monolog": "^2.0",
