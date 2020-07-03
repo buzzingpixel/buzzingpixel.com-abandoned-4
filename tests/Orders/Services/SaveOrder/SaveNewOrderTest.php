@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tests\TestConfig;
 use Throwable;
+
 use function assert;
 
 class SaveNewOrderTest extends TestCase
@@ -23,7 +24,7 @@ class SaveNewOrderTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testSaveNewOrder() : void
+    public function testSaveNewOrder(): void
     {
         $uuid = TestConfig::$di->get(UuidFactoryWithOrderedTimeCodec::class)
             ->uuid1();
@@ -49,7 +50,7 @@ class SaveNewOrderTest extends TestCase
             ->willReturnCallback(
                 static function (
                     OrderRecord $record
-                ) use ($saveCallHolder) : Payload {
+                ) use ($saveCallHolder): Payload {
                     $saveCallHolder->record = $record;
 
                     return new Payload(Payload::STATUS_CREATED);
@@ -89,7 +90,71 @@ class SaveNewOrderTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testSaveNewOrderInvalidPayloadReturnStatus() : void
+    public function testSaveNewOrderWithInputNewOrderId(): void
+    {
+        $newId = 'foo-new-id';
+
+        $uuidFactory = $this->createMock(
+            UuidFactoryWithOrderedTimeCodec::class,
+        );
+
+        $uuidFactory->expects(self::never())
+            ->method(self::anything());
+
+        $saveNewRecord = $this->createMock(
+            SaveNewRecord::class,
+        );
+
+        $saveCallHolder = new stdClass();
+
+        $saveCallHolder->record = null;
+
+        $saveNewRecord->expects(self::once())
+            ->method('__invoke')
+            ->willReturnCallback(
+                static function (
+                    OrderRecord $record
+                ) use ($saveCallHolder): Payload {
+                    $saveCallHolder->record = $record;
+
+                    return new Payload(Payload::STATUS_CREATED);
+                }
+            );
+
+        $saveNewOrder = new SaveNewOrder(
+            $saveNewRecord,
+            new TransformOrderModelToRecord(),
+            $uuidFactory,
+        );
+
+        $orderModel = new OrderModel();
+
+        $orderModel->name = 'U.S.S. Enterprise';
+
+        $saveNewOrder($orderModel, $newId);
+
+        self::assertSame(
+            $newId,
+            $orderModel->id,
+        );
+
+        assert($saveCallHolder->record instanceof OrderRecord);
+
+        self::assertSame(
+            $newId,
+            $saveCallHolder->record->id,
+        );
+
+        self::assertSame(
+            $orderModel->name,
+            $saveCallHolder->record->name,
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testSaveNewOrderInvalidPayloadReturnStatus(): void
     {
         $uuid = TestConfig::$di->get(UuidFactoryWithOrderedTimeCodec::class)
             ->uuid1();
@@ -115,7 +180,7 @@ class SaveNewOrderTest extends TestCase
             ->willReturnCallback(
                 static function (
                     OrderRecord $record
-                ) use ($saveCallHolder) : Payload {
+                ) use ($saveCallHolder): Payload {
                     $saveCallHolder->record = $record;
 
                     return new Payload(Payload::STATUS_ERROR);

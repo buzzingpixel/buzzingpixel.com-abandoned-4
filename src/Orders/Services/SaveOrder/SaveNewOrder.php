@@ -34,9 +34,13 @@ class SaveNewOrder
     /**
      * @throws Exception
      */
-    public function __invoke(OrderModel $model): void
+    public function __invoke(OrderModel $model, string $newOrderId = ''): void
     {
-        $model->id = $this->uuidFactory->uuid1()->toString();
+        if ($newOrderId !== '') {
+            $model->id = $newOrderId;
+        } else {
+            $model->id = $this->uuidFactory->uuid1()->toString();
+        }
 
         $record = ($this->transformer)($model);
 
