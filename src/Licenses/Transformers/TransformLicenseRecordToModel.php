@@ -68,12 +68,14 @@ class TransformLicenseRecordToModel
 
         $model->isDisabled = $record->is_disabled === '1';
 
-        $expires = DateTimeImmutable::createFromFormat(
-            Constants::POSTGRES_OUTPUT_FORMAT,
-            $record->expires
-        );
+        if ($record->expires !== null) {
+            $expires = DateTimeImmutable::createFromFormat(
+                Constants::POSTGRES_OUTPUT_FORMAT,
+                $record->expires
+            );
 
-        $model->expires = $expires;
+            $model->expires = $expires;
+        }
 
         return $model;
     }

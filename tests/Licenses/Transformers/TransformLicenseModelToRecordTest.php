@@ -11,6 +11,7 @@ use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Throwable;
+
 use function Safe\json_encode;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -20,7 +21,7 @@ class TransformLicenseModelToRecordTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testTransformer() : void
+    public function testTransformer(): void
     {
         $model = new LicenseModel();
 

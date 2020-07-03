@@ -47,6 +47,8 @@ class TransformLicenseModelToRecord
             $record->expires = $model->expires->format(
                 DateTimeInterface::ATOM
             );
+        } else {
+            $record->expires = null;
         }
 
         return $record;
