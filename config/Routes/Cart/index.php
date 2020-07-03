@@ -6,6 +6,7 @@ use App\Http\Cart\GetAddToCartAction;
 use App\Http\Cart\GetCartAction;
 use App\Http\Cart\GetCartUpdateQuantityAction;
 use App\Http\Cart\GetClearCartAction;
+use App\Http\Cart\PostCartAction;
 use App\HttpRouteMiddleware\RequireLogIn\RequireLogInAction;
 use Config\NoOp;
 use Slim\App;
@@ -19,22 +20,22 @@ return static function (App $app): void {
 
         $r->get(
             '',
-            GetCartAction::class
+            GetCartAction::class,
         );
 
         $r->get(
             '/add/{slug}',
-            GetAddToCartAction::class
+            GetAddToCartAction::class,
         );
 
         $r->get(
             '/update-quantity/{slug}/{quantity:\d+}',
-            GetCartUpdateQuantityAction::class
+            GetCartUpdateQuantityAction::class,
         );
 
         $r->get(
             '/clear',
-            GetClearCartAction::class
+            GetClearCartAction::class,
         );
     });
 
@@ -45,5 +46,10 @@ return static function (App $app): void {
         $this->get(NoOp::class)();
 
         $r->redirect('/log-in', '/cart');
+
+        $r->post(
+            '',
+            PostCartAction::class,
+        );
     })->add(RequireLogInAction::class);
 };

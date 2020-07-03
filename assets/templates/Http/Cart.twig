@@ -3,6 +3,8 @@
 
 {% extends 'Http/_Infrastructure/_Layout.twig' %}
 
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
+
 {% set infoItems = [
     {
         key: 'Items in Cart',
@@ -107,6 +109,7 @@
                                 method="post"
                                 enctype="multipart/form-data"
                             >
+                                {{ Inputs.hiddenInputs() }}
                                 <div class="mb-4">
                                     <div
                                         class="inline-block align-bottom"
