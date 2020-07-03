@@ -105,9 +105,10 @@
             },
             {
                 title: 'Expires',
-                content: license.expires
+                content: license.expires ? license.expires
                     .setTimezone(user.timezone)
-                    .format('Y/m/d'),
+                    .format('Y/m/d') :
+                    '',
             },
             {
                 title: 'Notes',
