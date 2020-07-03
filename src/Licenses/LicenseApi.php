@@ -8,6 +8,7 @@ use App\Licenses\Models\LicenseModel;
 use App\Licenses\Services\FetchLicenseById;
 use App\Licenses\Services\FetchUserLicenseById;
 use App\Licenses\Services\FetchUsersLicenses;
+use App\Licenses\Services\LicenseStatus;
 use App\Licenses\Services\OrganizeLicensesByItemKey;
 use App\Licenses\Services\SaveLicenseMaster;
 use App\Payload\Payload;
@@ -121,5 +122,15 @@ class LicenseApi
         assert($service instanceof FetchLicenseById);
 
         return $service($id, $ownerUser);
+    }
+
+    public function licenseStatus(): LicenseStatus
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(LicenseStatus::class);
+
+        assert($service instanceof LicenseStatus);
+
+        return $service;
     }
 }
