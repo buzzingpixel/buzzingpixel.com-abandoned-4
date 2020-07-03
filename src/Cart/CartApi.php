@@ -8,10 +8,12 @@ use App\Cart\Models\CartModel;
 use App\Cart\Services\AddItemToCurrentUsersCart;
 use App\Cart\Services\ClearCart;
 use App\Cart\Services\FetchCurrentUserCart;
+use App\Cart\Services\ProcessCartOrder;
 use App\Cart\Services\SaveCart;
 use App\Cart\Services\UpdateCartItemQuantity;
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
+use App\Users\Models\UserCardModel;
 use Psr\Container\ContainerInterface;
 
 use function assert;
@@ -75,5 +77,17 @@ class CartApi
         assert($service instanceof ClearCart);
 
         $service();
+    }
+
+    public function processCartOrder(
+        CartModel $cart,
+        UserCardModel $card
+    ): Payload {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(ProcessCartOrder::class);
+
+        assert($service instanceof ProcessCartOrder);
+
+        return $service($cart, $card);
     }
 }
