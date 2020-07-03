@@ -13,7 +13,7 @@ use Tests\TestConfig;
 
 class PostAdminSoftwareVersionEditResponderTest extends TestCase
 {
-    public function testWhenNotUpdated() : void
+    public function testWhenNotUpdated(): void
     {
         $flashMessages = $this->createMock(Messages::class);
 
@@ -60,7 +60,7 @@ class PostAdminSoftwareVersionEditResponderTest extends TestCase
         );
     }
 
-    public function testWhenUpdated() : void
+    public function testWhenUpdated(): void
     {
         $flashMessages = $this->createMock(Messages::class);
 

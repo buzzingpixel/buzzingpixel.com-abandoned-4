@@ -109,10 +109,13 @@ class PostUpdatePaymentMethodAction
                 $errors['expiration_date'] = 'Valid expiration required';
             }
 
+            // @codeCoverageIgnoreStart
             if (! $validPostalCode) {
                 /** @phpstan-ignore-next-line */
                 $errors['postal_code'][] = 'Postal code is invalid';
             }
+
+            // @codeCoverageIgnoreEnd
 
             return ($this->responder)(
                 new Payload(

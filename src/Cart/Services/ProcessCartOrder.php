@@ -73,6 +73,7 @@ class ProcessCartOrder
         assert($clearCartAtEnd instanceof ClearCartAtEnd);
 
         // TODO: Create subscriptions
+        // TODO: Send email
         $pipeline = (new Pipeline())
             ->pipe($chargeOrderToCard)
             ->pipe($populateOrderAfterCharge)
