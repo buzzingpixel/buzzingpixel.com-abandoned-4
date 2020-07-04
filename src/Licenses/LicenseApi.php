@@ -6,6 +6,7 @@ namespace App\Licenses;
 
 use App\Licenses\Models\LicenseModel;
 use App\Licenses\Services\FetchLicenseById;
+use App\Licenses\Services\FetchLicensesByIds;
 use App\Licenses\Services\FetchUserLicenseById;
 use App\Licenses\Services\FetchUsersLicenses;
 use App\Licenses\Services\LicenseStatus;
@@ -49,6 +50,21 @@ class LicenseApi
         assert($service instanceof FetchUsersLicenses);
 
         return $service($userModel);
+    }
+
+    /**
+     * @param string[] $ids
+     *
+     * @return LicenseModel[]
+     */
+    public function fetchLicensesByIds(array $ids): array
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchLicensesByIds::class);
+
+        assert($service instanceof FetchLicensesByIds);
+
+        return $service($ids);
     }
 
     /**

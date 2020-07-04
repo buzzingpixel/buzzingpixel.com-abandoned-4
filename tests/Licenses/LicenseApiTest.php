@@ -7,6 +7,7 @@ namespace Tests\Licenses;
 use App\Licenses\LicenseApi;
 use App\Licenses\Models\LicenseModel;
 use App\Licenses\Services\FetchLicenseById;
+use App\Licenses\Services\FetchLicensesByIds;
 use App\Licenses\Services\FetchUserLicenseById;
 use App\Licenses\Services\FetchUsersLicenses;
 use App\Licenses\Services\LicenseStatus;
@@ -78,6 +79,34 @@ class LicenseApiTest extends TestCase
         self::assertSame(
             [$license],
             $api->fetchUserLicenses($user)
+        );
+    }
+
+    public function testFetchLicensesByIds(): void
+    {
+        $license = new LicenseModel();
+
+        $service = $this->createMock(
+            FetchLicensesByIds::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo(['foo-test-id']))
+            ->willReturn([$license]);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(FetchLicensesByIds::class))
+            ->willReturn($service);
+
+        $api = new LicenseApi($di);
+
+        self::assertSame(
+            [$license],
+            $api->fetchLicensesByIds(['foo-test-id'])
         );
     }
 
