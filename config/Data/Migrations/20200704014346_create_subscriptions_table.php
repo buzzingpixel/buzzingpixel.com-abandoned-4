@@ -21,14 +21,18 @@ class CreateSubscriptionsTable extends AbstractMigration
             ->addColumn(
                 'order_ids',
                 'json',
-                ['null' => true]
+                ['null' => true],
             )
             ->addColumn(
                 'auto_renew',
                 'boolean',
                 ['default' => 1]
             )
-            ->addColumn('card_id', 'uuid')
+            ->addColumn(
+                'card_id',
+                'uuid',
+                ['null' => true],
+            )
             ->create();
     }
 }
