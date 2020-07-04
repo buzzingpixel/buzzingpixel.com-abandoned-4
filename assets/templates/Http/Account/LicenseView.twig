@@ -1,4 +1,5 @@
 {# @var \App\Licenses\Models\LicenseModel license #}
+{# @var strign statusString #}
 
 {% extends 'Http/Account/_AccountLayout.twig' %}
 
@@ -100,8 +101,8 @@
                 content: downloads,
             },
             {
-                title: 'Is Active',
-                content: license.isDisabled ? 'No' : 'Yes',
+                title: 'Status',
+                content: statusString,
             },
             {
                 title: 'Expires',

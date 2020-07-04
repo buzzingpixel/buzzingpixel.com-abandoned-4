@@ -5,13 +5,31 @@ declare(strict_types=1);
 namespace App\Http\Account\Licenses\View;
 
 use App\Content\Meta\MetaPayload;
-use App\Http\StandardResponderConstructor;
+use App\Licenses\LicenseApi;
 use App\Licenses\Models\LicenseModel;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use Twig\Environment as TwigEnvironment;
 
-class GetAccountLicenseViewResponder extends StandardResponderConstructor
+use function ucfirst;
+
+class GetAccountLicenseViewResponder
 {
+    protected ResponseFactoryInterface $responseFactory;
+    protected TwigEnvironment $twigEnvironment;
+    private LicenseApi $licenseApi;
+
+    public function __construct(
+        ResponseFactoryInterface $responseFactory,
+        TwigEnvironment $twigEnvironment,
+        LicenseApi $licenseApi
+    ) {
+        $this->responseFactory = $responseFactory;
+        $this->twigEnvironment = $twigEnvironment;
+        $this->licenseApi      = $licenseApi;
+    }
+
     /**
      * @throws Throwable
      */
@@ -33,6 +51,9 @@ class GetAccountLicenseViewResponder extends StandardResponderConstructor
                     ],
                 ],
                 'license' => $license,
+                'statusString' => ucfirst($this->licenseApi
+                    ->licenseStatus()
+                    ->statusString($license)),
             ]
         ));
 
