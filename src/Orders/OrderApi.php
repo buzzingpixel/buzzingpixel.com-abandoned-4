@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Orders;
 
 use App\Orders\Models\OrderModel;
+use App\Orders\Services\Fetch\FetchOrdersByIds\FetchOrdersByIds;
 use App\Orders\Services\Fetch\FetchUserOrderByid\FetchUserOrderById;
 use App\Orders\Services\Fetch\FetchUsersOrders\FetchUsersOrdersMaster;
 use App\Orders\Services\SaveOrder\SaveOrderMaster;
@@ -45,6 +46,21 @@ class OrderApi
         assert($service instanceof FetchUsersOrdersMaster);
 
         return $service($user);
+    }
+
+    /**
+     * @param string[] $ids
+     *
+     * @return OrderModel[]
+     */
+    public function fetchOrdersByIds(array $ids): array
+    {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(FetchOrdersByIds::class);
+
+        assert($service instanceof FetchOrdersByIds);
+
+        return $service($ids);
     }
 
     /**

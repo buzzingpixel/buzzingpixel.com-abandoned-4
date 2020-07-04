@@ -24,7 +24,7 @@ use Safe\DateTimeImmutable;
 
 class FetchUsersOrdersMasterTest extends TestCase
 {
-    public function testWhenExceptionThrown() : void
+    public function testWhenExceptionThrown(): void
     {
         $user = new UserModel();
 
@@ -76,7 +76,7 @@ class FetchUsersOrdersMasterTest extends TestCase
         self::assertSame([], $service($user));
     }
 
-    public function testWhenNoRecords() : void
+    public function testWhenNoRecords(): void
     {
         $user = new UserModel();
 
@@ -128,7 +128,7 @@ class FetchUsersOrdersMasterTest extends TestCase
         self::assertSame([], $service($user));
     }
 
-    public function test() : void
+    public function test(): void
     {
         $user = new UserModel();
 
