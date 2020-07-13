@@ -10,6 +10,8 @@ use App\Persistence\Record;
 
 class SubscriptionRecord extends Record
 {
+    protected static string $tableName = 'subscriptions';
+
     public string $user_id = '';
 
     public string $license_id = '';
@@ -19,5 +21,5 @@ class SubscriptionRecord extends Record
     /** @var int|bool|string */
     public $auto_renew = '0';
 
-    public string $card_id = '';
+    public ?string $card_id = null;
 }

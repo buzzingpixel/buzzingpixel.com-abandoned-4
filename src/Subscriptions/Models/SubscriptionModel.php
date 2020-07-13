@@ -10,7 +10,7 @@ use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use RuntimeException;
 
-use function array_map;
+use function array_walk;
 use function assert;
 use function is_array;
 
@@ -53,9 +53,9 @@ class SubscriptionModel
 
         assert(is_array($value));
 
-        array_map(
-            [$this, 'addOrder'],
+        array_walk(
             $value,
+            [$this, 'addOrder']
         );
     }
 
