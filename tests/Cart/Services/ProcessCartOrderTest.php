@@ -9,6 +9,7 @@ use App\Cart\Models\CartModel;
 use App\Cart\Models\ProcessOrderModel;
 use App\Cart\OrderProcessors\ChargeOrderToCard;
 use App\Cart\OrderProcessors\ClearCartAtEnd;
+use App\Cart\OrderProcessors\CreateSubscriptionsFromOrder;
 use App\Cart\OrderProcessors\PopulateOrderAfterCharge;
 use App\Cart\OrderProcessors\SaveOrderAfterPopulate;
 use App\Cart\Services\ProcessCartOrder;
@@ -128,6 +129,23 @@ class ProcessCartOrderTest extends TestCase
                 return $processOrderModel;
             });
 
+        $createSubscriptionsFromOrder = $this->createMock(
+            CreateSubscriptionsFromOrder::class,
+        );
+
+        $createSubscriptionsFromOrder->expects(self::once())
+            ->method('__invoke')
+            ->willReturnCallback(static function (
+                ProcessOrderModel $processOrderModel
+            ) use ($holder): ProcessOrderModel {
+                self::assertSame(
+                    $holder->processOrderModel,
+                    $processOrderModel,
+                );
+
+                return $processOrderModel;
+            });
+
         $clearCartAtEnd = $this->createMock(
             ClearCartAtEnd::class
         );
@@ -180,6 +198,7 @@ class ProcessCartOrderTest extends TestCase
                     $chargeOrderToCard,
                     $populateOrderAfterCharge,
                     $saveOrderAfterPopulate,
+                    $createSubscriptionsFromOrder,
                     $clearCartAtEnd
                 ) {
                     switch ($class) {
@@ -194,6 +213,9 @@ class ProcessCartOrderTest extends TestCase
 
                         case SaveOrderAfterPopulate::class:
                             return $saveOrderAfterPopulate;
+
+                        case CreateSubscriptionsFromOrder::class:
+                            return $createSubscriptionsFromOrder;
 
                         case ClearCartAtEnd::class:
                             return $clearCartAtEnd;

@@ -8,6 +8,7 @@ use App\Cart\Models\CartModel;
 use App\Cart\Models\ProcessOrderModel;
 use App\Cart\OrderProcessors\ChargeOrderToCard;
 use App\Cart\OrderProcessors\ClearCartAtEnd;
+use App\Cart\OrderProcessors\CreateSubscriptionsFromOrder;
 use App\Cart\OrderProcessors\PopulateOrderAfterCharge;
 use App\Cart\OrderProcessors\SaveOrderAfterPopulate;
 use App\Orders\Models\OrderModel;
@@ -69,15 +70,18 @@ class ProcessCartOrder
         $saveOrderAfterPopulate = $di->get(SaveOrderAfterPopulate::class);
         assert($saveOrderAfterPopulate instanceof SaveOrderAfterPopulate);
 
+        $createSubscriptionsFromOrder = $di->get(CreateSubscriptionsFromOrder::class);
+        assert($createSubscriptionsFromOrder instanceof CreateSubscriptionsFromOrder);
+
         $clearCartAtEnd = $di->get(ClearCartAtEnd::class);
         assert($clearCartAtEnd instanceof ClearCartAtEnd);
 
-        // TODO: Create subscriptions
         // TODO: Send email
         $pipeline = (new Pipeline())
             ->pipe($chargeOrderToCard)
             ->pipe($populateOrderAfterCharge)
             ->pipe($saveOrderAfterPopulate)
+            ->pipe($createSubscriptionsFromOrder)
             ->pipe($clearCartAtEnd);
 
         $pipeline->process($processOrderModel);
