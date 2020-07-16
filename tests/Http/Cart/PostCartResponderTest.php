@@ -21,7 +21,10 @@ class PostCartResponderTest extends TestCase
             ->method('addMessage')
             ->with(
                 self::equalTo('PostMessage'),
-                self::equalTo(['status' => Payload::STATUS_NOT_VALID])
+                self::equalTo([
+                    'status' => Payload::STATUS_NOT_VALID,
+                    'result' => ['message' => 'We could not process your order'],
+                ])
             );
 
         $responseFactory = TestConfig::$di->get(

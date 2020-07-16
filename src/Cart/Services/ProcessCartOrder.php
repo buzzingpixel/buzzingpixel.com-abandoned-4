@@ -76,7 +76,6 @@ class ProcessCartOrder
         $clearCartAtEnd = $di->get(ClearCartAtEnd::class);
         assert($clearCartAtEnd instanceof ClearCartAtEnd);
 
-        // TODO: Send email
         $pipeline = (new Pipeline())
             ->pipe($chargeOrderToCard)
             ->pipe($populateOrderAfterCharge)

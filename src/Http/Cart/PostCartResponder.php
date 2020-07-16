@@ -27,7 +27,10 @@ class PostCartResponder
         if ($payload->getStatus() !== Payload::STATUS_SUCCESSFUL) {
             $this->flashMessages->addMessage(
                 'PostMessage',
-                ['status' => $payload->getStatus()],
+                [
+                    'status' => $payload->getStatus(),
+                    'result' => ['message' => 'We could not process your order'],
+                ],
             );
 
             return $this->responseFactory->createResponse(303)

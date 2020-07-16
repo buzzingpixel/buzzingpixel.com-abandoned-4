@@ -57,6 +57,15 @@
             }"
         >
             <div
+                class="max-w-88rem mx-auto -mb-20"
+            >
+                <div class="p-8 max-w-2xl mx-auto lg:max-w-none">
+                    {% include 'Http/_Infrastructure/Components/Forms/Includes/Message.twig' with {
+                        standAlone: true,
+                    } only %}
+                </div>
+            </div>
+            <div
                 class="max-w-88rem mx-auto lg:flex lg:flex-row lg:flex-row-reverse"
                 data-name="Cart"
             >
