@@ -1,5 +1,3 @@
-import Loader from '../Helpers/Loader.js';
-
 let tries = 0;
 
 let debouncer = 0;
