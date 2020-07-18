@@ -20,6 +20,7 @@ class AnalyticsModel
         );
     }
 
+    /** @psalm-suppress PropertyNotSetInConstructor */
     public CookieInterface $cookie;
 
     public ?UserModel $user = null;

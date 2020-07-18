@@ -14,7 +14,7 @@ class AnalyticsRecord extends Record
 
     public string $cookie_id = '';
 
-    public string $user_id = '';
+    public ?string $user_id = null;
 
     /** @var int|bool|string */
     public $logged_in_on_page_load = '1';
