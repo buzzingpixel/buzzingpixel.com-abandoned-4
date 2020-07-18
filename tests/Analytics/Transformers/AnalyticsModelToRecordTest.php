@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
-class TestAnalyticsModel extends TestCase
+class AnalyticsModelToRecordTest extends TestCase
 {
     public function testSupplemental(): void
     {
