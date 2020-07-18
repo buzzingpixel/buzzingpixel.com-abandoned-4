@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Ajax\Analytics\PostAnalyticsPageViewAction;
 use App\Http\Ajax\Cart\GetCartPayloadAction;
 use App\Http\Ajax\User\GetUserPayloadAction;
 use Config\NoOp;
@@ -22,6 +23,11 @@ return static function (App $app): void {
         $r->get(
             '/cart/payload',
             GetCartPayloadAction::class,
+        );
+
+        $r->post(
+            '/analytics/page-view',
+            PostAnalyticsPageViewAction::class,
         );
     });
 };
