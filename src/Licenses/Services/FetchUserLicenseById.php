@@ -10,6 +10,7 @@ use App\Persistence\Licenses\LicenseRecord;
 use App\Persistence\RecordQueryFactory;
 use App\Users\Models\UserModel;
 use Throwable;
+
 use function assert;
 
 class FetchUserLicenseById
@@ -25,7 +26,7 @@ class FetchUserLicenseById
         $this->transformer        = $transformer;
     }
 
-    public function __invoke(UserModel $user, string $id) : ?LicenseModel
+    public function __invoke(UserModel $user, string $id): ?LicenseModel
     {
         try {
             $record = ($this->recordQueryFactory)(

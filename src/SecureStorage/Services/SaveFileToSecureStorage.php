@@ -26,7 +26,7 @@ class SaveFileToSecureStorage
     public function __invoke(
         UploadedFileInterface $uploadedFile,
         string $directory = ''
-    ) : Payload {
+    ): Payload {
         try {
             $finalPath = $this->generalConfig->pathToSecureStorageDirectory();
 

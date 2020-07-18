@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Flash\Messages as FlashMessages;
+
 use function array_keys;
 use function assert;
 use function count;
@@ -31,7 +32,7 @@ class PostAdminQueueAction
         $this->queueApi        = $queueApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $parsedBody = $request->getParsedBody();
 
@@ -57,7 +58,8 @@ class PostAdminQueueAction
         /** @var array<string, string> $ids */
         $ids = $parsedBody['selected_items'] ?? [];
 
-        if (($action !== 'clear_all' && $action !== 'restart_all') &&
+        if (
+            ($action !== 'clear_all' && $action !== 'restart_all') &&
             count($ids) < 1
         ) {
             $this->flashMessages->addMessage(

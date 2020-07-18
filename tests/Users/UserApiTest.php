@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace Tests\Users;
 
 use App\Payload\Payload;
+use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\DeleteUser;
+use App\Users\Services\DeleteUserCard;
 use App\Users\Services\FetchLoggedInUser;
 use App\Users\Services\FetchTotalUserResetTokens;
 use App\Users\Services\FetchTotalUsers;
 use App\Users\Services\FetchUserByEmailAddress;
 use App\Users\Services\FetchUserById;
 use App\Users\Services\FetchUserByResetToken;
+use App\Users\Services\FetchUserCardById;
+use App\Users\Services\FetchUserCards;
 use App\Users\Services\FetchUsersByLimitOffset;
 use App\Users\Services\FetchUsersBySearch;
 use App\Users\Services\GeneratePasswordResetToken;
@@ -22,6 +26,7 @@ use App\Users\Services\PostalCodeService;
 use App\Users\Services\RequestPasswordResetEmail;
 use App\Users\Services\ResetPasswordByToken;
 use App\Users\Services\SaveUser;
+use App\Users\Services\SaveUserCard;
 use App\Users\Services\ValidateUserPassword;
 use App\Users\UserApi;
 use Exception;
@@ -277,6 +282,32 @@ class UserApiTest extends TestCase
         );
     }
 
+    public function testFillCardModelFromPostalCode() : void
+    {
+        $card = new UserCardModel();
+
+        $service = $this->createMock(
+            PostalCodeService::class
+        );
+
+        $service->expects(self::once())
+            ->method('fillCardModelFromPostalCode')
+            ->with(self::equalTo($card));
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(PostalCodeService::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        $api->fillCardModelFromPostalCode($card);
+    }
+
     protected function setUp() : void
     {
         $this->callArgs = [];
@@ -355,7 +386,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(SaveUser::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -374,7 +405,7 @@ class UserApiTest extends TestCase
         );
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 $this->callArgs = func_get_args();
 
                 return $this->userModel;
@@ -391,7 +422,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(FetchUserById::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 $this->callArgs = func_get_args();
 
                 return $this->userModel;
@@ -408,7 +439,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(LogUserIn::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -425,7 +456,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(DeleteUser::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -442,7 +473,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(FetchLoggedInUser::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 return $this->userModel;
             });
 
@@ -459,7 +490,7 @@ class UserApiTest extends TestCase
         );
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -476,7 +507,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(FetchUserByResetToken::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : UserModel {
                 $this->callArgs = func_get_args();
 
                 return $this->userModel;
@@ -495,7 +526,7 @@ class UserApiTest extends TestCase
         );
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 return $this->payload;
             });
 
@@ -510,7 +541,7 @@ class UserApiTest extends TestCase
         $mock = $this->createMock(ResetPasswordByToken::class);
 
         $mock->method('__invoke')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : Payload {
                 $this->callArgs = func_get_args();
 
                 return $this->payload;
@@ -624,5 +655,150 @@ class UserApiTest extends TestCase
             ->willReturn(42);
 
         return $mock;
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testSaveUserCard() : void
+    {
+        $userCard = new UserCardModel();
+
+        $payload = new Payload(Payload::STATUS_UPDATED);
+
+        $service = $this->createMock(
+            SaveUserCard::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($userCard))
+            ->willReturn($payload);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(SaveUserCard::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        self::assertSame(
+            $payload,
+            $api->saveUserCard($userCard),
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testFetchUserCards() : void
+    {
+        $user = new UserModel();
+
+        $userCardModel = new UserCardModel();
+
+        $service = $this->createMock(
+            FetchUserCards::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($user))
+            ->willReturn([$userCardModel]);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(FetchUserCards::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        self::assertSame(
+            [$userCardModel],
+            $api->fetchUserCards($user),
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testFetchUserCardById() : void
+    {
+        $user = new UserModel();
+
+        $id = 'foo-id';
+
+        $userCardModel = new UserCardModel();
+
+        $service = $this->createMock(
+            FetchUserCardById::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(
+                self::equalTo($user),
+                self::equalTo($id),
+            )
+            ->willReturn($userCardModel);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(FetchUserCardById::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        self::assertSame(
+            $userCardModel,
+            $api->fetchUserCardById($user, $id),
+        );
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testDeleteUserCard() : void
+    {
+        $payload = new Payload(Payload::STATUS_DELETED);
+
+        $card = new UserCardModel();
+
+        $service = $this->createMock(
+            DeleteUserCard::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($card))
+            ->willReturn($payload);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo(DeleteUserCard::class)
+            )
+            ->willReturn($service);
+
+        $api = new UserApi($di);
+
+        self::assertSame(
+            $payload,
+            $api->deleteUserCard($card),
+        );
     }
 }

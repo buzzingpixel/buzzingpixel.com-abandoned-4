@@ -16,7 +16,7 @@ class RunItem
         $this->di = $di;
     }
 
-    public function __invoke(QueueItemModel $item) : void
+    public function __invoke(QueueItemModel $item): void
     {
         /** @psalm-suppress MixedAssignment */
         $class = $this->di->get($item->class);

@@ -1,0 +1,86 @@
+{# @var \App\Users\Models\UserCardModel userCard #}
+
+{% extends 'Http/Account/_AccountLayout.twig' %}
+
+{% set contentClass = 'max-w-3xl' %}
+
+{% set actionForm = {
+    action: "/account/payment-methods/#{userCard.id}/delete",
+    content: 'Delete',
+    confirmAction: 'delete',
+    isDangerousAction: true,
+} %}
+
+{% block accountContent %}
+    {#{
+        type: 'text',
+        readonly: true,
+        label: 'Card',
+        value: userCard.provider ~ ': **** **** **** ' ~ userCard.lastFour,
+    },#}
+    {% include 'Http/_Infrastructure/Components/Forms/LabelsOnLeftForm.twig' with {
+        cancelButton: {
+            content: 'Cancel',
+            href: '/account/payment-methods',
+        },
+        title: 'Edit Payment Method',
+        subtitle: userCard.provider ~ ': **** **** **** ' ~ userCard.lastFour,
+        inputs: [
+            {
+                type: 'creditCardExpiration',
+                label: 'Expiration',
+                expirationDate: userCard.expiration,
+            },
+            {
+                type: 'text',
+                label: 'Name On Card',
+                name: 'name_on_card',
+                value: userCard.nameOnCard,
+            },
+            {
+                type: 'stacked',
+                label: 'Address',
+                inputs: [
+                    {
+                        type: 'text',
+                        label: 'Line 1',
+                        name: 'address',
+                        value: userCard.address,
+                    },
+                    {
+                        type: 'text',
+                        label: 'Line 2',
+                        name: 'address2',
+                        value: userCard.address2,
+                    },
+                ],
+            },
+            {
+                type: 'select',
+                label: 'Country',
+                name: 'country',
+                value: userCard.country,
+                options: countriesSelectArray(),
+                emptyOption: 'Choose country&hellip;',
+            },
+            {
+                type: 'text',
+                label: 'Postal Code',
+                name: 'postal_code',
+                value: userCard.postalCode,
+            },
+            {
+                type: 'checkbox',
+                label: 'Default?',
+                name: 'default',
+                isChecked: userCard.isDefault,
+            },
+            {
+                type: 'text',
+                label: 'Nickname',
+                name: 'nickname',
+                value: userCard.nickname,
+            },
+        ]
+    } only %}
+{% endblock %}

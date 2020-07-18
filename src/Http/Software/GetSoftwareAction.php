@@ -35,7 +35,7 @@ class GetSoftwareAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $uriPath = $request->getUri()->getPath();
 

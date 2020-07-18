@@ -8,12 +8,12 @@ trait PositionHref
 {
     private string $positionHref = '';
 
-    protected function setPositionHref(string $positionHref) : void
+    protected function setPositionHref(string $positionHref): void
     {
         $this->positionHref = $positionHref;
     }
 
-    public function getPositionHref() : string
+    public function getPositionHref(): string
     {
         return $this->positionHref;
     }

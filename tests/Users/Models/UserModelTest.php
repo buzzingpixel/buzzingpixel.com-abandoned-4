@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Users\Models;
 
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 
 class UserModelTest extends TestCase
 {
@@ -97,6 +97,20 @@ class UserModelTest extends TestCase
                 ),
             ],
             $model->asArray(false)
+        );
+    }
+
+    public function testGetFullName() : void
+    {
+        $model = new UserModel();
+
+        $model->firstName = 'foo-first';
+
+        $model->lastName = 'foo-last';
+
+        self::assertSame(
+            'foo-first foo-last',
+            $model->getFullName(),
         );
     }
 }

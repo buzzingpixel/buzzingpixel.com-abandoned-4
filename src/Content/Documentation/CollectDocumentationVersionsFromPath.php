@@ -8,12 +8,14 @@ use App\Content\Software\ExtractSoftwareInfoFromPath;
 use Config\General;
 use DirectoryIterator;
 use Throwable;
+
 use function array_map;
 use function array_merge;
 use function array_reverse;
 use function assert;
 use function implode;
 use function Safe\ksort;
+
 use const SORT_NATURAL;
 
 class CollectDocumentationVersionsFromPath
@@ -35,7 +37,7 @@ class CollectDocumentationVersionsFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : DocumentationVersionsPayload
+    public function __invoke(string $contentPath): DocumentationVersionsPayload
     {
         $fullDirectoryArray = [
             $this->generalConfig->pathToContentDirectory(),
@@ -52,6 +54,7 @@ class CollectDocumentationVersionsFromPath
         $directory = new DirectoryIterator($fullDirectoryPath);
 
         foreach ($directory as $fileInfo) {
+            /** @psalm-suppress RedundantCondition */
             assert($fileInfo instanceof DirectoryIterator);
 
             if ($fileInfo->isDot() || ! $fileInfo->isDir()) {
@@ -81,7 +84,9 @@ class CollectDocumentationVersionsFromPath
         return new DocumentationVersionsPayload([
             'softwareInfo' => ($this->extractSoftwareInfoFromPath)($contentPath),
             'versions' => array_map(
-                function (string $version) use ($contentPath) {
+                function (string $version) use (
+                    $contentPath
+                ): DocumentationVersionPayload {
                     return ($this->collectDocumentationVersionPayloadFromPath)(
                         $contentPath . '/documentation/' . $version
                     );

@@ -31,7 +31,7 @@ class RequireLogInAction implements MiddlewareInterface
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $user = $this->userApi->fetchLoggedInUser();
 
         if ($user === null) {

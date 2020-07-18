@@ -10,36 +10,36 @@ class ImageSourcePayload extends SpecificPayload
 {
     private string $oneX = '';
 
-    protected function setOneX(string $oneX) : void
+    protected function setOneX(string $oneX): void
     {
         $this->oneX = $oneX;
     }
 
-    public function getOneX() : string
+    public function getOneX(): string
     {
         return $this->oneX;
     }
 
     private string $twoX = '';
 
-    protected function setTwoX(string $twoX) : void
+    protected function setTwoX(string $twoX): void
     {
         $this->twoX = $twoX;
     }
 
-    public function getTwoX() : string
+    public function getTwoX(): string
     {
         return $this->twoX;
     }
 
     private string $mediaQuery = '';
 
-    protected function setMediaQuery(string $mediaQuery) : void
+    protected function setMediaQuery(string $mediaQuery): void
     {
         $this->mediaQuery = $mediaQuery;
     }
 
-    public function getMediaQuery() : string
+    public function getMediaQuery(): string
     {
         return $this->mediaQuery;
     }

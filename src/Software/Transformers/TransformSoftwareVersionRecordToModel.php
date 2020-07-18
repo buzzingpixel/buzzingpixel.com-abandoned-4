@@ -7,8 +7,7 @@ namespace App\Software\Transformers;
 use App\Persistence\Constants;
 use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareVersionModel;
-use DateTimeImmutable;
-use function assert;
+use Safe\DateTimeImmutable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -16,7 +15,7 @@ class TransformSoftwareVersionRecordToModel
 {
     public function __invoke(
         SoftwareVersionRecord $record
-    ) : SoftwareVersionModel {
+    ): SoftwareVersionModel {
         $model = new SoftwareVersionModel();
 
         $model->id = $record->id;
@@ -33,8 +32,6 @@ class TransformSoftwareVersionRecordToModel
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record->released_on
         );
-
-        assert($releasedOn instanceof DateTimeImmutable);
 
         $model->releasedOn = $releasedOn;
 

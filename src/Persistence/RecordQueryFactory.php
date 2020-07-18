@@ -15,7 +15,7 @@ class RecordQueryFactory
         $this->pdo = $pdo;
     }
 
-    public function __invoke(Record $recordClass) : RecordQuery
+    public function __invoke(Record $recordClass): RecordQuery
     {
         return new RecordQuery($recordClass, $this->pdo);
     }

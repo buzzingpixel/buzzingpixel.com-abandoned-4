@@ -9,6 +9,7 @@ use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
 use function getenv;
 
 class SetupDockerDatabase extends Command
@@ -20,7 +21,7 @@ class SetupDockerDatabase extends Command
     /**
      * @throws Exception
      */
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $pdo = new PDO(
             'pgsql:host=db;port=5432',

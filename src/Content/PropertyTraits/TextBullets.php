@@ -14,12 +14,12 @@ trait TextBullets
     /**
      * @param string[] $textBullets
      */
-    protected function setTextBullets(array $textBullets) : void
+    protected function setTextBullets(array $textBullets): void
     {
         array_walk($textBullets, [$this, 'addTextBullet']);
     }
 
-    private function addTextBullet(string $textBullet) : void
+    private function addTextBullet(string $textBullet): void
     {
         $this->textBullets[] = $textBullet;
     }
@@ -27,7 +27,7 @@ trait TextBullets
     /**
      * @return string[]
      */
-    public function getTextBullets() : array
+    public function getTextBullets(): array
     {
         return $this->textBullets;
     }

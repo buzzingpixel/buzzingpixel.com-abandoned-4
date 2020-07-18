@@ -11,6 +11,7 @@ use App\Schedule\Transformers\TransformRecordToModel;
 use Config\Schedule;
 use PDO;
 use Throwable;
+
 use function array_fill;
 use function array_map;
 use function count;
@@ -32,7 +33,7 @@ class FetchSchedules
         $this->transformRecordToModel = $transformRecordToModel;
     }
 
-    public function __invoke() : SchedulesPayload
+    public function __invoke(): SchedulesPayload
     {
         try {
             return $this->fetch();
@@ -44,7 +45,7 @@ class FetchSchedules
     /**
      * @throws Throwable
      */
-    private function fetch() : SchedulesPayload
+    private function fetch(): SchedulesPayload
     {
         $classes = $this->schedule->getScheduleClasses();
 
@@ -58,7 +59,7 @@ class FetchSchedules
             'schedules' => array_map(
                 function (string $class) use (
                     $records
-                ) : ScheduleItemModel {
+                ): ScheduleItemModel {
                     return $this->mapScheduleClassToModel(
                         $class,
                         $records
@@ -74,7 +75,7 @@ class FetchSchedules
      *
      * @return array<string, ScheduleTrackingRecord>
      */
-    private function fetchRecords(array $classes) : array
+    private function fetchRecords(array $classes): array
     {
         $in = implode(
             ',',
@@ -108,7 +109,7 @@ class FetchSchedules
     private function mapScheduleClassToModel(
         string $class,
         array $records
-    ) : ScheduleItemModel {
+    ): ScheduleItemModel {
         $record = $records[$class] ?? new ScheduleTrackingRecord();
 
         $record->class = $class;

@@ -8,6 +8,7 @@ use App\Persistence\Users\UserPasswordResetTokenRecord;
 use App\Users\Models\UserModel;
 use PDO;
 use Throwable;
+
 use function assert;
 use function is_bool;
 
@@ -24,7 +25,7 @@ class FetchUserByResetToken
         $this->fetchUserById = $fetchUserById;
     }
 
-    public function __invoke(string $token) : ?UserModel
+    public function __invoke(string $token): ?UserModel
     {
         try {
             $statement = $this->pdo->prepare(

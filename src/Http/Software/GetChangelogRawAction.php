@@ -10,6 +10,7 @@ use Config\General;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
+
 use function Safe\file_get_contents;
 
 class GetChangelogRawAction
@@ -34,7 +35,7 @@ class GetChangelogRawAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $uriSegments = ($this->extractUriSegments)($request->getUri());
 

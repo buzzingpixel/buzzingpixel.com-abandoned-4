@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Safe\Exceptions\FilesystemException;
+
 use function trim;
 
 class MinifyMiddleware implements MiddlewareInterface
@@ -32,7 +33,7 @@ class MinifyMiddleware implements MiddlewareInterface
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $handler->handle($request);
 
         $contentType = $response->getHeader('Content-Type');

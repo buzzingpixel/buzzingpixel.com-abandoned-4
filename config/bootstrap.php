@@ -7,6 +7,7 @@ use Psr\Container\ContainerInterface;
 use Whoops\Handler\PlainTextHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run as WhoopsRun;
+
 use function Safe\ini_set;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -33,7 +34,7 @@ if (class_exists(Symfony\Component\VarDumper\VarDumper::class)) {
     require __DIR__ . '/dumper.php';
 }
 
-return static function () : ContainerInterface {
+return static function (): ContainerInterface {
     $containerBuilder = (new ContainerBuilder())
         ->useAnnotations(true)
         ->useAutowiring(true)

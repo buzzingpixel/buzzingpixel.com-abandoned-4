@@ -14,7 +14,7 @@ use RuntimeException;
 
 class CartModelTest extends TestCase
 {
-    public function testIncorrectPropertySet() : void
+    public function testIncorrectPropertySet(): void
     {
         $model = new CartModel();
 
@@ -25,7 +25,7 @@ class CartModelTest extends TestCase
         $model->asdf = 'asdf';
     }
 
-    public function testIsset() : void
+    public function testIsset(): void
     {
         $model = new CartModel();
 
@@ -34,7 +34,7 @@ class CartModelTest extends TestCase
         self::assertTrue(isset($model->items));
     }
 
-    public function testInvalidPropertyGet() : void
+    public function testInvalidPropertyGet(): void
     {
         $model = new CartModel();
 
@@ -45,7 +45,7 @@ class CartModelTest extends TestCase
         $model->asdf;
     }
 
-    public function testAsArray() : void
+    public function testAsArray(): void
     {
         $user     = new UserModel();
         $user->id = 'foo-user-id';
@@ -90,7 +90,7 @@ class CartModelTest extends TestCase
         );
     }
 
-    public function testCalculateSubTotal() : void
+    public function testCalculateSubTotal(): void
     {
         $software1        = new SoftwareModel();
         $software1->price = 123.4;
@@ -115,7 +115,7 @@ class CartModelTest extends TestCase
         self::assertSame(3646.8, $model->calculateSubTotal());
     }
 
-    public function testCalcTax() : void
+    public function testCalcTax(): void
     {
         $software1        = new SoftwareModel();
         $software1->price = 123.4;

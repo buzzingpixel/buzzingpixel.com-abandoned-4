@@ -1,13 +1,19 @@
 /* eslint-disable no-new */
 
+import CartAjax from './Components/CartAjax.js';
 import CartQuantity from './Components/CartQuantity.js';
 import ConfirmSubmit from './Components/ConfirmSubmit.js';
+import CreditCardInputFormatting from './Components/CreditCardInputFormatting.js';
+import Events from './Events.js';
 import Flatpickr from './Components/Flatpickr.js';
 import LeftFixedScroll from './Components/LeftFixedScroll.js';
 import PreventEmptySubmit from './Components/PreventEmptySubmit.js';
 import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
 import Selects from './Components/Selects.js';
 
+Events();
+
+window.Methods.CartAjax = CartAjax;
 window.Methods.CartQuantity = CartQuantity;
 window.Methods.LeftFixedScroll = LeftFixedScroll;
 
@@ -21,6 +27,12 @@ forms.forEach((el) => {
 const flatpickrEls = document.querySelectorAll('[ref="flatpickr"]');
 if (flatpickrEls.length > 0) {
     new Flatpickr(flatpickrEls);
+}
+
+// Credit card input formatting
+const creditCardInputs = document.querySelectorAll('[ref="creditCardInput"]');
+if (creditCardInputs.length > 0) {
+    new CreditCardInputFormatting(creditCardInputs);
 }
 
 // Prevent empty submit

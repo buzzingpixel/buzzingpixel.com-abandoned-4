@@ -8,6 +8,7 @@ use App\Content\Modules\Payloads\CtaCardItemPayload;
 use App\Content\Modules\Payloads\CtaCardsPayload;
 use cebe\markdown\GithubMarkdown;
 use Throwable;
+
 use function array_map;
 use function is_array;
 use function is_string;
@@ -27,7 +28,7 @@ trait ExtractCtaCards
      *
      * @throws Throwable
      */
-    protected function extractCtaCards(array $parsedYaml) : CtaCardsPayload
+    protected function extractCtaCards(array $parsedYaml): CtaCardsPayload
     {
         /** @var array<string, mixed> $primary */
         $primary = isset($parsedYaml['primary']) && is_array($parsedYaml['primary']) ?
@@ -59,7 +60,7 @@ trait ExtractCtaCards
      *
      * @throws Throwable
      */
-    private function mapCtaCardInnerYamlToItemPayload(array $parsedYaml) : CtaCardItemPayload
+    private function mapCtaCardInnerYamlToItemPayload(array $parsedYaml): CtaCardItemPayload
     {
         $textBullets = isset($parsedYaml['bullets']) && is_array($parsedYaml['bullets']) ?
             $parsedYaml['bullets'] :

@@ -9,12 +9,12 @@ use App\Persistence\Queue\QueueRecord;
 use App\Persistence\RecordQuery;
 use App\Persistence\RecordQueryFactory;
 use App\Queue\Services\CleanDeadItems;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 
 class CleanDeadItemsTest extends TestCase
 {

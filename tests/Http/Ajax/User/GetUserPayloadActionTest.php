@@ -17,7 +17,7 @@ class GetUserPayloadActionTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function test() : void
+    public function test(): void
     {
         $cart = $this->createMock(CartModel::class);
 

@@ -6,6 +6,7 @@ namespace App\Content\Modules\ExtractorMethods;
 
 use App\Content\Modules\Payloads\ImageModulePayload;
 use Throwable;
+
 use function is_array;
 use function is_bool;
 
@@ -20,7 +21,7 @@ trait ExtractImage
      *
      * @throws Throwable
      */
-    protected function extractImage(array $parsedYaml) : ImageModulePayload
+    protected function extractImage(array $parsedYaml): ImageModulePayload
     {
         /** @psalm-suppress MixedAssignment */
         $noShadow = ($parsedYaml['noShadow'] ?? false);

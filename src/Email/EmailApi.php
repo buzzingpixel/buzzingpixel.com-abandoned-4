@@ -9,6 +9,7 @@ use App\Email\Models\EmailModel;
 use App\Email\Services\QueueEmail;
 use App\Payload\Payload;
 use Psr\Container\ContainerInterface;
+
 use function assert;
 
 class EmailApi
@@ -20,7 +21,7 @@ class EmailApi
         $this->di = $di;
     }
 
-    public function sendMail(EmailModel $email) : Payload
+    public function sendMail(EmailModel $email): Payload
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(SendMailAdapter::class);
@@ -30,7 +31,7 @@ class EmailApi
         return $service($email);
     }
 
-    public function queueEmail(EmailModel $email) : void
+    public function queueEmail(EmailModel $email): void
     {
         /** @psalm-suppress MixedAssignment */
         $service = $this->di->get(QueueEmail::class);

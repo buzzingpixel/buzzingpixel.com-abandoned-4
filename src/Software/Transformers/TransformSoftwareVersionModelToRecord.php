@@ -12,7 +12,7 @@ use DateTimeInterface;
 
 class TransformSoftwareVersionModelToRecord
 {
-    public function __invoke(SoftwareVersionModel $model) : SoftwareVersionRecord
+    public function __invoke(SoftwareVersionModel $model): SoftwareVersionRecord
     {
         $record = new SoftwareVersionRecord();
 

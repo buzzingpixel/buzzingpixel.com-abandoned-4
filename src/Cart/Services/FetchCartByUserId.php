@@ -12,6 +12,7 @@ use App\Persistence\Cart\CartItemRecord;
 use App\Persistence\Cart\CartRecord;
 use App\Persistence\RecordQueryFactory;
 use Throwable;
+
 use function array_map;
 use function assert;
 
@@ -31,7 +32,7 @@ class FetchCartByUserId
         $this->transformCartRecordToModel     = $transformCartRecordToModel;
     }
 
-    public function __invoke(string $userId) : ?CartModel
+    public function __invoke(string $userId): ?CartModel
     {
         try {
             return $this->innerRun($userId);
@@ -40,7 +41,7 @@ class FetchCartByUserId
         }
     }
 
-    private function innerRun(string $userId) : ?CartModel
+    private function innerRun(string $userId): ?CartModel
     {
         $cartRecord = ($this->recordQueryFactory)(new CartRecord())
             ->withWhere('user_id', $userId)

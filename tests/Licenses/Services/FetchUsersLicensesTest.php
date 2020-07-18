@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class FetchUsersLicensesTest extends TestCase
 {
-    public function test() : void
+    public function test(): void
     {
         $user     = new UserModel();
         $user->id = 'foo-user-id';
@@ -78,7 +78,7 @@ class FetchUsersLicensesTest extends TestCase
         $recordQueryFactory->expects(self::once())
             ->method('__invoke')
             ->willReturnCallback(
-                static fn(LicenseRecord $record) => $recordQuery
+                static fn (LicenseRecord $record) => $recordQuery
             );
 
         $model = new LicenseModel();

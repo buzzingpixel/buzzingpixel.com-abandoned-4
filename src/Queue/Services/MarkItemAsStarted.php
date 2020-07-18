@@ -8,9 +8,9 @@ use App\Payload\Payload;
 use App\Persistence\SaveExistingRecord;
 use App\Queue\Models\QueueModel;
 use App\Queue\Transformers\TransformQueueModelToRecord;
-use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
+use Safe\DateTimeImmutable;
 use Throwable;
 
 class MarkItemAsStarted
@@ -29,7 +29,7 @@ class MarkItemAsStarted
     /**
      * @throws Throwable
      */
-    public function __invoke(QueueModel $model) : void
+    public function __invoke(QueueModel $model): void
     {
         $model->hasStarted = true;
 

@@ -9,6 +9,7 @@ use cebe\markdown\GithubMarkdown;
 use Config\General;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
 use function array_map;
 use function array_values;
 use function assert;
@@ -33,7 +34,7 @@ class CollectDocumentationPageSectionFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : DocumentationPageSectionPayload
+    public function __invoke(string $contentPath): DocumentationPageSectionPayload
     {
         $pathArray = [
             $this->generalConfig->pathToContentDirectory(),
@@ -60,14 +61,19 @@ class CollectDocumentationPageSectionFromPath
                     switch ($type) {
                         case 'heading':
                             return $this->mapHeadingTypeToPayload($item);
+
                         case 'list':
                             return $this->mapListTypeToPayload($item);
+
                         case 'content':
                             return $this->mapContentTypeToPayload($item);
+
                         case 'codeblock':
                             return $this->mapCodeblockTypeToPayload($item);
+
                         case 'image':
                             return $this->mapYamlImageToPayload($item);
+
                         case 'note':
                             return $this->mapNoteTypeToPayload($item);
                     }
@@ -82,7 +88,7 @@ class CollectDocumentationPageSectionFromPath
      *
      * @throws Throwable
      */
-    private function mapHeadingTypeToPayload(array $item) : HeadingPayload
+    private function mapHeadingTypeToPayload(array $item): HeadingPayload
     {
         return new HeadingPayload([
             'level' => (int) ($item['level'] ?? 3),
@@ -97,7 +103,7 @@ class CollectDocumentationPageSectionFromPath
      *
      * @throws Throwable
      */
-    private function mapListTypeToPayload(array $item) : ListPayload
+    private function mapListTypeToPayload(array $item): ListPayload
     {
         return new ListPayload([
             'listItems' => $item['content'] ?? [],
@@ -109,7 +115,7 @@ class CollectDocumentationPageSectionFromPath
      *
      * @throws Throwable
      */
-    private function mapContentTypeToPayload(array $item) : ContentPayload
+    private function mapContentTypeToPayload(array $item): ContentPayload
     {
         return new ContentPayload([
             'content' => $this->markdownParser->parse(
@@ -123,7 +129,7 @@ class CollectDocumentationPageSectionFromPath
      *
      * @throws Throwable
      */
-    private function mapCodeblockTypeToPayload(array $item) : CodeblockPayload
+    private function mapCodeblockTypeToPayload(array $item): CodeblockPayload
     {
         return new CodeblockPayload([
             'lang' => (string) ($item['lang'] ?? ''),
@@ -137,7 +143,7 @@ class CollectDocumentationPageSectionFromPath
      *
      * @throws Throwable
      */
-    private function mapNoteTypeToPayload(array $item) : NotePayload
+    private function mapNoteTypeToPayload(array $item): NotePayload
     {
         return new NotePayload([
             'heading' => (string) ($item['heading'] ?? 'Note'),

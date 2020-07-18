@@ -10,6 +10,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Throwable;
+
 use function mb_strtolower;
 
 class HoneyPotMiddleware implements MiddlewareInterface
@@ -20,7 +21,7 @@ class HoneyPotMiddleware implements MiddlewareInterface
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ) : ResponseInterface {
+    ): ResponseInterface {
         if (mb_strtolower($request->getMethod()) === 'get') {
             return $handler->handle($request);
         }

@@ -8,6 +8,7 @@ use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;
+
 use function is_array;
 
 class GetLogOutAction
@@ -23,7 +24,7 @@ class GetLogOutAction
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $this->userApi->logCurrentUserOut();
 

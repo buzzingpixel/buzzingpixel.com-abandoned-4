@@ -6,6 +6,7 @@ namespace App\Content\Meta;
 
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
 use function assert;
 use function is_array;
 
@@ -21,12 +22,13 @@ class ExtractMetaFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : MetaPayload
+    public function __invoke(string $contentPath): MetaPayload
     {
         $fullPath = $this->pathToContentDirectory . '/' . $contentPath . '/meta.yml';
 
         /** @psalm-suppress MixedAssignment */
         $parsedYaml = Yaml::parseFile($fullPath);
+
         assert(is_array($parsedYaml) || $parsedYaml === null);
 
         return new MetaPayload([
@@ -38,8 +40,11 @@ class ExtractMetaFromPath
                 ((string) $parsedYaml['twitterCardType']) :
                 'summary',
             'headingBackground' => new HeadingBackgroundPayload([
+                /** @phpstan-ignore-next-line */
                 'oneX' => $parsedYaml['headingBackground']['1x'] ?? '',
+                /** @phpstan-ignore-next-line */
                 'twoX' => $parsedYaml['headingBackground']['2x'] ?? '',
+                /** @phpstan-ignore-next-line */
                 'alt' => $parsedYaml['headingBackground']['alt'] ?? '',
             ]),
         ]);

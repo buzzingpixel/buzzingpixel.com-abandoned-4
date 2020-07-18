@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+
 use function assert;
 use function is_array;
 
@@ -30,7 +31,7 @@ class PostResetPasswordWithTokenAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $token = (string) $request->getAttribute('token');
 

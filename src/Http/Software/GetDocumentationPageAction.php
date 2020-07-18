@@ -39,7 +39,7 @@ class GetDocumentationPageAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $versionString = (string) $request->getAttribute('versionString');
 

@@ -34,7 +34,7 @@ class MigrateSeedCreateCommand extends Command
         parent::__construct();
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         return $this->phinxApplication->doRun(
             new ArrayInput([

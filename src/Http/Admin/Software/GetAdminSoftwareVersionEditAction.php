@@ -12,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+
 use function assert;
 
 class GetAdminSoftwareVersionEditAction
@@ -30,7 +31,7 @@ class GetAdminSoftwareVersionEditAction
     /**
      * @throws Throwable
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $softwareVersion = $this->softwareApi->fetchSoftwareVersionById(
             (string) $request->getAttribute('id')

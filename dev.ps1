@@ -8,6 +8,9 @@ param(
 
 $Env:COMPOSE_CONVERT_WINDOWS_PATHS = 'true'
 
+$Env:COMPOSE_DOCKER_CLI_BUILD = '1'
+$Env:DOCKER_BUILDKIT = '1'
+
 $nodeDockerImage = "node:12.12.0"
 $composeFiles = "-f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.dev.sync.yml"
 

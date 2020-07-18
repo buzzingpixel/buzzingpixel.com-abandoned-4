@@ -7,6 +7,7 @@ namespace App\HttpResponse\Twig\Extensions;
 use Throwable;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+
 use function Safe\file_get_contents;
 use function Safe\json_decode;
 
@@ -20,7 +21,7 @@ class ReadJson extends AbstractExtension
         return [$this->getFunction()];
     }
 
-    private function getFunction() : TwigFunction
+    private function getFunction(): TwigFunction
     {
         return new TwigFunction(
             'readJson',
@@ -35,7 +36,7 @@ class ReadJson extends AbstractExtension
      *
      * @psalm-suppress MixedInferredReturnType
      */
-    public function readJsonFunction(string $filePath) : array
+    public function readJsonFunction(string $filePath): array
     {
         /** @psalm-suppress MixedReturnStatement */
         return json_decode(

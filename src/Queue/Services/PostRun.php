@@ -9,8 +9,9 @@ use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
 use App\Queue\Transformers\TransformQueueItemtoRecord;
 use App\Queue\Transformers\TransformQueueModelToRecord;
-use DateTimeImmutable;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
+
 use function count;
 
 class PostRun
@@ -29,7 +30,7 @@ class PostRun
         $this->saveExistingRecord = $saveExistingRecord;
     }
 
-    public function __invoke(QueueItemModel $item) : void
+    public function __invoke(QueueItemModel $item): void
     {
         $item->isFinished = true;
 
@@ -46,7 +47,7 @@ class PostRun
 
         $item->queue->percentComplete = $finishedItems / $totalItems * 100;
 
-        if ($finishedItems >=$totalItems) {
+        if ($finishedItems >= $totalItems) {
             $item->queue->percentComplete = 100.0;
 
             $item->queue->isFinished = true;
@@ -63,7 +64,7 @@ class PostRun
         ($this->saveExistingRecord)($itemRecord);
     }
 
-    public function calcFinishedItems(QueueModel $queue) : int
+    public function calcFinishedItems(QueueModel $queue): int
     {
         $finished = 0;
 

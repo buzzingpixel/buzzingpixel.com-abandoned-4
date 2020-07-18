@@ -25,7 +25,7 @@ class GetDocumentationPageResponder extends StandardResponderConstructor
         DocumentationVersionPayload $activeVersion,
         DocumentationVersionsPayload $versions,
         SoftwareInfoPayload $softwareInfoPayload
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

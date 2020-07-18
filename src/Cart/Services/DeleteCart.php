@@ -9,6 +9,7 @@ use App\Cart\Models\CartModel;
 use App\Persistence\Cart\CartItemRecord;
 use App\Persistence\Cart\CartRecord;
 use PDO;
+
 use function array_fill;
 use function array_map;
 use function count;
@@ -23,7 +24,7 @@ class DeleteCart
         $this->pdo = $pdo;
     }
 
-    public function __invoke(CartModel $model) : void
+    public function __invoke(CartModel $model): void
     {
         $statement = $this->pdo->prepare(
             'DELETE FROM ' . (new CartRecord())->getTableName() .
@@ -33,7 +34,7 @@ class DeleteCart
         $statement->execute([':id' => $model->id]);
 
         $ids = array_map(
-            static function (CartItemModel $model) : string {
+            static function (CartItemModel $model): string {
                 return $model->id;
             },
             $model->items

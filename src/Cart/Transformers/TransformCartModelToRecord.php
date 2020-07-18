@@ -12,7 +12,7 @@ use DateTimeInterface;
 
 class TransformCartModelToRecord
 {
-    public function __invoke(CartModel $model) : CartRecord
+    public function __invoke(CartModel $model): CartRecord
     {
         $record = new CartRecord();
 

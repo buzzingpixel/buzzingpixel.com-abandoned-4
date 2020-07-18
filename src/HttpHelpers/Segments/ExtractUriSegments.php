@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\HttpHelpers\Segments;
 
 use Psr\Http\Message\UriInterface;
+
 use function array_filter;
 use function array_slice;
 use function array_values;
@@ -13,11 +14,12 @@ use function explode;
 
 class ExtractUriSegments
 {
-    public function __invoke(UriInterface $uri) : UriSegments
+    public function __invoke(UriInterface $uri): UriSegments
     {
+        /** @phpstan-ignore-next-line */
         $segments = array_values(array_filter(
             explode('/', $uri->getPath()),
-            static function ($item) {
+            static function ($item): string {
                 return $item;
             }
         ));

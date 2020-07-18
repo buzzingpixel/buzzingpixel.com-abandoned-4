@@ -13,10 +13,10 @@ use App\Software\Models\SoftwareVersionModel;
 use App\Software\Services\FetchSoftwareById;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Tests\TestConfig;
 use function assert;
 

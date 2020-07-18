@@ -8,9 +8,9 @@ use App\Persistence\Constants;
 use App\Persistence\Schedule\ScheduleTrackingRecord;
 use App\Schedule\Frequency;
 use App\Schedule\Models\ScheduleItemModel;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use Throwable;
-use function assert;
+
 use function constant;
 use function in_array;
 
@@ -18,7 +18,7 @@ use function in_array;
 
 class TransformRecordToModel
 {
-    public function __invoke(ScheduleTrackingRecord $record) : ScheduleItemModel
+    public function __invoke(ScheduleTrackingRecord $record): ScheduleItemModel
     {
         $lastRunStartAt = null;
 
@@ -29,8 +29,6 @@ class TransformRecordToModel
                 Constants::POSTGRES_OUTPUT_FORMAT,
                 $record->last_run_start_at
             );
-
-            assert($lastRunStartAt instanceof DateTimeImmutable);
         }
 
         if ($record->last_run_end_at !== '') {
@@ -38,8 +36,6 @@ class TransformRecordToModel
                 Constants::POSTGRES_OUTPUT_FORMAT,
                 $record->last_run_end_at
             );
-
-            assert($lastRunEndAt instanceof DateTimeImmutable);
         }
 
         try {

@@ -7,11 +7,11 @@ namespace Tests\Users\Services;
 use App\Persistence\Constants;
 use App\Users\Services\SessionGarbageCollection;
 use App\Utilities\SystemClock;
-use DateTimeImmutable;
 use DateTimeZone;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Throwable;
 use function Safe\strtotime;
 

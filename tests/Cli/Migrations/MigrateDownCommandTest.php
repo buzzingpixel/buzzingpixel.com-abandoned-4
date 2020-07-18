@@ -119,7 +119,7 @@ class MigrateDownCommandTest extends TestCase
 
         $mock->expects(self::once())
             ->method('doRun')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : int {
                 $this->doRunCallArgs = func_get_args();
 
                 return 0;

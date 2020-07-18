@@ -9,6 +9,7 @@ use App\Licenses\Transformers\TransformLicenseRecordToModel;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Persistence\RecordQueryFactory;
 use App\Users\Models\UserModel;
+
 use function array_map;
 
 class FetchUsersLicenses
@@ -27,7 +28,7 @@ class FetchUsersLicenses
     /**
      * @return LicenseModel[]
      */
-    public function __invoke(UserModel $userModel) : array
+    public function __invoke(UserModel $userModel): array
     {
         $records = ($this->recordQueryFactory)(
             new LicenseRecord()
@@ -41,7 +42,7 @@ class FetchUsersLicenses
 
         /** @psalm-suppress ArgumentTypeCoercion */
         return array_map(
-            fn(LicenseRecord $record) => ($this->transformer)(
+            fn (LicenseRecord $record) => ($this->transformer)(
                 $record,
                 $userModel
             ),

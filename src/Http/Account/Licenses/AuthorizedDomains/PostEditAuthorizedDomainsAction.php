@@ -12,6 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Flash\Messages as FlashMessages;
 use Throwable;
+
 use function assert;
 use function is_array;
 use function Safe\preg_split;
@@ -37,7 +38,7 @@ class PostEditAuthorizedDomainsAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $id = (string) $request->getAttribute('id');
 

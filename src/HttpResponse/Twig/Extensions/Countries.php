@@ -10,8 +10,10 @@ use Twig\TwigFunction;
 
 class Countries extends AbstractExtension
 {
+    /** @phpstan-ignore-next-line */
     private ISO3166 $ISO3166;
 
+    /** @phpstan-ignore-next-line */
     public function __construct(ISO3166 $ISO3166)
     {
         $this->ISO3166 = $ISO3166;
@@ -20,7 +22,7 @@ class Countries extends AbstractExtension
     /**
      * @inheritDoc
      */
-    public function getFunctions() : array
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -37,7 +39,7 @@ class Countries extends AbstractExtension
     /**
      * @return mixed[]
      */
-    public function countries() : array
+    public function countries(): array
     {
         return $this->ISO3166->all();
     }
@@ -45,7 +47,7 @@ class Countries extends AbstractExtension
     /**
      * @return mixed[]
      */
-    public function countriesSelectArray() : array
+    public function countriesSelectArray(): array
     {
         $array = [];
 

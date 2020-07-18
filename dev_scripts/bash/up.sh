@@ -11,7 +11,7 @@ function up() {
 
     docker network create proxy >/dev/null 2>&1
 
-    docker-compose ${composeFiles} -p buzzingpixel up -d;
+    COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose ${composeFiles} -p buzzingpixel up -d;
 
     return 0;
 }

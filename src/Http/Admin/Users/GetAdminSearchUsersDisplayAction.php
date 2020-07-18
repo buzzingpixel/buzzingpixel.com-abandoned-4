@@ -34,7 +34,7 @@ class GetAdminSearchUsersDisplayAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $query = (string) ($request->getQueryParams()['q'] ?? '');
 

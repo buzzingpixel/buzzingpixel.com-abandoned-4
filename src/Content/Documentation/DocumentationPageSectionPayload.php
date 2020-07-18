@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace App\Content\Documentation;
 
 use App\Payload\SpecificPayload;
+
 use function array_walk;
 
 class DocumentationPageSectionPayload extends SpecificPayload
 {
     private string $title = '';
 
-    protected function setTitle(string $title) : void
+    protected function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -27,12 +28,12 @@ class DocumentationPageSectionPayload extends SpecificPayload
     /**
      * @param SpecificPayload[] $content
      */
-    protected function setContent(array $content) : void
+    protected function setContent(array $content): void
     {
         array_walk($content, [$this, 'addContent']);
     }
 
-    protected function addContent(SpecificPayload $content) : void
+    protected function addContent(SpecificPayload $content): void
     {
         $this->content[] = $content;
     }
@@ -40,7 +41,7 @@ class DocumentationPageSectionPayload extends SpecificPayload
     /**
      * @return SpecificPayload[]
      */
-    public function getContent() : array
+    public function getContent(): array
     {
         return $this->content;
     }

@@ -22,7 +22,7 @@ class PostRegisterResponder
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(Payload $payload, string $redirectTo) : ResponseInterface
+    public function __invoke(Payload $payload, string $redirectTo): ResponseInterface
     {
         if ($payload->getStatus() !== Payload::STATUS_CREATED) {
             $this->flashMessages->addMessage(

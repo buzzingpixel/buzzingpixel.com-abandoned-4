@@ -12,7 +12,7 @@ use DateTimeInterface;
 
 class TransformQueueModelToRecord
 {
-    public function __invoke(QueueModel $model, bool $setInitial = false) : QueueRecord
+    public function __invoke(QueueModel $model, bool $setInitial = false): QueueRecord
     {
         $record = new QueueRecord();
 

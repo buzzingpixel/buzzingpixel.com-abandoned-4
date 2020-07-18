@@ -18,7 +18,7 @@ class QueueEmail
         $this->queueApi = $queueApi;
     }
 
-    public function __invoke(EmailModel $emailModel) : void
+    public function __invoke(EmailModel $emailModel): void
     {
         $queueModel              = new QueueModel();
         $queueModel->handle      = 'send-email';

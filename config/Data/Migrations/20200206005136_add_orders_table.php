@@ -9,7 +9,7 @@ use Phinx\Migration\AbstractMigration;
 
 class AddOrdersTable extends AbstractMigration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->table('orders', [
             'id' => false,

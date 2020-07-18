@@ -9,7 +9,7 @@ use Phinx\Migration\AbstractMigration;
 
 class AddQueueItemsTable extends AbstractMigration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->table('queue_items', [
             'id' => false,

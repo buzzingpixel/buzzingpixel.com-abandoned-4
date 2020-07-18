@@ -21,7 +21,7 @@ class GetAdminSoftwareCreateAction
     /**
      * @throws Throwable
      */
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         return ($this->responder)(
             'Http/Admin/SoftwareCreate.twig',

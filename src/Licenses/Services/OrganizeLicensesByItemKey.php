@@ -6,7 +6,9 @@ namespace App\Licenses\Services;
 
 use App\Licenses\Models\LicenseModel;
 use Safe\Exceptions\ArrayException;
+
 use function Safe\ksort;
+
 use const SORT_NATURAL;
 
 class OrganizeLicensesByItemKey
@@ -21,7 +23,7 @@ class OrganizeLicensesByItemKey
      * @psalm-suppress MixedReturnTypeCoercion
      * @noinspection PhpDocSignatureInspection
      */
-    public function __invoke(array $licenses) : array
+    public function __invoke(array $licenses): array
     {
         $returnItems = [];
 

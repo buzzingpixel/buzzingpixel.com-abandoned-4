@@ -6,6 +6,7 @@ namespace App\Content\Modules\ExtractorMethods;
 
 use App\Content\Modules\Payloads\CtasPayload;
 use Throwable;
+
 use function array_map;
 use function is_array;
 
@@ -20,7 +21,7 @@ trait ExtractCtas
      *
      * @throws Throwable
      */
-    protected function extractCtas(array $parsedYaml) : CtasPayload
+    protected function extractCtas(array $parsedYaml): CtasPayload
     {
         $yamlCtas = isset($parsedYaml['ctas']) && is_array($parsedYaml['ctas']) ?
             $parsedYaml['ctas'] :

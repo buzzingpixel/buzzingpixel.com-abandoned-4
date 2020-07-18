@@ -21,7 +21,7 @@ class GetSoftwareResponder extends StandardResponderConstructor
         ModulePayload $modulePayload,
         SoftwareInfoPayload $softwareInfoPayload,
         string $uriPath
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

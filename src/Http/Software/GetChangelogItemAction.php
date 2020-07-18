@@ -39,7 +39,7 @@ class GetChangelogItemAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $uriSegments = ($this->extractUriSegments)($request->getUri());
 

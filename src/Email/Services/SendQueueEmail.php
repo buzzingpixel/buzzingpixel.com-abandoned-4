@@ -9,7 +9,9 @@ use App\Email\Models\EmailModel;
 use App\Payload\Payload;
 use Exception;
 use Throwable;
+
 use function implode;
+
 use const PHP_EOL;
 
 class SendQueueEmail
@@ -26,7 +28,7 @@ class SendQueueEmail
      *
      * @throws Throwable
      */
-    public function __invoke(array $context) : void
+    public function __invoke(array $context): void
     {
         $props = $context['model'] ?? [];
 

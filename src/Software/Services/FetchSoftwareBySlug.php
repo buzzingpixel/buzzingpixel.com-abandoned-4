@@ -11,6 +11,7 @@ use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
+
 use function array_map;
 use function assert;
 
@@ -30,7 +31,7 @@ class FetchSoftwareBySlug
         $this->softwareVersionRecordToModel = $softwareVersionRecordToModel;
     }
 
-    public function __invoke(string $slug) : ?SoftwareModel
+    public function __invoke(string $slug): ?SoftwareModel
     {
         $softwareRecord = ($this->recordQueryFactory)(
             new SoftwareRecord()

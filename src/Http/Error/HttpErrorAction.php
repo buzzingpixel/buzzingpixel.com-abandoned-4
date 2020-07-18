@@ -25,7 +25,7 @@ class HttpErrorAction
     public function __invoke(
         ServerRequestInterface $request,
         Throwable $exception
-    ) : ResponseInterface {
+    ): ResponseInterface {
         if ($exception instanceof HttpNotFoundException) {
             return ($this->error404Responder)();
         }

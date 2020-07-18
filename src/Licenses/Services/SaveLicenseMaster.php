@@ -25,7 +25,7 @@ class SaveLicenseMaster
         $this->saveExistingLicense = $saveExistingLicense;
     }
 
-    public function __invoke(LicenseModel $licenseModel) : Payload
+    public function __invoke(LicenseModel $licenseModel): Payload
     {
         try {
             $this->transactionManager->beginTransaction();

@@ -9,6 +9,7 @@ use App\Users\Models\UserModel;
 use App\Users\UserApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+
 use function assert;
 use function is_array;
 
@@ -25,7 +26,7 @@ class PostChangePasswordAction
         $this->userApi   = $userApi;
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $user = $this->userApi->fetchLoggedInUser();
 

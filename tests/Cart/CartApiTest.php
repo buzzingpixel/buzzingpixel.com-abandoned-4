@@ -9,16 +9,18 @@ use App\Cart\Models\CartModel;
 use App\Cart\Services\AddItemToCurrentUsersCart;
 use App\Cart\Services\ClearCart;
 use App\Cart\Services\FetchCurrentUserCart;
+use App\Cart\Services\ProcessCartOrder;
 use App\Cart\Services\SaveCart;
 use App\Cart\Services\UpdateCartItemQuantity;
 use App\Payload\Payload;
 use App\Software\Models\SoftwareModel;
+use App\Users\Models\UserCardModel;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 class CartApiTest extends TestCase
 {
-    public function testFetchCurrentUserCart() : void
+    public function testFetchCurrentUserCart(): void
     {
         $cartModel = new CartModel();
 
@@ -41,7 +43,7 @@ class CartApiTest extends TestCase
         );
     }
 
-    public function testSaveCart() : void
+    public function testSaveCart(): void
     {
         $payload = new Payload(Payload::STATUS_SUCCESSFUL);
 
@@ -67,7 +69,7 @@ class CartApiTest extends TestCase
         );
     }
 
-    public function testAddItemToCurrentUsersCart() : void
+    public function testAddItemToCurrentUsersCart(): void
     {
         $softwareModel = new SoftwareModel();
 
@@ -93,7 +95,7 @@ class CartApiTest extends TestCase
         );
     }
 
-    public function testUpdateCartItemQuantity() : void
+    public function testUpdateCartItemQuantity(): void
     {
         $softwareModel = new SoftwareModel();
 
@@ -123,7 +125,7 @@ class CartApiTest extends TestCase
         );
     }
 
-    public function testClearCart() : void
+    public function testClearCart(): void
     {
         $service = $this->createMock(
             ClearCart::class
@@ -140,5 +142,39 @@ class CartApiTest extends TestCase
             ->willReturn($service);
 
         (new CartApi($di))->clearCart();
+    }
+
+    public function testProcessCartOrder(): void
+    {
+        $payload = new Payload(Payload::STATUS_SUCCESSFUL);
+
+        $cart = new CartModel();
+
+        $card = new UserCardModel();
+
+        $service = $this->createMock(
+            ProcessCartOrder::class
+        );
+
+        $service->method('__invoke')
+            ->with(
+                self::equalTo($cart),
+                self::equalTo($card),
+            )
+            ->willReturn($payload);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->method('get')
+            ->with(self::equalTo(ProcessCartOrder::class))
+            ->willReturn($service);
+
+        self::assertSame(
+            $payload,
+            (new CartApi($di))->processCartOrder(
+                $cart,
+                $card
+            )
+        );
     }
 }

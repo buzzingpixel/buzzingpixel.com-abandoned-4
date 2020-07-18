@@ -3,6 +3,7 @@
 
 declare(strict_types=1);
 
+use Config\RegisterEventListeners;
 use Config\SetupDockerDatabase;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -12,6 +13,9 @@ use Symfony\Component\Console\Application;
 $bootstrap = require __DIR__ . '/config/bootstrap.php';
 /** @var ContainerInterface $container */
 $container = $bootstrap();
+
+// Register event listeners
+$container->get(RegisterEventListeners::class)();
 
 // Create application
 /** @var Application $app */

@@ -11,15 +11,14 @@ use App\Schedule\Runners\UserSessionGarbageCollection;
 use App\Schedule\Services\FetchSchedules;
 use App\Schedule\Transformers\TransformRecordToModel;
 use Config\Schedule;
-use DateTimeImmutable;
 use DateTimeInterface;
 use Exception;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Tests\TestConfig;
-use function assert;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -180,7 +179,6 @@ class FetchSchedulesTest extends TestCase
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record1->last_run_start_at
         );
-        assert($lastRunTestTime instanceof DateTimeImmutable);
 
         $lastRunStartAt = $schedule1->lastRunStartAt;
         self::assertInstanceOf(DateTimeImmutable::class, $lastRunStartAt);
@@ -193,7 +191,6 @@ class FetchSchedulesTest extends TestCase
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record1->last_run_end_at
         );
-        assert($lastRunEndTestTime instanceof DateTimeImmutable);
 
         $lastRunEndAt = $schedule1->lastRunEndAt;
         self::assertInstanceOf(DateTimeImmutable::class, $lastRunEndAt);

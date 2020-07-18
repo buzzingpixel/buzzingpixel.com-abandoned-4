@@ -12,6 +12,7 @@ use App\Software\Models\SoftwareVersionModel;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
 use Throwable;
+
 use function array_map;
 use function assert;
 
@@ -31,7 +32,7 @@ class FetchSoftwareById
         $this->softwareVersionRecordToModel = $softwareVersionRecordToModel;
     }
 
-    public function __invoke(string $id) : ?SoftwareModel
+    public function __invoke(string $id): ?SoftwareModel
     {
         try {
             return $this->innerRun($id);
@@ -43,14 +44,18 @@ class FetchSoftwareById
     /**
      * @throws Throwable
      */
-    private function innerRun(string $id) : ?SoftwareModel
+    private function innerRun(string $id): ?SoftwareModel
     {
         $softwareRecord = ($this->recordQueryFactory)(
             new SoftwareRecord()
         )
             ->withWhere('id', $id)
             ->one();
-        assert($softwareRecord instanceof SoftwareRecord || $softwareRecord === null);
+
+        assert(
+            $softwareRecord instanceof SoftwareRecord ||
+            $softwareRecord === null
+        );
 
         if ($softwareRecord === null) {
             return null;

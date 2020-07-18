@@ -7,6 +7,7 @@ namespace App\Content\Modules\ExtractorMethods;
 use App\Content\Modules\Payloads\InformationalImagePayload;
 use cebe\markdown\GithubMarkdown;
 use Throwable;
+
 use function is_array;
 use function is_string;
 
@@ -25,7 +26,7 @@ trait ExtractInformationalImage
      *
      * @throws Throwable
      */
-    protected function extractInformationalImage(array $parsedYaml) : InformationalImagePayload
+    protected function extractInformationalImage(array $parsedYaml): InformationalImagePayload
     {
         /** @var array<string, mixed> $image */
         $image = isset($parsedYaml['image']) && is_array($parsedYaml['image']) ?

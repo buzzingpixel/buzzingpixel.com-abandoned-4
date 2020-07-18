@@ -6,6 +6,7 @@ namespace App\Queue\Services;
 
 use App\Persistence\Queue\QueueRecord;
 use App\Persistence\RecordQueryFactory;
+
 use function array_map;
 use function count;
 
@@ -22,7 +23,7 @@ class ClearAllStalledItems
         $this->deleteQueuesByIds  = $deleteQueuesByIds;
     }
 
-    public function __invoke() : void
+    public function __invoke(): void
     {
         /** @var QueueRecord[] $records */
         $records = ($this->recordQueryFactory)(new QueueRecord())
@@ -34,7 +35,7 @@ class ClearAllStalledItems
         }
 
         ($this->deleteQueuesByIds)(array_map(
-            static fn (QueueRecord $record) : string => $record->id,
+            static fn (QueueRecord $record): string => $record->id,
             $records,
         ));
     }

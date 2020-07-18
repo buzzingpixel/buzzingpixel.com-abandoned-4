@@ -8,12 +8,12 @@ trait Href
 {
     private string $href = '';
 
-    protected function setHref(string $href) : void
+    protected function setHref(string $href): void
     {
         $this->href = $href;
     }
 
-    public function getHref() : string
+    public function getHref(): string
     {
         return $this->href;
     }

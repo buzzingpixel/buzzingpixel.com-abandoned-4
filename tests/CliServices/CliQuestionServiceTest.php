@@ -82,7 +82,9 @@ class CliQuestionServiceTest extends TestCase
         self::assertTrue($args1Question->isHidden());
     }
 
-    private int $questionHelperCalls      = 0;
+    private int $questionHelperCalls = 0;
+
+    /** @var mixed[] */
     private array $questionHelperCallArgs = [];
 
     protected function setUp() : void
@@ -94,7 +96,7 @@ class CliQuestionServiceTest extends TestCase
         );
 
         $this->questionHelper->method('ask')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : string {
                 $this->questionHelperCalls += 1;
 
                 $this->questionHelperCallArgs[] = func_get_args();

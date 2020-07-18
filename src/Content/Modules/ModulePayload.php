@@ -14,7 +14,7 @@ class ModulePayload extends SpecificPayload
     /**
      * @param SpecificPayload[] $items
      */
-    protected function setItems(array $items) : void
+    protected function setItems(array $items): void
     {
         $this->items = $items;
     }
@@ -22,7 +22,7 @@ class ModulePayload extends SpecificPayload
     /**
      * @return SpecificPayload[]
      */
-    public function getItems() : array
+    public function getItems(): array
     {
         return $this->items;
     }

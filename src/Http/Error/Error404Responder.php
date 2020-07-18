@@ -16,7 +16,7 @@ class Error404Responder
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         // TODO: Implement 404 page
         $response = $this->responseFactory->createResponse(404, 'Page not found');

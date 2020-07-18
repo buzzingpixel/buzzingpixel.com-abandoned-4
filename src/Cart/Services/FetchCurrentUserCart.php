@@ -9,8 +9,9 @@ use App\Cart\Models\CartModel;
 use App\Software\Models\SoftwareModel;
 use App\Users\UserApi;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
-use DateTimeImmutable;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
+
 use function assert;
 use function Safe\strtotime;
 
@@ -43,7 +44,7 @@ class FetchCurrentUserCart
         $this->deleteCart        = $deleteCart;
     }
 
-    public function __invoke() : CartModel
+    public function __invoke(): CartModel
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $currentDate = new DateTimeImmutable(

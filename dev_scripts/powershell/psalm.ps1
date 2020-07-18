@@ -6,6 +6,6 @@ $tasks.Add('psalm',@{
         # Invoke-Expression 'docker run -it -v $("$(Get-Location):/app".Trim()) -w /app buzzingpixel-php bash -c "php -d memory_limit=4G /app/vendor/vimeo/psalm/psalm"'
 
          # Run locally
-         Invoke-Expression 'php -d memory_limit=4G vendor/vimeo/psalm/psalm'
+         Invoke-Expression 'php -d memory_limit=4G vendor/vimeo/psalm/psalm --no-cache'
     }
 })

@@ -6,10 +6,11 @@ namespace App\Cart\Models;
 
 use App\Software\Models\SoftwareModel;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use RuntimeException;
+use Safe\DateTimeImmutable;
+
 use function assert;
 use function is_array;
 use function round;
@@ -31,7 +32,7 @@ class CartModel
     /**
      * @param mixed $value
      */
-    public function __set(string $name, $value) : void
+    public function __set(string $name, $value): void
     {
         if ($name !== 'items') {
             throw new RuntimeException('Invalid property');
@@ -47,7 +48,7 @@ class CartModel
         }
     }
 
-    public function __isset(string $name) : bool
+    public function __isset(string $name): bool
     {
         return $name === 'items';
     }
@@ -75,7 +76,7 @@ class CartModel
     /** @var CartItemModel[] */
     private array $items = [];
 
-    public function addItem(CartItemModel $item) : CartModel
+    public function addItem(CartItemModel $item): CartModel
     {
         $item->cart = $this;
 
@@ -88,8 +89,10 @@ class CartModel
 
     /**
      * @return mixed[]
+     *
+     * @noinspection PhpDocMissingThrowsInspection
      */
-    public function asArray(bool $excludeId = true) : array
+    public function asArray(bool $excludeId = true): array
     {
         $array = [];
 
@@ -109,6 +112,7 @@ class CartModel
 
         // TODO: generate items
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $array['createdAt'] = $this->createdAt->format(
             DateTimeInterface::ATOM
         );
@@ -116,7 +120,7 @@ class CartModel
         return $array;
     }
 
-    public function calculateSubTotal() : float
+    public function calculateSubTotal(): float
     {
         $subTotal = 0;
 
@@ -131,16 +135,23 @@ class CartModel
         return round((float) $subTotal, 2);
     }
 
-    public function calculateTax() : float
+    public function calculateTax(string $stateAbbr = ''): float
     {
         $user = $this->user;
 
         if ($user === null) {
-            return 0.0;
+            if ($stateAbbr !== 'TN') {
+                return 0.0;
+            }
         }
 
-        // We only charge sales tax in TN
-        if ($user->billingStateAbbr !== 'TN') {
+        assert($user instanceof UserModel);
+
+        if ($stateAbbr === '') {
+            $stateAbbr = $user->billingStateAbbr;
+        }
+
+        if ($stateAbbr !== 'TN') {
             return 0.0;
         }
 
@@ -148,32 +159,12 @@ class CartModel
         return round($this->calculateSubTotal() * 0.07, 2);
     }
 
-    public function calculateTotal() : float
+    public function calculateTotal(string $stateAbbr = ''): float
     {
         return round(
-            $this->calculateSubTotal() + $this->calculateTax(),
+            $this->calculateSubTotal() +
+                $this->calculateTax($stateAbbr),
             2
         );
-    }
-
-    public function canPurchase() : bool
-    {
-        $user = $this->user;
-
-        // TODO: Determine if user has cards
-        return false;
-
-        if ($user === null) {
-            return false;
-        }
-
-        return $user->firstName !== '' &&
-            $user->lastName !== '' &&
-            $user->billingName !== '' &&
-            $user->billingCountry !== '' &&
-            $user->billingAddress !== '' &&
-            $user->billingCity !== '' &&
-            $user->billingPostalCode !== '' &&
-            $user->billingStateAbbr !== '';
     }
 }

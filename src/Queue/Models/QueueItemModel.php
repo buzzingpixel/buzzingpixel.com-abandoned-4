@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Queue\Models;
 
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 
 class QueueItemModel
 {

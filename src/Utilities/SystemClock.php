@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Utilities;
 
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 
 class SystemClock
 {
-    public function getCurrentTime() : DateTimeImmutable
+    public function getCurrentTime(): DateTimeImmutable
     {
         return new DateTimeImmutable();
     }

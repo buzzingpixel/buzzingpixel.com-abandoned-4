@@ -21,7 +21,7 @@ class GetChangelogItemResponder extends StandardResponderConstructor
         Release $release,
         SoftwareInfoPayload $softwareInfoPayload,
         string $uriPath
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse();
 
         $response->getBody()->write($this->twigEnvironment->render(

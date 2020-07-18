@@ -31,7 +31,7 @@ class SaveExistingOrderItem
     /**
      * @throws Exception
      */
-    public function __invoke(OrderItemModel $model) : void
+    public function __invoke(OrderItemModel $model): void
     {
         $record = ($this->transformer)($model);
 

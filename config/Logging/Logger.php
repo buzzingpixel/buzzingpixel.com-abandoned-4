@@ -15,7 +15,7 @@ class Logger extends \Monolog\Logger
         int $level,
         string $message,
         array $context = []
-    ) : bool {
+    ): bool {
         $trace = debug_backtrace();
 
         $callerInfo = $trace[1] ?? null;

@@ -7,8 +7,10 @@ namespace App\HttpResponse\Twig\Extensions;
 use LogicException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+
 use function get_class;
 use function gettype;
+use function is_string;
 
 class RequireVariables extends AbstractExtension
 {
@@ -20,7 +22,7 @@ class RequireVariables extends AbstractExtension
         return [$this->getFunction()];
     }
 
-    private function getFunction() : TwigFunction
+    private function getFunction(): TwigFunction
     {
         return new TwigFunction(
             'requireVariables',
@@ -35,10 +37,11 @@ class RequireVariables extends AbstractExtension
      *
      * @throws LogicException
      */
-    public function requireVars(array $context, array $required) : void
+    public function requireVars(array $context, array $required): void
     {
         foreach ($required as $var => $type) {
             if (! isset($context[$var])) {
+                /** @phpstan-ignore-next-line */
                 $this->throwRequirementException($var, $type ?: null);
             }
 
@@ -81,7 +84,14 @@ class RequireVariables extends AbstractExtension
                 // @codeCoverageIgnoreEnd
             }
 
-            $this->throwRequirementException($var, $type ?: null);
+            /**
+             * @psalm-suppress DocblockTypeContradiction
+             */
+            $this->throwRequirementException(
+                $var,
+                /** @phpstan-ignore-next-line */
+                is_string($type) ? $type : null
+            );
         }
 
         // @codeCoverageIgnoreStart
@@ -92,7 +102,7 @@ class RequireVariables extends AbstractExtension
     /**
      * @throws LogicException
      */
-    private function throwRequirementException(string $var, ?string $type) : void
+    private function throwRequirementException(string $var, ?string $type): void
     {
         $message = 'Variable "' . $var . '" is required';
 

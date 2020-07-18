@@ -6,7 +6,9 @@ namespace Tests\Http\Account\Licenses\View;
 
 use App\Content\Meta\MetaPayload;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewResponder;
+use App\Licenses\LicenseApi;
 use App\Licenses\Models\LicenseModel;
+use App\Licenses\Services\LicenseStatus;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Tests\TestConfig;
@@ -18,9 +20,23 @@ class GetAccountLicenseViewResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function test() : void
+    public function test(): void
     {
         $license = new LicenseModel();
+
+        $licenseStatus = $this->createMock(
+            LicenseStatus::class
+        );
+
+        $licenseStatus->expects(self::once())
+            ->method('statusString')
+            ->with(self::equalTo($license))
+            ->willReturn('foo-status-string');
+
+        $licenseApi = $this->createMock(LicenseApi::class);
+
+        $licenseApi->method('licenseStatus')
+            ->willReturn($licenseStatus);
 
         $twigEnv = $this->createMock(TwigEnvironment::class);
 
@@ -43,6 +59,7 @@ class GetAccountLicenseViewResponderTest extends TestCase
                             ],
                         ],
                         'license' => $license,
+                        'statusString' => 'Foo-status-string',
                     ]
                 )
             )
@@ -53,6 +70,7 @@ class GetAccountLicenseViewResponderTest extends TestCase
                 ResponseFactoryInterface::class
             ),
             $twigEnv,
+            $licenseApi,
         );
 
         $response = $responder($license);

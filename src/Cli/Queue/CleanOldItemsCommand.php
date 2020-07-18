@@ -20,14 +20,14 @@ class CleanOldItemsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('queue:clean-old-items');
 
         $this->setDescription('Cleans old queue items');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=yellow>Cleaning old items...</>');
 

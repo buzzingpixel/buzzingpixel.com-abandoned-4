@@ -10,9 +10,9 @@ use App\Persistence\Constants;
 use App\Persistence\Orders\OrderRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 

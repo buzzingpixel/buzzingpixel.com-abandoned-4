@@ -93,6 +93,7 @@ class UserDemoteCommandTest extends TestCase
 
         self::assertSame($this->userModel, $userModel);
 
+        /** @phpstan-ignore-next-line */
         self::assertFalse($userModel->isAdmin);
     }
 
@@ -127,6 +128,7 @@ class UserDemoteCommandTest extends TestCase
 
         self::assertSame($this->userModel, $userModel);
 
+        /** @phpstan-ignore-next-line */
         self::assertFalse($userModel->isAdmin);
     }
 
@@ -167,7 +169,7 @@ class UserDemoteCommandTest extends TestCase
         $mock = $this->createMock(UserApi::class);
 
         $mock->method('saveUser')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function () : ?Payload {
                 $this->saveUserCallArgs = func_get_args();
 
                 return $this->payload;

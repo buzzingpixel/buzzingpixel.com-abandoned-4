@@ -9,7 +9,7 @@ use App\Http\Software\GetDocumentationPageAction;
 use App\Http\Software\GetSoftwareAction;
 use Slim\Routing\RouteCollectorProxy;
 
-return static function (RouteCollectorProxy $r) : void {
+return static function (RouteCollectorProxy $r): void {
     $r->get(
         '/ansel-ee',
         GetSoftwareAction::class

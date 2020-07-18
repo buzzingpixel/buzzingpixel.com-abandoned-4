@@ -1,23 +1,30 @@
 {# @var \App\Cart\Models\CartModel cart #}
+{# @var \App\Users\Models\UserCardModel[] cards #}
 
 {% extends 'Http/_Infrastructure/_Layout.twig' %}
+
+{% import 'Http/_Infrastructure/Components/Forms/Macros/Inputs.twig' as Inputs %}
 
 {% set infoItems = [
     {
         key: 'Items in Cart',
         val: cart.totalQuantity,
+        xText: 'data.totalQuantity',
     },
     {
         key: 'Subtotal',
         val: '$' ~ cart.calculateSubTotal|number_format(2),
+        xText: 'data.subTotal',
     },
     {
         key: 'Tax',
         val: '$' ~ cart.calculateTax|number_format(2),
+        xText: 'data.tax',
     },
     {
         key: 'Total',
         val: '$' ~ cart.calculateTotal|number_format(2),
+        xText: 'data.total',
     },
 ] %}
 
@@ -29,7 +36,36 @@
             </div>
         </div>
     {% else %}
-        <div class="bg-gray-100 md:py-6 xl:py-10">
+        <div
+            class="bg-gray-100 md:py-6 xl:py-10"
+            {#x-init="RunWhenReady('CartAjax', data);"#}
+            x-data="{
+                data: {
+                    items: {
+                        {% for item in cart.items %}
+                            '{{ item.software.slug }}': {
+                                quantity: {{ item.quantity }},
+                            },
+                        {% endfor %}
+                    },
+                    totalQuantity: '{{ cart.totalQuantity }}',
+                    subTotal: '${{ cart.calculateSubTotal|number_format(2) }}',
+                    tax: '${{ cart.calculateTax|number_format(2) }}',
+                    total: '${{ cart.calculateTotal|number_format(2) }}',
+                    selectedPaymentMethod: '',
+                    submissionInProgress: false,
+                }
+            }"
+        >
+            <div
+                class="max-w-88rem mx-auto -mb-20"
+            >
+                <div class="p-8 max-w-2xl mx-auto lg:max-w-none">
+                    {% include 'Http/_Infrastructure/Components/Forms/Includes/Message.twig' with {
+                        standAlone: true,
+                    } only %}
+                </div>
+            </div>
             <div
                 class="max-w-88rem mx-auto lg:flex lg:flex-row lg:flex-row-reverse"
                 data-name="Cart"
@@ -61,7 +97,10 @@
                                 <span class="block font-bold">
                                     {{ item.key|smartypants|widont }}
                                 </span>
-                                <span class="block absolute right-0 top-0 mt-4 mr-4">
+                                <span
+                                    class="block absolute right-0 top-0 mt-4 mr-4"
+                                    x-text="{{ item.xText }}"
+                                >
                                     {{ item.val|smartypants|widont }}
                                 </span>
                             </div>
@@ -70,25 +109,93 @@
                     <div class="mt-3">
                         {% if not cart.user %}
                             <a
-                                {# TODO: Cart log-in route #}
                                 href="/cart/log-in"
                                 class="block rounded-md shadow bg-white py-2 px-4 text-sm text-center leading-5 text-white font-medium bg-meteor hover:bg-pumpkin-skin focus:border-rich-gold focus:shadow-outline-rich-gold active:bg-rich-gold"
                             >
                                 Log In To Pay
                             </a>
-                        {% elseif not cart.canPurchase %}
-                            <p class="text-sm m-4">
-                                {{ 'You need to have your profile completed and at least one payment source associated with your account in order to check out.'|smartypants|widont }}
-                            </p>
-                            <a
-                                href="/account/profile"
-                                class="block rounded-md shadow bg-white py-2 px-4 text-sm text-center leading-5 text-white font-medium bg-meteor hover:bg-pumpkin-skin focus:border-rich-gold focus:shadow-outline-rich-gold active:bg-rich-gold"
-                            >
-                                Go to profile
-                            </a>
                         {% else %}
-                            {# TODO: Display which card to use and a pay button #}
-                            TODO: Display which card to use and a pay button
+                            <form
+                                method="post"
+                                enctype="multipart/form-data"
+                            >
+                                {{ Inputs.hiddenInputs() }}
+                                <div class="mb-4">
+                                    <div
+                                        class="inline-block align-bottom"
+                                        style="width: calc(100% - 120px);"
+                                    >
+                                        <label
+                                            for="card"
+                                            class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 mb-1 mx-1"
+                                        >
+                                            Payment Method:
+                                        </label>
+                                        <select
+                                            name="card"
+                                            id="card"
+                                            class="form-select checkout-card-select"
+                                            {#x-model="data.selectedPaymentMethod"#}
+                                            @change="data.selectedPaymentMethod = $event.currentTarget.value; window.Methods.CartAjax(data);"
+                                        >
+                                            <option value="">Select Payment Method...</option>
+                                            {% for card in cards %}
+                                                <option
+                                                    value="{{ card.id }}"
+                                                >
+                                                    {{ card.nickname }} (&hellip;{{ card.lastFour }}) ({{ card.provider|capitalize }}){% if card.isDefault %} (default){% endif %}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div
+                                        class="inline-block align-bottom"
+                                        style="width: 110px; margin-left: 10px;"
+                                    >
+                                        <a
+                                            href="/account/payment-methods/create"
+                                            class="checkout-new-card-button"
+                                        >
+                                            New Card
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button
+                                        type="submit"
+                                        class="checkout-button"
+                                        disabled
+                                        x-bind:disabled="data.selectedPaymentMethod === ''"
+                                        x-bind:class="{'checkout-button--is-active': data.selectedPaymentMethod !== '' && data.submissionInProgress === false}"
+                                        @click="data.submissionInProgress = true"
+                                    >
+                                        <span
+                                            class="inline-block w-4 h-4 align-middle mr-2 hidden"
+                                            x-bind:class="{'hidden': data.submissionInProgress === false}"
+                                        >
+                                            <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                                                <g fill="none" fill-rule="evenodd">
+                                                    <g transform="translate(1 1)" stroke-width="2">
+                                                        <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                                                        <path d="M36 18c0-9.94-8.06-18-18-18">
+                                                            <animateTransform
+                                                                attributeName="transform"
+                                                                type="rotate"
+                                                                from="0 18 18"
+                                                                to="360 18 18"
+                                                                dur="1s"
+                                                                repeatCount="indefinite"/>
+                                                        </path>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <span class="inline-block align-middle">
+                                            Pay Now With Selected Card
+                                        </span>
+                                    </button>
+                                </div>
+                            </form>
                         {% endif %}
                     </div>
                 </div>
@@ -132,6 +239,9 @@
                                                 type="text"
                                                 class="form-input inline-block w-14 rounded-md transition ease-in-out duration-150 text-sm leading-none py-1 px-2 sm:text-right"
                                                 value="{{ item.quantity }}"
+                                                {#x-model="items['{{ item.software.slug }}'].quantity"#}
+                                                @change="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data);"
+                                                @keyup="data.items['{{ item.software.slug }}'].quantity = $event.currentTarget.value; window.Methods.CartAjax(data);"
                                             >
                                         </label>
                                     </span>

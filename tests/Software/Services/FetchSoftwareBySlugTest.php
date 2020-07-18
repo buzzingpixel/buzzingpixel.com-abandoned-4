@@ -13,9 +13,9 @@ use App\Software\Models\SoftwareVersionModel;
 use App\Software\Services\FetchSoftwareBySlug;
 use App\Software\Transformers\TransformSoftwareRecordToModel;
 use App\Software\Transformers\TransformSoftwareVersionRecordToModel;
-use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Tests\TestConfig;
 use function assert;
 

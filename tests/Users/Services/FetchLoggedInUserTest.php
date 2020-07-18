@@ -13,15 +13,14 @@ use App\Users\Services\FetchLoggedInUser;
 use App\Users\Services\FetchUserById;
 use buzzingpixel\cookieapi\interfaces\CookieApiInterface;
 use buzzingpixel\cookieapi\interfaces\CookieInterface;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Throwable;
-use function assert;
 use function Safe\strtotime;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -233,8 +232,6 @@ class FetchLoggedInUserTest extends TestCase
             DateTimeInterface::ATOM,
             $userSessionRecord->last_touched_at
         );
-
-        assert($updatedLastTouchedAt instanceof DateTimeImmutable);
 
         self::assertSame(
             $currentTime->format('Y-m-d H:i'),

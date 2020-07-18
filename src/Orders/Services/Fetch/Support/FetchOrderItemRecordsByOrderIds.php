@@ -26,7 +26,7 @@ class FetchOrderItemRecordsByOrderIds
      *
      * @noinspection PhpDocSignatureInspection
      */
-    public function __invoke(array $orderIds) : array
+    public function __invoke(array $orderIds): array
     {
         /** @var OrderItemRecord[] $itemRecords */
         $itemRecords = ($this->recordQueryFactory)(

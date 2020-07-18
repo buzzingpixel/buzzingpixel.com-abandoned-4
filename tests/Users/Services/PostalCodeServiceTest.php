@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Users\Services;
 
+use App\Users\Models\UserCardModel;
 use App\Users\Models\UserModel;
 use App\Users\Services\PostalCodeService;
 use PHPUnit\Framework\TestCase;
@@ -84,6 +85,52 @@ class PostalCodeServiceTest extends TestCase
         self::assertSame(
             'TN',
             $userModel->billingStateAbbr
+        );
+    }
+
+    public function testFillCardModelFromPostalCodeInvalid() : void
+    {
+        $model = new UserCardModel();
+
+        $model->postalCode = 'adsf';
+
+        $model->country = 'adsf';
+
+        $postalCodeService = TestConfig::$di->get(PostalCodeService::class);
+
+        $postalCodeService->fillCardModelFromPostalCode($model);
+
+        self::assertSame(
+            '',
+            $model->city
+        );
+
+        self::assertSame(
+            '',
+            $model->state
+        );
+    }
+
+    public function testCardFillModelFromPostalCode() : void
+    {
+        $model = new UserCardModel();
+
+        $model->postalCode = '37174';
+
+        $model->country = 'US';
+
+        $postalCodeService = TestConfig::$di->get(PostalCodeService::class);
+
+        $postalCodeService->fillCardModelFromPostalCode($model);
+
+        self::assertSame(
+            'Spring Hill',
+            $model->city
+        );
+
+        self::assertSame(
+            'TN',
+            $model->state
         );
     }
 }

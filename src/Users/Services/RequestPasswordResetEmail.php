@@ -34,7 +34,7 @@ class RequestPasswordResetEmail
     /**
      * @throws Throwable
      */
-    public function __invoke(UserModel $user) : void
+    public function __invoke(UserModel $user): void
     {
         $payload = ($this->generatePasswordResetToken)($user);
 

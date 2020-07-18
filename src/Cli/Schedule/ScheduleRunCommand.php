@@ -8,13 +8,14 @@ use App\Schedule\Models\ScheduleItemModel;
 use App\Schedule\Services\CheckIfModelShouldRun;
 use App\Schedule\Services\FetchSchedules;
 use App\Schedule\Services\SaveSchedule;
-use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Container\ContainerInterface;
+use Safe\DateTimeImmutable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
+
 use function array_walk;
 use function count;
 
@@ -46,7 +47,7 @@ class ScheduleRunCommand extends Command
     /** @psalm-suppress PropertyNotSetInConstructor */
     private OutputInterface $output;
 
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
 
@@ -81,7 +82,7 @@ class ScheduleRunCommand extends Command
     /**
      * @throws Throwable
      */
-    protected function processScheduleItem(ScheduleItemModel $model) : void
+    protected function processScheduleItem(ScheduleItemModel $model): void
     {
         try {
             $this->processScheduleItemInner($model);
@@ -107,7 +108,7 @@ class ScheduleRunCommand extends Command
     /**
      * @throws Throwable
      */
-    private function processScheduleItemInner(ScheduleItemModel $model) : void
+    private function processScheduleItemInner(ScheduleItemModel $model): void
     {
         $shouldRun = $this->checkIfModelShouldRun->check($model);
 

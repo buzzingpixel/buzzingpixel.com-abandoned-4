@@ -30,7 +30,7 @@ class GetCartUpdateQuantityAction
     /**
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $software = $this->softwareApi->fetchSoftwareBySlug(
             (string) $request->getAttribute('slug')

@@ -7,8 +7,10 @@ namespace Tests\Licenses;
 use App\Licenses\LicenseApi;
 use App\Licenses\Models\LicenseModel;
 use App\Licenses\Services\FetchLicenseById;
+use App\Licenses\Services\FetchLicensesByIds;
 use App\Licenses\Services\FetchUserLicenseById;
 use App\Licenses\Services\FetchUsersLicenses;
+use App\Licenses\Services\LicenseStatus;
 use App\Licenses\Services\OrganizeLicensesByItemKey;
 use App\Licenses\Services\SaveLicenseMaster;
 use App\Payload\Payload;
@@ -20,7 +22,7 @@ use Throwable;
 
 class LicenseApiTest extends TestCase
 {
-    public function testSaveLicense() : void
+    public function testSaveLicense(): void
     {
         $payload = new Payload(Payload::STATUS_SUCCESSFUL);
 
@@ -50,7 +52,7 @@ class LicenseApiTest extends TestCase
         );
     }
 
-    public function testFetchUserLicenses() : void
+    public function testFetchUserLicenses(): void
     {
         $license = new LicenseModel();
 
@@ -80,7 +82,35 @@ class LicenseApiTest extends TestCase
         );
     }
 
-    public function testFetchCurrentUserLicenses() : void
+    public function testFetchLicensesByIds(): void
+    {
+        $license = new LicenseModel();
+
+        $service = $this->createMock(
+            FetchLicensesByIds::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo(['foo-test-id']))
+            ->willReturn([$license]);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(FetchLicensesByIds::class))
+            ->willReturn($service);
+
+        $api = new LicenseApi($di);
+
+        self::assertSame(
+            [$license],
+            $api->fetchLicensesByIds(['foo-test-id'])
+        );
+    }
+
+    public function testFetchCurrentUserLicenses(): void
     {
         $license = new LicenseModel();
 
@@ -124,7 +154,7 @@ class LicenseApiTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testOrganizeLicensesByItemKey() : void
+    public function testOrganizeLicensesByItemKey(): void
     {
         $license = new LicenseModel();
 
@@ -154,7 +184,7 @@ class LicenseApiTest extends TestCase
         );
     }
 
-    public function testFetchCurrentUserLicenseById() : void
+    public function testFetchCurrentUserLicenseById(): void
     {
         $license = new LicenseModel();
 
@@ -200,7 +230,7 @@ class LicenseApiTest extends TestCase
         );
     }
 
-    public function testFetchLicenseById() : void
+    public function testFetchLicenseById(): void
     {
         $license = new LicenseModel();
 
@@ -230,6 +260,25 @@ class LicenseApiTest extends TestCase
         self::assertSame(
             $license,
             $api->fetchLicenseById('foo-id', $user)
+        );
+    }
+
+    public function testLicenseStatus(): void
+    {
+        $service = $this->createMock(LicenseStatus::class);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(LicenseStatus::class))
+            ->willReturn($service);
+
+        $api = new LicenseApi($di);
+
+        self::assertSame(
+            $service,
+            $api->licenseStatus(),
         );
     }
 }

@@ -10,9 +10,10 @@ use App\Persistence\Constants;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use Throwable;
+
 use function assert;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -21,7 +22,7 @@ class TransformLicenseRecordToModelTest extends TestCase
 {
     private DateTimeImmutable $expires;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->expires = new DateTimeImmutable();
     }
@@ -29,7 +30,7 @@ class TransformLicenseRecordToModelTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testWithUserModel() : void
+    public function testWithUserModel(): void
     {
         $record = $this->createRecord();
 
@@ -52,7 +53,7 @@ class TransformLicenseRecordToModelTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testWhenUserModelIdDoesntMatch() : void
+    public function testWhenUserModelIdDoesntMatch(): void
     {
         $record = $this->createRecord();
 
@@ -82,7 +83,7 @@ class TransformLicenseRecordToModelTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testWithNoUserModelArg() : void
+    public function testWithNoUserModelArg(): void
     {
         $record = $this->createRecord();
 
@@ -106,7 +107,7 @@ class TransformLicenseRecordToModelTest extends TestCase
         );
     }
 
-    private function createRecord() : LicenseRecord
+    private function createRecord(): LicenseRecord
     {
         $record                         = new LicenseRecord();
         $record->id                     = 'foo-id';
@@ -126,7 +127,7 @@ class TransformLicenseRecordToModelTest extends TestCase
         return $record;
     }
 
-    private function validateModel(LicenseModel $model, UserModel $user) : void
+    private function validateModel(LicenseModel $model, UserModel $user): void
     {
         self::assertSame(
             'foo-id',

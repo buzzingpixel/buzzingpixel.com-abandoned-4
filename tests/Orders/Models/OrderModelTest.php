@@ -6,10 +6,10 @@ namespace Tests\Orders\Models;
 
 use App\Orders\Models\OrderItemModel;
 use App\Orders\Models\OrderModel;
-use DateTimeImmutable;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Safe\DateTimeImmutable;
 use Throwable;
 
 class OrderModelTest extends TestCase

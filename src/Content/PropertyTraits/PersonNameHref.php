@@ -8,12 +8,12 @@ trait PersonNameHref
 {
     private string $personNameHref = '';
 
-    protected function setPersonNameHref(string $personNameHref) : void
+    protected function setPersonNameHref(string $personNameHref): void
     {
         $this->personNameHref = $personNameHref;
     }
 
-    public function getPersonNameHref() : string
+    public function getPersonNameHref(): string
     {
         return $this->personNameHref;
     }

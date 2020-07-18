@@ -13,12 +13,12 @@ class HeadingPayload extends SpecificPayload
 
     private int $level = 3;
 
-    protected function setLevel(int $level) : void
+    protected function setLevel(int $level): void
     {
         $this->level = $level;
     }
 
-    public function getLevel() : int
+    public function getLevel(): int
     {
         return $this->level;
     }

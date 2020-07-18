@@ -15,7 +15,7 @@ class GetResetPasswordWithTokenResponder extends StandardResponderConstructor
     /**
      * @throws Throwable
      */
-    public function __invoke(UserModel $user, string $token) : ResponseInterface
+    public function __invoke(UserModel $user, string $token): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 

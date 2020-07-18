@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Users\Models;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Safe\DateTimeImmutable;
+
 use function trim;
 
 class UserModel
 {
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         $this->timezone = new DateTimeZone('US/Central');
@@ -63,10 +61,12 @@ class UserModel
 
     public DateTimeImmutable $createdAt;
 
+    public string $stripeId = '';
+
     /**
      * @return mixed[]
      */
-    public function asArray(bool $excludeId = true) : array
+    public function asArray(bool $excludeId = true): array
     {
         $array = [];
 
@@ -112,7 +112,7 @@ class UserModel
         return $array;
     }
 
-    public function getFullName() : string
+    public function getFullName(): string
     {
         return trim($this->firstName . ' ' . $this->lastName);
     }

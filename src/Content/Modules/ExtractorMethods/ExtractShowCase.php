@@ -6,6 +6,7 @@ namespace App\Content\Modules\ExtractorMethods;
 
 use App\Content\Modules\Payloads\ShowCasePayload;
 use Throwable;
+
 use function array_map;
 use function is_array;
 
@@ -23,7 +24,7 @@ trait ExtractShowCase
      *
      * @throws Throwable
      */
-    protected function extractShowCase(array $parsedYaml) : ShowCasePayload
+    protected function extractShowCase(array $parsedYaml): ShowCasePayload
     {
         $yamlCtas = isset($parsedYaml['ctas']) && is_array($parsedYaml['ctas']) ?
             $parsedYaml['ctas'] :

@@ -31,7 +31,7 @@ class SaveOrderItemMaster
     /**
      * @throws Exception
      */
-    public function __invoke(OrderItemModel $model) : void
+    public function __invoke(OrderItemModel $model): void
     {
         ($this->saveLicenseMaster)($model->license);
 

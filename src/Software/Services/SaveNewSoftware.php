@@ -34,7 +34,7 @@ class SaveNewSoftware
     /**
      * @throws Exception
      */
-    public function __invoke(SoftwareModel $model) : void
+    public function __invoke(SoftwareModel $model): void
     {
         $model->id = $this->uuidFactory->uuid1()->toString();
 

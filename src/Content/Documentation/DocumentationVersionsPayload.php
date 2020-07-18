@@ -7,6 +7,7 @@ namespace App\Content\Documentation;
 use App\Content\Software\SoftwareInfoPayload;
 use App\Payload\SpecificPayload;
 use InvalidArgumentException;
+
 use function array_walk;
 
 class DocumentationVersionsPayload extends SpecificPayload
@@ -29,12 +30,12 @@ class DocumentationVersionsPayload extends SpecificPayload
     /** @psalm-suppress PropertyNotSetInConstructor */
     private SoftwareInfoPayload $softwareInfo;
 
-    protected function setSoftwareInfo(SoftwareInfoPayload $softwareInfoPayload) : void
+    protected function setSoftwareInfo(SoftwareInfoPayload $softwareInfoPayload): void
     {
         $this->softwareInfo = $softwareInfoPayload;
     }
 
-    public function getSoftwareInfo() : SoftwareInfoPayload
+    public function getSoftwareInfo(): SoftwareInfoPayload
     {
         return $this->softwareInfo;
     }
@@ -45,12 +46,12 @@ class DocumentationVersionsPayload extends SpecificPayload
     /**
      * @param DocumentationVersionPayload[] $versions
      */
-    protected function setVersions(array $versions) : void
+    protected function setVersions(array $versions): void
     {
         array_walk($versions, [$this, 'addVersion']);
     }
 
-    protected function addVersion(DocumentationVersionPayload $version) : void
+    protected function addVersion(DocumentationVersionPayload $version): void
     {
         $this->versions[$version->getSlug()] = $version;
     }
@@ -58,12 +59,12 @@ class DocumentationVersionsPayload extends SpecificPayload
     /**
      * @return DocumentationVersionPayload[]
      */
-    public function getVersions() : array
+    public function getVersions(): array
     {
         return $this->versions;
     }
 
-    public function getVersionBySlug(string $slug) : ?DocumentationVersionPayload
+    public function getVersionBySlug(string $slug): ?DocumentationVersionPayload
     {
         return $this->versions[$slug] ?? null;
     }

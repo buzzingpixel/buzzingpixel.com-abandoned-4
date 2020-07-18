@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Software\Models;
 
 use RuntimeException;
+
 use function assert;
 use function is_array;
 
@@ -16,7 +17,7 @@ class SoftwareModel
     /**
      * @param mixed $value
      */
-    public function __set(string $name, $value) : void
+    public function __set(string $name, $value): void
     {
         if ($name !== 'versions') {
             throw new RuntimeException('Invalid property');
@@ -44,7 +45,7 @@ class SoftwareModel
         return $this->versions;
     }
 
-    public function __isset(string $name) : bool
+    public function __isset(string $name): bool
     {
         return $name === 'versions';
     }
@@ -66,7 +67,7 @@ class SoftwareModel
     /** @var SoftwareVersionModel[] */
     private array $versions = [];
 
-    public function addVersion(SoftwareVersionModel $softwareVersionModel) : SoftwareModel
+    public function addVersion(SoftwareVersionModel $softwareVersionModel): SoftwareModel
     {
         $softwareVersionModel->software = $this;
 

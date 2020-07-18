@@ -20,12 +20,12 @@ class Slugify extends AbstractExtension
     /**
      * @inheritDoc
      */
-    public function getFilters() : array
+    public function getFilters(): array
     {
         return [$this->getFilter()];
     }
 
-    private function getFilter() : TwigFilter
+    private function getFilter(): TwigFilter
     {
         return new TwigFilter(
             'slugify',

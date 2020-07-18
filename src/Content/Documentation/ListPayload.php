@@ -14,7 +14,7 @@ class ListPayload extends SpecificPayload
     /**
      * @param mixed[] $listItems
      */
-    protected function setListItems(array $listItems) : void
+    protected function setListItems(array $listItems): void
     {
         $this->listItems = $listItems;
     }
@@ -22,7 +22,7 @@ class ListPayload extends SpecificPayload
     /**
      * @return mixed[]
      */
-    public function getListItems() : array
+    public function getListItems(): array
     {
         return $this->listItems;
     }

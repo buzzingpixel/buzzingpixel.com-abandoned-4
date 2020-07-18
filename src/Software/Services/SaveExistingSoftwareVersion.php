@@ -30,7 +30,7 @@ class SaveExistingSoftwareVersion
     /**
      * @throws Exception
      */
-    public function __invoke(SoftwareVersionModel $model) : void
+    public function __invoke(SoftwareVersionModel $model): void
     {
         $record = ($this->transformer)($model);
 

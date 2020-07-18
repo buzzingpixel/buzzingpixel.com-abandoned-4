@@ -9,8 +9,10 @@ use App\Persistence\Constants;
 use App\Persistence\Licenses\LicenseRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
+use Safe\Exceptions\DatetimeException;
 use Safe\Exceptions\JsonException;
+
 use function assert;
 use function Safe\json_decode;
 
@@ -26,12 +28,12 @@ class TransformLicenseRecordToModel
     }
 
     /**
-     * @throws JsonException
+     * @throws JsonException|DatetimeException
      */
     public function __invoke(
         LicenseRecord $record,
         ?UserModel $ownerUser = null
-    ) : LicenseModel {
+    ): LicenseModel {
         $model = new LicenseModel();
 
         $model->id = $record->id;
@@ -66,14 +68,14 @@ class TransformLicenseRecordToModel
 
         $model->isDisabled = $record->is_disabled === '1';
 
-        $expires = DateTimeImmutable::createFromFormat(
-            Constants::POSTGRES_OUTPUT_FORMAT,
-            $record->expires
-        );
+        if ($record->expires !== null) {
+            $expires = DateTimeImmutable::createFromFormat(
+                Constants::POSTGRES_OUTPUT_FORMAT,
+                $record->expires
+            );
 
-        assert($expires instanceof DateTimeImmutable);
-
-        $model->expires = $expires;
+            $model->expires = $expires;
+        }
 
         return $model;
     }

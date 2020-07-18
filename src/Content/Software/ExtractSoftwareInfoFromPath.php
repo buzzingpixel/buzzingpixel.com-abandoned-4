@@ -7,6 +7,7 @@ namespace App\Content\Software;
 use App\Content\Modules\CommonTraits\MapYamlCtaToPayload;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
 use function array_map;
 use function assert;
 use function is_array;
@@ -25,7 +26,7 @@ class ExtractSoftwareInfoFromPath
     /**
      * @throws Throwable
      */
-    public function __invoke(string $contentPath) : SoftwareInfoPayload
+    public function __invoke(string $contentPath): SoftwareInfoPayload
     {
         $fullPath = $this->pathToContentDirectory . '/' . $contentPath . '/software.yml';
 

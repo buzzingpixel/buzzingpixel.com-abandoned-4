@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Queue\Models;
 
-use DateTimeImmutable;
 use DateTimeZone;
 use RuntimeException;
+use Safe\DateTimeImmutable;
+
 use function assert;
 use function is_array;
 
@@ -61,7 +62,7 @@ class QueueModel
     /** @var QueueItemModel[] */
     private array $items = [];
 
-    public function addItem(QueueItemModel $item) : void
+    public function addItem(QueueItemModel $item): void
     {
         $item->queue = $this;
 
@@ -71,7 +72,7 @@ class QueueModel
     /**
      * @param mixed $value
      */
-    public function __set(string $name, $value) : void
+    public function __set(string $name, $value): void
     {
         if ($name !== 'items') {
             throw new RuntimeException('Property does not exist');
@@ -87,7 +88,7 @@ class QueueModel
         }
     }
 
-    public function __isset(string $name) : bool
+    public function __isset(string $name): bool
     {
         return $name === 'items';
     }

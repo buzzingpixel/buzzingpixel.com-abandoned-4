@@ -8,9 +8,9 @@ use App\Persistence\Constants;
 use App\Persistence\Queue\QueueItemRecord;
 use App\Queue\Models\QueueItemModel;
 use App\Queue\Models\QueueModel;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use Throwable;
-use function assert;
+
 use function in_array;
 use function is_array;
 use function Safe\json_decode;
@@ -22,7 +22,7 @@ class QueueItemRecordToModel
     public function __invoke(
         QueueItemRecord $record,
         QueueModel $queueModel
-    ) : QueueItemModel {
+    ): QueueItemModel {
         $model = new QueueItemModel();
 
         $model->id = $record->id;
@@ -41,10 +41,8 @@ class QueueItemRecordToModel
             /** @psalm-suppress PossiblyNullArgument */
             $finishedAt = DateTimeImmutable::createFromFormat(
                 Constants::POSTGRES_OUTPUT_FORMAT,
-                $record->finished_at,
+                (string) $record->finished_at,
             );
-
-            assert($finishedAt instanceof DateTimeImmutable);
 
             $model->finishedAt = $finishedAt;
         } catch (Throwable $e) {

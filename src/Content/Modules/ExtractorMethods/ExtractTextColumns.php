@@ -8,6 +8,7 @@ use App\Content\Modules\Payloads\ContentWithHeadingPayload;
 use App\Content\Modules\Payloads\TextColumnsPayload;
 use cebe\markdown\GithubMarkdown;
 use Throwable;
+
 use function array_map;
 use function is_array;
 
@@ -23,7 +24,7 @@ trait ExtractTextColumns
      *
      * @throws Throwable
      */
-    protected function extractTextColumns(array $parsedYaml) : TextColumnsPayload
+    protected function extractTextColumns(array $parsedYaml): TextColumnsPayload
     {
         /** @var array<int, array<string, string>> $columns */
         $columns = isset($parsedYaml['columns']) && is_array($parsedYaml['columns']) ?
@@ -44,7 +45,7 @@ trait ExtractTextColumns
      *
      * @throws Throwable
      */
-    private function mapTextColumnArrayToPayload(array $textColumn) : ContentWithHeadingPayload
+    private function mapTextColumnArrayToPayload(array $textColumn): ContentWithHeadingPayload
     {
         return new ContentWithHeadingPayload([
             'headline' => (string) ($textColumn['headline'] ?? ''),

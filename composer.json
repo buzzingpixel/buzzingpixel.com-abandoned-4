@@ -14,11 +14,24 @@
         {
             "type": "vcs",
             "url": "https://github.com/mjerwin/parseachangelog.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/buzzingpixel/twig-getenv.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/buzzingpixel/twig-markdown.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/buzzingpixel/twig-switch.git"
         }
     ],
     "require": {
         "php": "^7.4",
         "ext-PDO": "^7.3",
+        "awurth/slim-validation": "^3.3",
         "buzzingpixel/cookie-api": "^2.0",
         "buzzingpixel/twig-getenv": "^1.0",
         "buzzingpixel/twig-markdown": "^1.0",
@@ -26,43 +39,45 @@
         "buzzingpixel/twig-switch": "^1.0",
         "buzzingpixel/twig-widont": "^1.0",
         "cebe/markdown": "^1.2",
-        "cocur/slugify": "^3.2",
+        "cocur/slugify": "^4.0",
+        "crell/tukio": "^1.1",
         "guzzlehttp/guzzle": "^6.5",
         "html2text/html2text": "^4.2",
-        "kanellov/slim-twig-flash": "^0.2.0",
         "league/iso3166": "^2.1",
+        "league/pipeline": "^1.0",
         "mandrill/mandrill": "^1.0",
         "mjerwin/parseachangelog": "0.9.4",
         "monolog/monolog": "^2.0",
         "mrclay/minify": "^3.0",
         "php-di/php-di": "^6.0",
         "ramsey/uuid": "^3.8",
-        "robmorgan/phinx": "^0.11.1",
+        "robmorgan/phinx": "^0.12",
         "rollbar/rollbar": "^2.0",
         "slim/csrf": "^1.0",
         "slim/flash": "^0.4.0",
-        "slim/psr7": "^0.6.0",
+        "slim/psr7": "^1.1",
         "slim/slim": "^4.3",
-        "symfony/console": "^4.3",
+        "stripe/stripe-php": "^7.37",
+        "symfony/console": "^5.0",
         "symfony/yaml": "^4.3",
-        "twig/twig": "^2.12"
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "buzzingpixel/twig-dumper": "^1.0",
-        "codedungeon/phpunit-result-printer": "^0.26.2",
+        "codedungeon/phpunit-result-printer": "^0.27.0",
         "dg/bypass-finals": "^1.1",
-        "doctrine/coding-standard": "^7.0",
+        "doctrine/coding-standard": "^8.0",
         "filp/whoops": "^2.5",
         "friendsofphp/php-cs-fixer": "^2.14",
-        "phpstan/phpstan": "^0.11.5",
-        "phpstan/phpstan-deprecation-rules": "^0.11.0",
-        "phpstan/phpstan-phpunit": "^0.11.2",
-        "phpstan/phpstan-strict-rules": "^0.11.1",
-        "phpunit/phpunit": "^8.1",
+        "phpstan/phpstan": "^0.12.29",
+        "phpstan/phpstan-deprecation-rules": "^0.12.4",
+        "phpstan/phpstan-phpunit": "^0.12.11",
+        "phpstan/phpstan-strict-rules": "^0.12.2",
+        "phpunit/phpunit": "^9",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.4",
-        "symfony/var-dumper": "^4.3",
-        "thecodingmachine/phpstan-safe-rule": "^0.1.4",
+        "symfony/var-dumper": "^5",
+        "thecodingmachine/phpstan-safe-rule": "^1.0",
         "vimeo/psalm": "^3.6"
     },
     "autoload": {

@@ -9,6 +9,7 @@ use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareModel;
 use App\Software\Models\SoftwareVersionModel;
 use PDO;
+
 use function array_fill;
 use function array_map;
 use function count;
@@ -23,7 +24,7 @@ class DeleteSoftware
         $this->pdo = $pdo;
     }
 
-    public function __invoke(SoftwareModel $model) : void
+    public function __invoke(SoftwareModel $model): void
     {
         $softwareStatement = $this->pdo->prepare(
             'DELETE FROM ' . (new SoftwareRecord())->getTableName() .
@@ -33,7 +34,7 @@ class DeleteSoftware
         $softwareStatement->execute([':id' => $model->id]);
 
         $ids = array_map(
-            static function (SoftwareVersionModel $model) : string {
+            static function (SoftwareVersionModel $model): string {
                 return $model->id;
             },
             $model->versions

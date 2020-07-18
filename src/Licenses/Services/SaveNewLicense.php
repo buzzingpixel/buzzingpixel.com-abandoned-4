@@ -34,7 +34,7 @@ class SaveNewLicense
     /**
      * @throws Exception
      */
-    public function __invoke(LicenseModel $model) : void
+    public function __invoke(LicenseModel $model): void
     {
         $model->id = $this->uuidFactory->uuid1()->toString();
 

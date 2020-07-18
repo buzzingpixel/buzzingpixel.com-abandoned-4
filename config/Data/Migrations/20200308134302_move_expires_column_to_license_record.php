@@ -9,7 +9,7 @@ use Phinx\Migration\AbstractMigration;
 
 class MoveExpiresColumnToLicenseRecord extends AbstractMigration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->table('licenses')
             ->addColumn(

@@ -10,11 +10,11 @@ use App\Persistence\Queue\QueueRecord;
 use App\Persistence\RecordQuery;
 use App\Persistence\RecordQueryFactory;
 use App\Queue\Services\CleanOldItems;
-use DateTimeImmutable;
 use DateTimeZone;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 
 class CleanOldItemsTest extends TestCase
 {

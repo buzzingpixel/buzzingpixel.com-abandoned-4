@@ -8,6 +8,7 @@ use App\Persistence\RecordQueryFactory;
 use App\Persistence\Software\SoftwareVersionRecord;
 use App\Software\Models\SoftwareVersionModel;
 use Throwable;
+
 use function assert;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
@@ -25,7 +26,7 @@ class FetchSoftwareVersionById
         $this->fetchSoftwareById  = $fetchSoftwareById;
     }
 
-    public function __invoke(string $id) : ?SoftwareVersionModel
+    public function __invoke(string $id): ?SoftwareVersionModel
     {
         try {
             return $this->innerRun($id);
@@ -37,7 +38,7 @@ class FetchSoftwareVersionById
     /**
      * @throws Throwable
      */
-    private function innerRun(string $id) : ?SoftwareVersionModel
+    private function innerRun(string $id): ?SoftwareVersionModel
     {
         $softwareVersionRecord = ($this->recordQueryFactory)(
             new SoftwareVersionRecord()

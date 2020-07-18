@@ -9,6 +9,7 @@ use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserRecordToUserModel;
 use PDO;
 use Throwable;
+
 use function assert;
 
 class FetchUserById
@@ -24,7 +25,7 @@ class FetchUserById
         $this->transformUserRecordToUserModel = $transformUserRecordToUserModel;
     }
 
-    public function __invoke(string $id) : ?UserModel
+    public function __invoke(string $id): ?UserModel
     {
         try {
             $query = $this->pdo->prepare(

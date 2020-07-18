@@ -8,12 +8,12 @@ trait NoShadow
 {
     private bool $noShadow = false;
 
-    protected function setNoShadow(bool $noShadow) : void
+    protected function setNoShadow(bool $noShadow): void
     {
         $this->noShadow = $noShadow;
     }
 
-    public function getNoShadow() : bool
+    public function getNoShadow(): bool
     {
         return $this->noShadow;
     }

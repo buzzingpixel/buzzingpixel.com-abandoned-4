@@ -50,7 +50,11 @@
         </div>
         {% if errorMessage %}
             <div class="mt-2 text-red">
-                {{ errorMessage|smartypants|widont }}
+                {% if errorMessage is iterable %}
+                    {{ errorMessage|join('<br>')|smartypants|widont }}
+                {% else %}
+                    {{ errorMessage|smartypants|widont }}
+                {% endif %}
             </div>
         {% endif %}
     </div>
@@ -61,6 +65,7 @@
         name: '',
         value: '',
         type: 'text',
+        readonly: false,
     }|merge(params) %}
 
     {% set value = params.value %}
@@ -79,6 +84,9 @@
                 id="{{ params.name }}"
                 class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
                 value="{{ value }}"
+                {% if params.readonly %}
+                readonly
+                {% endif %}
             >
         </div>
     {% endset %}
@@ -140,11 +148,127 @@
             </div>
             {% if errorMessage %}
                 <div class="mt-2 text-red">
-                    {{ errorMessage|smartypants|widont }}
+                    {% if errorMessage is iterable %}
+                        {{ errorMessage|join('<br>')|smartypants|widont }}
+                    {% else %}
+                        {{ errorMessage|smartypants|widont }}
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
     </div>
+{% endmacro %}
+
+{% macro labelsOnLeftCreditCardExpiration(params) %}
+    {% set params = {
+        expirationDate: false,
+        name: 'expiration_date',
+    }|merge(params) %}
+
+    {% set months = [
+        {
+            name: 'January',
+            digit: '01',
+        },
+        {
+            name: 'February',
+            digit: '02',
+        },
+        {
+            name: 'March',
+            digit: '03',
+        },
+        {
+            name: 'April',
+            digit: '04',
+        },
+        {
+            name: 'May',
+            digit: '05',
+        },
+        {
+            name: 'June',
+            digit: '06',
+        },
+        {
+            name: 'July',
+            digit: '07',
+        },
+        {
+            name: 'August',
+            digit: '08',
+        },
+        {
+            name: 'September',
+            digit: '09',
+        },
+        {
+            name: 'October',
+            digit: '10',
+        },
+        {
+            name: 'November',
+            digit: '11',
+        },
+        {
+            name: 'December',
+            digit: '12',
+        },
+    ] %}
+
+    {% set errorMessage = PostMessage['result']['inputMessages'][params.name] ?? '' %}
+
+    {% set monthSelected = '' %}
+    {% set yearSelected = '' %}
+
+    {% if PostMessage['result']['inputValues']['expiration_month'] is defined %}
+        {% set monthSelected = PostMessage['result']['inputValues']['expiration_month'] %}
+    {% endif %}
+    {% if PostMessage['result']['inputValues']['expiration_year'] is defined %}
+        {% set yearSelected = PostMessage['result']['inputValues']['expiration_year'] %}
+    {% endif %}
+
+    {% set input %}
+        <div class="flex">
+            <select
+                name="{{ params.name }}[month]"
+                id="{{ params.name }}"
+                class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+            >
+                <option value="">Select Month...</option>
+                {% for month in months %}
+                    <option
+                        value="{{ month.digit }}"
+                        {% if (params.expirationDate and (params.expirationDate.format('m') == month.digit)) or monthSelected == month.digit %}
+                        selected
+                        {% endif %}
+                    >
+                        {{ month.name }} ({{ month.digit }})
+                    </option>
+                {% endfor %}
+            </select>
+            <span class="w-6"></span>
+            <select
+                name="{{ params.name }}[year]"
+                id="{{ params.name }}"
+                class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+            >
+                <option value="">Select Year...</option>
+                {% for year in expirationYears() %}
+                    <option
+                        value="{{ year }}"
+                        {% if (params.expirationDate and (params.expirationDate.format('Y') == year)) or yearSelected == year %}
+                        selected
+                        {% endif %}
+                    >
+                        {{ year }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
 {% endmacro %}
 
 {% macro labelsOnLeftText(params) %}
@@ -152,6 +276,8 @@
         name: '',
         value: '',
         type: 'text',
+        ref: '',
+        readonly: false,
     }|merge(params) %}
 
     {% set value = params.value %}
@@ -170,6 +296,12 @@
                 id="{{ params.name }}"
                 class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
                 value="{{ value }}"
+                {% if params.ref %}
+                ref="{{ params.ref|raw }}"
+                {% endif %}
+                {% if params.readonly %}
+                readonly
+                {% endif %}
             >
         </div>
     {% endset %}
@@ -289,6 +421,65 @@
                 ref="flatpickr"
             >
         </div>
+    {% endset %}
+
+    {{ _self.labelsOnLeftWrapper(params, input) }}
+{% endmacro %}
+
+{% macro labelsOnLeftStacked(params) %}
+    {% set params = {
+        inputs: [],
+    }|merge(params) %}
+
+    {% set input %}
+        {% for inputParams in params.inputs %}
+            {% set inputParams = {
+                name: '',
+                value: '',
+                type: 'text',
+                ref: '',
+                readonly: false,
+                small: '',
+            }|merge(inputParams) %}
+
+            {% set errorMessage = PostMessage['result']['inputMessages'][inputParams.name] ?? '' %}
+
+            <label
+                for="{{ inputParams.name }}"
+                class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100 mt-1{% if not loop.first %} sm:pt-3{% endif %}"
+            >
+                {{ inputParams.label|smartypants|widont }}
+                {% if inputParams.small %}
+                    <small class="block">
+                        {{ inputParams.small|smartypants|widont }}
+                    </small>
+                {% endif %}
+            </label>
+            <div class="rounded-md shadow-sm">
+                <input
+                    type="{{ inputParams.type }}"
+                    name="{{ inputParams.name }}"
+                    id="{{ inputParams.name }}"
+                    class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-nandor-light dark:text-gray-200{% if errorMessage %} border-red bg-lighter-red{% endif %}"
+                    value="{{ inputParams.value }}"
+                    {% if inputParams.ref %}
+                    ref="{{ inputParams.ref|raw }}"
+                    {% endif %}
+                    {% if inputParams.readonly %}
+                    readonly
+                    {% endif %}
+                >
+            </div>
+            {% if errorMessage %}
+                <div class="mt-2 text-red">
+                    {% if errorMessage is iterable %}
+                        {{ errorMessage|join('<br>')|smartypants|widont }}
+                    {% else %}
+                        {{ errorMessage|smartypants|widont }}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
     {% endset %}
 
     {{ _self.labelsOnLeftWrapper(params, input) }}

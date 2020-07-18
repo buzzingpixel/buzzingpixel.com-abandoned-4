@@ -16,7 +16,7 @@ class PostRequestPasswordResetResponder
         $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke() : ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         return $this->responseFactory->createResponse(303)
             ->withHeader(

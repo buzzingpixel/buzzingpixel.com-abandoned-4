@@ -15,12 +15,12 @@ class CodeblockPayload extends SpecificPayload
 
     private string $lang = '';
 
-    protected function setLang(string $lang) : void
+    protected function setLang(string $lang): void
     {
         $this->lang = $lang;
     }
 
-    public function getLang() : string
+    public function getLang(): string
     {
         return $this->lang;
     }

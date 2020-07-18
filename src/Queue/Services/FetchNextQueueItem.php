@@ -7,6 +7,7 @@ namespace App\Queue\Services;
 use App\Persistence\Queue\QueueRecord;
 use App\Persistence\RecordQueryFactory;
 use App\Queue\Models\QueueItemModel;
+
 use function assert;
 
 class FetchNextQueueItem
@@ -22,7 +23,7 @@ class FetchNextQueueItem
         $this->recordQueryFactory = $recordQueryFactory;
     }
 
-    public function __invoke() : ?QueueItemModel
+    public function __invoke(): ?QueueItemModel
     {
         $record = ($this->recordQueryFactory)(
             new QueueRecord()

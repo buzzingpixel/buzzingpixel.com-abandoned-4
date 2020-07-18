@@ -7,11 +7,13 @@ namespace Tests\Http\Cart;
 use App\Cart\Models\CartModel;
 use App\Content\Meta\MetaPayload;
 use App\Http\Cart\GetCartResponder;
+use App\Users\Models\UserCardModel;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Tests\TestConfig;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
+
 use function assert;
 
 class GetCartResponderTest extends TestCase
@@ -19,8 +21,13 @@ class GetCartResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function test() : void
+    public function test(): void
     {
+        $cards = [
+            new UserCardModel(),
+            new UserCardModel(),
+        ];
+
         $cart = new CartModel();
 
         $twigEnvironment = $this->createMock(
@@ -34,11 +41,12 @@ class GetCartResponderTest extends TestCase
                     string $template,
                     array $context
                 ) use (
-                    $cart
-                ) {
+                    $cart,
+                    $cards
+                ): string {
                     self::assertSame('Http/Cart.twig', $template);
 
-                    self::assertCount(2, $context);
+                    self::assertCount(3, $context);
 
                     $metaPayload = $context['metaPayload'];
 
@@ -51,6 +59,8 @@ class GetCartResponderTest extends TestCase
 
                     self::assertSame($cart, $context['cart']);
 
+                    self::assertSame($cards, $context['cards']);
+
                     return 'TwigReturnString';
                 }
             );
@@ -60,7 +70,7 @@ class GetCartResponderTest extends TestCase
             $twigEnvironment,
         );
 
-        $response = $responder($cart);
+        $response = $responder($cart, $cards);
 
         self::assertSame(
             'TwigReturnString',

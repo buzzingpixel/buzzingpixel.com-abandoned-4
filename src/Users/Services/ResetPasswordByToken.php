@@ -24,7 +24,7 @@ class ResetPasswordByToken
         $this->pdo                   = $pdo;
     }
 
-    public function __invoke(string $token, string $newPassword) : Payload
+    public function __invoke(string $token, string $newPassword): Payload
     {
         try {
             $user = ($this->fetchUserByResetToken)($token);

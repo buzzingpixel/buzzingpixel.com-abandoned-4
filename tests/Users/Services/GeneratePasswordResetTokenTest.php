@@ -10,10 +10,10 @@ use App\Persistence\Users\UserPasswordResetTokenRecord;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;
 use App\Users\Models\UserModel;
 use App\Users\Services\GeneratePasswordResetToken;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 use stdClass;
 use Tests\TestConfig;
 use Throwable;
@@ -66,7 +66,13 @@ class GeneratePasswordResetTokenTest extends TestCase
         );
 
         $record = $saveNewRecordArgHolder->record;
-        assert($record instanceof UserPasswordResetTokenRecord || $record === null);
+
+        /** @phpstan-ignore-next-line */
+        assert(
+            /** @phpstan-ignore-next-line */
+            $record instanceof UserPasswordResetTokenRecord ||
+            $record === null
+        );
 
         self::assertInstanceOf(
             UserPasswordResetTokenRecord::class,
@@ -81,7 +87,6 @@ class GeneratePasswordResetTokenTest extends TestCase
             DateTimeInterface::ATOM,
             $record->created_at
         );
-        assert($recordCreatedAt instanceof DateTimeImmutable);
 
         $currentDate = new DateTimeImmutable(
             'now',

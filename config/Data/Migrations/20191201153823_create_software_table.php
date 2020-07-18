@@ -9,7 +9,7 @@ use Phinx\Migration\AbstractMigration;
 
 class CreateSoftwareTable extends AbstractMigration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->table('software', [
             'id' => false,

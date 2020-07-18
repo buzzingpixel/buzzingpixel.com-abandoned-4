@@ -16,15 +16,15 @@ use App\Persistence\Orders\OrderItemRecord;
 use App\Persistence\Orders\OrderRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Safe\DateTimeImmutable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class FetchUsersOrdersMasterTest extends TestCase
 {
-    public function testWhenExceptionThrown() : void
+    public function testWhenExceptionThrown(): void
     {
         $user = new UserModel();
 
@@ -76,7 +76,7 @@ class FetchUsersOrdersMasterTest extends TestCase
         self::assertSame([], $service($user));
     }
 
-    public function testWhenNoRecords() : void
+    public function testWhenNoRecords(): void
     {
         $user = new UserModel();
 
@@ -128,7 +128,7 @@ class FetchUsersOrdersMasterTest extends TestCase
         self::assertSame([], $service($user));
     }
 
-    public function test() : void
+    public function test(): void
     {
         $user = new UserModel();
 

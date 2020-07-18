@@ -7,9 +7,11 @@ namespace App\Persistence;
 use PDO;
 use PDOException;
 use Throwable;
+
 use function assert;
 use function debug_backtrace;
 use function is_string;
+
 use const DEBUG_BACKTRACE_PROVIDE_OBJECT;
 
 class DatabaseTransactionManager
@@ -33,7 +35,7 @@ class DatabaseTransactionManager
      * Returns (bool) true if a transaction is started or already in progress
      * Returns (bool) false on failure to start transaction
      */
-    public function beginTransaction() : bool
+    public function beginTransaction(): bool
     {
         if ($this->pdo->inTransaction()) {
             return true;
@@ -68,7 +70,7 @@ class DatabaseTransactionManager
      *
      * @throws PDOException
      */
-    public function commit() : bool
+    public function commit(): bool
     {
         if ($this->rollbackCalled) {
             throw new PDOException();
@@ -101,7 +103,7 @@ class DatabaseTransactionManager
      * did not start the transaction, a property will be set so the call to
      * commit subsequently will fail.
      */
-    public function rollBack() : bool
+    public function rollBack(): bool
     {
         $trace = debug_backtrace(
             DEBUG_BACKTRACE_PROVIDE_OBJECT,

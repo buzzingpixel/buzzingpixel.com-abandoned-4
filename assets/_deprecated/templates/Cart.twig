@@ -54,6 +54,15 @@
                         {{ linkContent }}
                     </a>
                 </div>
+            {% elseif not cart.user %}
+                <div class="CartInfo__Item">
+                    <a
+                        href="/cart/log-in"
+                        class="button CartInfo__Button"
+                    >
+                        Log In
+                    </a>
+                </div>
             {% endif %}
         </div>
         <div class="Cart__Items">
@@ -71,10 +80,19 @@
                     <div class="Cart__Item">
                         <div class="Cart__ItemInner">
                             <div class="Cart__ItemLeft">
-                                <div class="Cart__ItemTitle">{{ item.software.name|smartypants }}</div>
+                                <div class="Cart__ItemTitle">
+                                    {{ item.software.name|smartypants }}
+                                </div>
+                                {% if item.software.isSubscription %}
+                                    <div class="Cart__ItemInfo">
+                                        Renews yearly for ${{ item.software.renewalPrice|number_format(2) }}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="Cart__ItemRight">
-                                <div class="Cart__ItemPrice">${{ item.software.price|number_format(2) }}</div>
+                                <div class="Cart__ItemPrice">
+                                    ${{ item.software.price|number_format(2) }}
+                                </div>
                                 <div class="Cart__ItemQuantity">
                                     <label>
                                         <input

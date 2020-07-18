@@ -26,7 +26,7 @@ class SaveExistingLicense
     /**
      * @throws Exception
      */
-    public function __invoke(LicenseModel $model) : void
+    public function __invoke(LicenseModel $model): void
     {
         $record = ($this->transformer)($model);
 

@@ -7,6 +7,7 @@ namespace App\HttpResponse\Twig\Extensions;
 use Throwable;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+
 use function Safe\preg_replace;
 use function trim;
 
@@ -20,7 +21,7 @@ class BreakToSpace extends AbstractExtension
         return [$this->getFunction()];
     }
 
-    private function getFunction() : TwigFunction
+    private function getFunction(): TwigFunction
     {
         return new TwigFunction(
             'breakToSpace',
@@ -31,7 +32,7 @@ class BreakToSpace extends AbstractExtension
     /**
      * @throws Throwable
      */
-    public function breakToSpaceMethod(string $classes) : string
+    public function breakToSpaceMethod(string $classes): string
     {
         /** @psalm-suppress PossiblyInvalidArgument */
         return trim(preg_replace(

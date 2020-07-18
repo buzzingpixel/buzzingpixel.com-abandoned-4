@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Config;
 
 use Config\Abstractions\SimpleModel;
+
 use function dirname;
 use function getenv;
 
@@ -37,7 +38,8 @@ class General extends SimpleModel
             static::$siteUrl = getenv('SITE_URL');
         }
 
-        if (! static::$devMode ||
+        if (
+            ! static::$devMode ||
             getenv('USE_DYNAMIC_SITE_URL') !== 'true' ||
             ! isset($_SERVER['HTTP_HOST'])
         ) {

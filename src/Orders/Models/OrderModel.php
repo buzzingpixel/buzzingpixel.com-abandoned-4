@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Orders\Models;
 
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeZone;
 use RuntimeException;
+use Safe\DateTimeImmutable;
+
 use function assert;
 use function is_array;
 
@@ -74,7 +75,7 @@ class OrderModel
     /** @var OrderItemModel[] */
     private array $items = [];
 
-    public function addItem(OrderItemModel $item) : void
+    public function addItem(OrderItemModel $item): void
     {
         $item->order = $this;
 
@@ -84,7 +85,7 @@ class OrderModel
     /**
      * @param mixed $value
      */
-    public function __set(string $name, $value) : void
+    public function __set(string $name, $value): void
     {
         if ($name !== 'items') {
             throw new RuntimeException('Property does not exist');
@@ -100,7 +101,7 @@ class OrderModel
         }
     }
 
-    public function __isset(string $name) : bool
+    public function __isset(string $name): bool
     {
         return $name === 'items';
     }

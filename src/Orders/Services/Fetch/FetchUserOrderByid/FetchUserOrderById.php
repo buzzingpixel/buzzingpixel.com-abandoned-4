@@ -15,6 +15,7 @@ use App\Persistence\Orders\OrderRecord;
 use App\Persistence\RecordQueryFactory;
 use App\Users\Models\UserModel;
 use Throwable;
+
 use function array_map;
 use function assert;
 
@@ -42,7 +43,7 @@ class FetchUserOrderById
         $this->transformItem         = $transformItem;
     }
 
-    public function __invoke(UserModel $user, string $id) : ?OrderModel
+    public function __invoke(UserModel $user, string $id): ?OrderModel
     {
         try {
             $record = ($this->recordQueryFactory)(
@@ -75,7 +76,7 @@ class FetchUserOrderById
             $itemModels = array_map(
                 function (OrderItemRecord $item) use (
                     $licenses
-                ) : OrderItemModel {
+                ): OrderItemModel {
                     return ($this->transformItem)(
                         $item,
                         $licenses[$item->license_id] ?? null,

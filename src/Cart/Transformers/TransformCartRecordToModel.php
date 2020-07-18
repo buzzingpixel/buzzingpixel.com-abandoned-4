@@ -9,8 +9,7 @@ use App\Cart\Models\CartModel;
 use App\Persistence\Cart\CartRecord;
 use App\Persistence\Constants;
 use App\Users\Services\FetchUserById;
-use DateTimeImmutable;
-use function assert;
+use Safe\DateTimeImmutable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
@@ -26,7 +25,7 @@ class TransformCartRecordToModel
     /**
      * @param CartItemModel[] $items
      */
-    public function __invoke(CartRecord $record, array $items) : CartModel
+    public function __invoke(CartRecord $record, array $items): CartModel
     {
         $user = null;
 
@@ -50,8 +49,6 @@ class TransformCartRecordToModel
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record->created_at
         );
-
-        assert($createdAt instanceof DateTimeImmutable);
 
         $cartModel->createdAt = $createdAt;
 

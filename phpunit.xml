@@ -28,6 +28,8 @@
                 <file>src/Schedule/Runners/ExampleScheduleItem.php</file>
                 <file>src/Cart/Services/FetchCurrentUserCart.php</file>
                 <file>src/Cart/Services/SaveCart.php</file>
+                <file>src/Stripe/Stripe.php</file>
+                <file>src/Content/Changelog/Release.php</file>
             </exclude>
         </whitelist>
     </filter>

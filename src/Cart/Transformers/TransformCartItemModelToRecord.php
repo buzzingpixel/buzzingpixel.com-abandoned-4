@@ -11,7 +11,7 @@ use App\Persistence\Cart\CartItemRecord;
 
 class TransformCartItemModelToRecord
 {
-    public function __invoke(CartItemModel $cartItem) : CartItemRecord
+    public function __invoke(CartItemModel $cartItem): CartItemRecord
     {
         $record = new CartItemRecord();
 

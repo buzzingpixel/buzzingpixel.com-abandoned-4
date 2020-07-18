@@ -12,7 +12,7 @@ use DateTimeInterface;
 
 class TransformModelToRecord
 {
-    public function __invoke(ScheduleItemModel $model) : ScheduleTrackingRecord
+    public function __invoke(ScheduleItemModel $model): ScheduleTrackingRecord
     {
         $record = new ScheduleTrackingRecord();
 

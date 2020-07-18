@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Licenses\Models;
 
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 
 class LicenseModel
 {

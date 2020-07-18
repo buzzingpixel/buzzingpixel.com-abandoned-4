@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Users\Services;
 
 use App\Users\Models\UserModel;
+
 use function password_hash;
 use function password_needs_rehash;
 use function password_verify;
+
 use const PASSWORD_DEFAULT;
 
 class ValidateUserPassword
@@ -27,7 +29,7 @@ class ValidateUserPassword
         UserModel $user,
         string $password,
         bool $rehashPasswordIfNeeded = true
-    ) : bool {
+    ): bool {
         $hash = $user->passwordHash;
 
         if (! password_verify($password, $hash)) {

@@ -8,6 +8,7 @@ use App\Licenses\LicenseApi;
 use App\Licenses\Models\LicenseModel;
 use App\Orders\Models\OrderItemModel;
 use App\Persistence\Orders\OrderItemRecord;
+
 use function assert;
 use function in_array;
 
@@ -25,7 +26,7 @@ class TransformOrderItemRecordToModel
     public function __invoke(
         OrderItemRecord $record,
         ?LicenseModel $license = null
-    ) : OrderItemModel {
+    ): OrderItemModel {
         $model = new OrderItemModel();
 
         $model->id = $record->id;

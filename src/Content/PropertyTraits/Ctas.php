@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Content\PropertyTraits;
 
 use App\Content\Modules\Payloads\CtaPayload;
+
 use function array_walk;
 
 trait Ctas
@@ -15,12 +16,12 @@ trait Ctas
     /**
      * @param CtaPayload[] $ctas
      */
-    protected function setCtas(array $ctas) : void
+    protected function setCtas(array $ctas): void
     {
         array_walk($ctas, [$this, 'addCta']);
     }
 
-    private function addCta(CtaPayload $cta) : void
+    private function addCta(CtaPayload $cta): void
     {
         $this->ctas[] = $cta;
     }
@@ -28,7 +29,7 @@ trait Ctas
     /**
      * @return CtaPayload[]
      */
-    public function getCtas() : array
+    public function getCtas(): array
     {
         return $this->ctas;
     }

@@ -7,72 +7,72 @@ namespace App\Users\Transformers;
 use App\Persistence\Constants;
 use App\Persistence\Users\UserRecord;
 use App\Users\Models\UserModel;
-use DateTimeImmutable;
 use DateTimeZone;
-use function assert;
+use Safe\DateTimeImmutable;
+
 use function in_array;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
 
 class TransformUserRecordToUserModel
 {
-    public function __invoke(UserRecord $userRecord) : UserModel
+    public function __invoke(UserRecord $record): UserModel
     {
-        $userModel = new UserModel();
+        $model = new UserModel();
 
-        $userModel->id = $userRecord->id;
+        $model->id = $record->id;
 
-        $userModel->isAdmin = in_array(
-            $userRecord->is_admin,
+        $model->isAdmin = in_array(
+            $record->is_admin,
             ['1', 1, true],
             true,
         );
 
-        $userModel->emailAddress = $userRecord->email_address;
+        $model->emailAddress = $record->email_address;
 
-        $userModel->passwordHash = $userRecord->password_hash;
+        $model->passwordHash = $record->password_hash;
 
-        $userModel->isActive = in_array(
-            $userRecord->is_active,
+        $model->isActive = in_array(
+            $record->is_active,
             ['1', 1, true],
             true,
         );
 
-        $userModel->timezone = new DateTimeZone(
-            $userRecord->timezone
+        $model->timezone = new DateTimeZone(
+            $record->timezone
         );
 
-        $userModel->firstName = $userRecord->first_name;
+        $model->firstName = $record->first_name;
 
-        $userModel->lastName = $userRecord->last_name;
+        $model->lastName = $record->last_name;
 
-        $userModel->displayName = $userRecord->display_name;
+        $model->displayName = $record->display_name;
 
-        $userModel->billingName = $userRecord->billing_name;
+        $model->billingName = $record->billing_name;
 
-        $userModel->billingCompany = $userRecord->billing_company;
+        $model->billingCompany = $record->billing_company;
 
-        $userModel->billingPhone = $userRecord->billing_phone;
+        $model->billingPhone = $record->billing_phone;
 
-        $userModel->billingCountry = $userRecord->billing_country;
+        $model->billingCountry = $record->billing_country;
 
-        $userModel->billingAddress = $userRecord->billing_address;
+        $model->billingAddress = $record->billing_address;
 
-        $userModel->billingCity = $userRecord->billing_city;
+        $model->billingCity = $record->billing_city;
 
-        $userModel->billingStateAbbr = $userRecord->billing_state_abbr;
+        $model->billingStateAbbr = $record->billing_state_abbr;
 
-        $userModel->billingPostalCode = $userRecord->billing_postal_code;
+        $model->billingPostalCode = $record->billing_postal_code;
 
         $createdAt = DateTimeImmutable::createFromFormat(
             Constants::POSTGRES_OUTPUT_FORMAT,
-            $userRecord->created_at
+            $record->created_at
         );
 
-        assert($createdAt instanceof DateTimeImmutable);
+        $model->createdAt = $createdAt;
 
-        $userModel->createdAt = $createdAt;
+        $model->stripeId = $record->stripe_id;
 
-        return $userModel;
+        return $model;
     }
 }

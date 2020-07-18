@@ -13,6 +13,12 @@ use App\Http\Account\Licenses\Notes\PostEditNotesAction;
 use App\Http\Account\Licenses\View\GetAccountLicenseViewAction;
 use App\Http\Account\LogIn\GetLogOutAction;
 use App\Http\Account\LogIn\PostLogInAction;
+use App\Http\Account\PaymentMethods\Create\GetCreatePaymentMethodAction;
+use App\Http\Account\PaymentMethods\Create\PostCreatePaymentMethodAction;
+use App\Http\Account\PaymentMethods\Delete\PostDeletePaymentMethodAction;
+use App\Http\Account\PaymentMethods\GetAccountPaymentMethodAction;
+use App\Http\Account\PaymentMethods\GetAccountPaymentMethodsAction;
+use App\Http\Account\PaymentMethods\Update\PostUpdatePaymentMethodAction;
 use App\Http\Account\Profile\GetAccountProfileAction;
 use App\Http\Account\Profile\PostAccountProfileEditAction;
 use App\Http\Account\Purchases\GetAccountPurchasesAction;
@@ -28,9 +34,9 @@ use Config\NoOp;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
-return static function (App $app) : void {
+return static function (App $app): void {
     // No auth required
-    $app->group('/account', function (RouteCollectorProxy $r) : void {
+    $app->group('/account', function (RouteCollectorProxy $r): void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
@@ -65,7 +71,7 @@ return static function (App $app) : void {
     });
 
     // Auth required
-    $app->group('/account', function (RouteCollectorProxy $r) : void {
+    $app->group('/account', function (RouteCollectorProxy $r): void {
         // We have to use $this so PHPCS will be happy and not convert to
         // static function. $this is an instance of the DI Container
         $this->get(NoOp::class)();
@@ -122,6 +128,36 @@ return static function (App $app) : void {
         $r->post(
             '/profile',
             PostAccountProfileEditAction::class
+        );
+
+        $r->get(
+            '/payment-methods',
+            GetAccountPaymentMethodsAction::class
+        );
+
+        $r->get(
+            '/payment-methods/create',
+            GetCreatePaymentMethodAction::class,
+        );
+
+        $r->post(
+            '/payment-methods/create',
+            PostCreatePaymentMethodAction::class,
+        );
+
+        $r->get(
+            '/payment-methods/{id}',
+            GetAccountPaymentMethodAction::class
+        );
+
+        $r->post(
+            '/payment-methods/{id}',
+            PostUpdatePaymentMethodAction::class
+        );
+
+        $r->post(
+            '/payment-methods/{id}/delete',
+            PostDeletePaymentMethodAction::class,
         );
 
         $r->get(

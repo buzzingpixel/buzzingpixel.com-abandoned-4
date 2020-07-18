@@ -14,8 +14,8 @@ class ScheduleTrackingRecord extends Record
 
     public string $class = '';
 
-    /** @var string int|bool|string */
-    public string $is_running = '0';
+    /** @var int|bool|string */
+    public $is_running = '0';
 
     public string $last_run_start_at = '';
 

@@ -31,5 +31,5 @@ class LicenseRecord extends Record
     /** @var int|bool|string */
     public $is_disabled = '1';
 
-    public string $expires = '';
+    public ?string $expires = null;
 }

@@ -9,6 +9,7 @@ use App\Users\Models\UserModel;
 use App\Users\Transformers\TransformUserRecordToUserModel;
 use PDO;
 use Throwable;
+
 use function assert;
 use function is_bool;
 
@@ -25,7 +26,7 @@ class FetchUserByEmailAddress
         $this->transformUserRecordToUserModel = $transformUserRecordToUserModel;
     }
 
-    public function __invoke(string $emailAddress) : ?UserModel
+    public function __invoke(string $emailAddress): ?UserModel
     {
         try {
             $statement = $this->pdo->prepare(
@@ -40,7 +41,8 @@ class FetchUserByEmailAddress
 
             $isInstance = $userRecord instanceof UserRecord;
 
-            if ($userRecord === null ||
+            if (
+                $userRecord === null ||
                 is_bool($userRecord) ||
                 ! $isInstance
             ) {

@@ -10,7 +10,8 @@ use App\Persistence\Constants;
 use App\Persistence\Orders\OrderRecord;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
+
 use function assert;
 use function in_array;
 
@@ -33,7 +34,7 @@ class TransformOrderRecordToModel
         OrderRecord $record,
         array $items = [],
         ?UserModel $user = null
-    ) : OrderModel {
+    ): OrderModel {
         $model = new OrderModel();
 
         $model->id = $record->id;
@@ -106,8 +107,6 @@ class TransformOrderRecordToModel
             Constants::POSTGRES_OUTPUT_FORMAT,
             $record->date,
         );
-
-        assert($date instanceof DateTimeImmutable);
 
         $model->date = $date;
 

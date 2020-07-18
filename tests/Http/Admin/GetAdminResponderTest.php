@@ -29,7 +29,7 @@ class GetAdminResponderTest extends TestCase
         $twig->expects(self::once())
             ->method('render')
             ->willReturnCallback(
-                static function () use ($twigRenderArgHolder) {
+                static function () use ($twigRenderArgHolder) : string {
                     $twigRenderArgHolder->args = func_get_args();
 
                     return 'FooTwigOutput';

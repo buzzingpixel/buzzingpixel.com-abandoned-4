@@ -9,13 +9,14 @@ use App\Software\Models\SoftwareModel;
 use App\Software\SoftwareApi;
 use App\Users\Models\UserModel;
 use App\Users\UserApi;
-use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use Safe\DateTimeImmutable;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
+
 use function assert;
 use function count;
 use function is_array;
@@ -41,7 +42,7 @@ class PostAdminSoftwareVersionEditAction
      * @throws Throwable
      * @throws HttpNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $softwareVersion = $this->softwareApi->fetchSoftwareVersionById(
             (string) $request->getAttribute('id')
@@ -116,8 +117,6 @@ class PostAdminSoftwareVersionEditAction
             $inputValues['released_on'],
             $user->timezone
         );
-
-        assert($releasedOn instanceof DateTimeImmutable);
 
         $releasedOn = $releasedOn->setTimezone(
             new DateTimeZone('UTC')

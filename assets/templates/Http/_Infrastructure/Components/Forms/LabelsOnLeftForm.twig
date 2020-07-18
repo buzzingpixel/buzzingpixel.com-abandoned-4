@@ -57,6 +57,10 @@
                                     {{ Inputs.labelsOnLeftCheckbox(params) }}
                                 {% case 'dateChooser' %}
                                     {{ Inputs.labelsOnLeftDateChooser(params) }}
+                                {% case 'creditCardExpiration' %}
+                                    {{ Inputs.labelsOnLeftCreditCardExpiration(params) }}
+                                {% case 'stacked' %}
+                                    {{ Inputs.labelsOnLeftStacked(params) }}
                                 {% default %}
                                     {{ Inputs.labelsOnLeftText(params) }}
                             {% endswitch %}

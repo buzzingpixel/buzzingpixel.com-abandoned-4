@@ -6,7 +6,7 @@ namespace Config;
 
 class NoOp
 {
-    public function __invoke() : void
+    public function __invoke(): void
     {
     }
 }
