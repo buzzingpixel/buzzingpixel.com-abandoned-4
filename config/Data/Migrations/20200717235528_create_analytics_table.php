@@ -17,7 +17,11 @@ class CreateAnalyticsTable extends AbstractMigration
         ])
             ->addColumn('id', 'uuid')
             ->addColumn('cookie_id', 'uuid')
-            ->addColumn('user_id', 'uuid')
+            ->addColumn(
+                'user_id',
+                'uuid',
+                ['null' => true]
+            )
             ->addColumn(
                 'logged_in_on_page_load',
                 'boolean',
