@@ -7,9 +7,11 @@ namespace Tests\Analytics;
 use App\Analytics\AnalyticsApi;
 use App\Analytics\Models\AnalyticsModel;
 use App\Analytics\Services\CreatePageView;
+use App\Analytics\Services\GetTotalPageViewsSince;
 use App\Payload\Payload;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Safe\DateTimeImmutable;
 
 class AnalyticsApiTest extends TestCase
 {
@@ -38,6 +40,34 @@ class AnalyticsApiTest extends TestCase
         self::assertSame(
             $payload,
             $api->createPageView($model)
+        );
+    }
+
+    public function testGetTotalPageViewsSince(): void
+    {
+        $date = new DateTimeImmutable();
+
+        $service = $this->createMock(
+            GetTotalPageViewsSince::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($date))
+            ->willReturn(987);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(GetTotalPageViewsSince::class))
+            ->willReturn($service);
+
+        $api = new AnalyticsApi($di);
+
+        self::assertSame(
+            987,
+            $api->getTotalPageViewsSince($date)
         );
     }
 }
