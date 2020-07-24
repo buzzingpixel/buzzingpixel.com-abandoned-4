@@ -40,6 +40,23 @@ class PostAnalyticsPageViewAction
 
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
+        $response = $this->responseFactory->createResponse(200)
+            ->withHeader(
+                'Content-type',
+                'application/json'
+            );
+
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $response->getBody()->write(
+            json_encode(['status' => 'ok'])
+        );
+
+        $user = $this->userApi->fetchLoggedInUser();
+
+        if ($user && $user->isAdmin) {
+            return $response;
+        }
+
         $requestData = (array) $request->getParsedBody();
 
         $analyticsModel = new AnalyticsModel();
@@ -53,17 +70,6 @@ class PostAnalyticsPageViewAction
         $analyticsModel->uri = (string) ($requestData['uri'] ?? '/');
 
         $this->analyticsApi->createPageView($analyticsModel);
-
-        $response = $this->responseFactory->createResponse(200)
-            ->withHeader(
-                'Content-type',
-                'application/json'
-            );
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $response->getBody()->write(
-            json_encode(['status' => 'ok'])
-        );
 
         return $response;
     }
