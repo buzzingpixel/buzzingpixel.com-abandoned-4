@@ -6,9 +6,11 @@ namespace Tests\Analytics;
 
 use App\Analytics\AnalyticsApi;
 use App\Analytics\Models\AnalyticsModel;
+use App\Analytics\Models\UriStatsModel;
 use App\Analytics\Services\CreatePageView;
 use App\Analytics\Services\GetTotalPageViewsSince;
 use App\Analytics\Services\GetUniqueTotalVisitorsSince;
+use App\Analytics\Services\GetUriStatsSince;
 use App\Payload\Payload;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -101,6 +103,42 @@ class AnalyticsApiTest extends TestCase
         self::assertSame(
             243,
             $api->getUniqueTotalVisitorsSince($date)
+        );
+    }
+
+    public function testGetUriStatsSince(): void
+    {
+        $uriStats1 = new UriStatsModel();
+
+        $uriStats2 = new UriStatsModel();
+
+        $uriStatsArray = [$uriStats1, $uriStats2];
+
+        $date = new DateTimeImmutable();
+
+        $service = $this->createMock(
+            GetUriStatsSince::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($date))
+            ->willReturn($uriStatsArray);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(
+                GetUriStatsSince::class
+            ))
+            ->willReturn($service);
+
+        $api = new AnalyticsApi($di);
+
+        self::assertSame(
+            $uriStatsArray,
+            $api->getUriStatsSince($date)
         );
     }
 }
