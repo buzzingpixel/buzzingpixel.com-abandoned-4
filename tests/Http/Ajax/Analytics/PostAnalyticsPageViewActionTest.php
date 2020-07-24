@@ -20,7 +20,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Tests\TestConfig;
 use Throwable;
 
-class PostAnalyticsPageViewTest extends TestCase
+class PostAnalyticsPageViewActionTest extends TestCase
 {
     public function testWhenUserIsAdmin(): void
     {

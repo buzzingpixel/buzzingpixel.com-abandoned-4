@@ -7,7 +7,9 @@ namespace App\Analytics;
 use App\Analytics\Models\AnalyticsModel;
 use App\Analytics\Services\CreatePageView;
 use App\Analytics\Services\GetTotalPageViewsSince;
+use App\Analytics\Services\GetUniqueTotalVisitorsSince;
 use App\Payload\Payload;
+use DateTimeImmutable;
 use Psr\Container\ContainerInterface;
 
 use function assert;
@@ -37,6 +39,17 @@ class AnalyticsApi
         $service = $this->di->get(GetTotalPageViewsSince::class);
 
         assert($service instanceof GetTotalPageViewsSince);
+
+        return $service($date);
+    }
+
+    public function getUniqueTotalVisitorsSince(
+        ?DateTimeImmutable $date = null
+    ): int {
+        /** @psalm-suppress MixedAssignment */
+        $service = $this->di->get(GetUniqueTotalVisitorsSince::class);
+
+        assert($service instanceof GetUniqueTotalVisitorsSince);
 
         return $service($date);
     }

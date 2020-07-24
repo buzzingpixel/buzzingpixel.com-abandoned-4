@@ -53,7 +53,7 @@ class PostAnalyticsPageViewAction
 
         $user = $this->userApi->fetchLoggedInUser();
 
-        if ($user && $user->isAdmin) {
+        if ($user !== null && $user->isAdmin) {
             return $response;
         }
 

@@ -8,6 +8,7 @@ use App\Analytics\AnalyticsApi;
 use App\Analytics\Models\AnalyticsModel;
 use App\Analytics\Services\CreatePageView;
 use App\Analytics\Services\GetTotalPageViewsSince;
+use App\Analytics\Services\GetUniqueTotalVisitorsSince;
 use App\Payload\Payload;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -60,7 +61,9 @@ class AnalyticsApiTest extends TestCase
 
         $di->expects(self::once())
             ->method('get')
-            ->with(self::equalTo(GetTotalPageViewsSince::class))
+            ->with(self::equalTo(
+                GetTotalPageViewsSince::class
+            ))
             ->willReturn($service);
 
         $api = new AnalyticsApi($di);
@@ -68,6 +71,36 @@ class AnalyticsApiTest extends TestCase
         self::assertSame(
             987,
             $api->getTotalPageViewsSince($date)
+        );
+    }
+
+    public function testGetUniqueTotalVisitorsSince(): void
+    {
+        $date = new DateTimeImmutable();
+
+        $service = $this->createMock(
+            GetUniqueTotalVisitorsSince::class
+        );
+
+        $service->expects(self::once())
+            ->method('__invoke')
+            ->with(self::equalTo($date))
+            ->willReturn(243);
+
+        $di = $this->createMock(ContainerInterface::class);
+
+        $di->expects(self::once())
+            ->method('get')
+            ->with(self::equalTo(
+                GetUniqueTotalVisitorsSince::class
+            ))
+            ->willReturn($service);
+
+        $api = new AnalyticsApi($di);
+
+        self::assertSame(
+            243,
+            $api->getUniqueTotalVisitorsSince($date)
         );
     }
 }
