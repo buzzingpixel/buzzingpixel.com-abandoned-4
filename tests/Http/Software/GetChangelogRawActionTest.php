@@ -16,7 +16,7 @@ class GetChangelogRawActionTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testWhenChangelogInternal() : void
+    public function testWhenChangelogInternal(): void
     {
         $action = TestConfig::$di->get(GetChangelogRawAction::class);
 
@@ -26,14 +26,12 @@ class GetChangelogRawActionTest extends TestCase
             )
         );
 
-        self::assertCount(
-            1,
-            $response->getHeader('Content-Type')
-        );
-
         self::assertSame(
-            'text/plain',
-            $response->getHeader('Content-Type')[0]
+            [
+                'EnableStaticCache' => ['true'],
+                'Content-Type' => ['text/plain'],
+            ],
+            $response->getHeaders()
         );
 
         self::assertNotEmpty($response->getBody()->__toString());
@@ -42,7 +40,7 @@ class GetChangelogRawActionTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testWhenChangelogExternal() : void
+    public function testWhenChangelogExternal(): void
     {
         $action = TestConfig::$di->get(GetChangelogRawAction::class);
 
@@ -52,20 +50,18 @@ class GetChangelogRawActionTest extends TestCase
             )
         );
 
-        self::assertCount(
-            1,
-            $response->getHeader('Content-Type')
-        );
-
         self::assertSame(
-            'text/plain',
-            $response->getHeader('Content-Type')[0]
+            [
+                'EnableStaticCache' => ['true'],
+                'Content-Type' => ['text/plain'],
+            ],
+            $response->getHeaders()
         );
 
         self::assertNotEmpty($response->getBody()->__toString());
     }
 
-    private function mockRequest(string $uriString) : ServerRequestInterface
+    private function mockRequest(string $uriString): ServerRequestInterface
     {
         $uri = $this->createMock(UriInterface::class);
 

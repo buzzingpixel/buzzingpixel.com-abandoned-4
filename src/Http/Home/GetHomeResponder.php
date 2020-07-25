@@ -19,7 +19,8 @@ class GetHomeResponder extends StandardResponderConstructor
         MetaPayload $metaPayload,
         ModulePayload $modulePayload
     ): ResponseInterface {
-        $response = $this->responseFactory->createResponse();
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('EnableStaticCache', 'true');
 
         $response->getBody()->write($this->twigEnvironment->render(
             'Http/StandardPage.twig',

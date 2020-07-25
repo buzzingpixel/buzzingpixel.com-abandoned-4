@@ -18,7 +18,7 @@ class GetSoftwareResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function test() : void
+    public function test(): void
     {
         $metaPayload = new MetaPayload();
 
@@ -59,6 +59,11 @@ class GetSoftwareResponderTest extends TestCase
         );
 
         self::assertSame(200, $response->getStatusCode());
+
+        self::assertSame(
+            ['EnableStaticCache' => ['true']],
+            $response->getHeaders()
+        );
 
         self::assertSame(
             'TwigRenderReturnContent',

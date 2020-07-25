@@ -22,7 +22,8 @@ class GetSoftwareResponder extends StandardResponderConstructor
         SoftwareInfoPayload $softwareInfoPayload,
         string $uriPath
     ): ResponseInterface {
-        $response = $this->responseFactory->createResponse();
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('EnableStaticCache', 'true');
 
         $response->getBody()->write($this->twigEnvironment->render(
             'Http/Software/SoftwarePage.twig',
