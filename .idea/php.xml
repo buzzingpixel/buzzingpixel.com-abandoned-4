@@ -184,6 +184,7 @@
       <path value="$PROJECT_DIR$/vendor/nette/php-generator" />
       <path value="$PROJECT_DIR$/vendor/nette/utils" />
       <path value="$PROJECT_DIR$/vendor/league/pipeline" />
+      <path value="$PROJECT_DIR$/vendor/league/flysystem" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
