@@ -33,6 +33,9 @@ projectOverrides.json
 /.idea/dictionaries
 /.idea/shelf*
 
+# Custom addtion for .idea ignore
+/.idea/httpRequests/*
+
 
 
 

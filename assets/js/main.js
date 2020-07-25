@@ -1,21 +1,32 @@
 /* eslint-disable no-new */
 
+// Setup
+import Events from './Events.js';
+import SetGlobalData from './SetUp/SetGlobalData.js';
+import LoadAxios from './SetUp/LoadAxios.js';
+import Analytics from './SetUp/Analytics.js';
+
+// Components
 import CartAjax from './Components/CartAjax.js';
 import CartQuantity from './Components/CartQuantity.js';
 import ConfirmSubmit from './Components/ConfirmSubmit.js';
 import CreditCardInputFormatting from './Components/CreditCardInputFormatting.js';
-import Events from './Events.js';
 import Flatpickr from './Components/Flatpickr.js';
 import LeftFixedScroll from './Components/LeftFixedScroll.js';
 import PreventEmptySubmit from './Components/PreventEmptySubmit.js';
 import PrismCodeHighlighting from './Components/PrismCodeHighlighting.js';
 import Selects from './Components/Selects.js';
 
+// Setup
 Events();
-
+SetGlobalData();
+LoadAxios();
+Analytics();
 window.Methods.CartAjax = CartAjax;
 window.Methods.CartQuantity = CartQuantity;
 window.Methods.LeftFixedScroll = LeftFixedScroll;
+
+// Components
 
 // ConfirmSubmit
 const forms = document.querySelectorAll('[ref="ConfirmSubmit"]');

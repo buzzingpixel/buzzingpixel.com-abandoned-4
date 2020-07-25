@@ -29,6 +29,8 @@ $app = AppFactory::create();
 $httpMiddleWares = require dirname(__DIR__) . '/config/httpAppMiddlewares.php';
 $httpMiddleWares($app);
 
+$app->addBodyParsingMiddleware();
+
 // Register routes
 $routes = require dirname(__DIR__) . '/config/Routes/index.php';
 $routes($app);

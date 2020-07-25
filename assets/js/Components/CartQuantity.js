@@ -1,7 +1,3 @@
-import Loader from '../Helpers/Loader.js';
-
-const axiosJs = 'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js';
-
 const run = (data) => {
     // noinspection JSUnresolvedVariable,ES6ModulesDependencies
     window.axios.get('/ajax/user/payload')
@@ -18,14 +14,18 @@ const firstRun = (data) => {
     });
 };
 
-export default (data) => {
+const preRun = (data) => {
     if (!window.axios) {
-        Loader.loadJs(axiosJs).then(() => {
-            firstRun(data);
-        });
+        setTimeout(() => {
+            preRun(data);
+        }, 50);
 
         return;
     }
 
     firstRun(data);
+};
+
+export default (data) => {
+    preRun(data);
 };

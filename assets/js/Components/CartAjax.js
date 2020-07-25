@@ -1,7 +1,3 @@
-import Loader from '../Helpers/Loader.js';
-
-const axiosJs = 'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js';
-
 let tries = 0;
 
 let debouncer = 0;
@@ -74,14 +70,18 @@ const run = (modelData) => {
     }, 300);
 };
 
-export default (modelData) => {
+const preRun = (modelData) => {
     if (!window.axios) {
-        Loader.loadJs(axiosJs).then(() => {
-            run(modelData);
-        });
+        setTimeout(() => {
+            preRun(modelData);
+        }, 50);
 
         return;
     }
 
     run(modelData);
+};
+
+export default (modelData) => {
+    preRun(modelData);
 };

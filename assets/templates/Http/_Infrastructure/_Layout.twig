@@ -4,6 +4,7 @@
 
 {# @var \Config\General GeneralConfig #}
 {# @var \App\Content\Meta\MetaPayload metaPayload #}
+{# @var \Slim\Csrf\Guard csrf #}
 
 {% set ogType = metaPayload.getOgType() ?? 'website' %}
 {% set twitterCardType = twitterCardType ?? 'summary' %}
@@ -85,7 +86,17 @@
         type="text/javascript"
     ></script>
 </head>
-<body class="antialiased font-sans bg-nandor dark:bg-mine-shaft-dark">
+<body
+    class="antialiased font-sans bg-nandor dark:bg-mine-shaft-dark"
+    data-app-info='{
+        "csrf": {
+            "tokenNameKey": "{{ csrf.tokenNameKey }}",
+            "tokenName": "{{ csrf.tokenName }}",
+            "tokenValueKey": "{{ csrf.tokenValueKey }}",
+            "tokenValue": "{{ csrf.tokenValue }}"
+        }
+    }'
+>
     {# Get any queued up body items #}
     {{ block('beginBody') ?? '' }}
 
