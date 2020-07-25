@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Http\Error;
 
+use App\Content\Meta\MetaPayload;
 use App\Http\Error\Error404Responder;
 use App\Http\Error\Error500Responder;
 use App\Http\Error\HttpErrorAction;
@@ -14,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Factory\ResponseFactory;
+use Twig\Environment as TwigEnvironment;
 
 class HttpErrorActionTest extends TestCase
 {
@@ -25,20 +27,29 @@ class HttpErrorActionTest extends TestCase
     /** @var MockObject&LoggerInterface */
     private $logger;
 
+    /** @var MockObject&TwigEnvironment */
+    private $twigEnvironment;
+
     protected function setUp(): void
     {
         $this->logger = $this->createMock(
             LoggerInterface::class
         );
 
+        $this->twigEnvironment = $this->createMock(
+            TwigEnvironment::class,
+        );
+
         $responseFactory = new ResponseFactory();
 
         $this->action = new HttpErrorAction(
             new Error404Responder(
-                $responseFactory
+                $responseFactory,
+                $this->twigEnvironment
             ),
             new Error500Responder(
                 $responseFactory,
+                $this->twigEnvironment,
                 $this->logger
             )
         );
@@ -56,6 +67,18 @@ class HttpErrorActionTest extends TestCase
 
         $this->logger->expects(self::never())
             ->method(self::anything());
+
+        $this->twigEnvironment->expects(self::once())
+            ->method('render')
+            ->with(
+                self::equalTo('Http/Errors/404.twig'),
+                self::equalTo([
+                    'metaPayload' => new MetaPayload(
+                        ['metaTitle' => 'Page not found']
+                    ),
+                ]),
+            )
+            ->willReturn('fooTwigRender');
 
         $response = ($this->action)(
             $this->request,
@@ -75,7 +98,7 @@ class HttpErrorActionTest extends TestCase
         );
 
         self::assertSame(
-            'Page not found',
+            'fooTwigRender',
             (string) $response->getBody()
         );
     }
@@ -90,6 +113,18 @@ class HttpErrorActionTest extends TestCase
                 self::equalTo('An exception was thrown'),
                 self::equalTo(['exception' => $exception]),
             );
+
+        $this->twigEnvironment->expects(self::once())
+            ->method('render')
+            ->with(
+                self::equalTo('Http/Errors/500.twig'),
+                self::equalTo([
+                    'metaPayload' => new MetaPayload(
+                        ['metaTitle' => 'An internal server error occurred']
+                    ),
+                ]),
+            )
+            ->willReturn('barTwigRender');
 
         $response = ($this->action)(
             $this->request,
@@ -112,7 +147,7 @@ class HttpErrorActionTest extends TestCase
         );
 
         self::assertSame(
-            'An internal server error occurred',
+            'barTwigRender',
             (string) $response->getBody()
         );
     }
