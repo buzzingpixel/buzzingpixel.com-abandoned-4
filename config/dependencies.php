@@ -10,6 +10,7 @@ use App\Content\Software\ExtractSoftwareInfoFromPath;
 use App\Email\Adapters\MandrillSendMailAdapter;
 use App\Email\Configuration\MandrillConfig;
 use App\Email\Interfaces\SendMailAdapter;
+use App\HttpAppMiddleware\StaticCacheMiddleware;
 use App\Users\Models\LoggedInUser;
 use App\Users\UserApi;
 use buzzingpixel\cookieapi\CookieApi;
@@ -19,6 +20,8 @@ use Config\Factories\TwigEnvironmentFactory;
 use Config\Logging\Logger;
 use Crell\Tukio\Dispatcher;
 use Crell\Tukio\OrderedListenerProvider;
+use League\Flysystem\Adapter\Local as FlysystemLocalAdapter;
+use League\Flysystem\Filesystem;
 use Monolog\Handler\RollbarHandler;
 use Monolog\Handler\StreamHandler as MonologStreamHandler;
 use Psr\Container\ContainerInterface;
@@ -87,6 +90,16 @@ return [
         'pathToContentDirectory',
         dirname(__DIR__) . '/content'
     ),
+    Filesystem::class => autowire(Filesystem::class)
+        ->constructorParameter(
+            'adapter',
+            get(FlysystemLocalAdapter::class),
+        ),
+    FlysystemLocalAdapter::class => autowire(FlysystemLocalAdapter::class)
+        ->constructorParameter(
+            'root',
+            '/',
+        ),
     ListenerProviderInterface::class => get(OrderedListenerProvider::class),
     LoggedInUser::class => static function (ContainerInterface $di): LoggedInUser {
         return new LoggedInUser(
@@ -198,6 +211,11 @@ return [
     },
     ResponseFactoryInterface::class => autowire(ResponseFactory::class),
     SendMailAdapter::class => autowire(MandrillSendMailAdapter::class),
+    StaticCacheMiddleware::class => autowire(StaticCacheMiddleware::class)
+        ->constructorParameter(
+            'staticCacheEnabled',
+            getenv('STATIC_CACHE_ENABLED') === 'true',
+        ),
     StripeClient::class => static function (): StripeClient {
         StripeApi::setApiKey(
             (string) getenv('STRIPE_SECRET_KEY')
