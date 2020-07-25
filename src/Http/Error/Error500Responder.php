@@ -33,7 +33,9 @@ class Error500Responder
         $response = $this->responseFactory->createResponse(
             500,
             'An internal server error occurred'
-        );
+        )
+            // We'll statically cache the response so 500s can't DDOS us
+            ->withHeader('EnableStaticCache', 'true');
 
         $response->getBody()->write('An internal server error occurred');
 

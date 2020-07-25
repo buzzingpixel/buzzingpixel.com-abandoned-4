@@ -26,7 +26,8 @@ class GetDocumentationPageResponder extends StandardResponderConstructor
         DocumentationVersionsPayload $versions,
         SoftwareInfoPayload $softwareInfoPayload
     ): ResponseInterface {
-        $response = $this->responseFactory->createResponse();
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('EnableStaticCache', 'true');
 
         $response->getBody()->write($this->twigEnvironment->render(
             'Http/Software/DocumentationPage.twig',

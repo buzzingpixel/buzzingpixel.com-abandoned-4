@@ -34,7 +34,7 @@ class GetChangelogResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function test() : void
+    public function test(): void
     {
         $response = ($this->responder)(
             $this->metaPayload,
@@ -48,6 +48,11 @@ class GetChangelogResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
+            ['EnableStaticCache' => ['true']],
+            $response->getHeaders()
+        );
+
+        self::assertSame(
             'TwigRenderOutputTest',
             $response->getBody()->__toString()
         );
@@ -56,7 +61,7 @@ class GetChangelogResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->metaPayload         = new MetaPayload();
         $this->allChangelogPayload = new ChangelogPayload();
@@ -72,7 +77,7 @@ class GetChangelogResponderTest extends TestCase
         );
     }
 
-    private function mockTwigEnvironment() : void
+    private function mockTwigEnvironment(): void
     {
         $this->twigEnvironment = $this->createMock(Environment::class);
 

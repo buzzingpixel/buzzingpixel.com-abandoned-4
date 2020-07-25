@@ -28,7 +28,7 @@ class GetChangelogItemResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function test() : void
+    public function test(): void
     {
         $response = ($this->responder)(
             $this->metaPayload,
@@ -40,12 +40,17 @@ class GetChangelogItemResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
+            ['EnableStaticCache' => ['true']],
+            $response->getHeaders()
+        );
+
+        self::assertSame(
             'TwigRenderOutput',
             $response->getBody()->__toString()
         );
     }
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->metaPayload = new MetaPayload();
 

@@ -18,7 +18,8 @@ class GetChangelogRawResponder
 
     public function __invoke(string $content): ResponseInterface
     {
-        $response = $this->responseFactory->createResponse();
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('EnableStaticCache', 'true');
 
         $response = $response->withHeader(
             'Content-Type',

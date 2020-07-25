@@ -36,7 +36,7 @@ class GetDocumentationPageResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testWhenNoActivePageSlug() : void
+    public function testWhenNoActivePageSlug(): void
     {
         $this->activePageSlug = '';
 
@@ -54,6 +54,11 @@ class GetDocumentationPageResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
+            ['EnableStaticCache' => ['true']],
+            $response->getHeaders()
+        );
+
+        self::assertSame(
             'TwigRenderOutput',
             $response->getBody()->__toString()
         );
@@ -62,7 +67,7 @@ class GetDocumentationPageResponderTest extends TestCase
     /**
      * @throws Throwable
      */
-    public function testWithActivePageSlug() : void
+    public function testWithActivePageSlug(): void
     {
         $this->activePageSlug = 'test-page-slug';
 
@@ -80,12 +85,17 @@ class GetDocumentationPageResponderTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
 
         self::assertSame(
+            ['EnableStaticCache' => ['true']],
+            $response->getHeaders()
+        );
+
+        self::assertSame(
             'TwigRenderOutput',
             $response->getBody()->__toString()
         );
     }
 
-    protected function internalSetUp() : void
+    protected function internalSetUp(): void
     {
         $this->metaPayload = new MetaPayload();
 

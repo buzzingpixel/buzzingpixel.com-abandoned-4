@@ -19,7 +19,12 @@ class Error404Responder
     public function __invoke(): ResponseInterface
     {
         // TODO: Implement 404 page
-        $response = $this->responseFactory->createResponse(404, 'Page not found');
+        $response = $this->responseFactory->createResponse(
+            404,
+            'Page not found'
+        )
+            // We'll statically cache the response so 404s can't DDOS us
+            ->withHeader('EnableStaticCache', 'true');
 
         $response->getBody()->write('Page not found');
 

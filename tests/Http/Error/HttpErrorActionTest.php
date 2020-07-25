@@ -25,7 +25,7 @@ class HttpErrorActionTest extends TestCase
     /** @var MockObject&LoggerInterface */
     private $logger;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->logger = $this->createMock(
             LoggerInterface::class
@@ -50,7 +50,7 @@ class HttpErrorActionTest extends TestCase
         $this->request = $request;
     }
 
-    public function testError404() : void
+    public function testError404(): void
     {
         $exception = new HttpNotFoundException($this->request);
 
@@ -65,6 +65,11 @@ class HttpErrorActionTest extends TestCase
         self::assertSame(404, $response->getStatusCode());
 
         self::assertSame(
+            ['EnableStaticCache' => ['true']],
+            $response->getHeaders()
+        );
+
+        self::assertSame(
             'Page not found',
             $response->getReasonPhrase()
         );
@@ -75,7 +80,7 @@ class HttpErrorActionTest extends TestCase
         );
     }
 
-    public function testError500() : void
+    public function testError500(): void
     {
         $exception = new Exception();
 
@@ -94,6 +99,11 @@ class HttpErrorActionTest extends TestCase
         self::assertSame(
             500,
             $response->getStatusCode()
+        );
+
+        self::assertSame(
+            ['EnableStaticCache' => ['true']],
+            $response->getHeaders()
         );
 
         self::assertSame(
