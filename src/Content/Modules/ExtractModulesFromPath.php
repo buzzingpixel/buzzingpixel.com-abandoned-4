@@ -14,6 +14,7 @@ use App\Content\Modules\ExtractorMethods\ExtractInformationalImage;
 use App\Content\Modules\ExtractorMethods\ExtractPrimaryImageTextHalfBlack;
 use App\Content\Modules\ExtractorMethods\ExtractQuoteBlocks;
 use App\Content\Modules\ExtractorMethods\ExtractShowCase;
+use App\Content\Modules\ExtractorMethods\ExtractSimpleTextInterrupter;
 use App\Content\Modules\ExtractorMethods\ExtractTextColumns;
 use cebe\markdown\GithubMarkdown;
 use DirectoryIterator;
@@ -45,6 +46,7 @@ class ExtractModulesFromPath
     use ExtractQuoteBlocks;
     use ExtractShowCase;
     use ExtractTextColumns;
+    use ExtractSimpleTextInterrupter;
 
     private string $pathToContentDirectory;
     protected GithubMarkdown $markdownParser;
