@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Tests\Http\Home;
+namespace Tests\Http\StandardPages;
 
 use App\Content\Meta\MetaPayload;
 use App\Content\Modules\ModulePayload;
-use App\Http\Home\GetHomeResponder;
+use App\Http\StandardPages\StandardPageResponder;
 use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\ResponseFactory;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
 
-class GetHomeResponderTest extends TestCase
+class StandardPageResponderTest extends TestCase
 {
     /**
      * @throws Throwable
@@ -23,7 +23,9 @@ class GetHomeResponderTest extends TestCase
 
         $modulePayload = new ModulePayload();
 
-        $twigEnvironment = $this->createMock(TwigEnvironment::class);
+        $twigEnvironment = $this->createMock(
+            TwigEnvironment::class
+        );
 
         $twigEnvironment->expects(self::once())
             ->method('render')
@@ -38,7 +40,7 @@ class GetHomeResponderTest extends TestCase
 
         $responseFactory = new ResponseFactory();
 
-        $response = (new GetHomeResponder(
+        $response = (new StandardPageResponder(
             $responseFactory,
             $twigEnvironment,
         ))($metaPayload, $modulePayload);
