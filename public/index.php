@@ -27,8 +27,6 @@ $container->get(RegisterEventListeners::class)();
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 
-$app->addBodyParsingMiddleware();
-
 // Register routes
 $routes = require $rootDir . '/config/Routes/index.php';
 $routes($app);
@@ -53,6 +51,8 @@ if (! class_exists(WhoopsRun::class)) {
 // Register middleware
 $httpMiddleWares = require $rootDir . '/config/httpAppMiddlewares.php';
 $httpMiddleWares($app);
+
+$app->addBodyParsingMiddleware();
 
 // Emit response from app
 $responseEmitter = $container->get(ResponseEmitter::class);
