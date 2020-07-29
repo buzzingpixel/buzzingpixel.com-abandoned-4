@@ -18,6 +18,7 @@ class StandardPageAction
         '/' => 'HomePage',
         '/terms' => 'Terms',
         '/privacy' => 'Privacy',
+        '/cookies' => 'Cookies',
     ];
 
     private StandardPageResponder $responder;
