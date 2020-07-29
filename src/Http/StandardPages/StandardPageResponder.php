@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Home;
+namespace App\Http\StandardPages;
 
 use App\Content\Meta\MetaPayload;
 use App\Content\Modules\ModulePayload;
@@ -10,7 +10,7 @@ use App\Http\StandardResponderConstructor;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-class GetHomeResponder extends StandardResponderConstructor
+class StandardPageResponder extends StandardResponderConstructor
 {
     /**
      * @throws Throwable

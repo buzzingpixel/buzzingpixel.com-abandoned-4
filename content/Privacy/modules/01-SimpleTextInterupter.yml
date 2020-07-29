@@ -1,0 +1,5 @@
+type: SimpleTextInterrupter
+backgroundColor: jade
+textColor: white
+headline: Privacy Policy
+isH1: true

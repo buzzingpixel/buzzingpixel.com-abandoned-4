@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Home\GetHomeAction;
 use App\Http\Tinker\GetTinkerAction;
 use Slim\App;
 
@@ -15,9 +14,6 @@ return static function (App $app): void {
 
     // Tinker
     $app->get('/tinker', GetTinkerAction::class);
-
-    // Home
-    $app->get('/', GetHomeAction::class);
 
     // Admin
     $adminRoutes = require __DIR__ . '/Admin/index.php';
@@ -38,4 +34,8 @@ return static function (App $app): void {
     // Ajax
     $ajaxRoutes = require __DIR__ . '/Ajax/index.php';
     $ajaxRoutes($app);
+
+    // Standard Pages
+    $standardPageRoutes = require __DIR__ . '/StandardPages/index.php';
+    $standardPageRoutes($app);
 };

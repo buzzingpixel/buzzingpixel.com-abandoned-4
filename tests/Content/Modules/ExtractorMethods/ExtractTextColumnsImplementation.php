@@ -25,7 +25,7 @@ class ExtractTextColumnsImplementation
      *
      * @throws Throwable
      */
-    public function runTest(array $parsedYaml) : TextColumnsPayload
+    public function runTest(array $parsedYaml): TextColumnsPayload
     {
         return $this->extractTextColumns($parsedYaml);
     }
