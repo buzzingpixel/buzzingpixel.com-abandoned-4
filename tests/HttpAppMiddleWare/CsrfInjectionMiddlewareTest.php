@@ -13,11 +13,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Csrf\Guard;
 use Tests\TestConfig;
+use Throwable;
 
-use function file_get_contents;
+use function Safe\file_get_contents;
 
 class CsrfInjectionMiddlewareTest extends TestCase
 {
+    /**
+     * @throws Throwable
+     */
     public function test(): void
     {
         $responseFactory = TestConfig::$di->get(

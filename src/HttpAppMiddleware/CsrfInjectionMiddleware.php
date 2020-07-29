@@ -40,7 +40,7 @@ class CsrfInjectionMiddleware implements MiddlewareInterface
 
         $bodyString = str_replace(
             '{!--csrfTokenNameKey--}',
-            (string) $this->csrfGuard->getTokenNameKey(),
+            $this->csrfGuard->getTokenNameKey(),
             $bodyString,
         );
 
@@ -52,7 +52,7 @@ class CsrfInjectionMiddleware implements MiddlewareInterface
 
         $bodyString = str_replace(
             '{!--csrfTokenValueKey--}',
-            (string) $this->csrfGuard->getTokenValueKey(),
+            $this->csrfGuard->getTokenValueKey(),
             $bodyString,
         );
 
