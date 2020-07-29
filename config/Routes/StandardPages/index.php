@@ -8,4 +8,5 @@ use Slim\App;
 return static function (App $app): void {
     $app->get('/', StandardPageAction::class);
     $app->get('/terms', StandardPageAction::class);
+    $app->get('/privacy', StandardPageAction::class);
 };

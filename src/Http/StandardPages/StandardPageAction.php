@@ -17,6 +17,7 @@ class StandardPageAction
     private static array $contentPathMap = [
         '/' => 'HomePage',
         '/terms' => 'Terms',
+        '/privacy' => 'Privacy',
     ];
 
     private StandardPageResponder $responder;

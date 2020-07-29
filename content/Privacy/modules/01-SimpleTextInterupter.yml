@@ -1,6 +1,5 @@
 type: SimpleTextInterrupter
 backgroundColor: jade
 textColor: white
-headline: Terms of Service
-#subHeadline: This is a test
+headline: Privacy Policy
 isH1: true
